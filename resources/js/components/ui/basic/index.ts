@@ -1,0 +1,7 @@
+export { default as Heading } from './Heading.vue'
+export { default as HeadingSmall } from './HeadingSmall.vue'
+export { default as LabelData } from './LabelData.vue'
+export { default as TextLink } from './TextLink.vue'
+export { default as PlaceholderPattern } from './PlaceholderPattern.vue'
+export { default as BooleanIcon } from './BooleanIcon.vue'
+export { default as BooleanData } from './BooleanData.vue'
