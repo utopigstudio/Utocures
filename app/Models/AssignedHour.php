@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class AssignedHour extends Model
 {
-    use HasUuids, HasFactory;
+    use HasFactory, HasUuids;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
-    
+
     protected $appends = ['programmed_hours', 'registered_hours'];
 
     protected $casts = [
@@ -43,7 +44,7 @@ class AssignedHour extends Model
      */
     public function employeeSubstitute(): BelongsTo
     {
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employee::class, 'employee_substitute_id');
     }
 
     /**
@@ -59,13 +60,13 @@ class AssignedHour extends Model
      */
     public function assignedHourTemplate(): BelongsTo
     {
-        return $this->belongsTo(AssignedHour::class);
+        return $this->belongsTo(AssignedHoursTemplate::class, 'assigned_hours_template_id');
     }
 
     /**
      * Get the time records for the assigned hour.
      */
-    public function timeRecords()
+    public function timeRecords(): HasMany
     {
         return $this->hasMany(EmployeeTimeRecord::class);
     }

@@ -13,8 +13,10 @@ import type { BreadcrumbItem, TabItem, Client, Note } from '@/types'
 interface Props {
   client: Client
   notes: Note[]
+  highlightNoteId?: string | null
   filters?: {
     filter_search?: string
+    highlight_note?: string | null
   }
 }
 
@@ -81,7 +83,7 @@ function reloadNotes() {
         </CardContent>
       </Card>
 
-      <Notes :notes="props.notes" resource="client" :filter="props.filters?.filter_search" :parent-id="props.client.id" @search="searchFilter = $event" @saved="reloadNotes" />
+      <Notes :notes="props.notes" resource="client" :filter="props.filters?.filter_search" :parent-id="props.client.id" :highlight-note-id="props.highlightNoteId" @search="searchFilter = $event" @saved="reloadNotes" />
 
     </LayoutTabs>
   </AppLayout>

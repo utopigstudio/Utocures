@@ -3,6 +3,7 @@
 return [
     'title' => 'Configuración',
     'button' => 'Guardar configuración',
+    'completed' => 'Configuración completada',
     'user' => [
         'title' => 'Cuenta del administrador',
         'name' => 'Nombre',

@@ -10,7 +10,7 @@ Route::get('/', function () {
     return redirect()->route('dashboard');
 })->name('home');
 
-Route::prefix('notes')->name('notes.')->group(function () {
+Route::middleware('auth')->prefix('notes')->name('notes.')->group(function () {
     Route::post('/', [NoteController::class, 'store'])->name('store');
     Route::put('{note}', [NoteController::class, 'update'])->name('update');
 });

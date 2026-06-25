@@ -15,6 +15,7 @@ return [
     'budget_templates' => 'Plantillas de presupuesto',
     'contract_templates' => 'Plantillas de contrato',
     'services' => 'Servicios',
+    'announcements' => 'Anuncios',
     'characteristics' => 'Características',
     'users' => 'Usuarios',
     'global_configuration' => 'Configuración global',

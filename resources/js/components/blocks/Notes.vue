@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Form } from '@inertiajs/vue3'
 import { InputTextarea } from '@/components/ui/input'
@@ -8,10 +8,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogC
 import type { Note } from '@/types'
 import DeleteModal from './DeleteModal.vue'
 import { InputText } from '@/components/ui/input'
-import { StickyNote, Calendar, Clock, Pencil, Trash2 } from 'lucide-vue-next'
+import { StickyNote, Calendar, Clock, Pencil, Trash2, AlertTriangle, Link2 } from 'lucide-vue-next'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
 import { cn } from '@/lib/utils'
+import { useI18n } from 'vue-i18n'
 import type { HTMLAttributes } from 'vue'
 
 interface Props {
@@ -20,22 +21,80 @@ interface Props {
   parentId: number | string
   actionsEnabled?: boolean
   filter?: string
+  createType?: 'general' | 'incident'
+  allowTypeSelection?: boolean
+  employeeTimeRecordId?: string | null
+  createButtonLabel?: string
+  highlightNoteId?: string | null
   class?: HTMLAttributes['class']
   titleClass?: HTMLAttributes['class']
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  actionsEnabled: true
+  actionsEnabled: true,
+  createType: 'general'
 })
 
 const emit = defineEmits(['saved', 'search'])
+const { t } = useI18n()
 
 const modalShow = ref(false)
 const modalShowDestroy = ref(false)
 const toEdit = ref<Note | null>(null)
 const toDelete = ref<Note | null>(null)
 const searchFilter = ref<string>(props.filter || '')
+const createNoteType = ref<'general' | 'incident'>(props.createType)
 const { getInitials } = useInitials();
+const canCreateNote = computed(() => {
+  if (props.allowTypeSelection) {
+    return true
+  }
+
+  return props.createType !== 'incident' || !!props.employeeTimeRecordId
+})
+const createButtonLabel = computed(() => {
+  if (props.createButtonLabel) {
+    return props.createButtonLabel
+  }
+
+  if (props.allowTypeSelection) {
+    return t('notes.add_note_or_incident')
+  }
+
+  return props.createType === 'incident' ? t('notes.add_incident') : t('notes.add_note')
+})
+const incidentSelected = computed(() => !toEdit.value && createNoteType.value === 'incident')
+const canSubmit = computed(() => !incidentSelected.value || !!props.employeeTimeRecordId)
+const createDialogTitle = computed(() => {
+  if (toEdit.value) {
+    return t('notes.edit_note')
+  }
+
+  return createNoteType.value === 'incident' ? t('notes.add_incident') : t('notes.add_note')
+})
+const highlightedNoteId = computed(() => props.highlightNoteId ?? null)
+
+async function scrollToHighlightedNote(noteId?: string | null) {
+  if (!noteId || typeof window === 'undefined') {
+    return
+  }
+
+  await nextTick()
+
+  const element = document.getElementById(`note-${noteId}`)
+
+  if (!element) {
+    return
+  }
+
+  element.scrollIntoView({ behavior: 'smooth', block: 'center' })
+}
+
+function openCreateModal() {
+  toEdit.value = null
+  createNoteType.value = props.createType
+  modalShow.value = true
+}
 
 function formatDate(dateStr: any) {
   const date = new Date(dateStr)
@@ -54,11 +113,39 @@ function formatTime(dateStr: any) {
   })
 }
 
+function formatRecordRange(note: Note) {
+  if (!note.employee_time_record) return null
+
+  const timeOut = note.employee_time_record.time_out ? ` - ${note.employee_time_record.time_out}` : ''
+
+  return `${note.employee_time_record.date_in} · ${note.employee_time_record.time_in}${timeOut}`
+}
+
+function linkedRecordLabel(note: Note) {
+  if (!note.employee_time_record) {
+    return t('notes.linked_time_record_unavailable')
+  }
+
+  const employeeName = note.employee_time_record.employee?.user?.name
+  const serviceName = note.employee_time_record.assigned_hour?.service?.name
+  const parts = [formatRecordRange(note), employeeName, serviceName].filter(Boolean)
+
+  return parts.join(' · ')
+}
+
 watch(
   () => searchFilter.value,
   (newSearch) => {
     emit('search', newSearch)
   }
+)
+
+watch(
+  () => highlightedNoteId.value,
+  (noteId) => {
+    scrollToHighlightedNote(noteId)
+  },
+  { immediate: true }
 )
 </script>
 
@@ -70,18 +157,27 @@ watch(
           <StickyNote class="text-blue-600 w-5 h-5 flex-shrink-0" />
           <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.notes') }}</span>
         </div>
-        <Button type="button" class="sm:ml-auto w-full sm:w-auto" @click="modalShow = true">{{ $t('clients.add_note') }}</Button>
+        <Button type="button" class="sm:ml-auto w-full sm:w-auto" :disabled="!canCreateNote" @click="openCreateModal">{{ createButtonLabel }}</Button>
       </CardTitle>
     </CardHeader>
     <CardContent>
       <div class="flex gap-4 mb-6">
         <InputText variant="filter" type="text" v-model="searchFilter" :placeholder="$t('clients.search')" />
       </div>
+      <p v-if="!props.allowTypeSelection && props.createType === 'incident' && !canCreateNote" class="mb-6 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
+        {{ $t('notes.start_time_record_before_incident') }}
+      </p>
       <template v-if="notes?.length">
         <div
           v-for="(note, i) in notes"
           :key="i"
-          class="bg-blue-gray-50 rounded-lg p-4 mb-6 last:mb-0"
+          :id="`note-${note.id}`"
+          :class="[
+            'rounded-lg p-4 mb-6 last:mb-0 transition-all duration-300',
+            note.id === highlightedNoteId
+              ? 'bg-amber-50 ring-2 ring-amber-300 shadow-sm'
+              : 'bg-blue-gray-50',
+          ]"
         >
           <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 mb-3">
             <div class="flex items-center gap-3">
@@ -95,6 +191,13 @@ watch(
             </div>
             <div class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
               <div class="text-sm text-gray-500 flex flex-row items-start gap-2 sm:gap-3">
+                <span
+                  class="inline-flex items-center rounded-full px-3 py-1 text-xs font-medium"
+                  :class="note.type === 'incident' ? 'bg-amber-100 text-amber-800' : 'bg-blue-100 text-blue-800'"
+                >
+                  <AlertTriangle v-if="note.type === 'incident'" class="mr-1 size-3.5" />
+                  {{ note.type === 'incident' ? $t('notes.incident') : $t('notes.general_note') }}
+                </span>
                 <div class="flex items-center gap-2">
                   <Calendar class="text-blue-gray-400 size-4" />
                   <span class="text-sm leading-5">{{ formatDate(note.created_at) }}</span>
@@ -123,6 +226,10 @@ watch(
               </div>
             </div>
           </div>
+          <div v-if="note.type === 'incident'" class="mb-3 flex items-start gap-2 rounded-lg bg-white px-3 py-2 text-sm text-blue-gray-600">
+            <Link2 class="mt-0.5 size-4 shrink-0 text-amber-600" />
+            <span>{{ linkedRecordLabel(note) }}</span>
+          </div>
           <p class="text-sm sm:text-base leading-6 font-normal text-blue-gray-700">
             {{ note.content }}
           </p>
@@ -147,11 +254,31 @@ watch(
       >
         <DialogHeader>
           <DialogTitle class="text-lg font-medium leading-6 text-gray-900">
-            {{ toEdit ? $t('notes.edit_note') : $t('notes.add_note') }}
+            {{ createDialogTitle }}
           </DialogTitle>
         </DialogHeader>
 
         <DialogDescription>
+          <div v-if="!toEdit && props.allowTypeSelection" class="mb-4 flex flex-wrap gap-2">
+            <Button
+              type="button"
+              size="sm"
+              :variant="createNoteType === 'general' ? 'default' : 'outline'"
+              @click="createNoteType = 'general'"
+            >
+              {{ $t('notes.general_note') }}
+            </Button>
+            <Button
+              type="button"
+              size="sm"
+              :variant="createNoteType === 'incident' ? 'default' : 'outline'"
+              @click="createNoteType = 'incident'"
+            >
+              {{ $t('notes.incident') }}
+            </Button>
+          </div>
+          <input v-if="!toEdit" type="hidden" name="type" :value="createNoteType" />
+          <input v-if="!toEdit && incidentSelected && props.employeeTimeRecordId" type="hidden" name="employee_time_record_id" :value="props.employeeTimeRecordId" />
           <InputTextarea
             name="content"
             :default-value="toEdit?.content || ''"
@@ -159,13 +286,19 @@ watch(
             :error="errors?.content?.[0]"
             required
           />
+          <p v-if="incidentSelected && !props.employeeTimeRecordId" class="mt-2 text-sm text-amber-700">
+            {{ $t('notes.start_time_record_before_incident') }}
+          </p>
+          <p v-if="errors?.employee_time_record_id?.[0]" class="mt-2 text-sm text-red-600">
+            {{ errors.employee_time_record_id[0] }}
+          </p>
         </DialogDescription>
 
         <DialogFooter>
           <DialogClose asChild>
             <Button variant="outline" type="button" @click="reset(); clearErrors(); toEdit = null">{{ $t('layout.cancel') }}</Button>
           </DialogClose>
-          <Button type="submit" :disabled="processing">
+          <Button type="submit" :disabled="processing || !canSubmit">
             {{ toEdit ? $t('layout.save_changes') : $t('layout.save') }}
           </Button>
         </DialogFooter>

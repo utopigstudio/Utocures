@@ -3,22 +3,25 @@
 namespace App\Exports;
 
 use Carbon\Carbon;
-use Maatwebsite\Excel\Concerns\WithHeadings;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
-use Maatwebsite\Excel\Concerns\WithEvents;
-use Maatwebsite\Excel\Events\BeforeSheet;
 use Maatwebsite\Excel\Concerns\WithCustomStartCell;
-use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\WithTitle;
+use Maatwebsite\Excel\Events\BeforeSheet;
 
-class BaseExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents, WithCustomStartCell
+class BaseExport implements FromCollection, ShouldAutoSize, WithCustomStartCell, WithEvents, WithHeadings, WithTitle
 {
     public function __construct(
         protected Collection $items,
         protected string $entity,
         protected array $fields,
-        protected array $preRows = [] 
-    ) { }
+        protected array $preRows = [],
+        protected ?string $sheetTitle = null,
+    ) {}
 
     public function collection()
     {
@@ -42,8 +45,9 @@ class BaseExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
             $fields = array_flip($this->fields);
 
             foreach ($array as $key => $value) {
-                if (!isset($fields[$key])) {
+                if (! isset($fields[$key])) {
                     unset($array[$key]);
+
                     continue;
                 }
                 if (is_bool($value)) {
@@ -59,7 +63,7 @@ class BaseExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
             }
 
             if (isset($array['status'])) {
-                $array['status'] = trans($this->entity . '.status_' . strtolower($array['status']));
+                $array['status'] = trans($this->entity.'.status_'.strtolower($array['status']));
             }
 
             $array = array_replace(array_fill_keys($this->fields, null), $array);
@@ -70,11 +74,12 @@ class BaseExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
 
     public function headings(): array
     {
-        $fieldNames = array_map(function($field) {
+        $fieldNames = array_map(function ($field) {
             if (str_contains($field, '.')) {
                 $field = last(explode('.', $field));
             }
-            return trans($this->entity . '.' . $field);
+
+            return trans($this->entity.'.'.$field);
         }, $this->fields);
 
         return $fieldNames;
@@ -87,7 +92,7 @@ class BaseExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
                 $worksheet = $event->sheet->getDelegate();
 
                 foreach ($this->preRows as $i => $row) {
-                    $worksheet->fromArray($row, null, 'A' . ($i + 1));
+                    $worksheet->fromArray($row, null, 'A'.($i + 1));
                 }
             },
         ];
@@ -95,6 +100,11 @@ class BaseExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEv
 
     public function startCell(): string
     {
-        return 'A' . (count($this->preRows) + 2);
+        return 'A'.(count($this->preRows) + 2);
+    }
+
+    public function title(): string
+    {
+        return $this->sheetTitle ?? Str::headline($this->entity);
     }
 }

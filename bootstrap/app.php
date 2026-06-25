@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\EnsureUserIsActive;
+use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsEmployee;
 use App\Http\Middleware\SetupCheck;

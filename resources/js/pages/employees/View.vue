@@ -1,23 +1,27 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { AppLayout, LayoutBasic } from '@/layouts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Link } from '@inertiajs/vue3'
 import { Button, ButtonDelete } from '@/components/ui/button';
 import { LabelData } from '@/components/ui/basic';
 import { Trash2, Pencil, UserRound, Phone, BadgeCheck, Star, Clock3 } from 'lucide-vue-next'
-import { Files, Notes } from '@/components/blocks'
+import { EmployeeStatusPeriods, Files, ModalAssignedHour, Notes } from '@/components/blocks'
 import { router } from '@inertiajs/vue3'
 import WeekCalendar from '@/components/ui/calendar/WeekCalendar.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
 import { useI18n } from 'vue-i18n';
-import type { BreadcrumbItem, Employee, File as FileType, AssignedHour } from '@/types'
+import type { AssignedHour, BreadcrumbItem, Employee, EmployeeStatus, EmployeeStatusPeriod, File as FileType } from '@/types'
 
 interface Props {
   employee: Employee
   files: FileType[]
   hours: AssignedHour[]
+  status_periods: EmployeeStatusPeriod[]
+  current_status: EmployeeStatus
+  active_status_period?: EmployeeStatusPeriod | null
+  next_status_period?: EmployeeStatusPeriod | null
 }
 
 const props = defineProps<Props>()
@@ -29,6 +33,12 @@ const breadcrumbItems: BreadcrumbItem[] = [
 ]
 
 const { getInitials } = useInitials();
+const assignedHourModalOpen = ref(false)
+const selectedAssignedHour = ref<AssignedHour | null>(null)
+
+type CalendarItem =
+  | { kind: 'assigned_hour'; data: AssignedHour }
+  | { kind: 'status_period'; data: EmployeeStatusPeriod }
 
 function reloadFiles() {
   router.reload({ only: ['files'] });
@@ -38,24 +48,56 @@ function reloadNotes() {
   router.reload({ only: ['notes'] });
 }
 
+function reloadHours() {
+  router.reload({ only: ['hours'] });
+}
+
 const toISO = (d: string) => {
   const [day, month, year] = d.split('/');
   return `${year}-${month}-${day}`;
 };
 
+const calendarItems = computed<CalendarItem[]>(() => [
+  ...props.hours.map((hour) => ({ kind: 'assigned_hour' as const, data: hour })),
+  ...props.status_periods.map((period) => ({ kind: 'status_period' as const, data: period })),
+])
+
 const formatCallback = (events: any[]) => {
   if (!events) return []
 
-  return events.map(hour => ({
-    id: hour.id,
-    title: hour.service.name + '<br>' + hour.client.name,
-    start: `${toISO(hour.date)}T${hour.time_start}`,
-    end: `${toISO(hour.date)}T${hour.time_end}`,
-    backgroundColor: 'rgba(209, 250, 229, 1)',
-    borderColor: 'rgb(114 201 156)',
-    textColor: '#065F46',
-    extendedProps: hour
-  }))
+  return events.map((event: CalendarItem) => {
+    if (event.kind === 'status_period') {
+      const palette = {
+        vacation: 'rgba(16, 185, 129, 0.16)',
+        sick_leave: 'rgba(244, 63, 94, 0.16)',
+        absence: 'rgba(100, 116, 139, 0.18)',
+        permission: 'rgba(245, 158, 11, 0.18)',
+      }
+
+      return {
+        id: `status-${event.data.id}`,
+        title: event.data.label,
+        start: event.data.start_at_input,
+        end: event.data.end_at_input,
+        display: 'background',
+        backgroundColor: palette[event.data.type],
+        extendedProps: event.data,
+      }
+    }
+
+    const hour = event.data
+
+    return {
+      id: hour.id,
+      title: hour.service.name + '<br>' + hour.client.name,
+      start: `${toISO(hour.date)}T${hour.time_start}`,
+      end: `${toISO(hour.date)}T${hour.time_end}`,
+      backgroundColor: 'rgba(209, 250, 229, 1)',
+      borderColor: 'rgb(114 201 156)',
+      textColor: '#065F46',
+      extendedProps: hour
+    }
+  })
 }
 
 const grouped_characteristics = computed(() => {
@@ -71,6 +113,21 @@ const grouped_characteristics = computed(() => {
 
   return groups
 })
+
+function handleCalendarEventClick(
+  _start: string,
+  _end: string,
+  _dayOfWeek: number,
+  _id: string,
+  extendedProps: AssignedHour | EmployeeStatusPeriod,
+) {
+  if (!('client' in extendedProps) || !('service' in extendedProps)) {
+    return
+  }
+
+  selectedAssignedHour.value = extendedProps
+  assignedHourModalOpen.value = true
+}
 </script>
 
 <template>
@@ -200,7 +257,8 @@ const grouped_characteristics = computed(() => {
             </CardHeader>
             <CardContent>
               <WeekCalendar
-                :events="props.hours || []"
+                :events="calendarItems"
+                :eventClick="handleCalendarEventClick"
                 :formatCallback="formatCallback"
                 mode="full"
               >
@@ -209,6 +267,22 @@ const grouped_characteristics = computed(() => {
           </Card>
         </div>
       </div>
+
+      <EmployeeStatusPeriods
+        :employee-id="props.employee.id"
+        :status-periods="props.status_periods"
+        :current-status="props.current_status"
+        :active-status-period="props.active_status_period"
+        :next-status-period="props.next_status_period"
+      />
+
+      <ModalAssignedHour
+        :assigned-hour="selectedAssignedHour"
+        :employee-id="props.employee.id"
+        :show="assignedHourModalOpen"
+        @close="assignedHourModalOpen = false; selectedAssignedHour = null"
+        @saved="reloadHours"
+      />
 
       <Files :files="props.files" resource="employee" :parent-id="props.employee.id" @saved="reloadFiles" />
 

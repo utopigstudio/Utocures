@@ -170,54 +170,53 @@ function onDragLeave(e: DragEvent) {
             :required="true"
             :error="errors.company_country_id"
           />
+        </div>
+        <div v-if="!existsConfig" class="col-span-12 mt-4">
+          <label class="block text-sm font-medium text-gray-700 mt-2">
+            {{ $t('setup.config.company_image') }}
+          </label>
+          <div
+            class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 transition-colors"
+            :class="isDragOver ? 'bg-indigo-50 border-indigo-400' : ''"
+            @dragover="onDragOver"
+            @dragleave="onDragLeave"
+            @drop="onDrop"
+          >
+            <div class="text-center">
+              <Camera class="mx-auto size-12 text-gray-300" />
+              <div class="mt-4 flex text-sm text-gray-600 justify-center">
+                <label
+                  for="company_image"
+                  class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 hover:text-indigo-500"
+                >
+                  <span>{{ $t('layout.select_file') }}</span>
+                  <input
+                    id="company_image"
+                    ref="fileInput"
+                    name="company_image"
+                    type="file"
+                    class="sr-only"
+                    @change="onFileChange"
+                  />
+                </label>
+                <p class="pl-1">{{ $t('layout.or_drag_here') }}</p>
+              </div>
+              <p class="text-xs text-gray-600">{{ $t('layout.file_size_limit') }}</p>
 
-          <div class="col-span-12 mt-4">
-            <label class="block text-sm font-medium text-gray-700 mt-2">
-              {{ $t('setup.config.company_image') }}
-            </label>
-            <div
-              class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10 transition-colors"
-              :class="isDragOver ? 'bg-indigo-50 border-indigo-400' : ''"
-              @dragover="onDragOver"
-              @dragleave="onDragLeave"
-              @drop="onDrop"
-            >
-              <div class="text-center">
-                <Camera class="mx-auto size-12 text-gray-300" />
-                <div class="mt-4 flex text-sm text-gray-600 justify-center">
-                  <label
-                    for="company_image"
-                    class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 hover:text-indigo-500"
-                  >
-                    <span>{{ $t('layout.select_file') }}</span>
-                    <input
-                      id="company_image"
-                      ref="fileInput"
-                      name="company_image"
-                      type="file"
-                      class="sr-only"
-                      @change="onFileChange"
-                    />
-                  </label>
-                  <p class="pl-1">{{ $t('layout.or_drag_here') }}</p>
-                </div>
-                <p class="text-xs text-gray-600">{{ $t('layout.file_size_limit') }}</p>
-
-                <div v-if="selectedFile" class="mt-6 text-sm text-gray-700">
-                  <p class="font-semibold">{{ $t('layout.selected_file') }}</p>
-                  <p>{{ selectedFile.name }}</p>
-                  <div v-if="previewUrl" class="mt-3">
-                    <img
-                      :src="previewUrl"
-                      alt="Preview"
-                      class="mx-auto max-h-48 rounded-md border"
-                    />
-                  </div>
+              <div v-if="selectedFile" class="mt-6 text-sm text-gray-700">
+                <p class="font-semibold">{{ $t('layout.selected_file') }}</p>
+                <p>{{ selectedFile.name }}</p>
+                <div v-if="previewUrl" class="mt-3">
+                  <img
+                    :src="previewUrl"
+                    alt="Preview"
+                    class="mx-auto max-h-48 rounded-md border"
+                  />
                 </div>
               </div>
             </div>
-            <p v-if="errors.avatar" class="mt-3 text-sm text-red-600">{{ errors.avatar }}</p>
           </div>
+          <p v-if="errors.company_image" class="mt-3 text-sm text-red-600">{{ errors.company_image }}</p>
         </div>
 
         <div class="my-6 flex items-center justify-start">

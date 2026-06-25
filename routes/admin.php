@@ -1,22 +1,26 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\ContractController;
+use App\Http\Controllers\AdminNotificationController;
+use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\AuditController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\BudgetTemplateController;
-use App\Http\Controllers\ContractTemplateController;
-use App\Http\Controllers\InvoiceController;
-use App\Http\Controllers\AuditController;
-use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\CharacteristicController;
-use App\Http\Controllers\FileController;
-use App\Http\Controllers\EmployeeTimeRecordController;
-use App\Http\Controllers\NoteController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ConfigurationController;
+use App\Http\Controllers\ContractController;
+use App\Http\Controllers\ContractTemplateController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeAssignedHourController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeStatusPeriodController;
+use App\Http\Controllers\EmployeeTimeRecordController;
+use App\Http\Controllers\FileController;
+use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\NoteController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'is_admin'])->group(function () {
 
@@ -40,6 +44,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
         Route::post('{employee}/assigned-hours', [EmployeeController::class, 'storeAssignedHour'])->name('assigned-hours.store');
         Route::put('{employee}/assigned-hours/{hour}', [EmployeeController::class, 'editAssignedHour'])->name('assigned-hours.update');
         Route::delete('{employee}/assigned-hours/{hour}', [EmployeeController::class, 'destroyAssignedHour'])->name('assigned-hours.destroy');
+        Route::put('{employee}/assigned-hour-events/{assignedHour}', [EmployeeAssignedHourController::class, 'update'])->name('assigned-hour-events.update');
+        Route::delete('{employee}/assigned-hour-events/{assignedHour}', [EmployeeAssignedHourController::class, 'destroy'])->name('assigned-hour-events.destroy');
+        Route::post('{employee}/status-periods', [EmployeeStatusPeriodController::class, 'store'])->name('status-periods.store');
+        Route::put('{employee}/status-periods/{statusPeriod}', [EmployeeStatusPeriodController::class, 'update'])->name('status-periods.update');
+        Route::delete('{employee}/status-periods/{statusPeriod}', [EmployeeStatusPeriodController::class, 'destroy'])->name('status-periods.destroy');
     });
 
     Route::resource('users', UserController::class)->except(['show']);
@@ -56,6 +65,8 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     Route::resource('services', ServiceController::class)->except(['show']);
 
+    Route::resource('announcements', AnnouncementController::class)->except(['show']);
+
     Route::resource('budget-templates', BudgetTemplateController::class)->except(['show']);
 
     Route::resource('contract-templates', ContractTemplateController::class)->except(['show']);
@@ -64,7 +75,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     Route::resource('audits', AuditController::class)->only(['index', 'show']);
 
-    Route::resource('employee-time-records', EmployeeTimeRecordController::class)->only(['index']);
+    Route::resource('employee-time-records', EmployeeTimeRecordController::class)->only(['index', 'update']);
 
     Route::prefix('files')->name('files.')->group(function () {
         Route::post('/', [FileController::class, 'store'])->name('store');
@@ -74,6 +85,11 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     Route::prefix('notes')->name('notes.')->group(function () {
         Route::delete('{note}', [NoteController::class, 'destroy'])->name('destroy');
+    });
+
+    Route::prefix('admin-notifications')->name('admin-notifications.')->group(function () {
+        Route::patch('mark-all-read', [AdminNotificationController::class, 'markAllAsRead'])->name('mark-all-read');
+        Route::patch('{adminNotification}', [AdminNotificationController::class, 'update'])->name('update');
     });
 
     Route::resource('configuration', ConfigurationController::class)->only(['index', 'update']);

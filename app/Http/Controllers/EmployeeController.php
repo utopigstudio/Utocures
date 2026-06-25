@@ -3,24 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Exports\BaseExport;
-use App\Models\Employee;
-use App\Models\Country;
-use App\Models\AvailableHour;
-use App\Models\User;
-use App\Models\Characteristic;
-use Illuminate\Http\Request;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Http\Requests\AvailableHour\AvailableHourStoreRequest;
 use App\Http\Requests\Employee\EmployeeIndexRequest;
 use App\Http\Requests\Employee\EmployeeStoreRequest;
-use App\Http\Requests\AvailableHour\AvailableHourStoreRequest;
+use App\Http\Requests\Note\NoteIndexRequest;
 use App\Models\AssignedHour;
+use App\Models\AvailableHour;
+use App\Models\Characteristic;
+use App\Models\Country;
+use App\Models\Employee;
 use App\Models\EmployeeTimeRecord;
 use App\Models\Gender;
 use App\Models\Service;
-use Inertia\Inertia;
+use App\Models\User;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-use App\Http\Requests\Note\NoteIndexRequest;
+use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
@@ -28,13 +29,13 @@ class EmployeeController extends Controller
     use AuthorizesRequests;
 
     private const LIST_FIELDS = ['id', 'nif', 'phone', 'user_id', 'created_at'];
+
     private const EXPORT_FIELDS = ['nif', 'user.name', 'user.email', 'phone', 'user.is_active', 'created_at'];
-    private const SEARCHABLE = ['user.name', 'user.email', 'nif'];
 
     public function index(EmployeeIndexRequest $request)
     {
         $sort = $request->validated('sort') ?? 'created_at';
-        $dir  = $request->validated('dir') ?? 'desc';
+        $dir = $request->validated('dir') ?? 'desc';
         $searchable = ['user.name', 'user.email', 'nif'];
         $filters = [
             'filter_search' => $request->validated('filter_search'),
@@ -48,6 +49,7 @@ class EmployeeController extends Controller
 
         if ($export) {
             $employees = $employees->get();
+
             return Excel::download(new BaseExport($employees, 'employees', self::EXPORT_FIELDS), 'employees.xlsx');
         }
 
@@ -66,13 +68,30 @@ class EmployeeController extends Controller
         $employee->load(['notes', 'notes.user', 'services', 'user:id,name,email,avatar', 'assignedCharacteristics.characteristic']);
         $files = $employee->files()->get();
         $notes = $employee->notes()->get();
-        $hours = $employee->assignedHours()->with(['service', 'client'])->get();
+        $hours = $employee->assignedHours()
+            ->with(['service', 'client', 'employee.user:id,name,avatar', 'timeRecords'])
+            ->withCount('timeRecords')
+            ->get();
+        $statusPeriods = $employee->statusPeriods()
+            ->with('updatedBy:id,name')
+            ->orderByDesc('start_at')
+            ->get();
+        $activeStatusPeriod = $employee->activeStatusPeriodAt(now())?->loadMissing('updatedBy:id,name');
+        $nextStatusPeriod = $employee->nextStatusPeriodAfter(now())?->loadMissing('updatedBy:id,name');
+        $currentStatusCode = $employee->statusForMoment(now());
 
         return Inertia::render('employees/View', [
             'employee' => $employee,
             'files' => $files,
             'notes' => $notes,
             'hours' => $hours,
+            'status_periods' => $statusPeriods,
+            'current_status' => [
+                'code' => $currentStatusCode,
+                'label' => Employee::statusLabel($currentStatusCode),
+            ],
+            'active_status_period' => $activeStatusPeriod,
+            'next_status_period' => $nextStatusPeriod,
         ]);
     }
 
@@ -85,13 +104,31 @@ class EmployeeController extends Controller
             'filter_search' => $request->validated('filter_search'),
         ];
 
-        $work->load(['service', 'service.tasks', 'client']);
-        $notes = $work->client->notes()->with('user')->filter($filters, $searchable)->get();
+        $work->load(['service', 'service.tasks', 'client', 'timeRecords']);
+        $notes = $work->client->notes()
+            ->with([
+                'user:id,name,avatar',
+                'employeeTimeRecord' => function ($query) {
+                    $query->with([
+                        'employee.user:id,name,avatar',
+                        'assignedHour.service:id,name',
+                    ]);
+                },
+            ])
+            ->filter($filters, $searchable)
+            ->orderByDesc('created_at')
+            ->get();
         $hasActiveWork = $request->user()->employee->timeRecords()->whereNull('date_out')->exists();
-        
+        $currentTimeRecordId = $work->timeRecords()
+            ->where('employee_id', $request->user()->employee->id)
+            ->whereNull('date_out')
+            ->latest('created_at')
+            ->value('id');
+
         return Inertia::render('employees/WorkView', [
             'work' => $work,
             'hasActiveWork' => $hasActiveWork,
+            'current_time_record_id' => $currentTimeRecordId,
             'notes' => $notes,
             'filters' => $filters,
         ]);
@@ -147,9 +184,9 @@ class EmployeeController extends Controller
 
         $employee = Employee::create([
             ...$request->except(['name', 'email', 'is_active', 'avatar']),
-            'user_id' => $user->id
+            'user_id' => $user->id,
         ]);
-        
+
         if ($request->filled('services')) {
             $employee->auditSync('services', $data['services']);
         }
@@ -203,7 +240,7 @@ class EmployeeController extends Controller
     public function storeAssignedHour(AvailableHourStoreRequest $request, Employee $employee)
     {
         $employee->availableHours()->create($request->validated());
-        
+
         return back()->with('success', 'Hora asignada correctamente.');
     }
 
@@ -211,7 +248,7 @@ class EmployeeController extends Controller
     {
         $hour = $employee->availableHours()->where('id', $hour->id)->first();
 
-        if (!$hour) {
+        if (! $hour) {
             return response()->json([
                 'message' => 'No se encontró el registro.',
             ], 404);
@@ -226,12 +263,12 @@ class EmployeeController extends Controller
     {
         $deleted = $employee->availableHours()->where('id', $hour->id)->delete();
 
-        if (!$deleted) {
+        if (! $deleted) {
             return response()->json([
                 'message' => 'No se pudo eliminar el registro.',
             ], 400);
         }
-        
+
         return back()->with('success', 'Hora eliminada correctamente.');
     }
 
@@ -272,7 +309,7 @@ class EmployeeController extends Controller
                 'time_out' => $data['time_out'],
             ]);
         } else {
-            if (!$request->filled('time_in')) {
+            if (! $request->filled('time_in')) {
                 return back()->withErrors(['time_in' => 'La hora de inicio es obligatoria al crear un nuevo registro de tiempo.']);
             }
 
@@ -280,7 +317,7 @@ class EmployeeController extends Controller
                 'assigned_hour_id' => $work->id,
                 'employee_id' => $employee->id,
                 'date_in' => $data['date_in'],
-                'time_in' => $data['time_in']
+                'time_in' => $data['time_in'],
             ]);
         }
 
@@ -290,38 +327,78 @@ class EmployeeController extends Controller
     public function schedule(Request $request)
     {
         $employee = Auth::user()?->employee;
-        
-        if (!$employee) {
+
+        if (! $employee) {
             return response()->json([
                 'message' => 'No se pudo obtener el empleado autenticado.',
             ], 400);
         }
 
-        $data = $request->validate(['filter_date' => 'date_format:Y-m-d']);
-        $date = $data['filter_date'] ?? now()->toDateString();
+        $data = $request->validate(['filter_date' => 'nullable|date_format:Y-m-d']);
+        $selectedDate = isset($data['filter_date'])
+            ? Carbon::createFromFormat('Y-m-d', $data['filter_date'])
+            : now();
 
         $assigned_hours = $employee->assignedHours()
-            ->whereDate('date', $date)
-            ->with('service', 'employee.user', 'client')
+            ->where('date', $selectedDate->toDateString())
+            ->with('service', 'employee.user', 'client', 'timeRecords')
             ->get();
 
         return Inertia::render('employees/Schedule', [
             'assigned_hours' => $assigned_hours,
+            'selected_date' => $selectedDate->toDateString(),
+        ]);
+    }
+
+    public function scheduleMonth(Request $request)
+    {
+        $employee = Auth::user()?->employee;
+
+        if (! $employee) {
+            return response()->json([
+                'message' => 'No se pudo obtener el empleado autenticado.',
+            ], 400);
+        }
+
+        $data = $request->validate(['filter_date' => 'nullable|date_format:Y-m-d']);
+        $selectedDate = isset($data['filter_date'])
+            ? Carbon::createFromFormat('Y-m-d', $data['filter_date'])
+            : now();
+
+        $rangeStart = $selectedDate->copy()->startOfMonth();
+        $rangeEnd = $selectedDate->copy()->endOfMonth();
+
+        $assigned_hours = $employee->assignedHours()
+            ->whereBetween('date', [$rangeStart->toDateString(), $rangeEnd->toDateString()])
+            ->with('service', 'client', 'timeRecords')
+            ->orderBy('date')
+            ->orderBy('time_start')
+            ->get();
+
+        return Inertia::render('employees/ScheduleMonth', [
+            'assigned_hours' => $assigned_hours,
+            'selected_date' => $selectedDate->toDateString(),
         ]);
     }
 
     public function hoursWorked()
     {
         $employee = Auth::user()?->employee;
-        
-        if (!$employee) {
+
+        if (! $employee) {
             return response()->json([
                 'message' => 'No se pudo obtener el empleado autenticado.',
             ], 400);
         }
 
         $time_records = $employee->timeRecords()
-            ->with('assignedHour', 'assignedHour.service', 'assignedHour.client')
+            ->with([
+                'assignedHour',
+                'assignedHour.timeRecords',
+                'assignedHour.service',
+                'assignedHour.client',
+                'notes.user:id,name,avatar',
+            ])
             ->orderBy('date_in', 'desc')
             ->get();
 

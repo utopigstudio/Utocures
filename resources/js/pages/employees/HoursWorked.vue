@@ -15,6 +15,14 @@ interface TimeRecord {
   date_out?: string
   time_in: string
   time_out?: string
+  notes?: Array<{
+    id: string
+    content: string
+    created_at: string
+    user: {
+      name: string
+    }
+  }>
 }
 
 interface Props {
@@ -37,8 +45,15 @@ const columns: Column<TimeRecord>[] = [
   { key: 'date_in', label: t('employee_time_records.date_in') },
   { key: 'time_in', label: t('employee_time_records.time_in') },
   { key: 'date_out', label: t('employee_time_records.date_out') },
-  { key: 'time_out', label: t('employee_time_records.time_out') }
+  { key: 'time_out', label: t('employee_time_records.time_out') },
+  { key: 'notes.length', label: t('employee_time_records.incidences'), sortable: false }
 ]
+
+function formatDateTime(dateStr: string) {
+  const date = new Date(dateStr)
+
+  return `${date.toLocaleDateString('es-ES')} · ${date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`
+}
 
 function onSortChange({ key, dir }: { key: string, dir: SortDir }) {
   router.get(
@@ -105,6 +120,29 @@ watchDebounced(
         </template>
         <template #empty>
           <div class="text-center text-gray-500">{{ $t('layout.no_results_found') }}</div>
+        </template>
+        <template #rowDetails="{ row }">
+          <div class="p-4 bg-gray-50 border-t border-gray-200">
+            <template v-if="row.notes?.length">
+              <div class="space-y-3">
+                <div
+                  v-for="note in row.notes"
+                  :key="note.id"
+                  class="rounded-lg border border-amber-200 bg-white px-4 py-3"
+                >
+                  <div class="mb-2 flex items-center justify-between gap-2">
+                    <span class="inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-xs font-medium text-amber-800">
+                      {{ t('notes.incident') }}
+                    </span>
+                    <span class="text-xs text-blue-gray-500">{{ formatDateTime(note.created_at) }}</span>
+                  </div>
+                  <p class="mb-2 text-sm font-medium text-blue-gray-700">{{ note.content }}</p>
+                  <p class="text-xs text-blue-gray-500">{{ note.user.name }}</p>
+                </div>
+              </div>
+            </template>
+            <p v-else class="text-sm text-gray-500">{{ t('employee_time_records.no_incidences') }}</p>
+          </div>
         </template>
       </DataTable>
     </div>

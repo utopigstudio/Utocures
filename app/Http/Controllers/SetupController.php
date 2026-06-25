@@ -19,16 +19,16 @@ class SetupController extends Controller
         $countries = Country::all();
 
         return Inertia::render('setup/Form', [
-            'existsUser' => User::query()->exists(),
-            'existsConfig' => Configuration::query()->exists(),
+            'existsUser' => User::exists(),
+            'existsConfig' => Configuration::exists(),
             'countries' => $countries,
         ]);
     }
 
     public function store(Request $request)
     {
-        $existsUser = User::query()->exists();
-        $existsConfig = Configuration::query()->exists();
+        $existsUser = User::exists();
+        $existsConfig = Configuration::exists();
 
         $rules = $this->createRules($existsUser, $existsConfig);
         $data = $request->validate($rules);
@@ -67,7 +67,7 @@ class SetupController extends Controller
     private function createRules($existsUser, $existsConfig)
     {
         $rules = [];
-        $countryIds = Country::all()->pluck('id')->toArray();
+        $countryIds = Country::all()->pluck('id')->all();
 
         if (!$existsUser) {
             $rules = array_merge($rules, [

@@ -111,4 +111,7 @@ return [
     'start_date_optional' => 'Fecha de inicio (opcional)',
     'days_label' => 'Días',
     'loading_employees' => 'Cargando trabajadoras...',
+    'employee_unavailable' => 'No disponible',
+    'employee_absent_on' => 'Ausente el :date',
+    'employee_absent_between' => 'Ausente de :start a :end',
 ];

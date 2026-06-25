@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\CarbonInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -16,6 +17,26 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 class Employee extends Model implements AuditableContract
 {
     use HasFactory, HasUuids, SoftDeletes, Filterable, Auditable;
+
+    public const STATUS_ACTIVE = 'active';
+
+    public const STATUSES = [
+        self::STATUS_ACTIVE => [
+            'label_key' => 'employees.status_active',
+        ],
+        EmployeeStatusPeriod::TYPE_VACATION => [
+            'label_key' => 'employees.status_type_vacation',
+        ],
+        EmployeeStatusPeriod::TYPE_SICK_LEAVE => [
+            'label_key' => 'employees.status_type_sick_leave',
+        ],
+        EmployeeStatusPeriod::TYPE_ABSENCE => [
+            'label_key' => 'employees.status_type_absence',
+        ],
+        EmployeeStatusPeriod::TYPE_PERMISSION => [
+            'label_key' => 'employees.status_type_permission',
+        ],
+    ];
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
@@ -99,6 +120,14 @@ class Employee extends Model implements AuditableContract
     }
 
     /**
+     * Get the temporary status periods associated with the employee.
+     */
+    public function statusPeriods(): HasMany
+    {
+        return $this->hasMany(EmployeeStatusPeriod::class);
+    }
+
+    /**
      * Get the gender name attribute.
      */
     public function getGenderAttribute(): ?object
@@ -132,6 +161,39 @@ class Employee extends Model implements AuditableContract
     public function getCountryAttribute(): ?object
     {
         return Country::find($this->country_id);
+    }
+
+    public function activeStatusPeriodAt(CarbonInterface $moment): ?EmployeeStatusPeriod
+    {
+        return $this->statusPeriods()
+            ->where('start_at', '<=', $moment)
+            ->where('end_at', '>=', $moment)
+            ->orderByDesc('start_at')
+            ->first();
+    }
+
+    public function nextStatusPeriodAfter(CarbonInterface $moment): ?EmployeeStatusPeriod
+    {
+        return $this->statusPeriods()
+            ->where('start_at', '>', $moment)
+            ->orderBy('start_at')
+            ->first();
+    }
+
+    public function statusForMoment(CarbonInterface $moment): string
+    {
+        return $this->activeStatusPeriodAt($moment)?->type ?? self::STATUS_ACTIVE;
+    }
+
+    public static function statusLabel(string $status): string
+    {
+        $meta = static::STATUSES[$status] ?? null;
+
+        if (!$meta) {
+            return ucfirst(str_replace('_', ' ', $status));
+        }
+
+        return __($meta['label_key']);
     }
 
     public function delete()

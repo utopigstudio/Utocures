@@ -26,7 +26,7 @@ class ClientStoreRequest extends FormRequest
             'address'            => ['required', 'string', 'max:255'],
             'city'               => ['required', 'string', 'max:255'],
             'zip_code'           => ['required', 'string', 'max:5'],
-            'country_id'         => ['required', 'string', Rule::in(Country::all()->pluck('id')->toArray())],
+            'country_id'         => ['required', 'string', Rule::in(Country::all()->pluck('id')->all())],
             'bank_name'          => ['nullable', 'string', 'max:255'],
             'bank_account'       => ['nullable', 'string', 'max:34'],
             'tax_included'       => ['required', 'boolean'],

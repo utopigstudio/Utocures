@@ -21,3 +21,9 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+
+# laravel boost
+.github
+.codex
+.agents
+AGENTS.md

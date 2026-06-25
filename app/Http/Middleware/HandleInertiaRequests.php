@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\AdminNotification;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -60,6 +61,7 @@ class HandleInertiaRequests extends Middleware
                     ])
                     ->first(),
             ],
+            'adminNotifications' => fn () => $this->resolveAdminNotifications($request),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'translations' => function () {
                 $locale = app()->getLocale();
@@ -73,6 +75,65 @@ class HandleInertiaRequests extends Middleware
 
                 return $strings;
             },
+        ];
+    }
+
+    /**
+     * Resolve shared admin notifications for Inertia layouts.
+     *
+     * @return array<string, mixed>|null
+     */
+    protected function resolveAdminNotifications(Request $request): ?array
+    {
+        $user = $request->user();
+
+        if (! $user || $user->employee) {
+            return null;
+        }
+
+        $unreadNotifications = AdminNotification::query()
+            ->where('read_at', '=', null)
+            ->latest()
+            ->get();
+
+        $readNotifications = AdminNotification::query()
+            ->latest('created_at')
+            ->get()
+            ->filter(fn (AdminNotification $notification) => $notification->read_at !== null)
+            ->take(20)
+            ->values();
+
+        $notifications = $unreadNotifications->take(10)->values();
+
+        return [
+            'count' => $unreadNotifications->count(),
+            'items' => $notifications
+                ->map(fn (AdminNotification $notification) => [
+                    'id' => $notification->id,
+                    'type' => $notification->type,
+                    'title' => $notification->title,
+                    'message' => $notification->message,
+                    'action_url' => $notification->action_url,
+                    'read_at' => $notification->read_at?->toISOString(),
+                    'created_at' => $notification->created_at?->toISOString(),
+                    'data' => $notification->data ?? [],
+                ])
+                ->values()
+                ->all(),
+            'readCount' => $readNotifications->count(),
+            'readItems' => $readNotifications
+                ->map(fn (AdminNotification $notification) => [
+                    'id' => $notification->id,
+                    'type' => $notification->type,
+                    'title' => $notification->title,
+                    'message' => $notification->message,
+                    'action_url' => $notification->action_url,
+                    'read_at' => $notification->read_at?->toISOString(),
+                    'created_at' => $notification->created_at?->toISOString(),
+                    'data' => $notification->data ?? [],
+                ])
+                ->values()
+                ->all(),
         ];
     }
 }

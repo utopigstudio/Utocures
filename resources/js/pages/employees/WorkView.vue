@@ -15,6 +15,7 @@ interface Props {
   work: Work
   notes: Note[]
   hasActiveWork: boolean
+  current_time_record_id?: string | null
   filters?: {
     filter_search?: string
   }
@@ -130,7 +131,19 @@ watchDebounced(
             </div>
 
             <div v-if="activeTab === 'notes'" class="flex flex-col gap-4">
-              <Notes :notes="notes" resource="client" :filter="props.filters?.filter_search" :parent-id="work.client.id" :actions-enabled="false" @search="searchFilter = $event" @saved="reloadNotes" class="rounded-none" titleClass="hidden"/>
+              <Notes
+                :notes="notes"
+                resource="client"
+                :filter="props.filters?.filter_search"
+                :parent-id="work.client.id"
+                :actions-enabled="false"
+                allow-type-selection
+                :employee-time-record-id="props.current_time_record_id"
+                @search="searchFilter = $event"
+                @saved="reloadNotes"
+                class="rounded-none"
+                titleClass="hidden"
+              />
             </div>
 
             <div v-if="activeTab === 'tasks'" class="flex flex-col gap-4">

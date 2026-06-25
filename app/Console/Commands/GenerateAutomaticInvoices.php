@@ -3,8 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Models\Client;
-use App\Models\Invoice;
 use App\Models\EmployeeTimeRecord;
+use App\Models\Invoice;
 use App\Models\Service;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -21,7 +21,7 @@ class GenerateAutomaticInvoices extends Command
 
         $this->info("Generando facturas automáticas para el periodo {$periodStart->toDateString()} - {$periodEnd->toDateString()}");
 
-        $services = Service::all();
+        $services = Service::all()->keyBy('id');
 
         Client::where('automatic_invoice', true)
             ->chunkById(200, function ($clients) use ($periodStart, $periodEnd, $services) {
@@ -31,29 +31,30 @@ class GenerateAutomaticInvoices extends Command
                         ->whereHas('assignedHour', function ($q) use ($client) {
                             $q->where('client_id', $client->id);
                         })
-                        ->with(['assignedHour.client', 'assignedHour.employee', 'assignedHour.service'])
+                        ->with('assignedHour.service')
                         ->get();
 
-                    if (!$records->isEmpty()) {
+                    if ($records->isNotEmpty()) {
                         $hoursByService = $records->groupBy(function ($record) {
                             return $record->assignedHour->service->id;
                         })->map(function ($group) {
                             return $group->sum(function ($record) {
                                 $start = $record->date_in->copy()->setTimeFromTimeString($record->time_in);
                                 $end = $record->date_out?->copy()->setTimeFromTimeString($record->time_out);
+
                                 return $start->diffInMinutes($end, false) / 60;
                             });
                         });
-                        
+
                         $lines = [];
                         foreach ($hoursByService as $serviceId => $totalHours) {
-                            $service = $services->find($serviceId);
+                            $service = $services->get($serviceId);
                             $partnerDiscount = $client->is_partner ? $service->discount_partner : 0;
                             $price = $service->price * $totalHours;
                             $discountAmount = $price * ($partnerDiscount / 100);
 
                             $lines[] = [
-                                'concept' => $service->name . " - Horas trabajadas en " . $periodStart->format('F Y'),
+                                'concept' => $service->name.' - Horas trabajadas en '.$periodStart->format('F Y'),
                                 'quantity' => $totalHours,
                                 'price' => $price,
                                 'discount' => $discountAmount,
@@ -65,7 +66,7 @@ class GenerateAutomaticInvoices extends Command
                             $invoice = Invoice::create([
                                 'client_id' => $client->id,
                                 'date' => now()->toDateString(),
-                                'due_date' => now()->addDays(30)->toDateString()
+                                'due_date' => now()->addDays(30)->toDateString(),
                             ]);
 
                             $invoice->lines()->createMany($lines);
@@ -75,7 +76,8 @@ class GenerateAutomaticInvoices extends Command
                 }
             });
 
-        $this->info("Proceso de generación de facturas automáticas completado.");
+        $this->info('Proceso de generación de facturas automáticas completado.');
+
         return self::SUCCESS;
     }
 }

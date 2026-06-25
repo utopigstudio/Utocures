@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RadioGroupRoot, RadioGroupItem, RadioGroupIndicator, useForwardPropsEmits } from 'reka-ui'
+import type { AcceptableValue } from 'reka-ui'
 import { ref, watch, computed } from 'vue'
 import { Label } from '@/components/ui/label'
 import InputError from '@/components/ui/input/InputError.vue'
@@ -29,7 +30,11 @@ watch(
   { immediate: true }
 )
 
-function onSelect(value: string | number) {
+function onSelect(value: AcceptableValue) {
+  if (typeof value !== 'string' && typeof value !== 'number') {
+    return
+  }
+
   selected.value = value
   emits('update:modelValue', value)
 }

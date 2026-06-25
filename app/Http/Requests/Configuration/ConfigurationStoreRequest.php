@@ -25,7 +25,7 @@ class ConfigurationStoreRequest extends FormRequest
             'company_address'     => ['required', 'string', 'max:255'],
             'company_city'        => ['required', 'string', 'max:255'],
             'company_zip_code'    => ['required', 'string', 'max:5'],
-            'company_country_id'  => ['required', 'string', Rule::in(Country::all()->pluck('id')->toArray())],
+            'company_country_id'  => ['required', 'string', Rule::in(Country::all()->pluck('id')->all())],
             'company_image' => [
                 $configuration?->company_image ? 'nullable' : 'required',
                 'image',

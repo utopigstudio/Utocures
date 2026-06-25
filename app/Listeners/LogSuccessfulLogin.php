@@ -21,7 +21,7 @@ class LogSuccessfulLogin
      */
     public function handle(Login $event): void
     {
-        /** @var \App\Models\User  */
+        /** @var \App\Models\User $user */
         $user = $event->user;
 
         $user->auditEvent = 'login';

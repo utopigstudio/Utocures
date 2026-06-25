@@ -16,8 +16,8 @@ class SetupCheck
      */
     public function handle(Request $request, Closure $next)
     {
-        $hasConfig = Configuration::query()->exists();
-        $hasUser = User::query()->exists();
+        $hasConfig = Configuration::exists();
+        $hasUser = User::exists();
 
         if ($request->is('setup*') && ($hasConfig && $hasUser)) {
             return redirect()->route('home');

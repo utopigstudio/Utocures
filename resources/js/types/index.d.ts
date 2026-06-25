@@ -6,6 +6,32 @@ export interface Notification {
   message: string;
 }
 
+export interface AdminNotificationData {
+  note_id?: string;
+  client_id?: string;
+  client_name?: string;
+  employee_name?: string;
+  excerpt?: string;
+}
+
+export interface AdminNotificationItem {
+  id: string;
+  type: string;
+  title: string;
+  message: string;
+  action_url?: string | null;
+  read_at?: string | null;
+  created_at: string;
+  data: AdminNotificationData;
+}
+
+export interface AdminNotificationsPayload {
+  count: number;
+  items: AdminNotificationItem[];
+  readCount: number;
+  readItems: AdminNotificationItem[];
+}
+
 export interface Auth {
   user: User;
   employee?: Employee;
@@ -39,6 +65,7 @@ export interface NavItem {
 export type AppPageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {
   name: string;
   auth: Auth;
+  adminNotifications?: AdminNotificationsPayload | null;
   ziggy: Config & { location: string };
   sidebarOpen: boolean;
 };
@@ -105,7 +132,51 @@ export interface Note {
   id: string
   user: User
   content: string
+  type: 'general' | 'incident'
+  employee_time_record_id?: string | null
+  employee_time_record?: EmployeeTimeRecordLinked | null
   created_at: string
+}
+
+export interface EmployeeStatusPeriod {
+  id: string
+  type: 'vacation' | 'sick_leave' | 'absence' | 'permission'
+  label: string
+  color: string
+  start_at: string
+  end_at: string
+  start_at_formatted: string
+  end_at_formatted: string
+  start_at_input: string
+  end_at_input: string
+  updated_at: string
+  updated_at_formatted: string
+  notes?: string | null
+  updated_by?: User | null
+}
+
+export interface EmployeeStatus {
+  code: 'active' | 'vacation' | 'sick_leave' | 'absence' | 'permission'
+  label: string
+}
+
+export interface Announcement {
+  id: string
+  title: string
+  image?: string | null
+  content: string
+  created_at?: string
+}
+
+export interface EmployeeTimeRecordLinked {
+  id: string
+  date_in: string
+  date_out?: string | null
+  time_in: string
+  time_out?: string | null
+  employee?: Employee
+  assigned_hour?: AssignedHour
+  notes?: Note[]
 }
 
 export interface Service {
@@ -298,6 +369,10 @@ export interface Employee {
   user: User
   assigned_hours?: AssignedHour[]
   assigned_characteristics?: CharacteristicOption[]
+  status_periods?: EmployeeStatusPeriod[]
+  is_selectable?: boolean
+  unavailability_reason?: string | null
+  blocking_status_period?: EmployeeStatusPeriod | null
 }
 
 export interface Characteristic {
@@ -345,7 +420,10 @@ export interface FieldBinding {
 
 export interface AssignedHour {
   id: string
+  assigned_hours_template_id?: string
+  client_id?: string
   employee_id: string
+  employee_substitute_id?: string | null
   service_id: string
   employee: Employee
   client: Client
@@ -353,6 +431,7 @@ export interface AssignedHour {
   date: string
   time_start: string
   time_end: string
+  time_records_count?: number
   programmed_hours_formatted?: string
   registered_hours_formatted?: string
 }

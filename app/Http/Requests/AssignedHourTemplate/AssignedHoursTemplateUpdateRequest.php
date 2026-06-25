@@ -6,6 +6,7 @@ use App\Models\AssignedHoursTemplate;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class AssignedHoursTemplateUpdateRequest extends FormRequest
 {
@@ -30,23 +31,26 @@ class AssignedHoursTemplateUpdateRequest extends FormRequest
         ];
     }
 
-    public function withValidator($validator)
+    public function after(): array
     {
-        $validator->after(function ($validator) {
-            $dateStart = $this->input('date_start');
-            $templateId = $this->route('template'); // This matches the controller parameter
+        return [
+            function (Validator $validator): void {
+                $dateStart = $this->input('date_start');
+                $templateId = $this->route('template'); // This matches the controller parameter
 
-            $existing = AssignedHoursTemplate::findOrFail($templateId);
-            
-            $originalDateStart = $existing->date_start?->format('Y-m-d');
+                $existing = AssignedHoursTemplate::findOrFail($templateId);
 
-            if ($dateStart && $dateStart !== $originalDateStart) {
-                $today = Carbon::today()->format('Y-m-d');
-                if ($dateStart < $today) {
-                    $validator->errors()->add('date_start', __('The start date must be today or a future date.'));
+                $originalDateStart = $existing->date_start?->format('Y-m-d');
+
+                if ($dateStart && $dateStart !== $originalDateStart) {
+                    $today = Carbon::today()->format('Y-m-d');
+
+                    if ($dateStart < $today) {
+                        $validator->errors()->add('date_start', __('The start date must be today or a future date.'));
+                    }
                 }
-            }
-        });
+            },
+        ];
     }
 
 }

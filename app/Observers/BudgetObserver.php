@@ -12,7 +12,7 @@ class BudgetObserver
      */
     public function creating(Budget $budget): void
     {
-        $client = Client::where('id', $budget->client_id)->first();
+        $client = Client::whereKey($budget->client_id)->first();
 
         if (!$client) {
             $budget->fill(['client_id' => null, 'client_name' => $budget->client_id]);

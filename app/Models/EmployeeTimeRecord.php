@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
@@ -38,6 +39,14 @@ class EmployeeTimeRecord extends Model implements AuditableContract
     public function assignedHour(): BelongsTo
     {
         return $this->belongsTo(AssignedHour::class);
+    }
+
+    /**
+     * Get the incident notes linked to the time record.
+     */
+    public function notes(): HasMany
+    {
+        return $this->hasMany(Note::class);
     }
 
     /**

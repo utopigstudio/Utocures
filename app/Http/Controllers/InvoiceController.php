@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    private const LIST_FIELDS = ['id', 'client_id', 'date', 'subtotal', 'discount', 'total', 'client_id', 'created_at'];
+    private const LIST_FIELDS = ['id', 'client_id', 'date', 'subtotal', 'discount', 'total', 'created_at'];
     private const EXPORT_FIELDS = ['client.name', 'date', 'subtotal', 'discount', 'total', 'created_at'];
 
     public function index(InvoiceIndexRequest $request)

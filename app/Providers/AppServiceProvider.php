@@ -2,23 +2,25 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use App\Models\AssignedHoursTemplate;
+use App\Models\Budget;
+use App\Models\BudgetLine;
+use App\Models\Client;
+use App\Models\Employee;
 use App\Models\Invoice;
 use App\Models\InvoiceLine;
-use App\Models\BudgetLine;
-use App\Models\Budget;
-use App\Models\Client;
+use App\Models\Note;
 use App\Models\User;
-use App\Models\Employee;
 use App\Observers\AssignedHoursTemplateObserver;
-use App\Observers\InvoiceObserver;
-use App\Observers\InvoiceLineObserver;
 use App\Observers\BudgetLineObserver;
 use App\Observers\BudgetObserver;
 use App\Observers\ClientObserver;
-use App\Observers\UserObserver;
 use App\Observers\EmployeeObserver;
+use App\Observers\InvoiceLineObserver;
+use App\Observers\InvoiceObserver;
+use App\Observers\NoteObserver;
+use App\Observers\UserObserver;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -43,6 +45,7 @@ class AppServiceProvider extends ServiceProvider
         AssignedHoursTemplate::observe(AssignedHoursTemplateObserver::class);
         User::observe(UserObserver::class);
         Employee::observe(EmployeeObserver::class);
+        Note::observe(NoteObserver::class);
 
         app()->useLangPath(base_path('lang'));
     }

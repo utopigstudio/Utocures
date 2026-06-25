@@ -2,7 +2,7 @@
 import { NavMain } from '@/components/blocks';
 import { AppLogo } from '@/components/app';
 import { Sidebar, SidebarContent, SidebarHeader } from '@/components/ui/sidebar';
-import { LayoutGrid, Users, UserRound, BadgeCheck, FileMinus, Clock3, History, Settings, Star, UsersRound } from 'lucide-vue-next';
+import { LayoutGrid, Users, UserRound, BadgeCheck, FileMinus, Clock3, History, Megaphone, Settings, Star, UsersRound } from 'lucide-vue-next';
 import { useI18n } from 'vue-i18n'
 import { type NavItem, type NavItemsGroup } from '@/types';
 
@@ -28,6 +28,11 @@ const mainNavItemsGestion: NavItem[] = [
     title: t('sidebar.characteristics'),
     href: '/characteristics',
     icon: Star,
+  },
+  {
+    title: t('sidebar.announcements'),
+    href: '/announcements',
+    icon: Megaphone,
   },
 ];
 

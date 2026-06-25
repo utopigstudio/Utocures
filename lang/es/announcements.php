@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'title' => 'Anuncios',
+    'board_button' => 'Tablón anuncios',
+    'title_field' => 'Título',
+    'create' => 'Crear anuncio',
+    'edit' => 'Editar anuncio',
+    'content' => 'Contenido',
+    'image' => 'Imagen',
+    'created_at' => 'Fecha de creación',
+    'published_at' => 'Publicado',
+    'search_placeholder' => 'Buscar anuncio...',
+    'no_results' => 'No hay anuncios registrados.',
+    'board_title' => 'Tablón de anuncios',
+    'board_description' => 'Mantente al día con las últimas novedades del equipo.',
+    'list_description' => 'Consulta aquí todos los anuncios publicados y abre el detalle del que necesites revisar.',
+    'empty_board' => 'No hay anuncios disponibles en este momento.',
+    'available_one' => '1 anuncio disponible.',
+    'available_many' => '{count} anuncios disponibles.',
+    'open_board' => 'Ver avisos',
+    'modal_description' => 'Aquí tienes el tablón completo para consultar los anuncios siempre que lo necesites.',
+    'back_to_work' => 'Volver al trabajo',
+    'open_detail' => 'Ver detalle',
+    'detail_description' => 'Aquí puedes consultar el contenido completo del anuncio.',
+    'close_detail' => 'Cerrar detalle',
+];

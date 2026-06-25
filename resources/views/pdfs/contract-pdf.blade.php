@@ -130,7 +130,7 @@
                 </p>
                 <p class="text-center">
                     <span class="from small">{{ $company->company_name }} | {{ $company->company_address }}, {{ $company->company_zip_code }} - {{ $company->company_city }} | {{ $company->company_email }}<br/>
-                        {{ __('configuration.company_phone') }}: {{ $company->company_phone }}
+                        {{ __('setup.config.company_phone') }}: {{ $company->company_phone }}
                     </span>
                 </p>
             </div>

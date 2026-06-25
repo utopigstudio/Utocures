@@ -66,7 +66,7 @@ class AuditController extends Controller
     {
         $realModel = null;
         if (class_exists($audit->auditable_type)) {
-            $realModel = $audit->auditable_type::with([])->find($audit->auditable_id);
+            $realModel = $audit->auditable_type::find($audit->auditable_id);
         }
 
         $resourceKey = class_basename($audit->auditable_type);

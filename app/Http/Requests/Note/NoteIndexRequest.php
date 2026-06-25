@@ -15,6 +15,7 @@ class NoteIndexRequest extends FormRequest
     {
         return [
             'filter_search' => 'nullable|string',
+            'highlight_note' => 'nullable|uuid|exists:notes,id',
         ];
     }
 }

@@ -4,8 +4,8 @@ import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
 import { createApp, h } from 'vue';
-import { ZiggyVue } from 'ziggy-js';
 import { createI18n } from 'vue-i18n'
+import { ZiggyVue } from 'ziggy-js';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Utocures';
 

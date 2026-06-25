@@ -14,6 +14,7 @@ class EmployeeIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'assigned_hour_id' => ['nullable', 'string', 'exists:assigned_hours,id'],
             'days_of_week' => ['array'],
             'days_of_week.*' => ['integer', 'in:0,1,2,3,4,5,6'],
             'event_id' => ['nullable', 'string', 'exists:assigned_hours_templates,id'],

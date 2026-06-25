@@ -46,8 +46,6 @@ class UserCreatedNotification extends Notification
      */
     public function toArray(object $notifiable): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 }

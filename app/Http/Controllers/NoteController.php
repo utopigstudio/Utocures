@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Note\NoteStoreRequest;
+use App\Models\EmployeeTimeRecord;
 use App\Models\Note;
 use App\Models\Client;
 use App\Models\Employee;
@@ -14,9 +15,13 @@ class NoteController extends Controller
     public function store(NoteStoreRequest $request)
     {
         [$model] = $this->resolveResource($request);
+        $data = $request->validated();
+
+        $this->validateIncidentPayload($request, $model, $data);
 
         $model->notes()->create([
-            ...$request->validated(),
+            ...$data,
+            'type' => $data['type'] ?? Note::TYPE_GENERAL,
             'user_id' => $request->user()->id
         ]);
 
@@ -29,7 +34,7 @@ class NoteController extends Controller
 
         $this->verifyOwnership($note, $model, $type, $id);
 
-        $note->update($request->validated());
+        $note->update($request->safe()->only('content'));
 
         return back()->with('success', 'Nota actualizada correctamente.');
     }
@@ -76,6 +81,27 @@ class NoteController extends Controller
 
         if (!$belongs) {
             abort(403, "La nota no pertenece al recurso indicado ($type #$id)");
+        }
+    }
+
+    protected function validateIncidentPayload(Request $request, Model $model, array $data): void
+    {
+        if (($data['type'] ?? Note::TYPE_GENERAL) !== Note::TYPE_INCIDENT) {
+            return;
+        }
+
+        if (!$model instanceof Client) {
+            abort(422, 'Las incidencias solo pueden registrarse sobre clientes.');
+        }
+
+        $timeRecord = EmployeeTimeRecord::with('assignedHour')->findOrFail($data['employee_time_record_id']);
+
+        if (!$timeRecord->assignedHour || $timeRecord->assignedHour->client_id !== $model->id) {
+            abort(422, 'El registro horario indicado no pertenece al cliente.');
+        }
+
+        if ($request->user()?->employee && $timeRecord->employee_id !== $request->user()->employee->id) {
+            abort(403, 'Solo puedes registrar incidencias en tus propios registros horarios.');
         }
     }
 }

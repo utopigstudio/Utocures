@@ -28,6 +28,7 @@ return [
         'Service' => 'Servicio',
         'AvailableHour' => 'Hora disponible',
         'AssignedHoursTemplate' => 'Plantilla de horas asignadas',
+        'EmployeeStatusPeriod' => 'Periodo de estado del empleado',
     ],
     'fallback' => 'Acción realizada',
     'title'    => 'Eventos de auditoría',
