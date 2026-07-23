@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import { AppLayoutEmployee } from '@/layouts'
-import { ChevronLeft, Calendar, CalendarDays, Clock3 } from 'lucide-vue-next'
+import { ChevronLeft, Calendar, CalendarDays } from 'lucide-vue-next'
 import { MonthlyDayCalendar } from '@/components/ui/calendar'
 import { darken } from '@/lib/utils'
 import { useI18n } from 'vue-i18n'

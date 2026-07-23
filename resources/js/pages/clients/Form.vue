@@ -222,7 +222,6 @@ const clientName = ref(props.client ? props.client.name : '')
                       name="bank_account"
                       :label="$t('clients.bank_account')"
                       :default-value="props.client?.bank_account"
-                      placeholder="ES61 1234 5678 90 1234567890"
                       :error="errors.bank_account"
                       class="mb-0"
                     />
@@ -319,6 +318,21 @@ const clientName = ref(props.client ? props.client.name : '')
           </div>
         </div>
 
+        <Card>
+          <CardContent class="md:flex md:items-center md:justify-end w-full">
+            <div :class="`${props.client ? 'mt-4 md:mt-0' : ''} flex md:ml-4 gap-6`">
+              <Link :href="props.client ? route('clients.show', props.client.id) : route('clients.index')">
+                <Button variant="outline" class="flex items-center gap-2 text-blue-gray-600 border-2">
+                  <X class="size-4" strokeWidth="3" /> {{ $t('layout.cancel') }}
+                </Button>
+              </Link>
+              <Button :disabled="processing" class="flex items-center">
+                <Save class="size-4" />
+                {{ props.client ? $t('layout.save_changes') : $t('layout.save') }}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
       </Form>
     </LayoutBasic>
   </AppLayout>

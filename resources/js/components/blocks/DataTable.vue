@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
 import { cn } from '@/lib/utils'
-import { useI18n } from 'vue-i18n';
 import type { Column, Paginated, SortDir, SortKey, Align } from '@/types'
 
 interface Props<T = any> {
@@ -26,7 +25,6 @@ interface Props<T = any> {
 
 const props = defineProps<Props>()
 
-const { t } = useI18n()
 const { getInitials } = useInitials();
 const selectedRowId = ref<string | null>(null)
 const expandedRow = ref<string | null>(null)

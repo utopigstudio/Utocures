@@ -222,6 +222,23 @@ function onDragLeave(e: DragEvent) {
           </div>
         </div>
 
+        <Card>
+          <CardContent class="md:flex md:items-center md:justify-end w-full">
+            <div :class="`${props.user ? 'mt-4 md:mt-0' : ''} flex md:ml-4 gap-6`">
+              <Link :href="route('users.index')">
+                <Button variant="outline" size="lg" class="flex items-center gap-2 text-blue-gray-600 border-2">
+                  <X class="size-4" strokeWidth="3" /> {{ $t('layout.cancel') }}
+                </Button>
+              </Link>
+              <Button :disabled="processing" size="lg" class="flex items-center gap-2">
+                <Save class="size-4" />
+                {{ props.user ? $t('layout.save_changes') : $t('layout.save') }}
+              </Button>
+              <input v-if="props.user" type="hidden" name="_method" value="PUT">
+            </div>
+          </CardContent>
+        </Card>
+
       </Form>
     </LayoutBasic>
   </AppLayout>

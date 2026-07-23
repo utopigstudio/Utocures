@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { InputText, Wysiwyg } from '@/components/ui/input';
 import { AppLayout, LayoutBasic } from '@/layouts';
 import type { Announcement, BreadcrumbItem } from '@/types';
@@ -184,6 +184,19 @@ onBeforeUnmount(() => {
                                     :error="errors.content"
                                 />
                             </CardContent>
+                            <CardFooter>
+                                <div class="flex flex-wrap justify-end w-full gap-6">
+                                    <Link :href="route('announcements.index')">
+                                        <Button variant="outline" size="lg" class="flex items-center gap-2 border-2 text-blue-gray-600">
+                                            <X class="size-4" strokeWidth="3" /> {{ $t('layout.cancel') }}
+                                        </Button>
+                                    </Link>
+                                    <Button type="submit" size="lg" :disabled="processing">
+                                        <Save class="size-4 text-white" />
+                                        {{ props.announcement ? $t('layout.save_changes') : $t('layout.save') }}
+                                    </Button>
+                                </div>
+                            </CardFooter>
                         </Card>
                     </div>
                 </div>

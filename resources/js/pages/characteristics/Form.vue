@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 import { AppLayout, LayoutBasic } from '@/layouts';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
 import { Form, Link, useForm } from '@inertiajs/vue3'
 import { InputText } from '@/components/ui/input'
 import { Button } from '@/components/ui/button';
@@ -93,6 +93,21 @@ watch(
                   </template>
                 </Repeatable>
               </CardContent>
+              <CardFooter>
+                <CardTitle class="text-xl md:flex md:items-center md:justify-end w-full mb-4">
+                  <div class="flex flex-wrap justify-between gap-6">
+                    <Link :href="route('characteristics.index')">
+                      <Button variant="outline" size="lg" class="flex items-center gap-2 text-blue-gray-600 border-2">
+                        <X class="size-4" strokeWidth="3" /> {{ $t('layout.cancel') }}
+                      </Button>
+                    </Link>
+                    <Button type="submit" size="lg" :disabled="processing">
+                      <Save class="size-4 text-white" />
+                      {{ props.characteristic ? $t('layout.save_changes') : $t('layout.save') }}
+                    </Button>
+                  </div>
+                </CardTitle>
+              </CardFooter>
             </Card>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { AppLayoutEmployee } from '@/layouts';
 import { usePage, Link, router } from '@inertiajs/vue3';
 import { ListWorks, TimerCounter, NewYearFireworks } from '@/components/blocks';
 import { Calendar, CalendarClock, Megaphone } from 'lucide-vue-next'
-import type { Announcement, User, Work } from '@/types';
+import type { User, Work } from '@/types';
 
 const page = usePage();
 const user = page.props.auth.user as User;
@@ -12,7 +12,6 @@ const user = page.props.auth.user as User;
 interface Props {
   works?: Work[],
   active_work?: Work,
-  announcements?: Announcement[],
 }
 
 const props = defineProps<Props>()
@@ -70,8 +69,8 @@ const dateEl = ref(null);
         <div class="flex items-center justify-between">
           <p class="text-base leading-6 font-semibold">{{ $t('employees.current_plan') }}</p>
         </div>
-        <TimerCounter v-if="active_work" :work="active_work" @recording-finished="reloadActiveWork" size="small" />
-        <ListWorks :works="works"/>
+        <TimerCounter v-if="props.active_work" :work="props.active_work" @recording-finished="reloadActiveWork" size="small" />
+        <ListWorks :works="props.works"/>
       </div>
     </div>
   </AppLayoutEmployee>

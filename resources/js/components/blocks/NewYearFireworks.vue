@@ -1,22 +1,45 @@
-<script setup>
-import { onMounted, onUnmounted, ref, nextTick } from 'vue'
+<script setup lang="ts">
+import { nextTick, onMounted, onUnmounted, ref } from 'vue'
 
-const props = defineProps({
-  target: { type: Object, required: true },
-  duration: { type: Number, default: 3000 },
+interface Particle {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  life: number
+  ttl: number
+  color: string
+}
+
+const props = withDefaults(defineProps<{
+  target: HTMLElement
+  duration?: number
+}>(), {
+  duration: 3000,
 })
 
-const canvas = ref(null)
+const canvas = ref<HTMLCanvasElement | null>(null)
 
-let fireworkInterval = null
-let rafId = null
+let fireworkInterval: ReturnType<typeof window.setInterval> | null = null
+let stopTimeout: ReturnType<typeof window.setTimeout> | null = null
+let rafId: number | null = null
 let running = true
 
 onMounted(async () => {
   await nextTick()
 
+  if (!canvas.value) {
+    return
+  }
+
   const rect = props.target.getBoundingClientRect()
-  const ctx = canvas.value.getContext('2d')
+  const context = canvas.value.getContext('2d')
+
+  if (!context) {
+    return
+  }
+
+  const ctx: CanvasRenderingContext2D = context
   const dpr = window.devicePixelRatio || 1
 
   const padding = 14
@@ -30,10 +53,10 @@ onMounted(async () => {
   ctx.translate(padding, padding)
   ctx.globalCompositeOperation = 'lighter'
 
-  const particles = []
+  const particles: Particle[] = []
   const colors = ['#fbbf24', '#f472b6', '#a78bfa', '#38bdf8']
 
-  function firework() {
+  function firework(): void {
     if (!running) return
 
     const count = 20 + Math.random() * 15
@@ -56,7 +79,11 @@ onMounted(async () => {
     }
   }
 
-  function animate() {
+  function animate(): void {
+    if (!canvas.value) {
+      return
+    }
+
     ctx.clearRect(-padding, -padding, canvas.value.width, canvas.value.height)
 
     for (let i = particles.length - 1; i >= 0; i--) {
@@ -86,9 +113,12 @@ onMounted(async () => {
 
   fireworkInterval = setInterval(firework, 300)
 
-  setTimeout(() => {
+  stopTimeout = setTimeout(() => {
     running = false
-    clearInterval(fireworkInterval)
+    if (fireworkInterval) {
+      clearInterval(fireworkInterval)
+      fireworkInterval = null
+    }
   }, props.duration)
 
   animate()
@@ -100,6 +130,11 @@ onUnmounted(() => {
   if (fireworkInterval) {
     clearInterval(fireworkInterval)
     fireworkInterval = null
+  }
+
+  if (stopTimeout) {
+    clearTimeout(stopTimeout)
+    stopTimeout = null
   }
 
   if (rafId) {

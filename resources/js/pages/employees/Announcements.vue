@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import { Link } from '@inertiajs/vue3'
 import { AppLayoutEmployee } from '@/layouts'
 import { Button } from '@/components/ui/button'
@@ -17,14 +17,6 @@ const { t } = useI18n()
 
 const selectedAnnouncement = ref<Announcement | null>(null)
 const detailOpen = ref(false)
-
-const announcementCountText = computed(() => {
-  if (props.announcements.length === 1) {
-    return t('announcements.available_one')
-  }
-
-  return t('announcements.available_many', { count: props.announcements.length })
-})
 
 function openDetail(announcement: Announcement) {
   selectedAnnouncement.value = announcement

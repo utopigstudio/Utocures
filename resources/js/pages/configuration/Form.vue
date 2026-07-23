@@ -64,10 +64,15 @@ function onDragLeave(e: DragEvent) {
         @success="() => { selectedFile = null; previewUrl = null; }"
         v-slot="{ errors, processing }"
       >
-        <div class="mt-4 flex md:mt-0 md:ml-4 justify-end px-4 lg:px-0">
-          <Button type="submit" :disabled="processing">{{ $t('layout.save') }}</Button>
-          <input type="hidden" name="_method" value="PUT" />
-        </div>
+
+        <Card>
+          <CardContent class="md:flex md:items-center md:justify-end w-full">
+            <div class="flex md:ml-4 gap-6">
+              <Button type="submit" :disabled="processing">{{ $t('layout.save') }}</Button>
+              <input type="hidden" name="_method" value="PUT" />
+            </div>
+          </CardContent>
+        </Card>
 
         <div class="grid grid-cols-1">
           <div class="relative lg:col-span-12">
@@ -212,6 +217,15 @@ function onDragLeave(e: DragEvent) {
             </Card>
           </div>
         </div>
+
+        <Card>
+          <CardContent class="md:flex md:items-center md:justify-end w-full">
+            <div class="flex md:ml-4 gap-6">
+              <Button type="submit" :disabled="processing">{{ $t('layout.save') }}</Button>
+              <input type="hidden" name="_method" value="PUT" />
+            </div>
+          </CardContent>
+        </Card>
 
       </Form>
     </LayoutBasic>

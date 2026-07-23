@@ -27,6 +27,8 @@ class EmployeeController extends Controller
         $date = isset($data['date']) ? Carbon::parse($data['date'])->toDateString() : null;
         $dateStart = isset($data['date_start']) ? Carbon::parse($data['date_start'])->toDateString() : Carbon::now()->toDateString();
         $dateEnd = isset($data['date_end']) ? Carbon::parse($data['date_end'])->toDateString() : null;
+        $occurrenceCheckEnd = $dateEnd
+            ?: Carbon::parse($dateStart)->addDays(AssignedHoursTemplate::DAYS_GENERATE)->toDateString();
         $occurrenceWindows = $this->buildOccurrenceTimeWindows(
             recurrency: $recurrency,
             daysOfWeek: $daysOfWeek,
@@ -47,6 +49,16 @@ class EmployeeController extends Controller
                     ->where('end_at', '>', $statusCheckStart)
                     ->orderBy('start_at'),
             ])
+            ->when($recurrency !== '0', fn ($query) => $query->with([
+                'assignedHoursTemplates' => fn ($assignedHoursTemplatesQuery) => $this->scopeRecurringTemplateCandidates(
+                    query: $assignedHoursTemplatesQuery,
+                    eventId: $eventId,
+                    timeStart: $timeStart,
+                    timeEnd: $timeEnd,
+                    dateStart: $dateStart,
+                    dateEnd: $occurrenceCheckEnd,
+                ),
+            ]))
             ->whereHas('user', function ($q) {
                 $q->where('is_active', true);
             })
@@ -62,47 +74,18 @@ class EmployeeController extends Controller
                         ->where('time_end', '>', $timeStart);
                 });
             })
-            ->whereDoesntHave('assignedHoursTemplates', function ($q) use (
+            ->when($recurrency === '0', fn ($query) => $query->whereDoesntHave('assignedHoursTemplates', function ($q) use (
                 $eventId,
-                $recurrency,
-                $daysOfWeek,
                 $timeStart,
                 $timeEnd,
                 $date,
-                $dateStart,
-                $dateEnd,
             ) {
                 $q->when($eventId, fn ($qq) => $qq->where('id', '!=', $eventId))
                     ->where('time_start', '<', $timeEnd)
-                    ->where('time_end', '>', $timeStart);
-
-                if ($recurrency === '0') {
-                    $q->where('recurrency', 0)
-                        ->where('date', $date);
-                }
-
-                if ($recurrency !== '0') {
-                    $q->where('recurrency', '!=', 0)
-                        ->where(function ($qq) use ($daysOfWeek) {
-                            foreach ($daysOfWeek as $day) {
-                                $qq->orWhereJsonContains('days_of_week', $day);
-                            }
-                        })
-                        ->where(function ($qq) use ($dateStart, $dateEnd) {
-                            $qq->where(function ($q2) use ($dateStart) {
-                                $q2->whereNull('date_end')
-                                    ->orWhere('date_end', '>=', $dateStart);
-                            });
-
-                            if ($dateEnd) {
-                                $qq->where(function ($q2) use ($dateEnd) {
-                                    $q2->whereNull('date_start')
-                                        ->orWhere('date_start', '<=', $dateEnd);
-                                });
-                            }
-                        });
-                }
-            });
+                    ->where('time_end', '>', $timeStart)
+                    ->where('recurrency', 0)
+                    ->where('date', $date);
+            }));
 
         if ($recurrency === '0') {
             $employees->whereHas('availableHours', function ($q) use ($timeStart, $timeEnd, $date) {
@@ -122,6 +105,14 @@ class EmployeeController extends Controller
         }
 
         $employees = $employees->get()
+            ->when($recurrency !== '0', fn (Collection $employees) => $employees
+                ->reject(fn (Employee $employee) => $this->hasConflictingRecurringTemplate(
+                    templates: $employee->assignedHoursTemplates,
+                    requestedWindows: $occurrenceWindows,
+                    dateStart: $dateStart,
+                    dateEnd: $occurrenceCheckEnd,
+                ))
+                ->values())
             ->map(function (Employee $employee) use ($occurrenceWindows) {
                 /** @var EmployeeStatusPeriod|null $blockingPeriod */
                 $blockingPeriod = $this->findFirstBlockingStatusPeriod($employee->statusPeriods, $occurrenceWindows);
@@ -140,6 +131,31 @@ class EmployeeController extends Controller
             ->values();
 
         return response()->json(['data' => $employees]);
+    }
+
+    private function scopeRecurringTemplateCandidates(
+        $query,
+        ?string $eventId,
+        string $timeStart,
+        string $timeEnd,
+        string $dateStart,
+        string $dateEnd,
+    ) {
+        return $query
+            ->when($eventId, fn ($qq) => $qq->where('id', '!=', $eventId))
+            ->where('time_start', '<', $timeEnd)
+            ->where('time_end', '>', $timeStart)
+            ->where('recurrency', '!=', 0)
+            ->where(function ($qq) use ($dateStart, $dateEnd) {
+                $qq->where(function ($q2) use ($dateStart) {
+                    $q2->whereNull('date_end')
+                        ->orWhere('date_end', '>=', $dateStart);
+                })
+                    ->where(function ($q2) use ($dateEnd) {
+                        $q2->whereNull('date_start')
+                            ->orWhere('date_start', '<=', $dateEnd);
+                    });
+            });
     }
 
     private function buildOccurrenceTimeWindows(
@@ -174,11 +190,56 @@ class EmployeeController extends Controller
             ]]);
         }
 
-        $anchorWeekStart = $baseStart->copy()->startOfWeek();
-        $candidate = $baseStart->copy();
+        $occurrences = $this->buildRecurrentOccurrenceTimeWindows(
+            daysOfWeek: $daysOfWeek,
+            timeStart: $timeStart,
+            timeEnd: $timeEnd,
+            rangeStart: $baseStart->toDateString(),
+            rangeEnd: $baseEnd->toDateString(),
+            anchorDateStart: $baseStart->toDateString(),
+            recurrency: $recurrency,
+        );
+
+        if ($occurrences->isNotEmpty()) {
+            return $occurrences;
+        }
+
+        return collect([[
+            'start_at' => Carbon::parse($baseStart->format('Y-m-d')." {$timeStart}"),
+            'end_at' => Carbon::parse($baseStart->format('Y-m-d')." {$timeEnd}"),
+        ]]);
+    }
+
+    private function buildRecurrentOccurrenceTimeWindows(
+        array $daysOfWeek,
+        string $timeStart,
+        string $timeEnd,
+        string $rangeStart,
+        string $rangeEnd,
+        string $anchorDateStart,
+        string $recurrency,
+    ): Collection {
+        $start = Carbon::parse($rangeStart);
+        $end = Carbon::parse($rangeEnd);
+
+        if ($start->greaterThan($end)) {
+            return collect();
+        }
+
+        $selectedDays = collect($daysOfWeek)
+            ->map(fn ($day) => (int) $day)
+            ->unique()
+            ->values();
+
+        if ($selectedDays->isEmpty()) {
+            return collect();
+        }
+
+        $anchorWeekStart = Carbon::parse($anchorDateStart)->startOfWeek();
+        $candidate = $start->copy();
         $occurrences = collect();
 
-        while ($candidate->lessThanOrEqualTo($baseEnd)) {
+        while ($candidate->lessThanOrEqualTo($end)) {
             if ($selectedDays->contains($candidate->dayOfWeek) && $this->matchesRecurrencePattern($candidate, $anchorWeekStart, $recurrency)) {
                 $occurrences->push([
                     'start_at' => Carbon::parse($candidate->format('Y-m-d')." {$timeStart}"),
@@ -189,14 +250,7 @@ class EmployeeController extends Controller
             $candidate->addDay();
         }
 
-        if ($occurrences->isNotEmpty()) {
-            return $occurrences;
-        }
-
-        return collect([[
-            'start_at' => Carbon::parse($baseStart->format('Y-m-d')." {$timeStart}"),
-            'end_at' => Carbon::parse($baseStart->format('Y-m-d')." {$timeEnd}"),
-        ]]);
+        return $occurrences;
     }
 
     private function matchesRecurrencePattern(
@@ -215,6 +269,49 @@ class EmployeeController extends Controller
         $weekDiff = $anchorWeekStart->diffInWeeks($candidate->copy()->startOfWeek());
 
         return $weekDiff % 2 === 0;
+    }
+
+    private function hasConflictingRecurringTemplate(
+        Collection $templates,
+        Collection $requestedWindows,
+        string $dateStart,
+        string $dateEnd,
+    ): bool {
+        return $templates->contains(function (AssignedHoursTemplate $template) use ($requestedWindows, $dateStart, $dateEnd) {
+            $templateStart = $template->date_start?->toDateString() ?? Carbon::today()->toDateString();
+            $templateEnd = $template->date_end?->toDateString() ?? $dateEnd;
+            $overlapStart = Carbon::parse($templateStart)->greaterThan(Carbon::parse($dateStart))
+                ? $templateStart
+                : $dateStart;
+            $overlapEnd = Carbon::parse($templateEnd)->lessThan(Carbon::parse($dateEnd))
+                ? $templateEnd
+                : $dateEnd;
+
+            $templateWindows = $this->buildRecurrentOccurrenceTimeWindows(
+                daysOfWeek: $template->days_of_week ?? [],
+                timeStart: $template->time_start->format('H:i'),
+                timeEnd: $template->time_end->format('H:i'),
+                rangeStart: $overlapStart,
+                rangeEnd: $overlapEnd,
+                anchorDateStart: $templateStart,
+                recurrency: (string) $template->recurrency,
+            );
+
+            return $this->timeWindowsOverlap($requestedWindows, $templateWindows);
+        });
+    }
+
+    private function timeWindowsOverlap(Collection $leftWindows, Collection $rightWindows): bool
+    {
+        foreach ($leftWindows as $leftWindow) {
+            foreach ($rightWindows as $rightWindow) {
+                if ($leftWindow['start_at']->lt($rightWindow['end_at']) && $leftWindow['end_at']->gt($rightWindow['start_at'])) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private function findFirstBlockingStatusPeriod(Collection $periods, Collection $occurrenceWindows): ?EmployeeStatusPeriod
