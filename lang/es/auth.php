@@ -14,7 +14,7 @@ return [
     */
     'login' => [
         'title' => '¡Bienvenida!',
-        'subtitle' => 'Texto de bienvenida Texto de bienvenida',
+        'subtitle' => 'Accede con tu perfil de empleada o administradora para registrar tu jornada, consultar tus fichajes y gestionar la información de tu entidad',
         'email_label' => 'Dirección de correo',
         'password_label' => 'Contraseña',
         'remember' => 'Recuerdame',

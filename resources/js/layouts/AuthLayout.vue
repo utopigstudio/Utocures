@@ -16,7 +16,7 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex min-h-svh flex-col items-center justify-center bg-blue-900 px-4 py-10">
+  <div class="flex min-h-svh flex-col items-center justify-center bg-blue-900 px-4 py-10 md:py-0">
     <div class="flex w-full max-w-[34.375rem] flex-col">
       <div :class="cn('flex items-center gap-6 self-center mb-16 md:mb-0', classLogoHeader)">
         <div class="flex h-12 w-12 items-center justify-center">
@@ -30,7 +30,7 @@ defineProps<{
           <CardHeader :border="false" class="px-6 md:px-10 py-0 text-center">
             <CardTitle :class="cn('text-4xl md:text-5xl leading-10 md:leading-none font-bold', classCardTitle)">{{ title }}</CardTitle>
             <div class="w-full border-t border-blue-gray-200 mt-6" aria-hidden="true" />
-            <CardDescription v-if="description" class="text-base leading-6 text-gray-800 mt-6">
+            <CardDescription v-if="description" class="text-base leading-6 text-gray-800 mt-4">
               {{ description }}
             </CardDescription>
           </CardHeader>

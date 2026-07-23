@@ -1,0 +1,1 @@
+import{e as c}from"./Timepicker.vue_vue_type_style_index_0_scoped_6777ae1a_lang-oVxI3Web.js";const r=c("UserRoundIcon",[["circle",{cx:"12",cy:"8",r:"5",key:"1hypcn"}],["path",{d:"M20 21a8 8 0 0 0-16 0",key:"rfgkzh"}]]);export{r as U};
