@@ -1,9 +1,12 @@
 import '../css/app.css';
+import 'leaflet/dist/leaflet.css';
 
+import OfflineGuard from '@/components/app/OfflineGuard.vue';
+import PwaInstallPrompt from '@/components/app/PwaInstallPrompt.vue';
 import { createInertiaApp } from '@inertiajs/vue3';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import type { DefineComponent } from 'vue';
-import { createApp, h } from 'vue';
+import { createApp, Fragment, h } from 'vue';
 import { createI18n } from 'vue-i18n'
 import { ZiggyVue } from 'ziggy-js';
 
@@ -23,7 +26,7 @@ createInertiaApp({
       messages: { [locale as string]: translations },
     })
 
-    createApp({ render: () => h(App, props) })
+    createApp({ render: () => h(Fragment, [h(App, props), h(PwaInstallPrompt), h(OfflineGuard)]) })
       .use(plugin)
       .use(ZiggyVue)
       .use(i18n)
@@ -33,3 +36,11 @@ createInertiaApp({
     color: '#4B5563',
   },
 });
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch((error) => {
+      console.error('No se ha podido registrar el service worker:', error)
+    })
+  })
+}

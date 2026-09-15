@@ -6,6 +6,7 @@ import { useVModel } from '@vueuse/core'
 import { Label } from '@/components/ui/label'
 import InputError from '@/components/ui/input/InputError.vue'
 import type { ClientOption } from '@/types'
+import { useI18n } from 'vue-i18n'
 
 import {
   ComboboxPortal,
@@ -35,6 +36,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const { t } = useI18n()
 
 const emits = defineEmits<{
   (e: 'update:modelValue', payload: string): void
@@ -116,7 +118,7 @@ onMounted(async () => {
       <ComboboxInput
         v-model="query"
         :display-value="displayValue"
-        :placeholder="props.label ? `Elige ${props.label?.toLowerCase()} o escribe el nombre` : 'Buscar cliente...'"
+        :placeholder="props.label ? t('inputs.client_select.choose_or_write', { label: props.label?.toLowerCase() }) : t('inputs.client_select.search')"
         :id="props.name"
         class="flex-1 outline-none bg-transparent"
       />
@@ -136,10 +138,10 @@ onMounted(async () => {
       >
         <ComboboxViewport class="p-4 w-[var(--reka-combobox-trigger-width)]">
           <ComboboxEmpty class="text-blue-gray-500 block">
-            No se encontraron resultados
+            {{ $t('inputs.no_results') }}
             <template v-if="props.freeClient">
               <span class="text-sm block mt-5">
-                Se guardará como: "{{ query }}"
+                {{ $t('inputs.client_select.will_be_saved_as', { query }) }}
               </span>
             </template>
           </ComboboxEmpty>

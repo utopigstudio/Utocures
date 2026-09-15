@@ -19,6 +19,9 @@ use App\Models\Country;
 use App\Models\Gender;
 use App\Models\Note;
 use App\Models\Service;
+use App\Services\AssignedHoursSchedulingService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -35,6 +38,8 @@ class ClientController extends Controller
     private const LIST_INVOICES_FIELDS = ['id', 'client_id', 'created_at', 'subtotal', 'discount', 'total'];
 
     private const LIST_BUDGETS_FIELDS = ['id', 'client_name', 'status', 'created_at', 'subtotal', 'discount', 'total'];
+
+    private const RELATION_FIELDS = ['services', 'characteristics'];
 
     public function index(ClientIndexRequest $request)
     {
@@ -70,8 +75,16 @@ class ClientController extends Controller
     public function show(Client $client)
     {
         $services = Service::select('id', 'name')->get();
-        $assigned_hours_templates = $client->assignedHoursTemplates()->with(['service', 'employee:id,phone,user_id', 'employee.user:id,name,email,avatar'])->get();
-        $client->load(['services', 'assignedCharacteristics.characteristic']);
+        $assigned_hours_templates = $client->assignedHoursTemplates()->with([
+            'service',
+            'employee:id,phone,user_id',
+            'employee.user:id,name,email,avatar',
+        ])->get();
+        $client->load([
+            'services',
+            'assignedCharacteristics.characteristic',
+            'user:id,name,email,is_active,invitation_accepted_at,created_at',
+        ]);
 
         return Inertia::render('clients/View', [
             'client' => $client,
@@ -228,54 +241,82 @@ class ClientController extends Controller
 
     public function store(ClientStoreRequest $request)
     {
-        $client = Client::create($request->validated());
+        $client = DB::transaction(function () use ($request) {
+            $client = Client::create($request->safe()->except(self::RELATION_FIELDS));
 
-        if ($request->filled('services')) {
-            $client->auditSync('services', $request->validated('services'));
-        }
+            if ($request->filled('services')) {
+                $client->auditSync('services', $request->validated('services'));
+            }
+
+            if ($request->filled('characteristics')) {
+                $client->auditSync('assignedCharacteristics', $request->validated('characteristics'));
+            }
+
+            return $client;
+        });
 
         return to_route('clients.index')->with('success', "Cliente {$client->name} creado correctamente.");
     }
 
     public function update(ClientStoreRequest $request, Client $client)
     {
-        $client->update($request->except('services', 'characteristics'));
+        DB::transaction(function () use ($client, $request) {
+            $client->update($request->safe()->except(self::RELATION_FIELDS));
 
-        if ($request->filled('services')) {
-            $client->auditSync('services', $request->validated('services'));
-        } else {
-            $client->auditDetach('services');
-        }
+            if ($request->filled('services')) {
+                $client->auditSync('services', $request->validated('services'));
+            } else {
+                $client->auditDetach('services');
+            }
 
-        if ($request->filled('characteristics')) {
-            $client->auditSync('assignedCharacteristics', $request->validated('characteristics'));
-        } else {
-            $client->auditDetach('assignedCharacteristics');
-        }
+            if ($request->filled('characteristics')) {
+                $client->auditSync('assignedCharacteristics', $request->validated('characteristics'));
+            } else {
+                $client->auditDetach('assignedCharacteristics');
+            }
+        });
 
         return to_route('clients.index')->with('success', "Cliente {$client->name} actualizado correctamente.");
     }
 
     public function destroy(Client $client)
     {
-        $client->delete();
+        DB::transaction(function () use ($client) {
+            if ($client->user) {
+                $client->user->deactivate();
+            }
+
+            $client->delete();
+        });
 
         return to_route('clients.index')->with('success', "Cliente {$client->name} eliminado correctamente.");
     }
 
-    public function storeAssignedHourTemplate(AssignedHoursTemplateStoreRequest $request, Client $client)
-    {
-        $data = $request->validated();
-        $client->assignedHoursTemplates()->create($data);
+    public function storeAssignedHourTemplate(
+        AssignedHoursTemplateStoreRequest $request,
+        Client $client,
+        AssignedHoursSchedulingService $schedulingService,
+    ) {
+        $data = $schedulingService->normalizeTemplateData($request->validated());
+        $schedulingService->ensureTemplateCanBeAssigned($client, $data);
+
+        DB::transaction(fn () => $client->assignedHoursTemplates()->create($data));
 
         return back()->with('success', 'Plantilla de horario creada correctamente');
     }
 
-    public function updateAssignedHourTemplate(AssignedHoursTemplateUpdateRequest $request, Client $client, string $template)
-    {
-        $data = $request->validated();
+    public function updateAssignedHourTemplate(
+        AssignedHoursTemplateUpdateRequest $request,
+        Client $client,
+        string $template,
+        AssignedHoursSchedulingService $schedulingService,
+    ) {
         $hourTemplate = $client->assignedHoursTemplates()->findOrFail($template);
-        $hourTemplate->update($data);
+        $hourTemplate->scheduleOriginalAttributes = $hourTemplate->getRawOriginal();
+        $data = $schedulingService->normalizeTemplateData($request->validated(), $hourTemplate);
+        $schedulingService->ensureTemplateCanBeAssigned($client, $data, $hourTemplate);
+
+        DB::transaction(fn () => $hourTemplate->update($data));
 
         return back()->with('success', 'Plantilla de horario actualizada correctamente');
     }
@@ -292,16 +333,34 @@ class ClientController extends Controller
             }
         }
 
-        // if original date start was today or after, just delete all assigned hours and the template
-        if (! $originalDateStart || ! $originalDateStart->lessThan(today())) {
-            $hourTemplate->assignedHours()->delete();
-            $hourTemplate->delete();
+        DB::transaction(function () use ($hourTemplate, $originalDateStart) {
+            if (! $originalDateStart || ! $originalDateStart->lessThan(today())) {
+                if ($hourTemplate->assignedHours()->whereHas('timeRecords')->exists()) {
+                    throw ValidationException::withMessages([
+                        'date_start' => __('employees.assigned_hour_locked'),
+                    ]);
+                }
 
-            return back()->with('success', 'Plantilla de horario eliminada correctamente');
-        }
+                $hourTemplate->assignedHours()->delete();
+                $hourTemplate->delete();
 
-        $hourTemplate->date_end = today();
-        $hourTemplate->save(); // this will trigger deletion of assigned hours beyond yesterday
+                return;
+            }
+
+            $yesterday = today()->subDay();
+            $futureHours = $hourTemplate->assignedHours()->where('date', '>', $yesterday->toDateString());
+            if ((clone $futureHours)->whereHas('timeRecords')->exists()) {
+                throw ValidationException::withMessages([
+                    'date_start' => __('employees.assigned_hour_locked'),
+                ]);
+            }
+
+            $futureHours->delete();
+            $hourTemplate->forceFill([
+                'date_end' => $yesterday->toDateString(),
+                'generated_until' => $yesterday->toDateString(),
+            ])->saveQuietly();
+        });
 
         return back()->with('success', 'Plantilla de horario eliminada correctamente');
     }

@@ -1,0 +1,53 @@
+name: Build assets
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - public/build/**
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-assets-main
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build assets
+        run: npm run build
+
+      - name: Commit and push assets
+        env:
+          BUILD_COMMIT_MESSAGE: ${{ vars.BUILD_COMMIT_MESSAGE || 'Build assets' }}
+        run: |
+          if [ -z "$(git status --porcelain -- public/build)" ]; then
+            echo "Build produced no changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- public/build
+          git commit -m "$BUILD_COMMIT_MESSAGE"
+          git push origin HEAD:main

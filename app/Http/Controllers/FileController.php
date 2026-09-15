@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\File\FileStoreRequest;
-use App\Models\File;
-use App\Models\Client;
 use App\Models\Budget;
-use App\Models\Employee;
+use App\Models\Client;
 use App\Models\Contract;
+use App\Models\Employee;
+use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -38,8 +38,13 @@ class FileController extends Controller
 
         $this->verifyOwnership($file, $model, $type, $id);
 
-        Storage::disk('public')->delete($file->path);
+        $path = $file->path;
+
         $file->delete();
+
+        if (! File::query()->where('path', $path)->exists()) {
+            Storage::disk('public')->delete($path);
+        }
 
         return back()->with('success', 'Archivo eliminado correctamente.');
     }
@@ -49,7 +54,7 @@ class FileController extends Controller
         $type = $request->query('resource');
         $id = $request->query('id');
 
-        if (!$type || !$id) {
+        if (! $type || ! $id) {
             abort(422, 'Faltan parámetros resource o id');
         }
 
@@ -72,10 +77,10 @@ class FileController extends Controller
 
     protected function verifyOwnership(File $file, Model $model, string $type, string|int $id): void
     {
-        $expectedType = get_class($model);
+        $expectedType = $model->getMorphClass();
         $belongs = $file->fileable_type === $expectedType && $file->fileable_id == $id;
 
-        if (!$belongs) {
+        if (! $belongs) {
             abort(403, "El archivo no pertenece al recurso indicado ($type #$id)");
         }
     }

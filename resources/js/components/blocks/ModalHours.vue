@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HelpButton from '@/components/help/HelpButton.vue';
 import { ref, watch, computed } from 'vue'
 import { VisuallyHidden } from 'reka-ui';
 import { Button, ButtonDelete } from '@/components/ui/button'
@@ -48,6 +49,7 @@ watch(() => props.hour, (newVal) => {
         <DialogHeader>
           <DialogTitle class="text-2xl leading-8 font-bold text-blue-gray-900">
             {{ isEdit ? $t('clients.edit_hours') : $t('clients.add_hours') }}
+            <HelpButton article="employee-availability" section="effects" :label="$t('help.effects')" />
           </DialogTitle>
           <VisuallyHidden asChild>
             <DialogDescription />

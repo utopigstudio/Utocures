@@ -3,6 +3,8 @@ import { computed } from 'vue';
 import { darken } from '@/lib/utils'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
+import { Button } from '@/components/ui/button';
+import { Pencil } from 'lucide-vue-next';
 import type { AssignedHourTemplate } from '@/types'
 
 interface Props {
@@ -10,6 +12,9 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const emit = defineEmits<{
+  (e: 'edit', template: AssignedHourTemplate): void
+}>()
 const { getInitials } = useInitials();
 
 const groupedEmployees = computed(() => {
@@ -81,6 +86,10 @@ const groupedEmployees = computed(() => {
               <p class="text-xs font-semibold">Email</p>
               <p class="text-sm leading-5 font-normal text-blue-gray-800 mt-1 truncate">{{ item.employee.email }}</p>
             </div>
+            <Button type="button" size="sm" variant="outline" @click="emit('edit', item)">
+              <Pencil class="size-4" />
+              {{ $t('layout.edit') }}
+            </Button>
           </div>
         </div>
 
@@ -108,6 +117,11 @@ const groupedEmployees = computed(() => {
           <div class="flex-1 min-w-0">
             <p class="text-sm leading-5 font-normal text-blue-gray-800 truncate">{{ item.employee.user.email }}</p>
           </div>
+
+          <Button type="button" size="sm" variant="outline" @click="emit('edit', item)">
+            <Pencil class="size-4" />
+            {{ $t('layout.edit') }}
+          </Button>
         </div>
       </div>
     </div>

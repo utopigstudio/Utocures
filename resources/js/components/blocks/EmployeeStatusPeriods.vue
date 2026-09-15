@@ -8,11 +8,12 @@ import { InputText, InputTextarea, Select } from '@/components/ui/input'
 import DeleteModal from './DeleteModal.vue'
 import { CalendarRange, ChevronDown, Pencil, Plus, Save, Trash2, X } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
-import type { EmployeeStatus, EmployeeStatusPeriod } from '@/types'
+import type { EmployeeStatus, EmployeeStatusPeriod, EmployeeVacationBalance } from '@/types'
 
 interface Props {
   employeeId: string
   statusPeriods: EmployeeStatusPeriod[]
+  vacationBalances: EmployeeVacationBalance[]
   currentStatus: EmployeeStatus
   activeStatusPeriod?: EmployeeStatusPeriod | null
   nextStatusPeriod?: EmployeeStatusPeriod | null
@@ -43,12 +44,15 @@ const statusClasses: Record<string, string> = {
   permission: 'bg-amber-50 text-amber-700 ring-amber-200',
 }
 
-const typeOptions = computed(() => [
-  { label: t('employees.all_status_types'), value: ALL_STATUS_TYPES },
+const statusTypeOptions = computed(() => [
   { label: t('employees.status_type_vacation'), value: 'vacation' },
   { label: t('employees.status_type_sick_leave'), value: 'sick_leave' },
   { label: t('employees.status_type_absence'), value: 'absence' },
   { label: t('employees.status_type_permission'), value: 'permission' },
+])
+const filterTypeOptions = computed(() => [
+  { label: t('employees.all_status_types'), value: ALL_STATUS_TYPES },
+  ...statusTypeOptions.value,
 ])
 
 const filteredStatusPeriods = computed(() => {
@@ -81,6 +85,29 @@ const groupedPeriods = computed(() => {
 
 const yearsCount = computed(() => groupedPeriods.value.length)
 const visibleCount = computed(() => filteredStatusPeriods.value.length)
+const currentYear = new Date().getFullYear()
+const currentVacationBalance = computed(() => vacationBalanceForYear(currentYear))
+const selectedVacationYear = computed(() => Number(form.start_at?.slice(0, 4)) || currentYear)
+const selectedVacationBalance = computed<EmployeeVacationBalance | null>(() => {
+  const existingBalance = vacationBalanceForYear(selectedVacationYear.value)
+
+  if (existingBalance) {
+    return existingBalance
+  }
+
+  const allowance = currentVacationBalance.value?.allowance
+
+  if (allowance === undefined) {
+    return null
+  }
+
+  return {
+    year: selectedVacationYear.value,
+    allowance,
+    used: 0,
+    remaining: allowance,
+  }
+})
 
 watch(
   groupedPeriods,
@@ -164,6 +191,10 @@ function resetFilters() {
   selectedType.value = ALL_STATUS_TYPES
 }
 
+function vacationBalanceForYear(year: string | number) {
+  return props.vacationBalances.find((balance) => balance.year === Number(year)) ?? null
+}
+
 function isYearExpanded(year: string) {
   return expandedYears.value.includes(year)
 }
@@ -182,7 +213,7 @@ function toggleYear(year: string) {
 <template>
   <Card>
     <CardHeader>
-      <CardTitle class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
+      <CardTitle help-article="absences" :help-label="$t('help.topic', { topic: $t('employees.status_periods') })" class="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
         <div class="min-w-0">
           <div class="flex items-center gap-2">
             <CalendarRange class="h-5 w-5 text-blue-600" />
@@ -214,6 +245,28 @@ function toggleYear(year: string) {
         </p>
       </div>
 
+      <div v-if="currentVacationBalance" class="rounded-2xl border border-emerald-200 bg-emerald-50/60 px-4 py-4">
+        <p class="text-sm font-semibold text-emerald-900">
+          {{ t('employees.vacation_balance_title', { year: currentVacationBalance.year }) }}
+        </p>
+        <div class="mt-3 grid grid-cols-3 gap-3">
+          <div>
+            <p class="text-xs text-emerald-700">{{ t('employees.vacation_allowance') }}</p>
+            <p class="mt-1 text-lg font-bold text-emerald-950">{{ currentVacationBalance.allowance }}</p>
+          </div>
+          <div>
+            <p class="text-xs text-emerald-700">{{ t('employees.vacation_used') }}</p>
+            <p class="mt-1 text-lg font-bold text-emerald-950">{{ currentVacationBalance.used }}</p>
+          </div>
+          <div>
+            <p class="text-xs text-emerald-700">{{ t('employees.vacation_remaining') }}</p>
+            <p class="mt-1 text-lg font-bold" :class="currentVacationBalance.remaining < 0 ? 'text-red-700' : 'text-emerald-950'">
+              {{ currentVacationBalance.remaining }}
+            </p>
+          </div>
+        </div>
+      </div>
+
       <template v-if="statusPeriods.length">
         <div class="flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm lg:flex-row lg:items-end lg:justify-between">
           <div class="grid gap-4 lg:flex-1 lg:grid-cols-[minmax(0,18rem)_1fr]">
@@ -221,7 +274,7 @@ function toggleYear(year: string) {
               variant="filter"
               v-model="selectedType"
               :label="t('employees.filter_by_type')"
-              :options="typeOptions"
+              :options="filterTypeOptions"
             />
 
             <div class="rounded-2xl bg-gray-50 px-4 py-3 text-sm text-blue-gray-700">
@@ -261,6 +314,12 @@ function toggleYear(year: string) {
                   <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700 ring-1 ring-blue-200">
                     {{ t('employees.records_count', { count: group.periods.length }) }}
                   </span>
+                  <span v-if="vacationBalanceForYear(group.year)" class="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-medium text-emerald-700 ring-1 ring-emerald-200">
+                    {{ t('employees.vacation_year_usage', {
+                      used: vacationBalanceForYear(group.year)?.used,
+                      allowance: vacationBalanceForYear(group.year)?.allowance,
+                    }) }}
+                  </span>
                 </div>
                 <p class="mt-1 text-sm text-blue-gray-600">
                   {{ isYearExpanded(group.year) ? t('employees.collapse_year_hint') : t('employees.expand_year_hint') }}
@@ -285,6 +344,9 @@ function toggleYear(year: string) {
                       <div class="flex flex-wrap items-center gap-3">
                         <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold ring-1" :class="statusClasses[period.type] ?? 'bg-gray-50 text-gray-700 ring-gray-200'">
                           {{ period.label }}
+                        </span>
+                        <span v-if="period.type === 'vacation' && period.vacation_days" class="text-xs font-medium text-emerald-700">
+                          {{ t('employees.vacation_period_days', { days: period.vacation_days }) }}
                         </span>
                         <span class="text-xs text-gray-500">{{ t('employees.last_updated') }}: {{ period.updated_at_formatted }}</span>
                       </div>
@@ -358,7 +420,7 @@ function toggleYear(year: string) {
             v-model="form.type"
             name="type"
             :label="t('employees.period_type')"
-            :options="typeOptions"
+            :options="statusTypeOptions"
             :error="form.errors.type"
             :required="true"
           />
@@ -384,6 +446,17 @@ function toggleYear(year: string) {
             :error="form.errors.end_at"
             :required="true"
           />
+        </div>
+
+        <div v-if="form.type === 'vacation' && selectedVacationBalance" class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+          <p class="font-medium">
+            {{ t('employees.vacation_selected_year_balance', {
+              year: selectedVacationBalance.year,
+              remaining: selectedVacationBalance.remaining,
+              allowance: selectedVacationBalance.allowance,
+            }) }}
+          </p>
+          <p class="mt-1 text-xs text-emerald-700">{{ t('employees.vacation_calendar_days_help') }}</p>
         </div>
 
         <InputTextarea

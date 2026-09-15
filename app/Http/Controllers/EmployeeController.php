@@ -10,16 +10,21 @@ use App\Http\Requests\Note\NoteIndexRequest;
 use App\Models\AssignedHour;
 use App\Models\AvailableHour;
 use App\Models\Characteristic;
+use App\Models\Configuration;
 use App\Models\Country;
 use App\Models\Employee;
 use App\Models\EmployeeTimeRecord;
+use App\Models\EmployeeTimeRecordLocation;
 use App\Models\Gender;
 use App\Models\Service;
 use App\Models\User;
+use App\Models\UserRole;
+use App\Services\EmployeeStatusPeriodService;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
@@ -63,7 +68,7 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function show(Employee $employee)
+    public function show(Employee $employee, EmployeeStatusPeriodService $statusPeriodService)
     {
         $employee->load(['notes', 'notes.user', 'services', 'user:id,name,email,avatar', 'assignedCharacteristics.characteristic']);
         $files = $employee->files()->get();
@@ -86,6 +91,7 @@ class EmployeeController extends Controller
             'notes' => $notes,
             'hours' => $hours,
             'status_periods' => $statusPeriods,
+            'vacation_balances' => $statusPeriodService->vacationBalances($employee, $statusPeriods),
             'current_status' => [
                 'code' => $currentStatusCode,
                 'label' => Employee::statusLabel($currentStatusCode),
@@ -176,6 +182,7 @@ class EmployeeController extends Controller
             return User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
+                'role' => UserRole::EMPLOYEE,
                 'password' => bcrypt(Str::random(40)),
                 'is_active' => $data['is_active'],
                 'avatar' => $data['avatar'] ?? null,
@@ -232,7 +239,10 @@ class EmployeeController extends Controller
 
     public function destroy(Employee $employee)
     {
-        $employee->delete();
+        DB::transaction(function () use ($employee) {
+            $employee->user->deactivate();
+            $employee->delete();
+        });
 
         return to_route('employees.index')->with('success', "Empleado {$employee->name} eliminado correctamente.");
     }
@@ -276,8 +286,12 @@ class EmployeeController extends Controller
     {
         $this->authorize('view', $work);
 
+        $employee = request()->user()?->employee;
+
         $timeRecord = $work->timeRecords()
+            ->where('employee_id', $employee?->id)
             ->whereNull('time_out')
+            ->latest('created_at')
             ->first();
 
         return response()->json([
@@ -288,40 +302,73 @@ class EmployeeController extends Controller
     public function storeTimeRecord(Request $request, AssignedHour $work)
     {
         $this->authorize('view', $work);
+        $employee = $request->user()?->employee;
+        $locationRequired = (bool) Configuration::query()->value('require_time_record_location');
 
         $data = $request->validate([
-            'date_in' => 'nullable|date_format:Y-m-d|required_without:date_out',
-            'date_out' => 'nullable|date_format:Y-m-d|after_or_equal:date_in|required_without:date_in',
-            'time_in' => 'nullable|date_format:H:i|required_without:time_out',
-            'time_out' => 'nullable|date_format:H:i|after_or_equal:time_in|required_without:time_in',
+            'location' => [$locationRequired ? 'required' : 'nullable', 'array'],
+            'location.latitude' => [$locationRequired ? 'required' : 'nullable', 'numeric', 'between:-90,90'],
+            'location.longitude' => [$locationRequired ? 'required' : 'nullable', 'numeric', 'between:-180,180'],
+            'location.accuracy_meters' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
+            'location.position_captured_at' => ['nullable', 'date'],
         ]);
 
-        $employee = $request->user()?->employee;
+        if (! $employee) {
+            return back()->withErrors(['employee' => 'No se pudo obtener la empleada autenticada.']);
+        }
 
         $timeRecord = EmployeeTimeRecord::where('assigned_hour_id', $work->id)
+            ->where('employee_id', $employee->id)
             ->whereNull('time_out')
             ->orderBy('created_at', 'desc')
             ->first();
 
-        if ($timeRecord) {
-            $timeRecord->update([
-                'date_out' => $data['date_out'],
-                'time_out' => $data['time_out'],
-            ]);
-        } else {
-            if (! $request->filled('time_in')) {
-                return back()->withErrors(['time_in' => 'La hora de inicio es obligatoria al crear un nuevo registro de tiempo.']);
-            }
-
-            EmployeeTimeRecord::create([
-                'assigned_hour_id' => $work->id,
-                'employee_id' => $employee->id,
-                'date_in' => $data['date_in'],
-                'time_in' => $data['time_in'],
-            ]);
+        if (! $timeRecord && $employee->timeRecords()->whereNull('time_out')->exists()) {
+            return back()->withErrors(['time_record' => 'Ya tienes un registro activo, debes finalizarlo antes de comenzar uno nuevo.']);
         }
 
+        $recordedAt = now();
+
+        DB::transaction(function () use ($data, $employee, $recordedAt, $timeRecord, $work) {
+            if ($timeRecord) {
+                $timeRecord->update([
+                    'date_out' => $recordedAt->toDateString(),
+                    'time_out' => $recordedAt->format('H:i:s'),
+                ]);
+
+                $this->storeTimeRecordLocation($timeRecord, EmployeeTimeRecordLocation::EVENT_OUT, $data['location'] ?? null);
+
+                return;
+            }
+
+            $timeRecord = EmployeeTimeRecord::create([
+                'assigned_hour_id' => $work->id,
+                'employee_id' => $employee->id,
+                'date_in' => $recordedAt->toDateString(),
+                'time_in' => $recordedAt->format('H:i:s'),
+            ]);
+
+            $this->storeTimeRecordLocation($timeRecord, EmployeeTimeRecordLocation::EVENT_IN, $data['location'] ?? null);
+        });
+
         return back()->with('success', 'Registro de tiempo almacenado correctamente.');
+    }
+
+    private function storeTimeRecordLocation(EmployeeTimeRecord $timeRecord, string $eventType, ?array $location): void
+    {
+        if (! $location) {
+            return;
+        }
+
+        $timeRecord->locations()->updateOrCreate(
+            ['event_type' => $eventType],
+            [
+                'latitude' => $location['latitude'],
+                'longitude' => $location['longitude'],
+                'accuracy_meters' => $location['accuracy_meters'] ?? null,
+                'position_captured_at' => $location['position_captured_at'] ?? null,
+            ]
+        );
     }
 
     public function schedule(Request $request)

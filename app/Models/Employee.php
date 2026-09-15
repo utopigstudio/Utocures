@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Carbon\CarbonInterface;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
@@ -45,6 +45,8 @@ class Employee extends Model implements AuditableContract
     protected $casts = [
         'birth_date' => 'date:d/m/Y',
         'hire_date' => 'date:d/m/Y',
+        'contract_end_date' => 'date:d/m/Y',
+        'annual_vacation_days' => 'integer',
     ];
 
     /**

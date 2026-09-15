@@ -57,5 +57,10 @@ return [
     'actions' => 'Acciones',
     'logout' => 'Cerrar sesión',
     'update_profile' => 'Actualizar perfil',
+    'language' => 'Idioma',
+    'language_updated' => 'Idioma actualizado.',
+    'toggle_sidebar' => 'Alternar barra lateral',
+    'fctc_support' => 'Utocures se ha desarrollado gracias a la subvención L’Empenta, con el apoyo de la Federació de Cooperatives de Treball de Catalunya (FCTC)',
+    'fctc_logo_alt' => 'Logo FCTC',
     'clear_date' => 'Borrar fecha',
 ];

@@ -26,6 +26,11 @@ class Configuration extends Model implements AuditableContract
         'company_zip_code',
         'company_country_id',
         'company_image',
+        'require_time_record_location',
+    ];
+
+    protected $casts = [
+        'require_time_record_location' => 'boolean',
     ];
 
     /**

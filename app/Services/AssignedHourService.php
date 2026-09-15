@@ -9,17 +9,39 @@ use Illuminate\Validation\ValidationException;
 
 class AssignedHourService
 {
+    public function __construct(private readonly AssignedHoursSchedulingService $schedulingService) {}
+
     public function update(AssignedHour $assignedHour, array $data): AssignedHour
     {
         $this->ensureCanBeManaged($assignedHour);
         $this->ensureEmployeeCanPerformService($data['employee_id'], $assignedHour->service_id);
-        $this->ensureNoOverlap(
+        $employee = Employee::with('availableHours')->findOrFail($data['employee_id']);
+        $scheduleData = [
+            'recurrency' => 0,
+            'days_of_week' => null,
+            'date' => $data['date'],
+            'date_start' => null,
+            'date_end' => null,
+            'time_start' => $data['time_start'],
+            'time_end' => $data['time_end'],
+        ];
+
+        if (! $this->schedulingService->hasAvailability($employee, $scheduleData)) {
+            throw ValidationException::withMessages([
+                'employee_id' => __('clients.schedule_employee_outside_availability'),
+            ]);
+        }
+
+        if ($this->schedulingService->hasConflict(
             employeeId: $data['employee_id'],
-            date: $data['date'],
-            timeStart: $data['time_start'],
-            timeEnd: $data['time_end'],
+            data: $scheduleData,
+            ignoreTemplateId: $assignedHour->assigned_hours_template_id,
             ignoreAssignedHourId: $assignedHour->id,
-        );
+        )) {
+            throw ValidationException::withMessages([
+                'time_start' => __('employees.assigned_hour_overlap'),
+            ]);
+        }
 
         return DB::transaction(function () use ($assignedHour, $data) {
             $assignedHour->update([
@@ -64,28 +86,6 @@ class AssignedHourService
         if (! $canPerformService) {
             throw ValidationException::withMessages([
                 'employee_id' => __('employees.assigned_hour_employee_service_mismatch'),
-            ]);
-        }
-    }
-
-    private function ensureNoOverlap(
-        string $employeeId,
-        string $date,
-        string $timeStart,
-        string $timeEnd,
-        ?string $ignoreAssignedHourId = null,
-    ): void {
-        $hasOverlap = AssignedHour::query()
-            ->where('employee_id', $employeeId)
-            ->where('date', $date)
-            ->when($ignoreAssignedHourId, fn ($query) => $query->whereKeyNot($ignoreAssignedHourId))
-            ->where('time_start', '<', $timeEnd)
-            ->where('time_end', '>', $timeStart)
-            ->exists();
-
-        if ($hasOverlap) {
-            throw ValidationException::withMessages([
-                'time_start' => __('employees.assigned_hour_overlap'),
             ]);
         }
     }

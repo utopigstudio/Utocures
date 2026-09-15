@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HelpButton from '@/components/help/HelpButton.vue';
 import { ref, watch, computed } from 'vue'
 import { VisuallyHidden } from 'reka-ui';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose, DialogDescription } from '@/components/ui/dialog'
@@ -9,6 +10,7 @@ import { ListEmployees } from '@/components/blocks'
 import { Calendar, X, Save, Trash2 } from 'lucide-vue-next'
 import type { ServiceOption, AssignedHourTemplate, SelectOption } from '@/types'
 import { useI18n } from 'vue-i18n'
+import { format } from 'date-fns'
 
 interface Props {
   hourTemplate?: AssignedHourTemplate | null
@@ -33,6 +35,7 @@ const dateEnd = ref<string | undefined>(props.hourTemplate?.date_end ?? undefine
 const isEdit = computed(() => props.hourTemplate?.id !== undefined)
 
 const { t } = useI18n()
+const today = format(new Date(), 'yyyy-MM-dd')
 
 const serviceOptions: SelectOption[] = props.services.map((service) => ({
     label: service.name,
@@ -108,6 +111,7 @@ const resetForm = () => {
         <DialogHeader>
           <DialogTitle class="text-2xl leading-8 font-bold text-blue-gray-900">
             {{ isEdit ? $t('clients.edit_service_hours') : $t('clients.add_service_hours') }}
+            <HelpButton article="schedules" section="effects" :label="$t('help.effects')" />
           </DialogTitle>
           <VisuallyHidden asChild>
             <DialogDescription />
@@ -180,7 +184,7 @@ const resetForm = () => {
                 name="date_start"
                 :default-value="dateStart"
                 @update:modelValue="(value: any) => dateStart = value"
-                :minDate="new Date().toISOString().split('T')[0]"
+                :minDate="today"
                 :error="errors?.date_start"
               />
             </div>
@@ -192,7 +196,7 @@ const resetForm = () => {
                 name="date_end"
                 :default-value="dateEnd"
                 @update:modelValue="(value: any) => dateEnd = value"
-                :minDate="dateStart || new Date().toISOString().split('T')[0]"
+                :minDate="dateStart || today"
                 :error="errors?.date_end"
               />
             </div>
@@ -206,7 +210,7 @@ const resetForm = () => {
               name="date"
               :default-value="date"
               @update:modelValue="(value: any) => date = value"
-              :minDate="new Date().toISOString().split('T')[0]"
+              :minDate="today"
               :error="errors?.date"
             />
           </div>

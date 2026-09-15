@@ -47,7 +47,7 @@ const inputEmail = ref(props.email);
             autocomplete="new-password"
             class="block w-full mt-1"
             autofocus
-            placeholder="Password"
+            :placeholder="$t('auth.reset.password_label')"
             :error="errors.password"
           />
         </div>
@@ -59,7 +59,7 @@ const inputEmail = ref(props.email);
             name="password_confirmation"
             autocomplete="new-password"
             class="block w-full mt-1"
-            placeholder="Confirm password"
+            :placeholder="$t('auth.reset.password_confirmation_label')"
             :error="errors.password_confirmation"
           />
         </div>

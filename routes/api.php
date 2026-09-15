@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\BudgetTemplateController;
 use App\Http\Controllers\Api\ContractTemplateController;
 
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'is_admin'])->group(function () {
 
     Route::get('api/icons', [IconController::class, 'index'])->name('api.icon.index');
 

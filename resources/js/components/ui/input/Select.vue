@@ -83,7 +83,7 @@ const modelValue = useVModel(props, 'modelValue', emits, {
         >
           <SelectViewport class="max-h-60 overflow-y-auto p-4">
             <SelectGroup>
-              <SelectLabel class="sr-only">Opciones</SelectLabel>
+              <SelectLabel class="sr-only">{{ $t('generic.options') }}</SelectLabel>
               <SelectItem v-for="opt in props.options" :key="String(opt.value)" :value="String(opt.value)" class="cursor-pointer select-none px-4 py-2 mb-4 last:mb-0 text-blue-gray-600
                 hover:bg-gray-100
                 data-[state=checked]:bg-blue-gray-200

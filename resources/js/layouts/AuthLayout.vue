@@ -39,8 +39,8 @@ defineProps<{
             <Notification />
           </CardContent>
           <div class="px-6 md:px-10 text-xs leading-5 text-gray-500 text-center">
-            <p>Utocures se ha desarrollado gracias a la subvención L’Empenta, con el apoyo de la Federació de Cooperatives de Treball de Catalunya (FCTC)</p>
-            <img class="mx-auto mt-2" src="/images/fctc.png" alt="FCTC Logo" width="200" height="60" />
+            <p>{{ $t('layout.fctc_support') }}</p>
+            <img class="mx-auto mt-2" src="/images/fctc.png" :alt="$t('layout.fctc_logo_alt')" width="200" height="60" />
           </div>
         </Card>
       </div>

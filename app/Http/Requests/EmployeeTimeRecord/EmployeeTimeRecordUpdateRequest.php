@@ -28,6 +28,18 @@ class EmployeeTimeRecordUpdateRequest extends FormRequest
     {
         return [
             function (Validator $validator): void {
+                $timeRecord = $this->route('employee_time_record');
+
+                if (! $timeRecord) {
+                    $timeRecord = $this->route('employeeTimeRecord');
+                }
+
+                if ($timeRecord && ! $timeRecord->time_out && ($this->filled('date_out') || $this->filled('time_out'))) {
+                    $validator->errors()->add('time_out', 'La salida debe registrarla la empleada desde su contador.');
+
+                    return;
+                }
+
                 if (! $this->filled('date_out') || ! $this->filled('time_out')) {
                     return;
                 }

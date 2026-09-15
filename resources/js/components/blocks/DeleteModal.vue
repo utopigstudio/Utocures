@@ -18,7 +18,7 @@ const emit = defineEmits(['close','deleted']);
 </script>
 
 <template>
-  <Dialog :open="show">
+  <Dialog :open="show" @update:open="(value) => { if (!value) emit('close') }">
     <DialogContent :showCloseButton="showCloseButton">
       <Form
         method="delete"
@@ -47,7 +47,7 @@ const emit = defineEmits(['close','deleted']);
 
         <DialogFooter class="gap-6">
           <DialogClose as-child>
-            <Button variant="link" @click="
+            <Button type="button" variant="link" @click="
               () => {
                 emit('close');
                 clearErrors();

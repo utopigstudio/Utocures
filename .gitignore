@@ -23,7 +23,10 @@ yarn-error.log
 /.zed
 
 # laravel boost
-.github
+.github/*
+!.github/workflows/
+.github/workflows/*
+!.github/workflows/build-assets.yml
 .codex
 .agents
 AGENTS.md

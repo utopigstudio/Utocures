@@ -3,7 +3,9 @@
 use App\Http\Middleware\EnsureUserIsActive;
 use App\Http\Middleware\HandleInertiaRequests;
 use App\Http\Middleware\IsAdmin;
+use App\Http\Middleware\IsClient;
 use App\Http\Middleware\IsEmployee;
+use App\Http\Middleware\IsStaff;
 use App\Http\Middleware\SetupCheck;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -31,7 +33,9 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'is_admin' => IsAdmin::class,
+            'is_client' => IsClient::class,
             'is_employee' => IsEmployee::class,
+            'is_staff' => IsStaff::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

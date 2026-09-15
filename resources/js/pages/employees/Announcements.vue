@@ -136,7 +136,7 @@ function formatDate(date?: string) {
           />
 
           <div
-            class="prose prose-sm max-w-none text-slate-700 [&_ol]:list-decimal [&_ol]:pl-5 [&_ul]:list-disc [&_ul]:pl-5"
+            class="wysiwyg-content prose prose-sm max-w-none text-slate-700"
             v-html="selectedAnnouncement.content"
           />
         </div>

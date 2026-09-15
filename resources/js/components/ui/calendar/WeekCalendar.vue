@@ -36,7 +36,7 @@ const calendarOptions = ref({
   allDaySlot: false,
   weekends: true,
   events: calendarEvents,
-  editable: true,
+  editable: false,
   selectable: props.select ? true : false,
   firstDay: 1,
   selectOverlap: false,

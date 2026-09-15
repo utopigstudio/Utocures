@@ -22,5 +22,7 @@ return [
         'company_city' => 'Ciudad de la empresa',
         'company_country' => 'País de la empresa',
         'company_image' => 'Logo de la empresa',
+        'require_time_record_location' => 'Exigir ubicacion al fichar',
+        'require_time_record_location_help' => 'Cuando este activo, la empleada debera permitir la ubicacion para iniciar y finalizar su registro horario.',
     ],
 ];

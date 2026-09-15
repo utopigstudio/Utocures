@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import HelpButton from '@/components/help/HelpButton.vue';
 import { ref } from 'vue';
 import { router } from '@inertiajs/vue3'
 import { AppLayout, LayoutBasic } from '@/layouts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Camera, UserRound, Phone, BadgeCheck, Star, Save, X, Clock } from 'lucide-vue-next'
 import { Form, Link } from '@inertiajs/vue3'
-import { InputText, Select, InputCheckboxGroup, InputCheckbox, Datepicker } from '@/components/ui/input'
+import { InputText, InputNumber, Select, InputCheckboxGroup, InputCheckbox, Datepicker } from '@/components/ui/input'
 import { Button } from '@/components/ui/button';
 import { ModalHours } from '@/components/blocks';
 import { WeekCalendar } from '@/components/ui/calendar'
@@ -13,6 +14,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
 import { useI18n } from 'vue-i18n';
 import type { BreadcrumbItem, Country, Gender, Employee, ServiceOption, AvailableHour, CharacteristicOptionsGrouped } from '@/types'
+import CardDescription from '@/components/ui/card/CardDescription.vue';
 
 interface Props {
   employee?: Employee
@@ -179,6 +181,29 @@ function onDragLeave(e: DragEvent) {
                   :error="errors.hire_date"
                 />
 
+                <Datepicker
+                  class="mt-1 block w-full mb-4"
+                  name="contract_end_date"
+                  :label="$t('employees.contract_end_date')"
+                  :default-value="props.employee?.contract_end_date"
+                  autocomplete="contract_end_date"
+                  max-date="2100-12-31"
+                  :error="errors.contract_end_date"
+                />
+
+                <InputNumber
+                  class="mt-1 block w-full"
+                  name="annual_vacation_days"
+                  :label="$t('employees.annual_vacation_days')"
+                  :default-value="props.employee?.annual_vacation_days ?? 30"
+                  autocomplete="annual_vacation_days"
+                  :placeholder="$t('employees.annual_vacation_days')"
+                  :required="true"
+                  :step="1"
+                  :error="errors.annual_vacation_days"
+                />
+                  <HelpButton article="absences" section="effects" :label="$t('help.topic', { topic: $t('employees.annual_vacation_days') })" />
+
                 <InputText
                   class="mt-1 block w-full"
                   name="nif"
@@ -344,7 +369,7 @@ function onDragLeave(e: DragEvent) {
           <div class="relative lg:col-span-12">
             <Card>
               <CardHeader>
-                <CardTitle class="text-xl flex items-center gap-2 mb-4">
+                <CardTitle help-article="services-characteristics" :help-label="$t('help.topic', { topic: $t('employees.assigned_services') })" class="text-xl flex items-center gap-2 mb-4">
                   <BadgeCheck class="text-blue-600 w-5 h-5" />
                   <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('employees.assigned_services') }}</span>
                 </CardTitle>
@@ -370,7 +395,7 @@ function onDragLeave(e: DragEvent) {
           <div class="relative lg:col-span-1">
             <Card class="gap-2">
               <CardHeader>
-                <CardTitle class="text-xl flex items-center gap-6 mb-4">
+                <CardTitle help-article="characteristics" :help-label="$t('help.topic', { topic: $t('employees.assigned_characteristics') })" class="text-xl flex items-center gap-6 mb-4">
                   <Star class="text-blue-600 w-5 h-5" />
                   <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('employees.assigned_characteristics') }}</span>
                 </CardTitle>
@@ -403,10 +428,11 @@ function onDragLeave(e: DragEvent) {
           <div class="relative lg:col-span-12">
             <Card>
               <CardHeader>
-                <CardTitle class="text-xl flex items-center gap-6 mb-4">
+                <CardTitle help-article="employee-availability" :help-label="$t('help.topic', { topic: $t('employees.required_hours') })" class="text-xl flex items-center gap-6 mb-4">
                   <Clock class="text-blue-600 w-5 h-5" />
                   <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('employees.required_hours') }}</span>
                 </CardTitle>
+                <CardDescription class="mb-2">{{ $t('employees.required_hours_help') }}</CardDescription>
               </CardHeader>
               <CardContent>
                 <WeekCalendar

@@ -107,7 +107,7 @@ function reloadFiles() {
             </div>
           </div>
           <div class="w-full my-20">
-            <div class="ProseMirror prose max-w-none focus:outline-none [&_h1]:text-4xl [&_h2]:text-3xl [&_h3]:text-2xl" v-html="props.budget.content"></div>
+            <div class="ProseMirror wysiwyg-content prose max-w-none focus:outline-none [&_h1]:text-4xl [&_h2]:text-3xl [&_h3]:text-2xl" v-html="props.budget.content"></div>
           </div>
           <Repeatable
             v-model="lines"

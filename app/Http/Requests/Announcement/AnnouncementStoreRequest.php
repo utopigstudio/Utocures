@@ -2,10 +2,21 @@
 
 namespace App\Http\Requests\Announcement;
 
+use App\Models\Announcement;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AnnouncementStoreRequest extends FormRequest
 {
+    protected function prepareForValidation(): void
+    {
+        if (! $this->has('to')) {
+            $this->merge([
+                'to' => Announcement::TO_EMPLOYEE,
+            ]);
+        }
+    }
+
     public function authorize(): bool
     {
         return true;
@@ -18,6 +29,7 @@ class AnnouncementStoreRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'content' => ['required', 'string'],
+            'to' => ['required', Rule::in(Announcement::AUDIENCES)],
             'image' => [
                 $announcement?->getRawOriginal('image') ? 'nullable' : 'required',
                 'image',

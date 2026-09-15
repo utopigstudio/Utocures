@@ -7,11 +7,14 @@
         "dev": "vite",
         "format": "prettier --write resources/",
         "format:check": "prettier --check resources/",
-        "lint": "eslint . --fix"
+        "hooks:install": "node scripts/install-git-hooks.mjs",
+        "lint": "eslint . --fix",
+        "prepare": "node scripts/install-git-hooks.mjs"
     },
     "devDependencies": {
         "@eslint/js": "^9.19.0",
         "@tailwindcss/vite": "^4.1.11",
+        "@types/leaflet": "^1.9.22",
         "@types/lodash.throttle": "^4.1.9",
         "@types/node": "^22.17.2",
         "@vitejs/plugin-vue": "^6.0.0",
@@ -61,6 +64,7 @@
         "clsx": "^2.1.1",
         "date-fns": "^4.1.0",
         "laravel-vite-plugin": "^2.0.0",
+        "leaflet": "^1.9.4",
         "lodash.throttle": "^4.1.1",
         "lucide-vue-next": "^0.468.0",
         "react-hotkeys-hook": "^5.1.0",

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\User;
+use App\Models\UserRole;
 use App\Models\Configuration;
 use App\Models\Country;
 use Illuminate\Support\Facades\Hash;
@@ -38,6 +39,7 @@ class SetupController extends Controller
                 User::create([
                     'name' => $data['user_name'],
                     'email' => $data['user_email'],
+                    'role' => UserRole::ADMIN,
                     'password' => Hash::make($data['user_password']),
                 ]);
             });

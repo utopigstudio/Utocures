@@ -2,22 +2,29 @@
 
 namespace App\Models;
 
+use App\Scopes\ActiveTemplates;
+use App\Services\RecurrenceCalculator;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-use App\Scopes\ActiveTemplates;
 
 class AssignedHoursTemplate extends Model implements AuditableContract
 {
-    use HasUuids, HasFactory, Auditable;
+    use Auditable, HasFactory, HasUuids;
+
+    public array $scheduleOriginalAttributes = [];
 
     const DAYS_GENERATE = 90;
+
     const RECURRENCY_TYPE_WEEK = 1;
+
     const RECURRENCY_TYPE_BIWEEK = 2;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
@@ -29,7 +36,9 @@ class AssignedHoursTemplate extends Model implements AuditableContract
         'time_start' => 'date:H:i',
         'time_end' => 'date:H:i',
         'date_start' => 'date:d/m/Y',
+        'recurrence_anchor_date' => 'date:d/m/Y',
         'date_end' => 'date:d/m/Y',
+        'generated_until' => 'date:d/m/Y',
         'date' => 'date:d/m/Y',
     ];
 
@@ -92,7 +101,7 @@ class AssignedHoursTemplate extends Model implements AuditableContract
         $daysNames = [];
         foreach ($this->days_of_week as $day) {
             if (isset($this->daysOfWeek[$day])) {
-                $daysNames[] = __('layout.' . $this->daysOfWeek[$day]);
+                $daysNames[] = __('layout.'.$this->daysOfWeek[$day]);
             }
         }
 
@@ -103,6 +112,7 @@ class AssignedHoursTemplate extends Model implements AuditableContract
     {
         if ($this->recurrency > 0) {
             $this->generateRecurrentAssignedHours();
+
             return;
         }
 
@@ -111,14 +121,15 @@ class AssignedHoursTemplate extends Model implements AuditableContract
 
     private function generateNonRecurrentAssignedHours(): void
     {
-        if (!$this->date) {
+        if (! $this->date) {
             return;
         }
 
-        $exists = $this->assignedHours()
+        $exists = AssignedHour::query()
+            ->where('employee_id', $this->employee_id)
             ->where('date', $this->date->format('Y-m-d'))
-            ->where('time_start', $this->time_start)
-            ->where('time_end', $this->time_end)
+            ->where('time_start', '<', $this->time_end->format('H:i:s'))
+            ->where('time_end', '>', $this->time_start->format('H:i:s'))
             ->exists();
 
         if ($exists) {
@@ -126,7 +137,7 @@ class AssignedHoursTemplate extends Model implements AuditableContract
         }
 
         $assignedHour = [
-            'id' => \Illuminate\Support\Str::uuid(),
+            'id' => Str::uuid(),
             'client_id' => $this->client_id,
             'employee_id' => $this->employee_id,
             'service_id' => $this->service_id,
@@ -141,81 +152,88 @@ class AssignedHoursTemplate extends Model implements AuditableContract
 
     private function generateRecurrentAssignedHours(): void
     {
-        $start = Carbon::today();
-        $end = $start->copy()->addDays(self::DAYS_GENERATE);
-        if ($this->date_start) {
-            if ($this->date_start->greaterThan($end)) {
-                return;
+        $days = array_map('intval', $this->days_of_week ?? []);
+        if (empty($days)) {
+            return;
+        }
+
+        $today = CarbonImmutable::today();
+        $end = $today->addDays(self::DAYS_GENERATE);
+        $anchor = $this->recurrenceAnchorDate();
+        $effectiveStart = $this->date_start
+            ? CarbonImmutable::instance($this->date_start)
+            : $anchor;
+        $start = $today->greaterThan($effectiveStart) ? $today : $effectiveStart;
+
+        if ($this->generated_until) {
+            $generatedUntil = CarbonImmutable::instance($this->generated_until);
+            if ($generatedUntil->greaterThanOrEqualTo($start)) {
+                $start = $generatedUntil->addDay();
             }
-            if ($this->date_start->greaterThan($start)) {
-                $start = $this->date_start->copy();
+        } else {
+            $lastAssignedDate = $this->assignedHours()->max('date');
+            if ($lastAssignedDate) {
+                $legacyStart = CarbonImmutable::parse($lastAssignedDate)->addDay();
+                if ($legacyStart->greaterThan($start)) {
+                    $start = $legacyStart;
+                }
             }
         }
 
-        if ($this->assignedHours()->count() != 0) {
-            $lastAssignedHour = $this->assignedHours()->orderBy('date', 'desc')->first();
-            $start = $lastAssignedHour->date->addDay();
-        }
-
-        if ($this->date_end) {
-            $templateEnd = $this->date_end;
-            if ($templateEnd->lessThan($start)) {
-                return;
-            }
-            if ($templateEnd->lessThan($end)) {
-                $end = $templateEnd;
-            }
+        if ($this->date_end && CarbonImmutable::instance($this->date_end)->lessThan($end)) {
+            $end = CarbonImmutable::instance($this->date_end);
         }
 
         if ($start->greaterThan($end)) {
             return;
         }
 
-        $days = array_map('intval', $this->days_of_week ?? []);
-        if (empty($days)) {
-            return;
-        }
+        $occupiedDates = AssignedHour::query()
+            ->where('employee_id', $this->employee_id)
+            ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+            ->where('time_start', '<', $this->time_end->format('H:i:s'))
+            ->where('time_end', '>', $this->time_start->format('H:i:s'))
+            ->pluck('date')
+            ->map(fn ($date) => Carbon::parse($date)->toDateString())
+            ->flip();
 
-        $assignedHours = [];
+        $assignedHours = app(RecurrenceCalculator::class)
+            ->dates(
+                recurrency: (int) $this->recurrency,
+                daysOfWeek: $days,
+                rangeStart: $start,
+                rangeEnd: $end,
+                anchorDate: $anchor,
+            )
+            ->reject(fn (CarbonImmutable $date) => $occupiedDates->has($date->toDateString()))
+            ->map(fn (CarbonImmutable $date) => [
+                'id' => Str::uuid(),
+                'client_id' => $this->client_id,
+                'employee_id' => $this->employee_id,
+                'service_id' => $this->service_id,
+                'assigned_hours_template_id' => $this->id,
+                'date' => $date->toDateString(),
+                'time_start' => $this->time_start->format('H:i'),
+                'time_end' => $this->time_end->format('H:i'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ])
+            ->all();
 
-        $date = $start->copy();
-        $lastOfDays = max($days);
-
-        while ($date->lessThanOrEqualTo($end)) {
-            while ($date->dayOfWeek <= $lastOfDays) {
-                if ($date->greaterThan($end)) {
-                    break 2;
-                }
-                if (in_array($date->dayOfWeek, $days)) {
-                    $assignedHours[] = [
-                        'id' => \Illuminate\Support\Str::uuid(),
-                        'client_id' => $this->client_id,
-                        'employee_id' => $this->employee_id,
-                        'service_id' => $this->service_id,
-                        'assigned_hours_template_id' => $this->id,
-                        'date' => $date->format('Y-m-d'),
-                        'time_start' => $this->time_start,
-                        'time_end' => $this->time_end,
-                        'created_at' => now(),
-                        'updated_at' => now(),
-                    ];
-                }
-                $date->addDay();
-                if ($date->dayOfWeek == 0) {
-                    break;
-                }
-            }
-
-            if ($this->recurrency == self::RECURRENCY_TYPE_WEEK) {
-                $date->addWeek()->startOfWeek();
-            } elseif ($this->recurrency == self::RECURRENCY_TYPE_BIWEEK) {
-                $date->addWeeks(2)->startOfWeek();
-            }
-        }
-
-        if (!empty($assignedHours)) {
+        if (! empty($assignedHours)) {
             $this->assignedHours()->insert($assignedHours);
         }
+
+        $this->forceFill(['generated_until' => $end->toDateString()])->saveQuietly();
     }
 
+    public function recurrenceAnchorDate(): CarbonImmutable
+    {
+        $anchor = $this->recurrence_anchor_date
+            ?? $this->date_start
+            ?? $this->created_at
+            ?? today();
+
+        return CarbonImmutable::instance($anchor)->startOfDay();
+    }
 }

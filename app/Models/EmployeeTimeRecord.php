@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
@@ -49,6 +50,21 @@ class EmployeeTimeRecord extends Model implements AuditableContract
         return $this->hasMany(Note::class);
     }
 
+    public function locations(): HasMany
+    {
+        return $this->hasMany(EmployeeTimeRecordLocation::class);
+    }
+
+    public function locationIn(): HasOne
+    {
+        return $this->hasOne(EmployeeTimeRecordLocation::class)->where('event_type', EmployeeTimeRecordLocation::EVENT_IN);
+    }
+
+    public function locationOut(): HasOne
+    {
+        return $this->hasOne(EmployeeTimeRecordLocation::class)->where('event_type', EmployeeTimeRecordLocation::EVENT_OUT);
+    }
+
     /**
      * Get the registered hours attribute.
      */
@@ -56,7 +72,7 @@ class EmployeeTimeRecord extends Model implements AuditableContract
     {
         $start = $this->date_in->setTimeFromTimeString($this->time_in);
         $end = $this->date_out?->setTimeFromTimeString($this->time_out);
-        
+
         return $start->diffInMinutes($end, false);
     }
 }

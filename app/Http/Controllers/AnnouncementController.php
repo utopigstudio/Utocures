@@ -10,15 +10,28 @@ use Inertia\Inertia;
 
 class AnnouncementController extends Controller
 {
-    private const LIST_FIELDS = ['id', 'title', 'content', 'image', 'created_at'];
+    private const LIST_FIELDS = ['id', 'title', 'content', 'image', 'to', 'created_at'];
 
     public function employeeIndex()
     {
         $announcements = Announcement::select(self::LIST_FIELDS)
+            ->visibleTo(Announcement::TO_EMPLOYEE)
             ->orderByDesc('created_at')
             ->get();
 
         return Inertia::render('employees/Announcements', [
+            'announcements' => $announcements,
+        ]);
+    }
+
+    public function clientIndex()
+    {
+        $announcements = Announcement::select(self::LIST_FIELDS)
+            ->visibleTo(Announcement::TO_CLIENT)
+            ->orderByDesc('created_at')
+            ->get();
+
+        return Inertia::render('clients/Announcements', [
             'announcements' => $announcements,
         ]);
     }

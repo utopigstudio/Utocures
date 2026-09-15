@@ -11,15 +11,11 @@ class IsAdmin
     {
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             return redirect()->route('login');
         }
 
-        if ($user->employee()->exists()) {
-            if (!$request->routeIs('dashboard')) {
-                return redirect()->route('dashboard');
-            }
-        }
+        abort_unless($user->isAdmin(), 403);
 
         return $next($request);
     }

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onBeforeUnmount, onMounted, watch } from 'vue'
 import { Label } from '@/components/ui/label'
 import { Calendar } from 'lucide-vue-next'
 import { format } from 'date-fns'
@@ -28,15 +28,18 @@ function isValidDate(d: any): d is Date {
   return d instanceof Date && !isNaN(d.getTime())
 }
 
-function parseDDMMYYYY(str?: string | null): Date | null {
+function parseDateString(str?: string | null): Date | null {
   if (!str) return null
-  const [day, month, year] = str.split('/').map(Number)
+  const isoMatch = str.match(/^(\d{4})-(\d{2})-(\d{2})$/)
+  const [day, month, year] = isoMatch
+    ? [Number(isoMatch[3]), Number(isoMatch[2]), Number(isoMatch[1])]
+    : str.split('/').map(Number)
   const d = new Date(year, month - 1, day)
   return isValidDate(d) ? d : null
 }
 
 function toDate(value?: string | Date | null): Date | null {
-  if (typeof value === 'string') return parseDDMMYYYY(value)
+  if (typeof value === 'string') return parseDateString(value)
   return null
 }
 
@@ -52,6 +55,15 @@ const selected = ref<Date | null>(toDate(props.defaultValue))
 const currentMonth = ref<Date>(selected.value ? new Date(selected.value) : new Date())
 
 const emit = defineEmits(['update:modelValue'])
+
+watch(
+  () => props.modelValue !== undefined ? props.modelValue : props.defaultValue,
+  value => {
+    selected.value = toDate(value)
+    if (selected.value) currentMonth.value = new Date(selected.value)
+  },
+  { immediate: true },
+)
 
 function selectDate(date: Date) {
   if (!isValidDate(date)) return
@@ -142,12 +154,13 @@ function deleteSelected() {
   emit('update:modelValue', null)
 }
 
-onMounted(() => {
-  document.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement
-    if (!target.closest(`#picker-${props.name}`)) showCalendar.value = false
-  })
-})
+function handleDocumentClick(e: MouseEvent) {
+  const target = e.target as HTMLElement
+  if (!target.closest(`#picker-${props.name}`)) showCalendar.value = false
+}
+
+onMounted(() => document.addEventListener('click', handleDocumentClick))
+onBeforeUnmount(() => document.removeEventListener('click', handleDocumentClick))
 </script>
 
 <template>

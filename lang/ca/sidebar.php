@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'dashboard' => 'Tauler',
+    'management' => 'Gestió',
+    'clients' => 'Clients',
+    'employees' => 'Empleades',
+    'contracts' => 'Contractes',
+    'budgets' => 'Pressupostos',
+    'invoices' => 'Factures',
+    'time' => 'Temps',
+    'time_records' => 'Registres d\'hores',
+    'documents' => 'Documents',
+    'employee_documents' => 'Documents per a treballadores',
+    'configuration' => 'Configuració',
+    'budget_templates' => 'Plantilles de pressupost',
+    'contract_templates' => 'Plantilles de contracte',
+    'services' => 'Serveis',
+    'announcements' => 'Anuncis',
+    'messages' => 'Missatges',
+    'resources' => 'Recursos',
+    'characteristics' => 'Característiques',
+    'users' => 'Usuaris',
+    'global_configuration' => 'Configuració global',
+    'reports' => 'Informes',
+    'actions_log' => 'Registres d\'acció',
+];

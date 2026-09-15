@@ -31,9 +31,9 @@ class EmployeeCreatedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Bienvenido/a a la plataforma')
-            ->line("Bienvenido {$this->name}, tu usuario ha sido creado correctamente.")
-            ->line('Para acceder a la plataforma necesitarás pulsar sobre el siguiente enlace y establecer tu contraseña:')
+            ->subject('Bienvenido/a a Utocures')
+            ->line("Bienvenido {$this->name}, tu acceso ha sido creado.")
+            ->line('Para acceder a Utocures necesitarás pulsar sobre el siguiente enlace y establecer tu contraseña:')
             ->action('Establecer contraseña', url(route('password.reset', ['token' => $this->token, 'email' => $notifiable->email], false)));
     }
 

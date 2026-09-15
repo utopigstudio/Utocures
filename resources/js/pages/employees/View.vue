@@ -12,13 +12,15 @@ import WeekCalendar from '@/components/ui/calendar/WeekCalendar.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
 import { useI18n } from 'vue-i18n';
-import type { AssignedHour, BreadcrumbItem, Employee, EmployeeStatus, EmployeeStatusPeriod, File as FileType } from '@/types'
+import type { AssignedHour, BreadcrumbItem, Employee, EmployeeStatus, EmployeeStatusPeriod, EmployeeVacationBalance, File as FileType } from '@/types'
+import CardDescription from '@/components/ui/card/CardDescription.vue';
 
 interface Props {
   employee: Employee
   files: FileType[]
   hours: AssignedHour[]
   status_periods: EmployeeStatusPeriod[]
+  vacation_balances: EmployeeVacationBalance[]
   current_status: EmployeeStatus
   active_status_period?: EmployeeStatusPeriod | null
   next_status_period?: EmployeeStatusPeriod | null
@@ -176,6 +178,8 @@ function handleCalendarEventClick(
               <LabelData :label="$t('employees.full_name')" :value="props.employee.user.name"/>
               <LabelData :label="$t('employees.birth_date')" :value="props.employee.birth_date"/>
               <LabelData :label="$t('employees.hire_date')" :value="props.employee.hire_date"/>
+              <LabelData :label="$t('employees.contract_end_date')" :value="props.employee.contract_end_date"/>
+              <LabelData :label="$t('employees.annual_vacation_days')" :value="props.employee.annual_vacation_days"/>
               <LabelData :label="$t('employees.nif')" :value="props.employee.nif"/>
               <LabelData :label="$t('employees.gender')" :value="props.employee.gender?.name"/>
 
@@ -209,7 +213,7 @@ function handleCalendarEventClick(
         <div class="relative lg:col-span-5 flex">
           <Card class="flex flex-col flex-1">
             <CardHeader>
-              <CardTitle class="text-xl flex items-center gap-2 mb-4">
+              <CardTitle help-article="characteristics" :help-label="$t('help.topic', { topic: $t('employees.assigned_characteristics') })" class="text-xl flex items-center gap-2 mb-4">
                 <Star class="text-blue-600 w-5 h-5" />
                 <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('employees.assigned_characteristics') }}</span>
               </CardTitle>
@@ -229,7 +233,7 @@ function handleCalendarEventClick(
         <div class="relative lg:col-span-7 flex">
           <Card class="flex flex-col flex-1">
             <CardHeader>
-              <CardTitle class="text-xl flex items-center gap-2 mb-4">
+              <CardTitle help-article="services-characteristics" :help-label="$t('help.topic', { topic: $t('employees.assigned_services') })" class="text-xl flex items-center gap-2 mb-4">
                 <BadgeCheck class="text-blue-600 w-5 h-5" />
                 <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('employees.assigned_services') }}</span>
               </CardTitle>
@@ -250,10 +254,11 @@ function handleCalendarEventClick(
         <div class="relative lg:col-span-12">
           <Card>
             <CardHeader>
-              <CardTitle class="text-xl flex items-center gap-2 mb-4">
+              <CardTitle help-article="schedules" :help-label="$t('help.topic', { topic: $t('employees.assigned_services') })" class="text-xl flex items-center gap-2 mb-4">
                 <Clock3 class="text-blue-600 w-5 h-5" />
-                <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('employees.assigned_services') }}</span>
+                <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('employees.assigned_services_with_employees') }}</span>
               </CardTitle>
+              <CardDescription class="mb-2">{{ $t('employees.assigned_services_with_employees_help') }}</CardDescription>
             </CardHeader>
             <CardContent>
               <WeekCalendar
@@ -271,6 +276,7 @@ function handleCalendarEventClick(
       <EmployeeStatusPeriods
         :employee-id="props.employee.id"
         :status-periods="props.status_periods"
+        :vacation-balances="props.vacation_balances"
         :current-status="props.current_status"
         :active-status-period="props.active_status_period"
         :next-status-period="props.next_status_period"

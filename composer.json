@@ -15,6 +15,7 @@
         "iconify/json": "^2.2",
         "iconify/json-tools": "^1.0",
         "inertiajs/inertia-laravel": "^3.0",
+        "laravel-notification-channels/webpush": "11.0",
         "laravel/framework": "^13.0",
         "laravel/tinker": "^3.0",
         "maatwebsite/excel": "^3.1",

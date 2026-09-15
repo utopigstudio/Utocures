@@ -153,6 +153,8 @@ class EmployeeTimeRecordController extends Controller
                 ->with([
                     'assignedHour.client:id,name',
                     'assignedHour.service:id,name',
+                    'locationIn',
+                    'locationOut',
                     'notes.user:id,name,avatar',
                 ])
                 ->orderBy('date_in')
@@ -362,10 +364,13 @@ class EmployeeTimeRecordController extends Controller
                     'date_out' => $timeRecord->getRawOriginal('date_out'),
                     'time_in' => $this->formatTime($timeRecord->time_in),
                     'time_out' => $this->formatTime($timeRecord->time_out),
+                    'is_open' => ! $timeRecord->time_out,
                     'date_in_formatted' => $timeRecord->date_in?->format('d/m/Y'),
                     'date_out_formatted' => $timeRecord->date_out?->format('d/m/Y'),
                     'client_name' => $timeRecord->assignedHour?->client?->name,
                     'service_name' => $timeRecord->assignedHour?->service?->name,
+                    'location_in' => $this->mapLocation($timeRecord->locationIn),
+                    'location_out' => $this->mapLocation($timeRecord->locationOut),
                     'notes_count' => $timeRecord->notes->where('type', Note::TYPE_INCIDENT)->count(),
                     'latest_modification' => $latestAudit ? [
                         'audit_id' => $latestAudit->id,
@@ -397,6 +402,20 @@ class EmployeeTimeRecordController extends Controller
             ->filter(fn (Audit $audit) => filled(data_get($audit->new_values, 'modification_reason')))
             ->unique('auditable_id')
             ->keyBy('auditable_id');
+    }
+
+    private function mapLocation($location): ?array
+    {
+        if (! $location) {
+            return null;
+        }
+
+        return [
+            'latitude' => (float) $location->latitude,
+            'longitude' => (float) $location->longitude,
+            'accuracy_meters' => $location->accuracy_meters !== null ? (float) $location->accuracy_meters : null,
+            'position_captured_at' => $location->position_captured_at?->format('d/m/Y H:i:s'),
+        ];
     }
 
     private function employeeOptions(): array

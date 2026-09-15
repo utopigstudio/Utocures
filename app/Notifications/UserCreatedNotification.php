@@ -31,8 +31,8 @@ class UserCreatedNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Bienvenido/a a la plataforma')
-            ->line("Bienvenido {$this->name}, tu usuario ha sido creado correctamente.")
+            ->subject('Bienvenido/a a Utocures')
+            ->line("Bienvenido {$this->name}, tu acceso ha sido creado correctamente.")
             ->line('Para facilitarte el acceso ya que eres nuevo, haz clic en el siguiente enlace para iniciar sesión:')
             ->action('Iniciar sesión', $this->link)
             ->line('Una vez iniciada la sesión, podrá establecer su contraseña desde la configuración de su cuenta.')

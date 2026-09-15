@@ -152,7 +152,7 @@ watch(
 <template>
   <Card :class="cn('rounded-xl', props.class)">
     <CardHeader>
-      <CardTitle class="text-xl flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4">
+      <CardTitle :help-article="props.actionsEnabled ? 'notes' : 'employee-work'" :help-label="$t('help.topic', { topic: $t('clients.notes') })" class="text-xl flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-4">
         <div :class="cn('flex items-center gap-2 whitespace-nowrap', props.titleClass)">
           <StickyNote class="text-blue-600 w-5 h-5 flex-shrink-0" />
           <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.notes') }}</span>

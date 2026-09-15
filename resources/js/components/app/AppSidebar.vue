@@ -2,8 +2,8 @@
 import { NavMain } from '@/components/blocks';
 import { AppLogo } from '@/components/app';
 import { Sidebar, SidebarContent, SidebarHeader } from '@/components/ui/sidebar';
-import { LayoutGrid, Users, UserRound, BadgeCheck, FileMinus, Clock3, History, Megaphone, Settings, Star, UsersRound } from 'lucide-vue-next';
-import { useI18n } from 'vue-i18n'
+import { LayoutGrid, Users, UserRound, BadgeCheck, FileMinus, FileUp, Clock3, History, Megaphone, Settings, Star, UsersRound, MapPinned, MessageCircle, CircleHelp } from 'lucide-vue-next';
+import { useI18n } from 'vue-i18n';
 import { type NavItem, type NavItemsGroup } from '@/types';
 
 const { t } = useI18n();
@@ -34,6 +34,16 @@ const mainNavItemsGestion: NavItem[] = [
     href: '/announcements',
     icon: Megaphone,
   },
+  {
+    title: t('sidebar.messages'),
+    href: '/messages',
+    icon: MessageCircle,
+  },
+  {
+    title: t('sidebar.resources'),
+    href: '/resources',
+    icon: MapPinned,
+  },
 ];
 
 const mainNavItemsTime: NavItem[] = [
@@ -45,6 +55,11 @@ const mainNavItemsTime: NavItem[] = [
 ];
 
 const mainNavItemsDocuments: NavItem[] = [
+  {
+    title: t('sidebar.employee_documents'),
+    href: '/employee-documents',
+    icon: FileUp,
+  },
   {
     title: t('sidebar.contracts'),
     href: '/contracts',

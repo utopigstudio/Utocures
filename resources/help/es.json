@@ -1,0 +1,2550 @@
+[
+    {
+        "id": "getting-started",
+        "roles": ["admin", "employee", "client"],
+        "category": "Primeros pasos con Utocures",
+        "title": "Qué es Utocures y quién puede utilizarla",
+        "description": "Una introducción rápida antes de entrar: para qué sirve la herramienta, quién tiene acceso y desde dónde se utiliza.",
+        "href": null,
+        "steps": [
+            "Utiliza la dirección que te haya facilitado la entidad. No necesitas instalar un programa; sí necesitas una cuenta y conexión a Internet."
+        ],
+        "effects": [
+            "Lo que ves depende de tu perfil. Administración organiza servicios, personal y clientes; el personal consulta su agenda y ficha sus visitas; los clientes leen anuncios y escriben a administración.",
+            "Entrar no depende del dispositivo: puedes usar el ordenador y el móvil indistintamente con la misma cuenta."
+        ],
+        "questions": [
+            {
+                "question": "¿Qué es Utocures y para qué sirve?",
+                "answer": "Es la herramienta con la que tu entidad organiza servicios de atención a personas: qué trabajo se hace, quién lo hace, cuándo, y el registro de las horas realmente trabajadas."
+            },
+            {
+                "question": "¿Quién puede utilizar Utocures?",
+                "answer": "Tres perfiles distintos: administración, personal (trabajadoras) y, si la entidad lo activa, clientes o personas usuarias. Cada perfil entra con su propia cuenta y ve solo lo que le corresponde."
+            },
+            {
+                "question": "¿Qué diferencia hay entre una administradora y una trabajadora?",
+                "answer": "Administración crea y organiza servicios, personal, clientes, horarios y documentos, y consulta lo fichado por todo el equipo. Una trabajadora consulta su propia agenda, ficha sus entradas y salidas y anota incidencias; no crea fichas ni cambia asignaciones."
+            },
+            {
+                "question": "¿Pueden acceder las personas usuarias/clientes o sus familias?",
+                "answer": "Sí, si administración les da acceso desde su ficha. Con su cuenta pueden leer el tablón de anuncios y escribir a administración por Mensajes; hoy no consultan directamente sus horarios ni descargan sus facturas o contratos desde ahí, deben pedirlos a administración."
+            },
+            {
+                "question": "¿Necesito instalar algún programa?",
+                "answer": "No. Se utiliza desde el navegador. En el móvil puede ofrecerte añadir un acceso directo a la pantalla de inicio, pero sigue siendo la misma web: necesitas conexión a Internet para guardar, fichar y enviar mensajes."
+            },
+            {
+                "question": "¿Desde qué dispositivos puedo utilizar Utocures?",
+                "answer": "Desde cualquier ordenador o móvil con navegador y conexión a Internet, con la misma cuenta."
+            }
+        ],
+        "related": ["access", "mobile", "client-area"],
+        "tasks": [
+            {
+                "title": "Entrar por primera vez",
+                "steps": [
+                    "Abre el correo de acceso enviado por la entidad. Si no lo encuentras, revisa Spam y comprueba con administración qué correo tiene tu cuenta.",
+                    "Sigue el enlace del mensaje. Según el tipo de cuenta, permite entrar una vez o elegir una contraseña. No debes buscar una contraseña escrita en el correo.",
+                    "Si ya tienes contraseña, abre la dirección de Utocures, escribe tu correo y contraseña y pulsa Inicia sesión. La guía de Acceso explica también cómo recuperarla."
+                ],
+                "result": "Verás Tablero si eres administración o Inicio si eres trabajadora o cliente. Desde Inicio, la trabajadora puede abrir Agenda."
+            },
+            {
+                "title": "Reconocer los apartados según tu perfil",
+                "steps": [
+                    "Administración tiene un menú con Tablero, Clientes, Empleados, Servicios, Facturas y otros apartados. Los horarios se gestionan dentro de las fichas de clientes y empleadas; no hay un apartado del menú llamado Horarios.",
+                    "Si entras como personal, verás tu Agenda, el contador de fichaje, Horas trabajadas y el Tablón de anuncios.",
+                    "Si entras como cliente, verás Inicio, con el Tablón de anuncios y Mensajes para escribir a la entidad."
+                ],
+                "result": "Cada perfil ve solo los apartados que le corresponden; no puedes cambiar de perfil desde tu propia cuenta."
+            }
+        ]
+    },
+    {
+        "id": "setup-order",
+        "roles": ["admin"],
+        "category": "Orden para dar de alta la información",
+        "title": "En qué orden crear servicios, características, personal y clientes",
+        "description": "Las fichas dependen unas de otras: antes de crear un cliente o una empleada conviene tener listos los servicios y, si los usas, las características, para poder seleccionarlos desde su formulario.",
+        "href": null,
+        "steps": [
+            "Antes de crear la primera ficha, comprueba qué servicios vas a necesitar: se seleccionan desde el formulario de cliente y de empleada, y si el servicio no está creado todavía, no aparecerá para elegirlo."
+        ],
+        "effects": [
+            "Crear un cliente o una empleada sin tener antes el servicio creado obliga a volver a su ficha más tarde para seleccionarlo, en cuanto exista.",
+            "Un horario solo puede asignarse cuando el cliente tiene el servicio seleccionado y una empleada activa tiene ese mismo servicio y disponibilidad horaria suficiente."
+        ],
+        "questions": [
+            {
+                "question": "¿Por dónde empiezo si la herramienta está recién creada?",
+                "answer": "Primero Configuración global, con los datos de la entidad. Después Servicios y, si vas a describir a las personas con datos concretos, Características. Esos dos catálogos son la base: se seleccionan luego desde las fichas de empleadas y clientes."
+            },
+            {
+                "question": "¿Tengo que crear primero los servicios o las fichas de personas?",
+                "answer": "Los servicios primero. Al crear una ficha de empleada o de cliente seleccionas servicios ya existentes; si el servicio no está creado todavía, no aparecerá para elegirlo."
+            },
+            {
+                "question": "¿Las características son obligatorias antes de crear una ficha?",
+                "answer": "No. Son opcionales: puedes crear clientes y empleadas sin ellas. Si las vas a usar, créalas antes para seleccionarlas al rellenar el formulario, aunque también puedes añadirlas más tarde editando la ficha."
+            },
+            {
+                "question": "¿Qué orden sigo para dejar una visita programada?",
+                "answer": "Servicio, después empleada (con ese servicio y su disponibilidad horaria), después cliente (con ese mismo servicio) y por último el horario desde la ficha del cliente. Sin esos pasos anteriores, el horario no tiene ni empleada ni servicio que elegir.",
+                "guide": "admin-start"
+            },
+            {
+                "question": "He creado el cliente antes que el servicio, ¿qué hago?",
+                "answer": "Crea ahora el servicio que falta, edita la ficha del cliente y selecciónalo. No hace falta volver a crear la ficha."
+            }
+        ],
+        "related": ["admin-start", "services-characteristics", "characteristics", "employees", "clients", "schedules"],
+        "tasks": [
+            {
+                "title": "Preparar los catálogos antes de crear fichas",
+                "steps": [
+                    "Abre Configuración global y completa los datos de la entidad. Guarda.",
+                    "Abre Servicios y crea los tipos de trabajo que ofrecéis, con su precio y sus tareas.",
+                    "Si vas a anotar datos como idioma, alergias o preferencias, abre Características y prepara también las opciones.",
+                    "Abre Empleados, crea la ficha y selecciona en ella los servicios que puede realizar; añade después su disponibilidad horaria.",
+                    "Abre Clientes, crea la ficha y selecciona los servicios que necesita.",
+                    "Desde la ficha del cliente, en Asignación de tareas, pulsa Añadir horario y elige el servicio y la empleada."
+                ],
+                "result": "Cada paso solo puede elegir lo que ya existe: sin servicio no hay ficha completa, y sin una ficha con servicio y disponibilidad no hay horario que crear."
+            }
+        ]
+    },
+    {
+        "id": "access",
+        "roles": ["admin", "employee", "client"],
+        "category": "Acceso y cuentas de usuario",
+        "title": "Entrar y recuperar la contraseña",
+        "description": "Utiliza el correo de tu cuenta para entrar. Si no recuerdas la contraseña, sigue la segunda explicación.",
+        "href": null,
+        "steps": ["Abre en el navegador la dirección de la herramienta que te haya facilitado la entidad."],
+        "effects": [
+            "Verás los apartados que permite tu cuenta. Un cliente y una empleada no ven las mismas pantallas que administración.",
+            "La contraseña anterior deja de servir. Esta acción no crea una cuenta si todavía no te han dado acceso.",
+            "Ese enlace sirve para entrar una vez. Si ya lo utilizaste o ha caducado, solicita otro.",
+            "Cambiar de idioma vuelve a cargar la pantalla. Salir de la cuenta no finaliza un fichaje abierto."
+        ],
+        "questions": [
+            {
+                "question": "No llega el correo.",
+                "answer": "Revisa spam y que has escrito el correo de acceso correcto. El mensaje de solicitud no confirma que exista una cuenta con ese correo. Si no llega, pide a administración que revise el acceso y el envío."
+            },
+            {
+                "question": "El enlace ha caducado o ya se ha usado.",
+                "answer": "Solicita uno nuevo desde la pantalla de acceso o pide que te reenvíen la invitación. Abre el último enlace recibido."
+            },
+            {
+                "question": "Mi cuenta está desactivada.",
+                "answer": "Pide a administración que revise su estado. Recuperar la contraseña no reactiva una cuenta desactivada."
+            },
+            {
+                "question": "¿Qué es el enlace mágico o Magic Link?",
+                "answer": "Es el enlace de un solo uso que puedes pedir en vez de escribir tu contraseña: lo recibes por correo y, al abrirlo, entras directamente. Sirve una vez; si vuelves a necesitarlo, solicita otro."
+            },
+            {
+                "question": "¿Puedo utilizar la misma cuenta en móvil y ordenador?",
+                "answer": "Sí. La cuenta no está ligada a un dispositivo: entra con el mismo correo y contraseña desde donde lo necesites."
+            },
+            {
+                "question": "¿Cómo cierro sesión?",
+                "answer": "Pulsa tu imagen o iniciales, arriba a la derecha, y después Cerrar sesión. Si tienes un fichaje abierto, salir de la cuenta no lo finaliza."
+            }
+        ],
+        "related": ["getting-started", "basics", "mobile"],
+        "tasks": [
+            {
+                "title": "Entrar con mi contraseña",
+                "steps": [
+                    "Pulsa el recuadro Dirección de correo y escribe el correo con el que te dieron acceso.",
+                    "Pulsa Contraseña y escribe tu contraseña. Respeta las mayúsculas y las minúsculas.",
+                    "Pulsa Inicia sesión, debajo de los campos.",
+                    "Espera a que aparezca tu pantalla de inicio. Si aparece un error, revisa el correo y la contraseña."
+                ],
+                "result": "Verás los apartados que permite tu cuenta. Un cliente y una empleada no ven las mismas pantallas que administración."
+            },
+            {
+                "title": "He olvidado la contraseña",
+                "steps": [
+                    "En la pantalla de entrada, pulsa ¿Has olvidado tu contraseña?, debajo del campo de contraseña.",
+                    "Escribe tu correo en Dirección de correo.",
+                    "Pulsa Envia un enlace para restablecer la contraseña.",
+                    "Abre tu correo y busca el mensaje de la herramienta. Revisa también Correo no deseado o Spam.",
+                    "Abre el enlace del mensaje más reciente. Escribe una nueva contraseña y repítela en Confirmar contraseña.",
+                    "Pulsa Restablecer la contraseña. Después entra con tu correo y la nueva contraseña."
+                ],
+                "result": "La contraseña anterior deja de servir. Esta acción no crea una cuenta si todavía no te han dado acceso."
+            },
+            {
+                "title": "Entrar con un enlace recibido por correo",
+                "steps": [
+                    "Pulsa ¿Has olvidado tu contraseña? en la pantalla de entrada.",
+                    "Escribe tu correo y pulsa Solicitar enlace de un solo uso.",
+                    "Abre tu correo y pulsa el enlace del mensaje más reciente."
+                ],
+                "result": "Ese enlace sirve para entrar una vez. Si ya lo utilizaste o ha caducado, solicita otro."
+            },
+            {
+                "title": "Cambiar idioma o salir de mi cuenta",
+                "steps": [
+                    "Guarda primero lo que estés escribiendo.",
+                    "Pulsa tu imagen o iniciales, arriba a la derecha.",
+                    "Para cambiar de idioma, abre Idioma y pulsa Español o Català.",
+                    "Para salir, pulsa Cerrar sesión en el menú de tu cuenta."
+                ],
+                "result": "Cambiar de idioma vuelve a cargar la pantalla. Salir de la cuenta no finaliza un fichaje abierto."
+            }
+        ]
+    },
+    {
+        "id": "client-area",
+        "roles": ["client"],
+        "category": "Inicio",
+        "title": "Utilizar mi pantalla de cliente",
+        "description": "Desde aquí puedes hablar con la entidad y leer sus avisos.",
+        "href": "/dashboard",
+        "steps": ["Entra con el correo de tu invitación y la contraseña que elegiste. Aparecerá Inicio."],
+        "effects": [
+            "Administración podrá leer tu petición. Pedir un cambio por mensaje no lo aplica automáticamente.",
+            "Tu cuenta permite ver mensajes y anuncios. Para obtener contratos o facturas, solicítalos a administración."
+        ],
+        "questions": [
+            {
+                "question": "¿Dónde veo mi contrato o factura?",
+                "answer": "Solicítalo a administración por Mensajes. El área de cliente actual no incluye un listado de esos documentos."
+            },
+            {
+                "question": "Quiero cambiar mi correo de acceso.",
+                "answer": "Pídelo a administración. Al modificarlo te llegará al nuevo correo un enlace de invitación o recuperación según el estado de tu cuenta."
+            }
+        ],
+        "related": ["messages", "announcement-board", "access", "mobile"],
+        "tasks": [
+            {
+                "title": "Pedir información a la entidad",
+                "steps": [
+                    "En Inicio, pulsa Mensajes.",
+                    "Pulsa el recuadro de la parte inferior y escribe lo que necesitas. Por ejemplo: «Necesito una copia de mi contrato».",
+                    "Revisa el texto y pulsa Enviar.",
+                    "Comprueba que aparece en la conversación. Vuelve a Mensajes más adelante para leer la respuesta."
+                ],
+                "result": "Administración podrá leer tu petición. Pedir un cambio por mensaje no lo aplica automáticamente."
+            },
+            {
+                "title": "Leer avisos y consultar ayuda",
+                "steps": [
+                    "En Inicio, pulsa Tablón anuncios.",
+                    "En el anuncio que quieras leer, pulsa Ver detalle. Al terminar, pulsa Cerrar detalle.",
+                    "Si necesitas instrucciones de una pantalla, pulsa Ayuda o el signo de interrogación de la cabecera.",
+                    "Para salir de tu cuenta, pulsa tu imagen o iniciales de arriba a la derecha y después Cerrar sesión."
+                ],
+                "result": "Tu cuenta permite ver mensajes y anuncios. Para obtener contratos o facturas, solicítalos a administración."
+            }
+        ]
+    },
+    {
+        "id": "admin-start",
+        "roles": ["admin"],
+        "category": "Configuración inicial de la entidad",
+        "title": "Consultar el resumen y preparar la herramienta por primera vez",
+        "description": "El tablero muestra un resumen. La primera vez, sigue este orden para dejar la herramienta lista antes de crear clientes.",
+        "href": "/dashboard",
+        "steps": ["Pulsa Tablero en el menú lateral izquierdo."],
+        "effects": [
+            "Cambiar el periodo cambia lo que ves. No cambia fichajes ni horarios.",
+            "La planificación queda preparada cuando existen las visitas. Crear solo las fichas no asigna trabajos.",
+            "Servicios, características y configuración global son la base: conviene crearlos antes de dar de alta a empleadas y clientes, porque se seleccionan desde sus fichas."
+        ],
+        "questions": [
+            {
+                "question": "Hay visitas programadas, pero las horas trabajadas son cero.",
+                "answer": "Programado es lo previsto; trabajado procede de los fichajes. Comprueba que existen entradas y salidas cerradas y que el periodo las incluye."
+            },
+            {
+                "question": "¿Por dónde continúo después de crear un cliente?",
+                "answer": "Selecciona sus servicios, prepara la disponibilidad del personal y crea el horario desde su ficha. Crea el acceso al portal solo si el cliente necesita entrar."
+            },
+            {
+                "question": "¿Qué información debería configurar antes de empezar a crear clientes?",
+                "answer": "Primero Configuración global (datos de la entidad), después Servicios y, si los usas, Características. Esos datos se seleccionan luego desde las fichas de empleadas y clientes."
+            },
+            {
+                "question": "¿Tengo que crear primero los servicios o las trabajadoras?",
+                "answer": "Los servicios primero. Al crear una ficha de empleada o de cliente seleccionas servicios ya existentes; si el servicio no está creado todavía, no aparecerá para elegirlo."
+            },
+            {
+                "question": "¿Cómo preparo Utocures para empezar a fichar?",
+                "answer": "Crea el servicio, da de alta a la empleada con ese servicio y su disponibilidad horaria, crea la ficha del cliente con ese mismo servicio y, por último, añade el horario desde la ficha del cliente. Sin ese horario no hay visita en la que fichar."
+            },
+            {
+                "question": "¿Puedo importar información que ya tengo en un Excel?",
+                "answer": "No. Hoy no existe una importación masiva de clientes ni de empleadas: cada ficha se crea una a una desde su formulario."
+            },
+            {
+                "question": "¿Cómo compruebo que la herramienta está lista para empezar a utilizarse?",
+                "answer": "Comprueba servicio, cuenta activa y disponibilidad de la empleada, y servicio y horario del cliente. Revisa que la visita concreta aparece en la agenda de la persona y que puede abrirla. Para fichar necesitará conexión y, si se exige, permitir la ubicación. No inicies un fichaje de prueba como si fuera trabajo real."
+            },
+            {
+                "question": "¿Qué datos son obligatorios para importar clientes?",
+                "answer": "No hay una opción de importación desde Excel en la pantalla actual. Las fichas se crean con Crear cliente, rellenando los campos obligatorios del formulario; un Excel exportado no se puede volver a cargar desde aquí.",
+                "guide": "clients"
+            }
+        ],
+        "related": ["setup-order", "services-characteristics", "characteristics", "employees", "clients", "schedules", "configuration"],
+        "tasks": [
+            {
+                "title": "Consultar las horas de otro periodo",
+                "steps": [
+                    "Busca el resumen de horas trabajadas.",
+                    "Pulsa el selector de periodo y elige la opción que necesitas.",
+                    "Selecciona el mes, el año o las fechas de inicio y fin que pida la opción elegida.",
+                    "Lee el total que aparece. Para revisar las entradas y salidas que lo componen, pulsa Registros de horas en el menú lateral."
+                ],
+                "result": "Cambiar el periodo cambia lo que ves. No cambia fichajes ni horarios."
+            },
+            {
+                "title": "Preparar la herramienta por primera vez",
+                "steps": [
+                    "Pulsa Configuración global y completa los datos de la entidad. Guarda.",
+                    "Pulsa Servicios y crea los tipos de trabajo que ofrecéis. Usa la ayuda de esa pantalla para seguir los pasos.",
+                    "Si vas a describir a personas con datos concretos (idioma, alergias, preferencias...), pulsa Características y prepáralas también; son opcionales.",
+                    "Pulsa Empleados, crea las fichas y después edítalas para añadir su disponibilidad horaria.",
+                    "Pulsa Clientes, crea cada ficha y selecciona los servicios que necesita.",
+                    "Abre la ficha del cliente con Visualizar. Baja a Asignación de tareas y pulsa Añadir horario para asignar día, horas y empleada.",
+                    "Comprueba las visitas en la ficha de la empleada. A medida que fiche, podrás consultar lo trabajado en Registros de horas."
+                ],
+                "result": "La planificación queda preparada cuando existen las visitas. Crear solo las fichas no asigna trabajos."
+            }
+        ]
+    },
+    {
+        "id": "services-characteristics",
+        "roles": ["admin"],
+        "category": "Servicios",
+        "title": "Crear o cambiar un servicio",
+        "description": "Un servicio es un tipo de trabajo, por ejemplo una limpieza. Aquí defines su precio y las tareas que incluye.",
+        "href": "/services",
+        "steps": ["Pulsa Servicios en el menú lateral izquierdo."],
+        "effects": [
+            "El servicio estará disponible para seleccionarlo en las fichas de clientes y empleadas. Todavía no se asigna a nadie.",
+            "Cambian los datos del servicio. Comprueba los precios antes de preparar nuevos documentos; los documentos ya guardados se revisan por separado."
+        ],
+        "questions": [
+            {
+                "question": "He creado un servicio pero no aparece en el horario.",
+                "answer": "Primero selecciona el servicio en las fichas del cliente y de la empleada y guarda los cambios. Después vuelve a añadir el horario desde la ficha del cliente."
+            },
+            {
+                "question": "¿Cómo indico qué trabajadoras pueden realizar un servicio?",
+                "answer": "No se indica desde Servicios: selecciona el servicio en la ficha de cada empleada (apartado Servicios) y guarda. Solo aparecerán como opción, al programar un horario, las empleadas que tengan ese servicio marcado."
+            },
+            {
+                "question": "¿Puedo asignar varios servicios diferentes a un mismo cliente?",
+                "answer": "Sí. Selecciona todos los servicios que necesite en su ficha y crea un horario distinto para cada uno, con la trabajadora que corresponda a cada servicio."
+            },
+            {
+                "question": "¿Puedo asignar cada servicio de un cliente a una trabajadora distinta?",
+                "answer": "Sí. La relación no es «una trabajadora por cliente»: cada horario del cliente elige su propia trabajadora, así que puedes repartir sus servicios entre varias personas."
+            },
+            {
+                "question": "¿Cómo elimino un servicio?",
+                "answer": "La pantalla actual de Servicios ofrece crear y editar, pero no muestra un botón para eliminar el servicio. Quitar un servicio de una ficha de cliente o empleada solo lo desasigna de esa persona; no elimina el servicio del catálogo."
+            }
+        ],
+        "related": ["clients", "employees", "characteristics", "schedules"],
+        "tasks": [
+            {
+                "title": "Crear un servicio",
+                "steps": [
+                    "Pulsa Nuevo servicio, arriba a la derecha.",
+                    "Escribe un Nombre fácil de reconocer y una Descripción de lo que incluye.",
+                    "Rellena Precio / hora y, si corresponde, Descuento para socios.",
+                    "Elige Color e Icono para reconocer el servicio en las pantallas.",
+                    "Baja a Tareas del servicio y escribe la primera tarea en la fila disponible.",
+                    "Para añadir otra tarea, pulsa Añadir elemento, debajo de las filas, y rellena la nueva fila. Repite si necesitas más.",
+                    "Pulsa Guardar al principio o al final del formulario."
+                ],
+                "result": "El servicio estará disponible para seleccionarlo en las fichas de clientes y empleadas. Todavía no se asigna a nadie."
+            },
+            {
+                "title": "Cambiar un servicio existente",
+                "steps": [
+                    "Pulsa Servicios en el menú lateral.",
+                    "Busca la tarjeta del servicio y pulsa Editar servicio, en la parte inferior de esa tarjeta.",
+                    "Cambia el nombre, precio, descripción o las tareas que corresponda.",
+                    "Para quitar una fila de tareas, pulsa la papelera de esa fila.",
+                    "Pulsa Guardar cambios y revisa la tarjeta del servicio."
+                ],
+                "result": "Cambian los datos del servicio. Comprueba los precios antes de preparar nuevos documentos; los documentos ya guardados se revisan por separado."
+            }
+        ]
+    },
+    {
+        "id": "characteristics",
+        "roles": ["admin"],
+        "category": "Características y criterios de asignación",
+        "title": "Crear opciones para describir a las personas",
+        "description": "Las características permiten anotar detalles en las fichas, eligiendo entre opciones preparadas. Son información de consulta, no un filtro automático.",
+        "href": "/characteristics",
+        "steps": ["Pulsa Características en el menú lateral izquierdo."],
+        "effects": [
+            "La ficha muestra la opción elegida. Una característica describe a la persona; no le asigna servicios ni horarios.",
+            "Si quitas una opción, deja de estar asignada a las personas que la tenían. Revisa esas fichas si necesitas elegir otra opción.",
+            "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+        ],
+        "questions": [
+            {
+                "question": "No veo una opción en la ficha.",
+                "answer": "Abre Características, edita la característica y comprueba que la opción existe. Después vuelve a editar la ficha de la persona y selecciónala."
+            },
+            {
+                "question": "¿Para qué utiliza Utocures las características?",
+                "answer": "Solo como información visible en la ficha: por ejemplo idioma, preferencias o alergias. Sirven para que administración las tenga en cuenta al decidir manualmente, pero la herramienta no las usa para filtrar nada."
+            },
+            {
+                "question": "¿Cómo influyen las características en las trabajadoras que puedo asignar a un servicio?",
+                "answer": "No influyen: hoy no forman parte del filtro de asignación. Lo que decide quién puede aparecer como opción es el servicio asignado a la empleada, que esté activa, su disponibilidad horaria y que no tenga otra visita en esas horas."
+            },
+            {
+                "question": "¿Por qué una trabajadora no aparece entre las opciones disponibles?",
+                "answer": "Revisa el servicio, la disponibilidad y los solapamientos de horario; no revises las características, porque no afectan a esa lista. La guía de Asignar trabajadoras a servicios explica el orden completo de comprobación."
+            }
+        ],
+        "related": ["clients", "employees", "services-characteristics", "schedules"],
+        "tasks": [
+            {
+                "title": "Crear una característica y sus opciones",
+                "steps": [
+                    "Pulsa Crear característica, arriba a la derecha del listado.",
+                    "En Nombre de la característica, escribe qué dato quieres describir.",
+                    "En Opciones, escribe la primera respuesta posible.",
+                    "Pulsa Añadir elemento para añadir otra respuesta y escribe su texto. Repite para las demás opciones.",
+                    "Pulsa Guardar.",
+                    "Para utilizarla, abre Clientes o Empleados, entra en Editar en una ficha y selecciona su opción en Características. Pulsa Guardar cambios."
+                ],
+                "result": "La ficha muestra la opción elegida. Una característica describe a la persona; no le asigna servicios ni horarios."
+            },
+            {
+                "title": "Cambiar una característica",
+                "steps": [
+                    "En Características, busca su fila y pulsa los tres puntos de la derecha.",
+                    "Pulsa Editar.",
+                    "Cambia el nombre o las opciones. Usa Añadir elemento para una opción nueva y la papelera de una fila para quitarla.",
+                    "Pulsa Guardar cambios."
+                ],
+                "result": "Si quitas una opción, deja de estar asignada a las personas que la tenían. Revisa esas fichas si necesitas elegir otra opción."
+            },
+            {
+                "title": "Eliminar un elemento del listado",
+                "steps": [
+                    "Pulsa Características en el menú lateral y localiza la fila del elemento que quieres quitar.",
+                    "Pulsa los tres puntos de la derecha y después Eliminar.",
+                    "Lee el aviso de la ventana. Si dudas de qué fila has seleccionado, cancela y comprueba su nombre en el listado antes de continuar.",
+                    "Si es el elemento correcto y quieres retirarlo, confirma Eliminar. Si no estás seguro, pulsa Cancelar.",
+                    "Comprueba que ya no aparece en el listado."
+                ],
+                "result": "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+            }
+        ]
+    },
+    {
+        "id": "clients",
+        "roles": ["admin"],
+        "category": "Gestión de clientes",
+        "title": "Crear, consultar o cambiar un cliente",
+        "description": "Una ficha guarda los datos de una persona. Aquí se explica cómo crearla y cómo volver a encontrarla.",
+        "href": "/clients",
+        "steps": ["Pulsa Clientes en el menú lateral izquierdo. En el móvil, abre primero el menú con el botón de arriba a la izquierda."],
+        "effects": [
+            "Eliminar un cliente lo retira del listado y desactiva su acceso. Revisa antes sus visitas y documentos: eliminar la ficha no sustituye la revisión de esos trabajos.",
+            "Guardar el IBAN no hace un cargo en la cuenta bancaria."
+        ],
+        "questions": [
+            {
+                "question": "No aparece un servicio al programar.",
+                "answer": "Edita el cliente y comprueba que tiene ese servicio seleccionado. Comprueba también que existe en Servicios."
+            },
+            {
+                "question": "El cliente no puede entrar aunque tiene correo.",
+                "answer": "Tener un correo en la ficha no crea una cuenta de acceso. Revisa la tarjeta de acceso al portal y su estado."
+            },
+            {
+                "question": "¿Puedo dar de alta a una misma entidad con varios servicios distintos?",
+                "answer": "Sí: selecciona todos los servicios que necesite en su ficha. Lo que no admite una única ficha es más de una dirección o sede propia; el CIF/NIF y el correo son únicos por ficha, así que cada cliente solo puede tener una."
+            },
+            {
+                "question": "¿Cómo consulto sus horarios y trabajadoras asignadas?",
+                "answer": "Abre la ficha con Visualizar y baja a Asignación de tareas: ahí ves el calendario con los horarios y la trabajadora asignada a cada uno."
+            },
+            {
+                "question": "¿Puedo exportar el listado de clientes a Excel?",
+                "answer": "Sí, con Descargar Excel al final del listado. Se exportan los datos visibles del listado (CIF/NIF, nombre, correo, teléfono, si es socio, dirección, ciudad, código postal y fecha de alta), no las visitas ni las facturas."
+            }
+        ],
+        "related": ["client-access", "schedules", "files", "notes", "budgets", "automatic-invoices", "client-locations"],
+        "tasks": [
+            {
+                "title": "Crear un cliente",
+                "steps": [
+                    "Revisa el listado para comprobar que el cliente no existe ya. Puedes escribir su nombre en Buscar cliente...",
+                    "Pulsa Crear cliente, arriba a la derecha, encima del listado.",
+                    "En Información personal, escribe Nombre completo, Fecha de nacimiento y CIF/NIF. Selecciona Género.",
+                    "Baja hasta Datos de contacto. Escribe Correo electrónico, Teléfono, Dirección, Ciudad, Código postal y País.",
+                    "En Datos de facturación, rellena los datos bancarios si corresponde. Revisa las casillas Precios con IVA y Es socio.",
+                    "Deja Crear factura automática sin marcar si todavía no has acordado utilizarla con la persona responsable. Hay una explicación específica de esta casilla en la ayuda de Facturación.",
+                    "En Servicios, pulsa los servicios que necesita el cliente para dejarlos seleccionados.",
+                    "Si hay características que debas indicar, selecciona la opción que corresponde en cada una.",
+                    "Pulsa Guardar, al principio o al final del formulario.",
+                    "Si se señalan errores, corrige los campos indicados y pulsa Guardar otra vez. Comprueba que el cliente aparece en el listado."
+                ],
+                "result": "El cliente ya tiene ficha. Todavía debes crear su horario y, si necesita entrar a la herramienta, darle acceso al portal."
+            },
+            {
+                "title": "Consultar los datos de un cliente",
+                "steps": [
+                    "Pulsa Clientes en el menú lateral.",
+                    "Busca la fila del cliente y pulsa los tres puntos de la derecha.",
+                    "Pulsa Visualizar.",
+                    "Pulsa la pestaña que necesitas: Datos personales, Facturas, Contratos, Presupuestos o Notas.",
+                    "En Datos personales, baja para ver servicios, horarios, trabajadoras asignadas, archivos y acceso al portal."
+                ],
+                "result": "Puedes consultar la información sin modificarla."
+            },
+            {
+                "title": "Corregir los datos de un cliente",
+                "steps": [
+                    "Pulsa Clientes y localiza al cliente.",
+                    "Pulsa los tres puntos de su fila y después Editar.",
+                    "Pulsa dentro del campo que quieres cambiar. Borra el dato incorrecto y escribe el correcto.",
+                    "Pulsa Guardar cambios al principio o al final del formulario.",
+                    "Vuelve a abrir la ficha con Visualizar y comprueba la corrección."
+                ],
+                "result": "Se actualiza esta ficha. Cambiar el correo de contacto no cambia el correo con el que el cliente entra al portal."
+            },
+            {
+                "title": "Eliminar un elemento del listado",
+                "steps": [
+                    "Pulsa Clientes en el menú lateral y localiza la fila del elemento que quieres quitar.",
+                    "Pulsa los tres puntos de la derecha y después Eliminar.",
+                    "Lee el aviso de la ventana. Si dudas de qué fila has seleccionado, cancela y comprueba su nombre en el listado antes de continuar.",
+                    "Si es el elemento correcto y quieres retirarlo, confirma Eliminar. Si no estás seguro, pulsa Cancelar.",
+                    "Comprueba que ya no aparece en el listado."
+                ],
+                "result": "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+            },
+            {
+                "title": "Descargar el listado en Excel",
+                "steps": [
+                    "Pulsa Clientes en el menú lateral.",
+                    "Si necesitas solo ciertos datos, utiliza los filtros que aparecen encima del listado. Comprueba qué filas se muestran.",
+                    "Baja hasta el final de la tabla y pulsa Descargar Excel, a la derecha.",
+                    "Busca el archivo en las descargas de tu ordenador o móvil."
+                ],
+                "result": "Se descarga una copia del listado. Los datos de la herramienta no cambian. El botón aparece cuando hay resultados."
+            }
+        ]
+    },
+    {
+        "id": "client-access",
+        "roles": ["admin"],
+        "category": "Gestión de clientes",
+        "title": "Permitir que un cliente entre a la herramienta",
+        "description": "Hazlo cuando un cliente necesite su propia cuenta para leer anuncios y hablar con administración.",
+        "href": "/clients",
+        "steps": [
+            "Pulsa Clientes en el menú lateral.",
+            "En la fila del cliente, pulsa los tres puntos de la derecha y después Visualizar.",
+            "Baja hasta el bloque Acceso al portal de clientes."
+        ],
+        "effects": [
+            "Se crea la cuenta y se envía un correo real al cliente. Guardar un correo en Datos de contacto no hace este paso.",
+            "Se envía un enlace al correo de acceso. No cambia el correo de contacto que se utiliza para enviar documentos.",
+            "La ficha del cliente se conserva. Desactivar el acceso impide utilizar su cuenta hasta que la actives de nuevo."
+        ],
+        "questions": [
+            {
+                "question": "El correo de los documentos sigue siendo el antiguo.",
+                "answer": "Cambia el correo de contacto en la ficha del cliente. La tarjeta de acceso modifica el correo para entrar, no el de contacto."
+            },
+            {
+                "question": "No permite reenviar la invitación.",
+                "answer": "Comprueba si la cuenta está activa y si ya aceptó la invitación. Si la aceptó, utiliza recuperación de contraseña."
+            }
+        ],
+        "related": ["clients", "access", "client-area", "messages"],
+        "tasks": [
+            {
+                "title": "Dar acceso por primera vez",
+                "steps": [
+                    "Comprueba que estás en la ficha de la persona correcta.",
+                    "Pulsa Correo de acceso y escribe el correo que el cliente utilizará para entrar.",
+                    "Pulsa Crear acceso y enviar invitación, debajo del correo.",
+                    "Pide al cliente que abra el mensaje recibido y siga el enlace para elegir su contraseña."
+                ],
+                "result": "Se crea la cuenta y se envía un correo real al cliente. Guardar un correo en Datos de contacto no hace este paso."
+            },
+            {
+                "title": "Cambiar el correo o ayudar a recuperar el acceso",
+                "steps": [
+                    "Para cambiar el correo, sustituye el texto de Correo de acceso y pulsa Guardar acceso.",
+                    "Si el cliente aún no ha aceptado la invitación, pulsa Reenviar invitación cuando esté disponible.",
+                    "Si ya había entrado y no recuerda su contraseña, pulsa Restablecer contraseña.",
+                    "Pide al cliente que revise su correo y utilice el mensaje más reciente."
+                ],
+                "result": "Se envía un enlace al correo de acceso. No cambia el correo de contacto que se utiliza para enviar documentos."
+            },
+            {
+                "title": "Impedir o permitir de nuevo la entrada",
+                "steps": [
+                    "En Acceso al portal de clientes, revisa si el estado es Activo o Inactivo.",
+                    "Pulsa Desactivar acceso para impedir que entre.",
+                    "Cuando deba volver a entrar, abre este mismo bloque y pulsa Activar acceso."
+                ],
+                "result": "La ficha del cliente se conserva. Desactivar el acceso impide utilizar su cuenta hasta que la actives de nuevo."
+            }
+        ]
+    },
+    {
+        "id": "client-locations",
+        "roles": ["admin"],
+        "category": "Clientes con varios servicios, sedes o domicilios",
+        "title": "Organizar servicios y comprobar el caso de varias direcciones",
+        "description": "Un cliente puede tener varios servicios y trabajadoras. Una ficha solo tiene una dirección; varias sedes de la misma entidad necesitan una revisión aparte.",
+        "href": "/clients",
+        "steps": ["Pulsa Clientes y comprueba si la persona o entidad ya tiene una ficha antes de crear otra."],
+        "effects": [
+            "El CIF/NIF y el correo de contacto no pueden repetirse entre fichas. Cambiar solo el correo no resuelve un CIF duplicado.",
+            "El horario selecciona un cliente y un servicio, pero no tiene un campo propio para indicar otra dirección de visita."
+        ],
+        "tasks": [
+            {
+                "title": "Añadir varios servicios al mismo cliente",
+                "steps": [
+                    "Pulsa los tres puntos de la fila del cliente y después Editar.",
+                    "Baja a Servicios y selecciona todos los que necesite. Pulsa Guardar cambios.",
+                    "Abre la ficha con Visualizar y baja a Asignación de tareas.",
+                    "Pulsa Añadir horario y crea el primer servicio con sus días, horas y trabajadora.",
+                    "Repite Añadir horario para los demás servicios. Puedes elegir otra trabajadora en cada horario."
+                ],
+                "result": "Los servicios quedan en la misma ficha. Cada visita conserva su servicio y trabajadora; todas muestran la dirección del cliente."
+            }
+        ],
+        "questions": [
+            {
+                "question": "¿Tengo que crear un cliente diferente por cada servicio?",
+                "answer": "No. Selecciona varios servicios en una misma ficha y crea un horario para cada trabajo."
+            },
+            {
+                "question": "¿Qué hago si una entidad tiene varias sedes con el mismo CIF?",
+                "answer": "La versión actual no tiene una estructura de sedes dentro de un cliente y no acepta otra ficha con el mismo CIF/NIF. Comunica las sedes y direcciones a la persona responsable para acordar cómo gestionarlas. No cambies ni inventes el CIF para evitar el error."
+            },
+            {
+                "question": "¿Y si las sedes también comparten correo?",
+                "answer": "El correo de contacto también es único. Utilizar otro correo no basta si el CIF se repite. El correo de acceso al portal es un dato distinto y tampoco crea sedes."
+            },
+            {
+                "question": "¿Puedo poner una dirección diferente en cada horario?",
+                "answer": "No hay un campo de dirección en el horario. Cambiar la dirección de la ficha cambia la información que se consulta desde sus visitas; no crea una segunda ubicación. Una nota puede explicar una indicación, pero no convierte la ficha en un sistema de sedes."
+            },
+            {
+                "question": "¿Cómo aparecen varios servicios o sedes en la facturación?",
+                "answer": "Una factura pertenece a una ficha de cliente y puede tener varias líneas de conceptos. Al crearla toma la dirección de esa ficha. No hay agrupación automática por sede ni un campo de sede en los registros; revisa el caso con la persona que lleva la facturación antes de preparar documentos."
+            }
+        ],
+        "related": ["clients", "schedules", "invoices"]
+    },
+    {
+        "id": "employees",
+        "roles": ["admin"],
+        "category": "Gestión de trabajadoras",
+        "title": "Crear, consultar o cambiar una trabajadora",
+        "description": "Primero crea la ficha. Después añade sus servicios y su disponibilidad horaria en una guía aparte.",
+        "href": "/employees",
+        "steps": ["Pulsa Empleados en el menú lateral izquierdo."],
+        "effects": [
+            "Desactivar una empleada impide que entre. No cancela sus visitas; debes organizar las sustituciones por separado.",
+            "La fecha de fin de contrato puede generar avisos antes del vencimiento. No desactiva la cuenta ni cancela trabajos cuando llega ese día."
+        ],
+        "questions": [
+            {
+                "question": "Una persona no aparece para un servicio.",
+                "answer": "Revisa que su cuenta esté activa, que tenga ese servicio asignado, que tenga disponibilidad suficiente para todos los días elegidos y que no tenga otra asignación solapada. La disponibilidad se configura en su propia guía."
+            },
+            {
+                "question": "¿Añadir disponibilidad significa que ya tiene trabajo?",
+                "answer": "No. Debes crear la programación desde la ficha del cliente. Después aparecerán las visitas concretas en el calendario."
+            },
+            {
+                "question": "¿Cómo establezco su fecha de inicio y finalización?",
+                "answer": "En la ficha de la empleada, en los datos de contratación: Fecha de contratación y, si la conoces, Fecha de fin de contrato. No hace falta rellenar la de fin si todavía no está prevista."
+            },
+            {
+                "question": "¿Cómo recibe sus datos de acceso?",
+                "answer": "Al crear la ficha se envía un mensaje para establecer la contraseña. La creación de la cuenta también puede enviar un enlace de entrada de un solo uso. Editar o guardar después la ficha no vuelve a enviar estos mensajes."
+            },
+            {
+                "question": "¿Por qué no ha recibido el correo de invitación?",
+                "answer": "Revisa el correo de la ficha y pide que compruebe Spam. Si el correo era incorrecto, corrígelo y guarda. Después, la trabajadora debe abrir ¿Has olvidado tu contraseña? en la pantalla de entrada y solicitar un enlace con ese correo. Volver a guardar una ficha existente no reenvía la invitación. Si no llega el mensaje, pide que revisen el envío de correo.",
+                "guide": "access"
+            },
+            {
+                "question": "¿Cómo compruebo que su cuenta está correctamente creada?",
+                "answer": "Abre su ficha con Visualizar: si la cuenta está activa y tiene correo, ya puede entrar en cuanto acepte la invitación. Pide que confirme que ha podido entrar y ver su Agenda."
+            }
+        ],
+        "related": ["employee-availability", "schedules", "absences", "employee-documents", "files"],
+        "tasks": [
+            {
+                "title": "Crear la ficha de una empleada",
+                "steps": [
+                    "Pulsa Crear empleado, arriba a la derecha del listado.",
+                    "Rellena los datos personales: nombre, nacimiento, identificación y género.",
+                    "Indica la fecha de contratación y, si la conoces, la fecha de fin de contrato.",
+                    "Revisa los días anuales de vacaciones y la casilla de cuenta activa. Una cuenta inactiva no puede entrar.",
+                    "Rellena el correo, teléfono y dirección en los datos de contacto. Comprueba especialmente el correo: allí llegará el acceso.",
+                    "Baja a Servicios y selecciona los que puede realizar. Completa las características que correspondan.",
+                    "Pulsa Guardar al principio o al final del formulario. Corrige los errores que se indiquen, si los hay.",
+                    "Pide a la empleada que revise el correo recibido para establecer su contraseña."
+                ],
+                "result": "La ficha queda creada y se envía el correo de acceso. Aún no tiene disponibilidad ni visitas asignadas."
+            },
+            {
+                "title": "Consultar visitas o cambiar los datos",
+                "steps": [
+                    "Pulsa Empleados y abre los tres puntos de la fila de la empleada.",
+                    "Pulsa Visualizar para ver su ficha y baja a Servicios asignados para ver sus visitas.",
+                    "Si necesitas cambiar datos personales, pulsa Editar en la parte superior de la ficha.",
+                    "Cambia los campos necesarios y pulsa Guardar cambios."
+                ],
+                "result": "Cambiar datos o disponibilidad no cambia por sí solo los horarios ya asignados."
+            },
+            {
+                "title": "Eliminar un elemento del listado",
+                "steps": [
+                    "Pulsa Empleados en el menú lateral y localiza la fila del elemento que quieres quitar.",
+                    "Pulsa los tres puntos de la derecha y después Eliminar.",
+                    "Lee el aviso de la ventana. Si dudas de qué fila has seleccionado, cancela y comprueba su nombre en el listado antes de continuar.",
+                    "Si es el elemento correcto y quieres retirarlo, confirma Eliminar. Si no estás seguro, pulsa Cancelar.",
+                    "Comprueba que ya no aparece en el listado."
+                ],
+                "result": "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+            },
+            {
+                "title": "Descargar el listado en Excel",
+                "steps": [
+                    "Pulsa Empleados en el menú lateral.",
+                    "Si necesitas solo ciertos datos, utiliza los filtros que aparecen encima del listado. Comprueba qué filas se muestran.",
+                    "Baja hasta el final de la tabla y pulsa Descargar Excel, a la derecha.",
+                    "Busca el archivo en las descargas de tu ordenador o móvil."
+                ],
+                "result": "Se descarga una copia del listado. Los datos de la herramienta no cambian. El botón aparece cuando hay resultados."
+            }
+        ]
+    },
+    {
+        "id": "employee-availability",
+        "roles": ["admin"],
+        "category": "Disponibilidad de las trabajadoras",
+        "title": "Configurar cuándo puede trabajar cada empleada",
+        "description": "La disponibilidad son los tramos horarios en los que una empleada puede aceptar servicios. No asigna trabajo por sí sola.",
+        "href": "/employees",
+        "steps": [
+            "Pulsa Empleados en el menú lateral.",
+            "Busca a la persona, pulsa los tres puntos de su fila y después Editar.",
+            "Baja hasta Disponibilidad horaria. Este calendario aparece al editar una ficha ya creada."
+        ],
+        "effects": [
+            "La disponibilidad solo indica cuándo podría trabajar la persona; no crea ninguna visita. Los horarios concretos se crean aparte, desde la ficha del cliente.",
+            "Un horario que se sale de la disponibilidad registrada no deja elegir a esa persona al programar un servicio.",
+            "Cambiar o reducir la disponibilidad no elimina ni avisa sobre los horarios que esa persona ya tenía asignados fuera del nuevo tramo: revísalos aparte."
+        ],
+        "questions": [
+            {
+                "question": "¿Para qué sirve la disponibilidad semanal?",
+                "answer": "Marca en qué días y horas puede aceptar trabajo una empleada. Utocures solo la muestra como opción para un horario si ese horario cabe dentro de un tramo de su disponibilidad."
+            },
+            {
+                "question": "¿Cómo indico jornadas partidas?",
+                "answer": "Añade dos tramos distintos el mismo día, por ejemplo 09:00 a 13:00 y 16:00 a 19:00. No hace falta ninguna opción especial: son dos bloques independientes en el mismo día de la semana."
+            },
+            {
+                "question": "¿Puedo poner horarios distintos según el día de la semana?",
+                "answer": "Sí. Cada tramo se crea para un día concreto; añade tantos tramos como necesites, con las horas propias de cada día."
+            },
+            {
+                "question": "¿Qué diferencia hay entre disponibilidad y servicios asignados?",
+                "answer": "La disponibilidad es cuándo podría trabajar; los servicios asignados (el horario del cliente) son el trabajo que realmente tiene programado. Tener disponibilidad no significa tener trabajo."
+            },
+            {
+                "question": "¿Qué pasa si cambio la disponibilidad de una trabajadora?",
+                "answer": "Los horarios que ya tenía asignados no se eliminan ni se avisan automáticamente aunque dejen de encajar en la nueva disponibilidad. Revisa sus visitas después de reducir un tramo."
+            },
+            {
+                "question": "¿Cómo influye la disponibilidad en las asignaciones?",
+                "answer": "Al crear o cambiar un horario, solo aparecen como opción las empleadas activas que tienen ese servicio y cuya disponibilidad cubre completamente las horas elegidas, sin solaparse con otra visita."
+            },
+            {
+                "question": "¿Por qué una trabajadora no aparece disponible para un determinado servicio?",
+                "answer": "Revisa, en este orden: que tenga el servicio seleccionado en su ficha, que su cuenta esté activa, que su disponibilidad cubra ese tramo exacto, y que no tenga ya otra visita en esas horas."
+            }
+        ],
+        "related": ["employees", "schedules", "calendars"],
+        "tasks": [
+            {
+                "title": "Añadir un tramo de disponibilidad",
+                "steps": [
+                    "Busca el día de la semana y la hora deseada en el calendario. Selecciona un tramo vacío; con ratón, pulsa y arrastra hasta la hora final.",
+                    "En la ventana que se abre, revisa Hora inicio y Hora fin. Por ejemplo, de 09:00 a 13:00.",
+                    "Pulsa Crear dentro de esa ventana.",
+                    "Comprueba que el tramo aparece en el calendario. Repite para los demás días que necesites."
+                ],
+                "result": "Estas franjas indican cuándo puede trabajar. Para darle un trabajo concreto, crea un horario desde la ficha del cliente."
+            },
+            {
+                "title": "Corregir o quitar un tramo",
+                "steps": [
+                    "En el calendario de disponibilidad, pulsa el tramo que quieras cambiar.",
+                    "En la ventana que se abre, corrige Hora inicio u Hora fin y pulsa Guardar cambios.",
+                    "Si necesitas quitarlo, pulsa Eliminar en esa misma ventana."
+                ],
+                "result": "Cambiar o quitar un tramo no avisa sobre los horarios que ya dependían de él: revísalos en Servicios asignados de la ficha de la empleada."
+            }
+        ]
+    },
+    {
+        "id": "calendars",
+        "roles": ["admin"],
+        "category": "Los calendarios de la herramienta",
+        "title": "Diferenciar el calendario del cliente, el de servicios asignados y el de disponibilidad",
+        "description": "En la herramienta encontrarás varios calendarios. Aunque visualmente se parecen, cada uno sirve para una cosa distinta.",
+        "href": null,
+        "steps": [
+            "Fíjate en dónde lo abres: cada calendario vive dentro de una ficha concreta (cliente o empleada) y eso determina para qué sirve."
+        ],
+        "effects": [
+            "Programar un servicio desde la ficha del cliente y asignarle una trabajadora hace que ese servicio aparezca también en el calendario de esa trabajadora, en Servicios asignados.",
+            "La disponibilidad horaria de la trabajadora no crea trabajo por sí sola: solo determina cuándo puede recibir nuevas asignaciones."
+        ],
+        "questions": [
+            {
+                "question": "¿Qué diferencia hay entre el calendario del cliente y el de la empleada?",
+                "answer": "El del cliente (Asignación de tareas) es donde programas los servicios: eliges qué servicio, en qué horario, con qué recurrencia y qué trabajadora lo hará. El de la empleada (Servicios asignados) es una vista de consulta: muestra las visitas que ya tiene asignadas y permite abrirlas para revisarlas o cambiarlas."
+            },
+            {
+                "question": "¿Para qué sirve el calendario de disponibilidad horaria de una empleada?",
+                "answer": "Para indicar en qué días y horas puede trabajar esa persona. No es un calendario de visitas: la herramienta lo consulta al asignar un servicio nuevo, para saber si esa trabajadora puede recibirlo."
+            },
+            {
+                "question": "Si asigno una trabajadora a un servicio desde la ficha del cliente, ¿tengo que repetir el paso en su ficha?",
+                "answer": "No. En cuanto guardas el horario desde la ficha del cliente, esa visita aparece automáticamente en el calendario Servicios asignados de la trabajadora elegida."
+            },
+            {
+                "question": "¿Puedo crear una visita directamente desde el calendario de disponibilidad de una empleada?",
+                "answer": "No. Ese calendario solo define tramos de disponibilidad. Los servicios se programan siempre desde Asignación de tareas, en la ficha del cliente."
+            },
+            {
+                "question": "Cambié la disponibilidad de una trabajadora, ¿desaparecen sus visitas de esas horas?",
+                "answer": "No automáticamente. Reducir o cambiar la disponibilidad no elimina ni avisa sobre los horarios ya asignados fuera del nuevo tramo; revisa Servicios asignados de esa empleada después del cambio."
+            },
+            {
+                "question": "¿Desde qué calendario cambio el día o la hora de una visita concreta?",
+                "answer": "Desde cualquiera de los dos donde aparece: Asignación de tareas en la ficha del cliente, o Servicios asignados en la ficha de la empleada. Ambos abren la misma visita."
+            }
+        ],
+        "related": ["schedules", "employee-availability", "clients", "employees"],
+        "tasks": [
+            {
+                "title": "Reconocer cada calendario antes de usarlo",
+                "steps": [
+                    "Abre la ficha de un cliente con Visualizar y baja a Asignación de tareas: aquí programas qué servicio, con qué recurrencia y qué trabajadora.",
+                    "Abre la ficha de una empleada con Visualizar y baja a Servicios asignados: aquí consultas y ajustas las visitas que ya tiene.",
+                    "Edita esa misma ficha de empleada y baja a Disponibilidad horaria: aquí defines los tramos en que puede trabajar, no visitas concretas."
+                ],
+                "result": "Sabrás en cuál de los tres calendarios estás antes de intentar programar, consultar o ajustar disponibilidad."
+            }
+        ]
+    },
+    {
+        "id": "schedules",
+        "roles": ["admin"],
+        "category": "Planificar y asignar servicios a un cliente",
+        "title": "Añadir un horario, elegir trabajadora y cambiar una visita",
+        "description": "Un mismo formulario indica qué servicio hay que hacer, qué día, a qué hora y quién lo hará.",
+        "href": "/clients",
+        "steps": [
+            "Antes de empezar, el cliente debe tener seleccionado el servicio. La empleada debe tener ese servicio y disponibilidad horaria en su ficha."
+        ],
+        "effects": [
+            "Las visitas repetidas se preparan con hasta 90 días de antelación y se van ampliando cada día. Si no ves una fecha muy lejana, puede que todavía no se haya preparado.",
+            "Cambiar un horario repetido que ya empezó puede rehacer las visitas desde hoy y sustituir cambios que hiciste en días concretos. Revisa las próximas visitas después de guardar.",
+            "Adelantar la fecha final puede quitar visitas posteriores a esa fecha. La herramienta impide cambios que afecten a visitas con fichajes.",
+            "Una empleada con vacaciones o una baja registrada en esas fechas puede seguir apareciendo en la lista de selección, marcada con un aviso de ausencia: revisa ese aviso antes de confirmar."
+        ],
+        "questions": [
+            {
+                "question": "Dice que el horario se solapa.",
+                "answer": "La persona ya tiene otra programación o visita en esa franja. Revisa todas sus asignaciones, también las quincenales, y escoge otra hora o persona."
+            },
+            {
+                "question": "¿Cómo sustituyo a alguien un solo día?",
+                "answer": "Edita la visita concreta desde su ficha y selecciona otra persona que cumpla servicio y disponibilidad. No cambies la serie si la sustitución es solo de un día."
+            },
+            {
+                "question": "¿Las vacaciones cancelan automáticamente las visitas?",
+                "answer": "No. Registra el periodo de ausencia y revisa la programación para cambiar o retirar las visitas afectadas."
+            },
+            {
+                "question": "¿Cómo creo un servicio que ocurre una sola vez?",
+                "answer": "En Recurrencia, elige Una sola vez e indica la Fecha concreta de la visita."
+            },
+            {
+                "question": "¿Cómo creo un servicio semanal o quincenal?",
+                "answer": "En Recurrencia, elige Semanal o la opción quincenal, marca los días de la semana en que se repite e indica desde qué fecha empieza."
+            },
+            {
+                "question": "¿Cómo programo un servicio quincenal que se realiza varios días de la semana?",
+                "answer": "Marca todos los días de la semana que correspondan dentro de la misma recurrencia quincenal: el sistema los repetirá juntos cada dos semanas, contando desde la fecha de inicio."
+            },
+            {
+                "question": "¿Qué hago si un horario quincenal no aparece en los días esperados?",
+                "answer": "La quincena se cuenta desde la fecha de inicio del horario (la semana de esa fecha es la primera «semana buena»). Si una visita no aparece, comprueba esa fecha de inicio, que el día de la semana esté marcado en Recurrencia y que no sea anterior al inicio."
+            },
+            {
+                "question": "¿Cómo decide Utocures qué trabajadoras son compatibles?",
+                "answer": "Solo aparecen como opción las empleadas activas que tienen el servicio seleccionado en su ficha, cuya disponibilidad cubre las horas elegidas y que no tienen otra visita en ese mismo horario. Las características no forman parte de este cálculo."
+            },
+            {
+                "question": "¿Por qué no aparece una trabajadora que quiero asignar?",
+                "answer": "Revisa en este orden: que tenga el servicio, que su cuenta esté activa, que su disponibilidad cubra exactamente esas horas y que no tenga otra visita solapada. Si tiene vacaciones o baja esas fechas, seguirá apareciendo pero con un aviso: revísalo antes de confirmar."
+            },
+            {
+                "question": "¿Puedo cambiar una asignación solo para un día concreto?",
+                "answer": "Sí. Abre esa visita concreta desde la ficha de la empleada y cambia únicamente ese día; no toques el horario repetido si el cambio es solo puntual."
+            },
+            {
+                "question": "¿Cómo registro un cambio de turno o una sustitución?",
+                "answer": "Edita la visita concreta afectada y selecciona a la otra persona, siempre que cumpla servicio y disponibilidad. El fichaje de esa visita quedará a nombre de quien realmente la realice."
+            },
+            {
+                "question": "Si varias trabajadoras hacen horas distintas en el mismo servicio y cliente, ¿cómo lo programo?",
+                "answer": "Cada trabajadora necesita su propio horario: crea un Añadir horario distinto para cada una, con sus propias horas y días, todos con el mismo cliente y servicio. Un único horario solo admite una trabajadora."
+            },
+            {
+                "question": "¿Cómo asigno cuatro trabajadoras al mismo servicio de 09:00 a 17:00?",
+                "answer": "Crea cuatro horarios para el mismo cliente y servicio, uno por trabajadora, con la misma fecha y de 09:00 a 17:00. Cada persona necesita ese servicio, cuenta activa, disponibilidad completa y no tener otro trabajo en esas horas. Son 8 horas previstas por persona y 32 en total; no un único fichaje de 32 horas. Cada trabajadora inicia y finaliza su propio registro."
+            }
+        ],
+        "related": ["employees", "employee-availability", "calendars", "absences", "time-records"],
+        "tasks": [
+            {
+                "title": "Crear un horario para un cliente",
+                "steps": [
+                    "Pulsa Clientes en el menú lateral.",
+                    "En la fila del cliente, pulsa los tres puntos y después Visualizar.",
+                    "Baja a Asignación de tareas y pulsa Añadir horario, a la derecha del título.",
+                    "En la ventana que se abre, pulsa Servicio y elige el trabajo que necesita el cliente.",
+                    "Rellena Hora inicio y Hora fin. Por ejemplo, 09:00 y 11:00.",
+                    "Pulsa Recurrencia. Elige Una sola vez si será un único día, Semanal si se repite cada semana, o la opción quincenal si se repite cada dos semanas.",
+                    "Si elegiste Una sola vez, indica la Fecha. Si se repite, marca los días de la semana e indica desde qué fecha empieza. Añade fecha final si sabes cuándo termina.",
+                    "Baja a Selecciona trabajadora para realizar este servicio. Pulsa la persona que hará el trabajo. Si no aparece nadie, revisa servicio, horas y disponibilidad; si aparece con un aviso de ausencia, revísalo antes de confirmar.",
+                    "Revisa los datos y pulsa Crear, abajo a la derecha.",
+                    "Pulsa Empleados en el menú lateral, abre la ficha de la persona con Visualizar y revisa las próximas visitas en Servicios asignados."
+                ],
+                "result": "La empleada verá las visitas en su agenda. Crear el horario no inicia ningún fichaje."
+            },
+            {
+                "title": "Cambiar una sola visita",
+                "steps": [
+                    "Pulsa Empleados y abre la ficha de la persona con los tres puntos y Visualizar.",
+                    "Baja al calendario Servicios asignados y busca el día de la visita.",
+                    "Pulsa la visita que quieres cambiar.",
+                    "En la ventana, cambia la fecha, las horas o la persona, según lo que necesites.",
+                    "Pulsa Guardar cambios y comprueba la visita en la fecha elegida."
+                ],
+                "result": "Cambia solo esa visita. Si ya tiene un fichaje, la herramienta no permite modificarla o eliminarla desde aquí."
+            },
+            {
+                "title": "Cambiar o terminar un horario que se repite",
+                "steps": [
+                    "Pulsa Clientes, abre la ficha del cliente con Visualizar y baja a Asignación de tareas.",
+                    "Pulsa el horario en el calendario del cliente.",
+                    "Cambia las horas o días que corresponda. Para indicar cuándo acaba, rellena la fecha de finalización.",
+                    "Pulsa Guardar cambios.",
+                    "Revisa las próximas visitas en la ficha de la empleada, especialmente si habías cambiado alguna por separado.",
+                    "Si necesitas eliminar el horario, usa Eliminar en su ventana y lee el aviso antes de confirmar. Comprueba que estás eliminando el horario correcto."
+                ],
+                "result": "Cambiar el horario repetido puede cambiar varias visitas futuras. No es lo mismo que cambiar un único día."
+            }
+        ]
+    },
+    {
+        "id": "absences",
+        "roles": ["admin"],
+        "category": "Vacaciones, bajas y ausencias",
+        "title": "Anotar vacaciones, bajas y ausencias",
+        "description": "Registra los días en los que una empleada no estará disponible y consulta sus días de vacaciones. Lo gestiona siempre administración.",
+        "href": "/employees",
+        "steps": [
+            "Pulsa Empleados en el menú lateral.",
+            "Busca a la persona, pulsa los tres puntos de su fila y después Visualizar.",
+            "Baja al bloque Vacaciones, bajas y ausencias."
+        ],
+        "effects": [
+            "No se pueden guardar dos periodos que coincidan en el tiempo para la misma persona. Revisa las fechas si aparece ese error.",
+            "Registrar el periodo no cancela ni reasigna las visitas de esos días por sí solo: si vuelves a seleccionar a esa persona en un horario de esas fechas, la lista de trabajadoras se lo permite igualmente, pero muestra un aviso de ausencia."
+        ],
+        "questions": [
+            {
+                "question": "El saldo consume más días de los esperados.",
+                "answer": "El cálculo cuenta días naturales, no solo laborables. Revisa las fechas inicial y final y la dotación anual."
+            },
+            {
+                "question": "La persona está de baja y sigue teniendo visitas.",
+                "answer": "El periodo registra su situación. Debes revisar y reorganizar las visitas desde la planificación."
+            },
+            {
+                "question": "¿Puede una trabajadora solicitar sus vacaciones desde Utocures?",
+                "answer": "No. Hoy los periodos de vacaciones, baja o ausencia los registra siempre administración; no existe un formulario para que el personal las solicite desde su cuenta."
+            },
+            {
+                "question": "¿Cómo sé qué servicios quedan afectados?",
+                "answer": "No hay un listado automático de «visitas afectadas». Abre el calendario de esa persona (Servicios asignados en su ficha) en las fechas del periodo y revisa una a una las visitas que tenía."
+            },
+            {
+                "question": "¿Cómo reasigno esos servicios a otra trabajadora?",
+                "answer": "Abre Empleados, visualiza la ficha de la persona ausente y busca cada visita en Servicios asignados. Pulsa la visita y cambia la trabajadora; guarda y revisa ese día. No cambies el horario repetido del cliente si la sustitución es solo para una fecha. Una visita con fichajes no puede reasignarse desde aquí.",
+                "guide": "schedules"
+            },
+            {
+                "question": "¿Cómo anulo unas vacaciones ya creadas?",
+                "answer": "Ábrelas en el mismo bloque y pulsa Eliminar, revisando antes las fechas. Elimínalas solo después de haber revisado y, si hace falta, reorganizado las visitas de esos días."
+            },
+            {
+                "question": "Después de eliminar unas vacaciones, ¿por qué no puedo volver a asignar un servicio?",
+                "answer": "Comprueba que no queda otro periodo de vacaciones, baja o ausencia con fechas parecidas y que la disponibilidad y el solapamiento de horario siguen cumpliéndose; eliminar unas vacaciones no cambia por sí solo esos otros requisitos."
+            }
+        ],
+        "related": ["employees", "schedules"],
+        "tasks": [
+            {
+                "title": "Añadir unas vacaciones o una ausencia",
+                "steps": [
+                    "Pulsa Añadir periodo, junto al título del bloque.",
+                    "Pulsa Tipo y selecciona Vacaciones, Baja, Ausencia o Permiso.",
+                    "En Inicio, indica el día y la hora en que comienza.",
+                    "En Fin, indica el día y la hora en que termina.",
+                    "En Observaciones, escribe la explicación que deba quedar anotada.",
+                    "Pulsa Guardar y comprueba que el periodo aparece en el listado del año correspondiente.",
+                    "Revisa por separado las visitas de esos días y organiza quién las hará."
+                ],
+                "result": "La ausencia queda anotada, pero las visitas no se cancelan ni se asignan a otra persona automáticamente."
+            },
+            {
+                "title": "Corregir un periodo y revisar vacaciones",
+                "steps": [
+                    "En el mismo bloque, busca el periodo en el año que corresponde. Revisa el filtro de tipo si no aparece.",
+                    "Pulsa Editar junto al periodo, cambia las fechas o la explicación y pulsa Guardar.",
+                    "Para quitar un periodo incorrecto, pulsa Eliminar junto a él y confirma solo después de revisar sus fechas.",
+                    "Consulta Asignados, Consumidos y Disponibles para ver el total anual, lo gastado y lo que queda de vacaciones."
+                ],
+                "result": "Las vacaciones cuentan días de calendario, incluidos fines de semana y los días inicial y final. Si necesitas cambiar el total anual, hazlo desde Editar en la ficha de la empleada."
+            }
+        ]
+    },
+    {
+        "id": "employee-agenda",
+        "roles": ["employee"],
+        "category": "La agenda de la trabajadora",
+        "title": "Consultar mis visitas de hoy y de otros días",
+        "description": "La agenda muestra las visitas que tienes asignadas. Ábrela antes de fichar para comprobar el cliente y el servicio.",
+        "href": "/schedule",
+        "steps": ["En Inicio verás los trabajos de hoy.", "Pulsa Agenda para ver otro día o Calendario mensual para ver el mes completo."],
+        "effects": [
+            "La agenda solo muestra las visitas que administración ya ha programado. Tener disponibilidad no crea por sí sola una visita.",
+            "Después de un cambio, vuelve a abrir Agenda o recarga la página para consultar las visitas actualizadas. No cuentes con un aviso individual de cada cambio.",
+            "Una visita aparece cuando está creada y asignada a ti. En horarios repetidos, se preparan las próximas fechas por adelantado; no todas las fechas futuras aparecen desde el primer día."
+        ],
+        "questions": [
+            {
+                "question": "¿Dónde ve una trabajadora los servicios que tiene asignados?",
+                "answer": "En Agenda (día) y Calendario mensual (mes), accesibles desde Inicio."
+            },
+            {
+                "question": "¿Cómo consulta lo que tiene que hacer hoy?",
+                "answer": "Inicio ya muestra los trabajos de hoy; también puedes abrir Agenda y comprobar que la fecha seleccionada es la de hoy."
+            },
+            {
+                "question": "¿Puede consultar los próximos servicios?",
+                "answer": "Sí, con Calendario mensual o cambiando la fecha en Agenda."
+            },
+            {
+                "question": "¿Qué información ve de cada servicio?",
+                "answer": "El nombre del cliente, el servicio y las horas previstas; al abrir la visita, además las tareas del servicio y las notas o incidencias anteriores."
+            },
+            {
+                "question": "¿Cómo sabe a qué cliente tiene que acudir?",
+                "answer": "El nombre del cliente aparece en cada visita de la agenda; al abrirla, también su dirección y otros datos de contacto guardados en la ficha."
+            },
+            {
+                "question": "¿Cómo sabe qué tipo de servicio debe realizar?",
+                "answer": "El nombre del servicio aparece en la visita; dentro, la pestaña de tareas lista lo que incluye ese servicio."
+            },
+            {
+                "question": "¿Qué ocurre si la administradora cambia una asignación?",
+                "answer": "La agenda de la trabajadora anterior deja de mostrar esa visita y aparece en la agenda de la nueva persona asignada."
+            },
+            {
+                "question": "¿Cuándo aparece un servicio nuevo en su agenda?",
+                "answer": "Una visita aparece cuando está creada y asignada a ti. En horarios repetidos, se preparan las próximas fechas por adelantado; no todas las fechas futuras aparecen desde el primer día."
+            },
+            {
+                "question": "¿Por qué no me aparece un servicio que debería tener asignado?",
+                "answer": "Comprueba la fecha seleccionada y que sigues siendo la persona asignada; si sigue sin aparecer, pide a administración que revise la asignación del horario."
+            }
+        ],
+        "related": ["employee-work", "employee-hours", "mobile"],
+        "tasks": [
+            {
+                "title": "Consultar una visita antes de empezar",
+                "steps": [
+                    "En Agenda, elige el día que quieres consultar.",
+                    "Pulsa la visita del cliente al que vas a atender.",
+                    "Comprueba el nombre del cliente, el servicio y las horas previstas.",
+                    "Pulsa las pestañas de información, notas o tareas para leer las indicaciones del servicio."
+                ],
+                "result": "Consultar la visita no registra horas trabajadas. Todavía debes pulsar el botón de iniciar cuando empieces."
+            },
+            {
+                "title": "Ver el mes completo",
+                "steps": [
+                    "Vuelve a Inicio.",
+                    "Pulsa Calendario mensual.",
+                    "Utiliza las flechas para moverte entre meses.",
+                    "Pulsa un día con visitas para ver su detalle."
+                ],
+                "result": "Consultar el mes no registra horas ni cambia nada; es solo para planificarte."
+            }
+        ]
+    },
+    {
+        "id": "employee-work",
+        "roles": ["employee"],
+        "category": "Fichaje y registro de jornada",
+        "title": "Registrar la entrada y la salida de una visita",
+        "description": "Haz la entrada cuando empieces a trabajar y la salida cuando termines. Abrir la visita no pone en marcha el contador.",
+        "href": "/schedule",
+        "steps": [
+            "Abre la visita correspondiente desde tu Agenda. El fichaje siempre se hace desde una visita concreta, no hay un botón de fichar independiente."
+        ],
+        "effects": [
+            "Las tareas son indicaciones para consultar. La pantalla no guarda una marca de tarea completada.",
+            "El contador sigue corriendo aunque se pase de la hora prevista de finalización: se detiene cuando tú pulsas Finalizar registro, no al llegar a esa hora.",
+            "Terminar antes de lo previsto también es válido: la hora de salida es la real, la que marca el momento en que pulsas Finalizar registro."
+        ],
+        "questions": [
+            {
+                "question": "Me olvidé de finalizar o fiché a una hora incorrecta.",
+                "answer": "Si el contador sigue abierto, finalízalo. Después comunica a administración el cliente, el día y las horas reales para que corrijan el registro ya cerrado. Si no puedes finalizar por un error, comunica también el mensaje que aparece."
+            },
+            {
+                "question": "No tengo visitas hoy.",
+                "answer": "Revisa la fecha y la vista mensual. Si falta un servicio esperado, pide a administración que compruebe la asignación. Crear disponibilidad no crea por sí solo una visita."
+            },
+            {
+                "question": "No puedo seleccionar Incidencia.",
+                "answer": "En la visita necesita un fichaje activo asociado. Si acabas de iniciarlo y aún no aparece disponible, vuelve a abrir la visita. Después del cierre, comunica la incidencia a administración; Horas trabajadas permite consultar las ya registradas."
+            },
+            {
+                "question": "¿Tengo que seleccionar el cliente antes de fichar?",
+                "answer": "No hace falta un paso aparte: abres la visita de ese cliente desde tu Agenda y fichas ahí. El cliente y el servicio ya quedan determinados por la visita que abriste."
+            },
+            {
+                "question": "¿Necesito tener la aplicación abierta mientras trabajo?",
+                "answer": "No todo el rato: la hora de inicio queda guardada al pulsar Inicia registro y la de fin al pulsar Finalizar registro. Abre la aplicación cuando necesites consultar el contador o finalizar el registro."
+            },
+            {
+                "question": "¿Puede una trabajadora ver cuánto tiempo lleva fichado?",
+                "answer": "Sí: mientras el registro está abierto, la visita muestra el contador en marcha."
+            },
+            {
+                "question": "¿Puedo fichar si no tengo ningún servicio programado?",
+                "answer": "No. El fichaje se hace siempre desde una visita concreta de tu agenda; si no hay visita programada, no hay dónde fichar. Pide a administración que revise la asignación si esperabas tener una."
+            },
+            {
+                "question": "¿Puedo fichar desde el móvil?",
+                "answer": "Sí, es el uso más habitual. Consulta la guía de Uso en el móvil si tienes problemas de conexión o de ubicación."
+            },
+            {
+                "question": "¿Es necesario firmar los fichajes?",
+                "answer": "Utocures no incluye una pantalla para firmar los fichajes. Administración puede exportar las horas. Si la entidad necesita firmas, debe organizar ese procedimiento por separado; el Excel descargado no es una firma."
+            }
+        ],
+        "related": ["employee-agenda", "employee-hours", "mobile", "announcement-board"],
+        "tasks": [
+            {
+                "title": "Registrar que empiezo a trabajar",
+                "steps": [
+                    "Abre la visita correcta y comprueba el cliente.",
+                    "Cuando empieces realmente el trabajo, pulsa Inicia registro.",
+                    "Si el móvil pide permiso para acceder a la ubicación, pulsa la opción que lo permite y espera.",
+                    "Comprueba que aparece el contador en marcha y la opción de finalizar. Si aparece un error, léelo antes de volver a intentar."
+                ],
+                "result": "Queda registrada la hora de entrada de ese momento. Solo puedes tener un trabajo con el contador abierto a la vez."
+            },
+            {
+                "title": "Registrar que he terminado",
+                "steps": [
+                    "Vuelve al trabajo que tiene el contador en marcha.",
+                    "Al acabar realmente, pulsa Finalizar registro. En el contador pequeño puede aparecer como Finalizar.",
+                    "Si se solicita ubicación, permite el acceso y espera a que termine la operación.",
+                    "Comprueba que el contador ya no está en marcha.",
+                    "Vuelve a Inicio, pulsa Horas trabajadas y comprueba que el registro tiene hora de salida."
+                ],
+                "result": "Queda guardada la salida. Cerrar el navegador, bloquear el móvil o salir de tu cuenta no sustituye este paso."
+            },
+            {
+                "title": "Anotar un problema durante el servicio",
+                "steps": [
+                    "Con el fichaje iniciado, abre la visita y entra en Notas. Si acabas de iniciar y no aparece disponible la incidencia, vuelve a abrir la visita.",
+                    "Pulsa Agregar nota o incidencia.",
+                    "Selecciona Incidencia si estás comunicando un problema, o Nota general si es información general.",
+                    "Escribe qué ha ocurrido y pulsa Guardar en la ventana.",
+                    "Comprueba que aparece en las notas."
+                ],
+                "result": "La incidencia queda relacionada con este fichaje y genera un aviso a administración. No corrige las horas automáticamente."
+            },
+            {
+                "title": "Me he olvidado de finalizar",
+                "steps": [
+                    "Abre el trabajo que sigue con el contador en marcha.",
+                    "Pulsa Finalizar registro para cerrarlo y comprueba que la operación termina.",
+                    "Comunica a administración el cliente, el día y la hora real a la que terminaste. Indica que lo has cerrado tarde por un olvido.",
+                    "Pide que revisen y corrijan la salida del registro ya cerrado. Si no consigues finalizarlo por un error, comunica también el mensaje de error."
+                ],
+                "result": "El botón guarda la hora en que lo pulsas, no la hora que recuerdas haber terminado. Administración debe corregir después la hora real."
+            }
+        ]
+    },
+    {
+        "id": "time-records",
+        "roles": ["admin"],
+        "category": "Registro, corrección y exportación de horas",
+        "title": "Consultar horas, corregir un fichaje y exportarlas",
+        "description": "Un fichaje es el registro de cuándo una empleada empieza y termina de trabajar.",
+        "href": "/employee-time-records",
+        "steps": ["Pulsa Registros de horas en el menú lateral izquierdo."],
+        "effects": [
+            "02:30 significa dos horas y treinta minutos. No significa 2,30 horas.",
+            "La ubicación guardada es la de entrada o salida. Corregir una hora no vuelve a localizar el móvil.",
+            "Un trabajo que empieza fuera del periodo consultado puede contarse de forma distinta en Tablero y en la lista. Revisa sus fechas si los totales no coinciden.",
+            "El Excel exportado usa siempre las horas ya corregidas, no las originales: una corrección guardada se refleja también en la exportación."
+        ],
+        "questions": [
+            {
+                "question": "Hay un fichaje abierto de otro día.",
+                "answer": "Pide a la empleada que finalice el registro desde su contador. Una vez cerrado, comprueba con ella la hora real de salida y corrígela desde Vista calendario, indicando el motivo."
+            },
+            {
+                "question": "La cifra 02:30, ¿son dos horas y treinta minutos?",
+                "answer": "Sí. El formato es horas:minutos; no son 2,30 horas decimales."
+            },
+            {
+                "question": "No aparece una ubicación.",
+                "answer": "Puede ser un fichaje anterior a la exigencia de ubicación o uno registrado sin ella. No se puede reconstruir retroactivamente una posición que no se capturó."
+            },
+            {
+                "question": "¿Puedo crear manualmente un fichaje de un día anterior?",
+                "answer": "No. Administración solo puede corregir un fichaje que la trabajadora ya haya iniciado desde su contador; no existe un botón para crear uno nuevo desde cero."
+            },
+            {
+                "question": "¿Cómo dejo constancia del motivo de una corrección?",
+                "answer": "Al corregir un fichaje, el campo Motivo de la modificación es obligatorio: escribe una explicación breve y concreta, por ejemplo con quién lo confirmaste."
+            },
+            {
+                "question": "¿La corrección se refleja después en los informes y exportaciones?",
+                "answer": "Sí, tanto la Vista lista como el Excel exportado usan siempre la hora ya corregida."
+            },
+            {
+                "question": "¿Las sustituciones aparecen asignadas a la persona que realmente realizó el servicio?",
+                "answer": "El fichaje pertenece a quien realmente lo hizo: si reasignas la visita a otra persona antes de que empiece, será ella quien pueda fichar y quien aparezca en el registro."
+            },
+            {
+                "question": "¿Cómo obtengo las horas mensuales de cada trabajadora para la gestoría?",
+                "answer": "En Vista lista, agrupa Ver por Empleadas, ajusta el periodo al mes que necesites y pulsa Descargar Excel al final del listado."
+            },
+            {
+                "question": "¿Puedo exportar solamente un periodo concreto?",
+                "answer": "Sí, el archivo utiliza las fechas inicial y final seleccionadas. Incluye tres hojas: Empleadas y clientes, Clientes y empleadas, y Empleadas. Cambiar Ver por solo cambia la lista de la pantalla: no limita el Excel a esa agrupación. La búsqueda por nombre de la pantalla tampoco limita actualmente el archivo."
+            },
+            {
+                "question": "¿Qué hago si olvidó iniciar el fichaje y no existe ningún registro?",
+                "answer": "Anota el cliente, servicio, día y horas reales y comunícalo a la persona responsable. Esta pantalla no permite crear un fichaje desde cero ni recuperar horas anteriores sin registro. No inventes una entrada de hoy para simular el trabajo de ayer."
+            }
+        ],
+        "related": ["employee-work", "employee-hours", "schedules", "audits", "configuration"],
+        "tasks": [
+            {
+                "title": "Ver las horas de un periodo",
+                "steps": [
+                    "Pulsa Vista lista si estás viendo el calendario.",
+                    "Selecciona la fecha inicial y final del periodo que quieres consultar. Al entrar se muestra el mes actual.",
+                    "En Ver por, selecciona Empleadas o Clientes según cómo quieras consultar las horas.",
+                    "Despliega la fila de la persona o cliente para ver el detalle de servicios.",
+                    "Compara las horas programadas (lo previsto) con las registradas (lo que se ha fichado).",
+                    "Para guardar una copia del informe, baja al final del listado y pulsa Descargar Excel, a la derecha."
+                ],
+                "result": "Consultar o descargar no cambia las horas. Un registro sin salida aún no tiene una duración final para sumar."
+            },
+            {
+                "title": "Corregir un fichaje",
+                "steps": [
+                    "Pulsa Vista calendario.",
+                    "Pulsa Seleccionar empleado y elige a la persona.",
+                    "Utiliza las flechas del calendario para ir al mes correspondiente. Pulsa el día del fichaje.",
+                    "En Fichajes del día, localiza el registro y pulsa Editar.",
+                    "Comprueba con la empleada cuáles fueron las horas reales. Corrige Fecha de entrada y Hora de entrada si hace falta.",
+                    "Si el fichaje ya está cerrado, puedes corregir Fecha de salida y Hora de salida. La salida debe ser posterior o igual a la entrada.",
+                    "Si aparece el aviso de que el fichaje sigue abierto, pide a la empleada que lo finalice desde su contador. Administración no puede introducir la salida mientras esté abierto.",
+                    "Escribe en Motivo de la modificación una explicación, por ejemplo: «Olvidó finalizar; la salida real fue a las 13:00, confirmada con la empleada».",
+                    "Pulsa Guardar cambios. Vuelve a consultar el día para comprobar entrada, salida y duración."
+                ],
+                "result": "Cambian las horas registradas y los informes. Queda guardado quién hizo la corrección y por qué. El horario previsto de la visita no cambia."
+            },
+            {
+                "title": "Preparar el Excel de horas para la gestoría",
+                "steps": [
+                    "Pulsa Registros de horas en el menú lateral y después Vista lista.",
+                    "Selecciona las fechas inicial y final del mes que necesitas.",
+                    "Revisa las diferencias entre horas programadas y registradas. Finaliza y corrige los fichajes pendientes siguiendo la guía de correcciones.",
+                    "Pulsa Descargar Excel al final de la tabla y abre el archivo time_records.xlsx.",
+                    "Abre la hoja Empleadas para los totales por persona. Usa Empleadas y clientes o Clientes y empleadas para revisar el detalle por cliente y servicio.",
+                    "Comprueba el periodo que aparece en el archivo antes de entregarlo. Si necesitas solo una persona, prepara esa selección en Excel: la búsqueda de la web no recorta el archivo."
+                ],
+                "result": "El archivo incluye las horas guardadas y sus correcciones. Las incidencias explican lo ocurrido, pero no cambian las horas sin una corrección del fichaje."
+            }
+        ]
+    },
+    {
+        "id": "employee-hours",
+        "roles": ["employee"],
+        "category": "Registro y control de horas",
+        "title": "Comprobar mis entradas, salidas e incidencias",
+        "description": "Aquí puedes consultar lo que has fichado. Si un dato es incorrecto, comunícalo a administración.",
+        "href": "/hours-worked",
+        "steps": ["Vuelve a Inicio y pulsa Horas trabajadas."],
+        "effects": ["Esta pantalla permite consultar. No puedes escribir otra hora ni borrar el fichaje desde aquí."],
+        "questions": [
+            {
+                "question": "¿02:30 significa 2,30 horas?",
+                "answer": "No. Significa dos horas y treinta minutos."
+            },
+            {
+                "question": "¿Puedo corregir o borrar una nota desde la visita?",
+                "answer": "La vista del personal permite añadir notas e incidencias, pero no ofrece las acciones administrativas de editar o eliminar. Comunica la corrección a administración."
+            }
+        ],
+        "related": ["employee-work", "employee-agenda", "mobile"],
+        "tasks": [
+            {
+                "title": "Consultar un registro",
+                "steps": [
+                    "Busca la fila del cliente y servicio que quieres revisar. Comprueba la fecha de entrada.",
+                    "Lee Hora de entrada y Hora de salida. Si falta la salida, comprueba si dejaste el contador en marcha.",
+                    "Despliega el detalle de la fila para leer las incidencias asociadas, si las hay.",
+                    "Si una hora no es correcta, comunica a administración el cliente, el día, la hora que aparece y la hora real."
+                ],
+                "result": "Esta pantalla permite consultar. No puedes escribir otra hora ni borrar el fichaje desde aquí."
+            }
+        ]
+    },
+    {
+        "id": "notes",
+        "roles": ["admin"],
+        "category": "Incidencias y notas",
+        "title": "Escribir notas y revisar incidencias",
+        "description": "Una nota guarda información de seguimiento. Una incidencia explica un problema ocurrido durante un servicio.",
+        "href": "/clients",
+        "steps": [
+            "Pulsa Clientes, abre los tres puntos del cliente y después Visualizar.",
+            "Pulsa la pestaña Notas. Para notas de una empleada, abre su ficha desde Empleados y baja al bloque Notas."
+        ],
+        "effects": [
+            "La campana también puede avisar de contratos de empleadas próximos a terminar y de visitas que no han empezado a ficharse. Los periodos de ausencia registrados se tienen en cuenta en estos últimos avisos."
+        ],
+        "questions": [
+            {
+                "question": "No veo la incidencia en Mensajes.",
+                "answer": "Las incidencias están en Notas y en los registros horarios; su aviso aparece en la campana administrativa. Mensajes es la conversación con el cliente."
+            },
+            {
+                "question": "¿Una nota normal también genera el aviso de incidencia?",
+                "answer": "No. Ese aviso se crea para incidencias del personal asociadas a un cliente."
+            },
+            {
+                "question": "¿Qué diferencia hay entre una nota y una incidencia?",
+                "answer": "Una nota es información de seguimiento (por ejemplo, cómo se encontró a la persona usuaria). Una incidencia comunica un problema ocurrido durante un servicio y genera un aviso a administración; una nota general no."
+            },
+            {
+                "question": "¿Son visibles para el resto de trabajadoras?",
+                "answer": "No hay un listado general de incidencias visible para todo el personal: cada trabajadora ve, dentro de una visita, las notas asociadas a ese cliente."
+            },
+            {
+                "question": "¿Con qué cliente, servicio o fichaje queda relacionada una incidencia?",
+                "answer": "Queda relacionada con la visita (el fichaje) desde la que se creó, y por tanto con ese cliente y ese servicio concretos."
+            },
+            {
+                "question": "¿Cómo resuelve o corrige un fichaje a partir de una incidencia?",
+                "answer": "Abre el aviso desde la campana para leer lo ocurrido, y corrige el fichaje relacionado desde Registros de horas, indicando el motivo de la corrección."
+            }
+        ],
+        "related": ["time-records", "messages", "audits"],
+        "tasks": [
+            {
+                "title": "Añadir una nota",
+                "steps": [
+                    "Pulsa Agregar nota, encima de las notas.",
+                    "En la ventana, escribe la información con frases claras. Indica el día y lo sucedido si es necesario.",
+                    "Pulsa Guardar en la parte inferior de la ventana.",
+                    "Comprueba que la nota aparece en la lista."
+                ],
+                "result": "La nota queda en la ficha. Las notas del cliente pueden ser consultadas por el personal desde sus visitas; no son un mensaje privado al cliente."
+            },
+            {
+                "title": "Leer avisos y corregir notas",
+                "steps": [
+                    "Pulsa la campana de la cabecera para abrir los avisos de administración.",
+                    "Pulsa el aviso de una incidencia para ir a la información del cliente y leer lo sucedido.",
+                    "Para corregir una nota, utiliza su botón Editar, modifica el texto y pulsa Guardar cambios.",
+                    "Si debes quitar una nota, utiliza su botón Eliminar y revisa el aviso antes de confirmar.",
+                    "Una vez leído un aviso, puedes marcarlo como leído en la campana."
+                ],
+                "result": "Marcar un aviso como leído no soluciona el problema ni cambia las horas. Debes realizar por separado la acción que corresponda."
+            }
+        ]
+    },
+    {
+        "id": "announcements",
+        "roles": ["admin"],
+        "category": "Anuncios y comunicaciones internas",
+        "title": "Publicar o cambiar un anuncio",
+        "description": "Escribe un aviso para que lo lea el grupo de personas que elijas.",
+        "href": "/announcements",
+        "steps": ["Pulsa Anuncios en el menú lateral izquierdo."],
+        "effects": [
+            "El anuncio se publica para los destinatarios elegidos. Guardar no envía un correo a cada persona.",
+            "Al editar, las personas verán el nuevo texto cuando lo consulten. Al eliminar, el anuncio deja de estar disponible."
+        ],
+        "questions": [
+            {
+                "question": "Otra persona ve un anuncio y yo no.",
+                "answer": "Puede estar dirigido a otro perfil. Comprueba con administración el público destinatario."
+            },
+            {
+                "question": "¿Dónde respondo a un anuncio?",
+                "answer": "El tablón no incluye respuestas. Si eres cliente, utiliza Mensajes para hablar con la entidad; si eres personal, utiliza el canal habitual con administración."
+            },
+            {
+                "question": "¿Los anuncios son para todas las trabajadoras o puedo elegir destinatarias?",
+                "answer": "Se eligen por público, no persona a persona: Clientes o Interno (empleados y administradores). No hay una opción para dirigirlo a un grupo más reducido de trabajadoras concretas."
+            },
+            {
+                "question": "¿Puedo utilizarlos para comunicar cambios generales o avisos internos?",
+                "answer": "Sí, es su uso habitual: información que debe llegar a todo un colectivo, como cambios de horario general, avisos o novedades."
+            },
+            {
+                "question": "¿En qué se diferencia un anuncio de una incidencia o una nota?",
+                "answer": "El anuncio es una comunicación general de administración hacia un colectivo. La incidencia y la nota están ligadas a un cliente o a una visita concreta, no a un aviso general."
+            }
+        ],
+        "related": ["messages", "client-area", "employee-agenda"],
+        "tasks": [
+            {
+                "title": "Publicar un anuncio",
+                "steps": [
+                    "Pulsa Crear anuncio, arriba a la derecha del listado.",
+                    "Escribe un Título que resuma el aviso.",
+                    "Pulsa Contenido y escribe el mensaje completo. Indica fechas, lugar y qué debe hacer quien lo lea, si corresponde.",
+                    "Revisa Destinatarios. Elige Clientes para que lo vean los clientes. La opción Interno (empleados y administradores) no incluye a los clientes.",
+                    "Si quieres añadir una imagen, selecciónala en el campo de imagen y comprueba la vista previa.",
+                    "Lee el anuncio y pulsa Guardar."
+                ],
+                "result": "El anuncio se publica para los destinatarios elegidos. Guardar no envía un correo a cada persona."
+            },
+            {
+                "title": "Corregir o retirar un anuncio",
+                "steps": [
+                    "En Anuncios, localiza la fila del aviso.",
+                    "Pulsa los tres puntos de la derecha y después Editar.",
+                    "Cambia el texto o los destinatarios y pulsa Guardar cambios.",
+                    "Si quieres retirar el anuncio, vuelve a su fila, abre los tres puntos y pulsa Eliminar. Lee el aviso antes de confirmar."
+                ],
+                "result": "Al editar, las personas verán el nuevo texto cuando lo consulten. Al eliminar, el anuncio deja de estar disponible."
+            }
+        ]
+    },
+    {
+        "id": "announcement-board",
+        "roles": ["employee", "client"],
+        "category": "Anuncios y comunicaciones internas",
+        "title": "Leer un anuncio",
+        "description": "Aquí puedes leer los avisos que la entidad ha publicado para ti.",
+        "href": null,
+        "steps": ["Vuelve a Inicio.", "Pulsa Tablón anuncios."],
+        "effects": [
+            "Leer un anuncio no envía una respuesta. Si tienes una duda, contacta con administración; los clientes pueden hacerlo desde Mensajes."
+        ],
+        "questions": [
+            {
+                "question": "Otra persona ve un anuncio y yo no.",
+                "answer": "Puede estar dirigido a otro perfil. Comprueba con administración el público destinatario."
+            },
+            {
+                "question": "¿Dónde respondo a un anuncio?",
+                "answer": "El tablón no incluye respuestas. Si eres cliente, utiliza Mensajes para hablar con la entidad; si eres personal, utiliza el canal habitual con administración."
+            }
+        ],
+        "related": ["messages", "client-area", "employee-agenda"],
+        "tasks": [
+            {
+                "title": "Abrir y leer el aviso completo",
+                "steps": [
+                    "Busca el anuncio por su título. Los más recientes aparecen primero.",
+                    "Pulsa Ver detalle en el anuncio que quieras leer.",
+                    "Lee el texto de la ventana. Desliza hacia abajo si el mensaje no cabe entero.",
+                    "Pulsa Cerrar detalle para volver al tablón."
+                ],
+                "result": "Leer un anuncio no envía una respuesta. Si tienes una duda, contacta con administración; los clientes pueden hacerlo desde Mensajes."
+            }
+        ]
+    },
+    {
+        "id": "messages",
+        "roles": ["admin", "client"],
+        "category": "Mensajes",
+        "title": "Leer y enviar un mensaje",
+        "description": "Este apartado permite que los clientes hablen con el equipo de administración.",
+        "href": null,
+        "steps": [
+            "Si eres cliente, pulsa Mensajes en Inicio. Si eres de administración, pulsa Mensajes en el menú lateral. También puedes usar el icono de mensajes de la cabecera.",
+            "Administración debe seleccionar primero la conversación del cliente en la lista de la izquierda. El cliente entra directamente en su conversación con la entidad."
+        ],
+        "effects": ["En administración, Leído es compartido por el equipo. No indica qué persona de administración abrió el mensaje."],
+        "questions": [
+            {
+                "question": "Me equivoqué al enviar.",
+                "answer": "Envía una aclaración en la misma conversación. No puedes deshacer el envío desde la pantalla."
+            },
+            {
+                "question": "No recibo avisos aunque hay mensajes.",
+                "answer": "Comprueba la opción de notificaciones, los permisos del sitio y el dispositivo donde los activaste. Aunque el aviso falle, puedes entrar en Mensajes para consultar la conversación."
+            },
+            {
+                "question": "El cliente no puede consultar la conversación.",
+                "answer": "Administración debe revisar que el cliente tenga una cuenta de acceso activa. El personal no dispone de este apartado de mensajería."
+            }
+        ],
+        "related": ["client-access", "mobile", "announcements"],
+        "tasks": [
+            {
+                "title": "Escribir y enviar",
+                "steps": [
+                    "Revisa el nombre de la conversación para comprobar a quién escribes.",
+                    "Pulsa el recuadro para escribir, en la parte inferior de la conversación.",
+                    "Escribe el mensaje. Antes de enviarlo, lee lo que has escrito y corrige los errores.",
+                    "Pulsa Enviar, junto al recuadro.",
+                    "Espera a que el texto aparezca dentro de la conversación."
+                ],
+                "result": "El mensaje ya puede leerlo la otra parte. No hay un botón para borrar o cambiar un mensaje enviado; si te equivocas, envía una aclaración."
+            },
+            {
+                "title": "Leer respuestas y recibir avisos",
+                "steps": [
+                    "Abre Mensajes y selecciona la conversación si aparece una lista de clientes.",
+                    "Baja hasta los mensajes más recientes para leer las respuestas.",
+                    "Junto a tus mensajes, revisa si aparece Enviado o Leído. Leído significa que la otra parte ha abierto la conversación.",
+                    "Si aparece la opción de activar notificaciones y quieres avisos en este dispositivo, púlsala y acepta el permiso del navegador."
+                ],
+                "result": "Abrir la conversación marca los mensajes recibidos como leídos. Un mensaje que pide cambiar una visita no modifica su horario automáticamente."
+            }
+        ]
+    },
+    {
+        "id": "automatic-invoices",
+        "roles": ["admin"],
+        "category": "Facturación",
+        "title": "Activar o desactivar Crear factura automática",
+        "description": "Esta casilla permite incluir al cliente en la creación periódica de facturas. Acuerda su uso con la persona responsable.",
+        "href": "/clients",
+        "steps": [
+            "Pulsa Clientes en el menú lateral.",
+            "Busca al cliente, pulsa los tres puntos de su fila y después Editar.",
+            "Baja hasta Datos de facturación."
+        ],
+        "effects": [
+            "La creación automática está prevista para el día 1 de cada mes, si el servicio automático está funcionando. Actualmente consulta el mes en curso, no el anterior.",
+            "El cálculo actual puede contar las horas dos veces al calcular el importe y utiliza un IVA del 21 %. La casilla Precios con IVA no cambia ese cálculo. Pide revisar los importes antes de utilizar la factura.",
+            "Si se repite la creación automática, pueden aparecer facturas duplicadas. Activar y desactivar la casilla no sirve para crear una factura al instante."
+        ],
+        "questions": [
+            {
+                "question": "¿Puedo asumir que la factura automática ya es correcta?",
+                "answer": "No. Revisa el periodo y el cálculo con la persona responsable antes de utilizarla. Hay limitaciones en la implementación actual y no se debe dar por confirmado el importe solo porque la factura exista."
+            },
+            {
+                "question": "No se ha generado ninguna factura.",
+                "answer": "Comprueba la casilla y los registros del periodo consultado. Administración técnica debe comprobar la ejecución automática. No actives y desactives repetidamente esperando que eso lance el proceso."
+            },
+            {
+                "question": "¿Utocures genera facturas legales?",
+                "answer": "Este apartado registra datos e importes y permite exportarlos como apoyo a la gestión. No ofrece una integración con el sistema de facturación fiscal ni sustituye tu programa de contabilidad. Que una factura esté guardada aquí no confirma que se haya emitido, enviado o cobrado fuera de Utocures."
+            }
+        ],
+        "related": ["clients", "services-characteristics", "invoices", "time-records"],
+        "tasks": [
+            {
+                "title": "Cambiar la casilla de factura automática",
+                "steps": [
+                    "Busca Crear factura automática. Si tiene una marca, está activada.",
+                    "Para activarla, pulsa la casilla vacía. Para desactivarla, pulsa la casilla marcada.",
+                    "Revisa Es socio y los servicios del cliente, ya que se utilizan para preparar importes.",
+                    "Pulsa Guardar cambios al principio o al final del formulario."
+                ],
+                "result": "Guardar no crea una factura en ese momento. Desactivar la casilla no borra las facturas que ya existen."
+            },
+            {
+                "title": "Revisar una factura creada automáticamente",
+                "steps": [
+                    "Pulsa Facturas en el menú lateral y busca el cliente. Revisa el año del listado.",
+                    "Abre los tres puntos de la factura y pulsa Editar para consultar sus datos.",
+                    "Comprueba a qué fechas corresponden las horas. No des por hecho que son las del mes anterior.",
+                    "Compara cantidad de horas, precio, descuento, IVA y total con la información de Registros de horas y los precios de Servicios.",
+                    "Si falta una factura o el importe no coincide, pide que la persona responsable lo revise antes de crear otra."
+                ],
+                "result": "Las facturas automáticas necesitan revisión. La herramienta no las cobra ni las envía automáticamente."
+            }
+        ]
+    },
+    {
+        "id": "invoices",
+        "roles": ["admin"],
+        "category": "Facturación",
+        "title": "Crear o corregir una factura",
+        "description": "Anota el cliente, las fechas y los conceptos que se cobran. Comprueba el total al guardar.",
+        "href": "/invoices",
+        "steps": ["Pulsa Facturas en el menú lateral izquierdo."],
+        "effects": [
+            "La factura copia la dirección del cliente al crearla. Cambiar después la dirección en Clientes no cambia esa factura; al elegir otro cliente se copia su dirección.",
+            "Comprueba los descuentos y el total guardado: pueden diferir de lo que viste mientras rellenabas el formulario.",
+            "Facturas no ofrece los botones Descargar PDF y Enviar de presupuestos y contratos."
+        ],
+        "questions": [
+            {
+                "question": "¿Aceptar un presupuesto genera la factura?",
+                "answer": "No. Debes crear la factura en su apartado."
+            },
+            {
+                "question": "¿Dónde marco una factura como pagada?",
+                "answer": "La pantalla actual no incluye un estado de pago. Registrar la factura no confirma que esté cobrada."
+            },
+            {
+                "question": "¿De dónde obtiene las horas que debe facturar a cada cliente?",
+                "answer": "No las toma automáticamente de los fichajes: cada línea de la factura se escribe a mano (concepto, cantidad y precio). Consulta antes las horas reales en Registros de horas si quieres facturar exactamente lo trabajado."
+            },
+            {
+                "question": "¿Se pueden configurar descuentos?",
+                "answer": "Sí, cada línea admite un descuento y un tipo de IVA propios."
+            },
+            {
+                "question": "¿Cómo llevo la información a mi programa de contabilidad?",
+                "answer": "Descarga el listado con Descargar Excel y revisa cliente, conceptos e importes. Utocures no lo envía a otro programa automáticamente. El formato que acepte tu programa y cualquier adaptación del archivo deben revisarse con la persona que lleva la contabilidad."
+            }
+        ],
+        "related": ["budgets", "clients", "automatic-invoices", "client-locations"],
+        "tasks": [
+            {
+                "title": "Crear una factura",
+                "steps": [
+                    "Pulsa Crear factura, arriba a la derecha del listado.",
+                    "Pulsa Cliente y selecciona una ficha existente.",
+                    "Indica Fecha de emisión y Fecha de vencimiento. El vencimiento es el último día previsto para pagar y no puede ser anterior a la emisión.",
+                    "En la primera línea, escribe Concepto: qué trabajo o producto estás cobrando.",
+                    "Rellena Cantidad y Precio. Por ejemplo, para dos horas a 15 por hora, escribe 2 en Cantidad y 15 en Precio.",
+                    "Revisa Descuento y Tipo de IVA. Si no debes aplicar descuento, déjalo en cero.",
+                    "Si necesitas otra línea, pulsa Añadir elemento, debajo de las líneas, y rellena la nueva fila.",
+                    "Pulsa Guardar, al principio o al final del formulario. Si aparecen errores, corrige los campos indicados y vuelve a guardar.",
+                    "En el listado, abre los tres puntos de la factura y pulsa Editar para comprobar los datos guardados."
+                ],
+                "result": "La factura queda registrada. No se envía por correo y no se cobra al cliente al pulsar Guardar."
+            },
+            {
+                "title": "Corregir una factura",
+                "steps": [
+                    "Pulsa Facturas y localiza el documento. Cambia el filtro de año si pertenece a otro año.",
+                    "Pulsa los tres puntos de su fila y después Editar.",
+                    "Cambia la fecha o las líneas necesarias. Para quitar una línea, pulsa la papelera de esa fila.",
+                    "Pulsa Guardar cambios y revisa de nuevo los importes."
+                ],
+                "result": "La herramienta vuelve a calcular el total. Esta pantalla no tiene un botón para marcar la factura como pagada."
+            },
+            {
+                "title": "Eliminar un elemento del listado",
+                "steps": [
+                    "Pulsa Facturas en el menú lateral y localiza la fila del elemento que quieres quitar.",
+                    "Pulsa los tres puntos de la derecha y después Eliminar.",
+                    "Lee el aviso de la ventana. Si dudas de qué fila has seleccionado, cancela y comprueba su nombre en el listado antes de continuar.",
+                    "Si es el elemento correcto y quieres retirarlo, confirma Eliminar. Si no estás seguro, pulsa Cancelar.",
+                    "Comprueba que ya no aparece en el listado."
+                ],
+                "result": "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+            },
+            {
+                "title": "Descargar el listado en Excel",
+                "steps": [
+                    "Pulsa Facturas en el menú lateral.",
+                    "Si necesitas solo ciertos datos, utiliza los filtros que aparecen encima del listado. Comprueba qué filas se muestran.",
+                    "Baja hasta el final de la tabla y pulsa Descargar Excel, a la derecha.",
+                    "Busca el archivo en las descargas de tu ordenador o móvil."
+                ],
+                "result": "Se descarga una copia del listado. Los datos de la herramienta no cambian. El botón aparece cuando hay resultados."
+            }
+        ]
+    },
+    {
+        "id": "budgets",
+        "roles": ["admin"],
+        "category": "Presupuestos",
+        "title": "Crear, revisar y enviar un presupuesto",
+        "description": "Prepara una propuesta con su texto y sus importes. Revísala antes de enviarla al cliente.",
+        "href": "/budgets",
+        "steps": ["Pulsa Presupuestos en el menú lateral izquierdo."],
+        "effects": [
+            "Revisa los descuentos y el total después de guardar: actualmente puede haber diferencias entre el importe que ves mientras editas y el importe finalmente guardado. Si no coincide, pide revisión antes de enviar."
+        ],
+        "questions": [
+            {
+                "question": "No puedo enviarlo por correo.",
+                "answer": "Comprueba que el presupuesto esté vinculado a una ficha real y que tenga correo de contacto. Un nombre libre no tiene un destinatario al que enviar."
+            },
+            {
+                "question": "¿Se envía al guardarlo?",
+                "answer": "No. Guardar, descargar y enviar son acciones independientes. Usa Enviar por correo solo después de revisar el documento."
+            },
+            {
+                "question": "¿Qué significa cada estado?",
+                "answer": "Borrador (Draft): documento en preparación. Enviado (Sent): consta como remitido. Aceptado (Accepted): administración registra la aceptación. Rechazado (Rejected): registra que no se acepta. Seleccionar un estado y guardar no envía un correo ni obtiene una firma."
+            }
+        ],
+        "related": ["clients", "contracts", "invoices", "budget-templates", "files"],
+        "tasks": [
+            {
+                "title": "Crear un presupuesto",
+                "steps": [
+                    "Pulsa Crear presupuesto, arriba a la derecha del listado.",
+                    "Pulsa Cliente y selecciona a la persona. Si escribes un nombre nuevo sin elegir una ficha, no podrás enviárselo por correo desde aquí.",
+                    "Revisa Estado. Para un documento que aún estás preparando, utiliza Borrador (Draft).",
+                    "Indica la Fecha de vencimiento si el presupuesto tiene una fecha límite.",
+                    "Si quieres partir de un texto preparado, elige una Plantilla de presupuesto. Después lee y completa Contenido.",
+                    "En la primera línea, escribe Concepto: qué trabajo o producto estás cobrando.",
+                    "Rellena Cantidad y Precio. Por ejemplo, para dos horas a 15 por hora, escribe 2 en Cantidad y 15 en Precio.",
+                    "Revisa Descuento y Tipo de IVA. Si no debes aplicar descuento, déjalo en cero.",
+                    "Si necesitas otra línea, pulsa Añadir elemento, debajo de las líneas, y rellena la nueva fila.",
+                    "Pulsa Guardar, al principio o al final del formulario. Si aparecen errores, corrige los campos indicados y vuelve a guardar.",
+                    "Vuelve al listado, pulsa los tres puntos del presupuesto y después Visualizar. Comprueba los importes guardados."
+                ],
+                "result": "El presupuesto queda guardado. Todavía no se ha enviado, ni crea un contrato, una factura o un horario."
+            },
+            {
+                "title": "Descargar una copia y enviarla al cliente",
+                "steps": [
+                    "Pulsa Presupuestos en el menú lateral y localiza el documento. Revisa el año seleccionado si no lo encuentras.",
+                    "Pulsa los tres puntos de su fila, a la derecha.",
+                    "Pulsa Descargar PDF. Abre el archivo descargado y revisa el cliente, el texto y los importes.",
+                    "Comprueba el correo de contacto en la ficha del cliente: ese es el destinatario del envío.",
+                    "Vuelve al listado de Presupuestos, abre los tres puntos del documento y pulsa Enviar por correo."
+                ],
+                "result": "Se envía el PDF al cliente. El presupuesto pasa a Enviado, salvo que ya estuviera Aceptado. Descargar el PDF por sí solo no envía nada."
+            },
+            {
+                "title": "Corregir texto, importes o estado",
+                "steps": [
+                    "En Presupuestos, pulsa los tres puntos del documento y después Editar.",
+                    "Modifica los campos necesarios. Si el cliente ha aceptado la propuesta, puedes seleccionar Aceptado (Accepted) en Estado.",
+                    "Pulsa Guardar cambios y vuelve a descargar el PDF para revisar el resultado."
+                ],
+                "result": "Cambiar el estado deja constancia de tu decisión. No recoge una firma ni vuelve a enviar el documento."
+            },
+            {
+                "title": "Eliminar un elemento del listado",
+                "steps": [
+                    "Pulsa Presupuestos en el menú lateral y localiza la fila del elemento que quieres quitar.",
+                    "Pulsa los tres puntos de la derecha y después Eliminar.",
+                    "Lee el aviso de la ventana. Si dudas de qué fila has seleccionado, cancela y comprueba su nombre en el listado antes de continuar.",
+                    "Si es el elemento correcto y quieres retirarlo, confirma Eliminar. Si no estás seguro, pulsa Cancelar.",
+                    "Comprueba que ya no aparece en el listado."
+                ],
+                "result": "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+            },
+            {
+                "title": "Descargar el listado en Excel",
+                "steps": [
+                    "Pulsa Presupuestos en el menú lateral.",
+                    "Si necesitas solo ciertos datos, utiliza los filtros que aparecen encima del listado. Comprueba qué filas se muestran.",
+                    "Baja hasta el final de la tabla y pulsa Descargar Excel, a la derecha.",
+                    "Busca el archivo en las descargas de tu ordenador o móvil."
+                ],
+                "result": "Se descarga una copia del listado. Los datos de la herramienta no cambian. El botón aparece cuando hay resultados."
+            }
+        ]
+    },
+    {
+        "id": "contracts",
+        "roles": ["admin"],
+        "category": "Contratos",
+        "title": "Crear, revisar y enviar un contrato",
+        "description": "Escribe el acuerdo con el cliente y descarga una copia para revisarla antes de enviarla.",
+        "href": "/contracts",
+        "steps": ["Pulsa Contratos en el menú lateral izquierdo."],
+        "effects": [
+            "El contrato queda guardado. Guardarlo no lo envía ni significa que el cliente lo haya firmado.",
+            "El cliente recibe el PDF por correo. El estado del contrato no cambia automáticamente al enviarlo.",
+            "La copia firmada queda junto al contrato. Los PDF que ya enviaste conservan su contenido anterior.",
+            "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran.",
+            "Se descarga una copia del listado. Los datos de la herramienta no cambian. El botón aparece cuando hay resultados."
+        ],
+        "questions": [
+            {
+                "question": "¿Cambiar una plantilla actualiza los contratos existentes?",
+                "answer": "No. El texto se incorpora al formulario cuando seleccionas la plantilla. Revisa y guarda por separado cada contrato que deba cambiar."
+            },
+            {
+                "question": "¿Dónde queda el documento firmado?",
+                "answer": "Si dispones de una copia firmada, puedes subirla en los archivos de la ficha del contrato. El envío del PDF por sí solo no recoge una firma."
+            },
+            {
+                "question": "¿Qué significa cada estado?",
+                "answer": "Borrador (Draft): documento en preparación. Enviado (Sent): consta como remitido. Aceptado (Accepted): administración registra la aceptación. Rechazado (Rejected): registra que no se acepta. Seleccionar un estado y guardar no envía un correo ni obtiene una firma."
+            }
+        ],
+        "related": ["templates", "files", "clients", "schedules"],
+        "tasks": [
+            {
+                "title": "Crear un contrato",
+                "steps": [
+                    "Pulsa Crear contrato, arriba a la derecha del listado.",
+                    "Escribe el Título y selecciona al Cliente.",
+                    "Selecciona Estado. Utiliza Borrador (Draft) si todavía estás preparando el documento.",
+                    "Rellena las fechas de inicio y fin que correspondan al acuerdo.",
+                    "Si tienes un texto preparado, selecciónalo en Plantilla de contrato.",
+                    "Pulsa dentro de Contenido. Lee el texto y completa los datos y condiciones de este cliente.",
+                    "Pulsa Guardar, al principio o al final del formulario. Si aparecen errores, corrige los campos indicados y vuelve a guardar."
+                ],
+                "result": "El contrato queda guardado. Guardarlo no lo envía ni significa que el cliente lo haya firmado."
+            },
+            {
+                "title": "Descargar y enviar el contrato",
+                "steps": [
+                    "Pulsa Contratos en el menú lateral y busca el documento.",
+                    "Pulsa los tres puntos de su fila y después Descargar PDF.",
+                    "Abre la copia descargada y revisa nombre del cliente, fechas y contenido.",
+                    "Comprueba que el correo de contacto de la ficha del cliente es correcto.",
+                    "Vuelve a Contratos, pulsa los tres puntos del documento y después Enviar por email."
+                ],
+                "result": "El cliente recibe el PDF por correo. El estado del contrato no cambia automáticamente al enviarlo."
+            },
+            {
+                "title": "Modificar el contrato o guardar una copia firmada",
+                "steps": [
+                    "En Contratos, abre los tres puntos del documento.",
+                    "Para corregir el texto, pulsa Editar, modifica lo necesario y pulsa Guardar cambios.",
+                    "Para añadir una copia firmada, pulsa Visualizar y baja a Documentos y archivos.",
+                    "Pulsa Añadir archivo, selecciona la copia y pulsa Guardar en la ventana. Encontrarás todos los pasos en la guía de archivos."
+                ],
+                "result": "La copia firmada queda junto al contrato. Los PDF que ya enviaste conservan su contenido anterior."
+            },
+            {
+                "title": "Eliminar un elemento del listado",
+                "steps": [
+                    "Pulsa Contratos en el menú lateral y localiza la fila del elemento que quieres quitar.",
+                    "Pulsa los tres puntos de la derecha y después Eliminar.",
+                    "Lee el aviso de la ventana. Si dudas de qué fila has seleccionado, cancela y comprueba su nombre en el listado antes de continuar.",
+                    "Si es el elemento correcto y quieres retirarlo, confirma Eliminar. Si no estás seguro, pulsa Cancelar.",
+                    "Comprueba que ya no aparece en el listado."
+                ],
+                "result": "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+            },
+            {
+                "title": "Descargar el listado en Excel",
+                "steps": [
+                    "Pulsa Contratos en el menú lateral.",
+                    "Si necesitas solo ciertos datos, utiliza los filtros que aparecen encima del listado. Comprueba qué filas se muestran.",
+                    "Baja hasta el final de la tabla y pulsa Descargar Excel, a la derecha.",
+                    "Busca el archivo en las descargas de tu ordenador o móvil."
+                ],
+                "result": "Se descarga una copia del listado. Los datos de la herramienta no cambian. El botón aparece cuando hay resultados."
+            }
+        ]
+    },
+    {
+        "id": "templates",
+        "roles": ["admin"],
+        "category": "Plantillas de contrato",
+        "title": "Crear y utilizar una plantilla de contrato",
+        "description": "Una plantilla es un texto preparado que puedes copiar a un documento nuevo para no escribirlo desde cero.",
+        "href": "/contract-templates",
+        "steps": ["Pulsa Plantillas de contrato en el menú lateral izquierdo."],
+        "effects": [
+            "La plantilla aparecerá en la lista y podrás elegirla al preparar un documento del mismo tipo.",
+            "Cambiar la plantilla no cambia los documentos que ya guardaste. Elegir otra plantilla mientras escribes puede sustituir el texto del formulario.",
+            "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+        ],
+        "questions": [
+            {
+                "question": "No veo mi plantilla.",
+                "answer": "Comprueba que la creaste en el tipo correcto. Las plantillas de contratos y de presupuestos están separadas."
+            },
+            {
+                "question": "¿La plantilla añade líneas o programa servicios?",
+                "answer": "Estas plantillas reutilizan el texto del documento. Las líneas económicas y los horarios se introducen en sus apartados."
+            }
+        ],
+        "related": ["contracts"],
+        "tasks": [
+            {
+                "title": "Crear una plantilla",
+                "steps": [
+                    "Pulsa Crear plantilla de contrato, arriba a la derecha del listado.",
+                    "Escribe Nombre de la plantilla. Utiliza un nombre que explique para qué sirve.",
+                    "Pulsa dentro de Contenido de la plantilla y escribe el texto que quieras reutilizar.",
+                    "Pulsa Guardar, al principio o al final del formulario. Si aparecen errores, corrige los campos indicados y vuelve a guardar."
+                ],
+                "result": "La plantilla aparecerá en la lista y podrás elegirla al preparar un documento del mismo tipo."
+            },
+            {
+                "title": "Usar o corregir el texto preparado",
+                "steps": [
+                    "Abre el formulario para crear o editar un contrato.",
+                    "Pulsa Plantilla de contrato y elige el nombre de tu plantilla.",
+                    "Lee el texto que aparece en Contenido y completa los datos particulares del cliente antes de guardar el documento.",
+                    "Si quieres corregir el texto para usos futuros, vuelve a Plantillas de contrato, pulsa los tres puntos de la plantilla y después Editar.",
+                    "Cambia el texto y pulsa Guardar cambios."
+                ],
+                "result": "Cambiar la plantilla no cambia los documentos que ya guardaste. Elegir otra plantilla mientras escribes puede sustituir el texto del formulario."
+            },
+            {
+                "title": "Eliminar un elemento del listado",
+                "steps": [
+                    "Pulsa Plantillas de contrato en el menú lateral y localiza la fila del elemento que quieres quitar.",
+                    "Pulsa los tres puntos de la derecha y después Eliminar.",
+                    "Lee el aviso de la ventana. Si dudas de qué fila has seleccionado, cancela y comprueba su nombre en el listado antes de continuar.",
+                    "Si es el elemento correcto y quieres retirarlo, confirma Eliminar. Si no estás seguro, pulsa Cancelar.",
+                    "Comprueba que ya no aparece en el listado."
+                ],
+                "result": "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+            }
+        ]
+    },
+    {
+        "id": "budget-templates",
+        "roles": ["admin"],
+        "category": "Plantillas de presupuesto",
+        "title": "Crear y utilizar una plantilla de presupuesto",
+        "description": "Una plantilla es un texto preparado que puedes copiar a un documento nuevo para no escribirlo desde cero.",
+        "href": "/budget-templates",
+        "steps": ["Pulsa Plantillas de presupuesto en el menú lateral izquierdo."],
+        "effects": [
+            "La plantilla aparecerá en la lista y podrás elegirla al preparar un documento del mismo tipo.",
+            "Cambiar la plantilla no cambia los documentos que ya guardaste. Elegir otra plantilla mientras escribes puede sustituir el texto del formulario.",
+            "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+        ],
+        "questions": [
+            {
+                "question": "No veo mi plantilla.",
+                "answer": "Comprueba que la creaste en el tipo correcto. Las plantillas de contratos y de presupuestos están separadas."
+            },
+            {
+                "question": "¿La plantilla añade líneas o programa servicios?",
+                "answer": "Estas plantillas reutilizan el texto del documento. Las líneas económicas y los horarios se introducen en sus apartados."
+            }
+        ],
+        "related": ["budgets"],
+        "tasks": [
+            {
+                "title": "Crear una plantilla",
+                "steps": [
+                    "Pulsa Crear plantilla de presupuesto, arriba a la derecha del listado.",
+                    "Escribe Nombre de la plantilla. Utiliza un nombre que explique para qué sirve.",
+                    "Pulsa dentro de Contenido de la plantilla y escribe el texto que quieras reutilizar.",
+                    "Pulsa Guardar, al principio o al final del formulario. Si aparecen errores, corrige los campos indicados y vuelve a guardar."
+                ],
+                "result": "La plantilla aparecerá en la lista y podrás elegirla al preparar un documento del mismo tipo."
+            },
+            {
+                "title": "Usar o corregir el texto preparado",
+                "steps": [
+                    "Abre el formulario para crear o editar un presupuesto.",
+                    "Pulsa Plantilla de presupuesto y elige el nombre de tu plantilla.",
+                    "Lee el texto que aparece en Contenido y completa los datos particulares del cliente antes de guardar el documento.",
+                    "Si quieres corregir el texto para usos futuros, vuelve a Plantillas de presupuesto, pulsa los tres puntos de la plantilla y después Editar.",
+                    "Cambia el texto y pulsa Guardar cambios."
+                ],
+                "result": "Cambiar la plantilla no cambia los documentos que ya guardaste. Elegir otra plantilla mientras escribes puede sustituir el texto del formulario."
+            },
+            {
+                "title": "Eliminar un elemento del listado",
+                "steps": [
+                    "Pulsa Plantillas de presupuesto en el menú lateral y localiza la fila del elemento que quieres quitar.",
+                    "Pulsa los tres puntos de la derecha y después Eliminar.",
+                    "Lee el aviso de la ventana. Si dudas de qué fila has seleccionado, cancela y comprueba su nombre en el listado antes de continuar.",
+                    "Si es el elemento correcto y quieres retirarlo, confirma Eliminar. Si no estás seguro, pulsa Cancelar.",
+                    "Comprueba que ya no aparece en el listado."
+                ],
+                "result": "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+            }
+        ]
+    },
+    {
+        "id": "files",
+        "roles": ["admin"],
+        "category": "Documentos y notas internas",
+        "title": "Añadir o descargar un archivo de una ficha",
+        "description": "Un archivo puede ser un PDF, una imagen o un documento de Word que quieras guardar junto a una persona o documento.",
+        "href": null,
+        "steps": [
+            "Abre Clientes, Empleados, Presupuestos o Contratos en el menú lateral, según dónde quieras guardar el archivo.",
+            "Busca la ficha, pulsa los tres puntos de su fila y después Visualizar.",
+            "Baja hasta Documentos y archivos."
+        ],
+        "effects": ["Se admiten imágenes JPG y PNG, PDF y documentos DOC o DOCX, de hasta 10 MB cada uno."],
+        "questions": [
+            {
+                "question": "No admite el archivo.",
+                "answer": "Comprueba formato y tamaño, que el archivo no esté vacío y que tengas conexión. Si supera 10 MB, prepara una versión más pequeña."
+            },
+            {
+                "question": "¿Subir documentación al personal le envía un correo?",
+                "answer": "La carga la asocia a las fichas para su gestión. No realiza un envío automático de correo."
+            },
+            {
+                "question": "¿Quién puede consultar estas notas y documentos?",
+                "answer": "Administración gestiona los archivos desde las fichas. La pantalla de visita de una trabajadora no ofrece ese bloque de archivos, pero sí muestra las notas e incidencias del cliente, también las de otras visitas. No utilices Notas del cliente como un espacio privado de administración.",
+                "guide": "privacy"
+            }
+        ],
+        "related": ["employee-documents", "clients", "contracts", "budgets"],
+        "tasks": [
+            {
+                "title": "Añadir un archivo",
+                "steps": [
+                    "Pulsa Añadir archivo, a la derecha del título del bloque.",
+                    "En la ventana Subir archivo, pulsa Seleccionar archivo.",
+                    "Se abrirá el selector de archivos de tu ordenador o móvil. Busca el documento, selecciónalo y confirma la elección en ese selector.",
+                    "Comprueba que en la ventana de la herramienta aparece el nombre del archivo correcto.",
+                    "Pulsa Guardar, abajo a la derecha de la ventana.",
+                    "Espera a que termine y comprueba que el archivo aparece en Documentos y archivos."
+                ],
+                "result": "El archivo queda guardado en esta ficha. No se envía por correo por el hecho de añadirlo."
+            },
+            {
+                "title": "Descargar o quitar un archivo",
+                "steps": [
+                    "En Documentos y archivos, busca el nombre del documento.",
+                    "Para obtener una copia, pulsa el botón con la flecha de descarga de ese archivo. Busca la copia en las descargas de tu dispositivo.",
+                    "Para quitarlo de la ficha, pulsa la papelera del archivo.",
+                    "Lee el aviso de confirmación. Si dudas de qué archivo has seleccionado, pulsa Cancelar y comprueba su nombre en la lista antes de volver a eliminarlo."
+                ],
+                "result": "Descargar conserva el original. Eliminar lo quita de esta ficha; si ninguna otra ficha lo utiliza, también se borra el archivo guardado en la herramienta."
+            }
+        ]
+    },
+    {
+        "id": "employee-documents",
+        "roles": ["admin"],
+        "category": "Documentos y notas internas",
+        "title": "Añadir el mismo documento a varias empleadas",
+        "description": "Utiliza este apartado para guardar uno o varios archivos en varias fichas a la vez.",
+        "href": "/employee-documents",
+        "steps": ["Pulsa Documentos para trabajadoras en el menú lateral."],
+        "effects": [
+            "Los archivos quedan en las fichas seleccionadas. Esta acción no envía un correo ni pide a las empleadas que confirmen su lectura.",
+            "Eliminar desde el listado de distribución afecta a todas sus destinatarias. Eliminar desde una ficha afecta solo a esa ficha."
+        ],
+        "questions": [
+            {
+                "question": "No aparece una persona en la selección.",
+                "answer": "Comprueba que su ficha existe y que su cuenta está activa."
+            },
+            {
+                "question": "He elegido a una persona incorrecta.",
+                "answer": "Abre su ficha y elimina allí el archivo si solo quieres retirárselo a ella. La eliminación desde el listado colectivo afecta a todas las personas asociadas."
+            }
+        ],
+        "related": ["files", "employees"],
+        "tasks": [
+            {
+                "title": "Distribuir documentos entre las fichas",
+                "steps": [
+                    "Busca el bloque Nueva distribución.",
+                    "Pulsa Seleccionar archivos y elige los documentos en tu ordenador o móvil. Confirma la selección.",
+                    "Comprueba los nombres de los archivos elegidos. Puedes seleccionar hasta 20, de un máximo de 10 MB cada uno.",
+                    "Baja a Destinatarias. Marca la casilla de cada persona que deba tener esos archivos en su ficha.",
+                    "Usa Seleccionar todas solo si los archivos corresponden a todas las empleadas activas. Revisa la selección antes de continuar.",
+                    "Pulsa Distribuir documentos, abajo a la derecha.",
+                    "Comprueba que aparecen en Documentos distribuidos."
+                ],
+                "result": "Los archivos quedan en las fichas seleccionadas. Esta acción no envía un correo ni pide a las empleadas que confirmen su lectura."
+            },
+            {
+                "title": "Retirar un documento distribuido",
+                "steps": [
+                    "Busca el archivo en Documentos distribuidos y revisa a cuántas personas está asociado.",
+                    "Si quieres quitarlo de todas esas fichas, pulsa la papelera de esa fila y revisa el aviso antes de confirmar.",
+                    "Si solo quieres quitárselo a una persona, ve a Empleados, abre su ficha con Visualizar y elimina el archivo desde Documentos y archivos de esa ficha."
+                ],
+                "result": "Eliminar desde el listado de distribución afecta a todas sus destinatarias. Eliminar desde una ficha afecta solo a esa ficha."
+            }
+        ]
+    },
+    {
+        "id": "privacy",
+        "roles": ["admin"],
+        "category": "Privacidad y datos que ven las trabajadoras",
+        "title": "Qué datos del cliente ve el personal en una visita",
+        "description": "Qué muestra la pantalla de una visita y qué notas del cliente comparte el personal que lo atiende.",
+        "href": null,
+        "steps": [],
+        "effects": [
+            "Las notas del cliente son compartidas con las trabajadoras que tienen una visita de ese cliente. No son privadas de quien las escribe ni se limitan al día de esa visita.",
+            "No hay un ajuste para ocultar campos individualmente. La información que no se muestra en pantalla no debe describirse como protegida solo por ese motivo."
+        ],
+        "questions": [
+            {
+                "question": "¿Qué información de un cliente puede ver una trabajadora?",
+                "answer": "Al abrir una visita asignada ve nombre, fecha de nacimiento, género y datos de contacto del cliente, además del servicio y sus tareas. En Notas puede leer las notas e incidencias de ese cliente, incluidas las escritas en otras visitas."
+            },
+            {
+                "question": "¿Qué información es exclusiva de administración?",
+                "answer": "La vista de visita no muestra los bloques de facturación ni Documentos y archivos. Sí muestra las notas del cliente, aunque se hayan escrito desde administración. No hay una opción para marcar una nota del cliente como privada de administración."
+            },
+            {
+                "question": "¿La trabajadora necesita ver el correo electrónico del cliente?",
+                "answer": "Hoy lo ve siempre que esté relleno en la ficha, se necesite o no para el servicio; no hay forma de ocultarlo solo a ella."
+            },
+            {
+                "question": "¿Puede ver su fecha de nacimiento?",
+                "answer": "Sí, la visita la muestra igual que el resto de datos personales."
+            },
+            {
+                "question": "¿Puedo ocultar determinados datos personales?",
+                "answer": "No hay una opción para ocultar cada campo a las trabajadoras. No borres datos necesarios ni escribas datos falsos para intentar ocultarlos. Comunica a la persona responsable qué información no debería compartirse."
+            },
+            {
+                "question": "¿Qué ocurre si dejo un campo sin rellenar?",
+                "answer": "Si el formulario marca el campo como obligatorio, debes completarlo para guardar. Un campo opcional vacío queda sin dato. Dejarlo vacío no es un permiso de privacidad: si lo rellenas después, se mostrará donde corresponda."
+            },
+            {
+                "question": "¿Qué datos necesita realmente una trabajadora para realizar el servicio?",
+                "answer": "Normalmente nombre, dirección y teléfono para localizar y contactar con la persona usuaria, y las tareas del servicio. El resto de datos personales y de contacto se muestran igualmente, aunque no siempre sean necesarios para el trabajo del día."
+            },
+            {
+                "question": "¿Quién puede consultar datos sensibles y de facturación?",
+                "answer": "Administración gestiona la ficha completa y la facturación. La pantalla de visita muestra datos personales y notas al personal asignado. No debe asumirse que todos los datos sensibles quedan reservados a administración: por ejemplo, una nota sobre salud puede ser visible a otras trabajadoras que atienden al cliente."
+            }
+        ],
+        "related": ["clients", "notes", "files"],
+        "tasks": []
+    },
+    {
+        "id": "common-problems",
+        "roles": ["admin"],
+        "category": "Problemas frecuentes",
+        "title": "Resolver los problemas más habituales",
+        "description": "Abre la pregunta que describe tu problema. Debajo de la respuesta tienes un enlace a la guía con los pasos completos.",
+        "href": null,
+        "steps": [],
+        "effects": [],
+        "questions": [
+            {
+                "question": "He creado una trabajadora y no ha recibido la invitación.",
+                "answer": "Revisa el correo de la ficha y pide que compruebe Spam. Si el correo era incorrecto, corrígelo y guarda. Después, la trabajadora debe abrir ¿Has olvidado tu contraseña? en la pantalla de entrada y solicitar un enlace con ese correo. Volver a guardar una ficha existente no reenvía la invitación. Si no llega el mensaje, pide que revisen el envío de correo.",
+                "guide": "access"
+            },
+            {
+                "question": "Una trabajadora no aparece para poder asignarla.",
+                "answer": "Comprueba en este orden: que tenga el servicio seleccionado, que su cuenta esté activa, que su disponibilidad cubra exactamente esas horas y que no tenga otra visita en ese horario. Las características no influyen en esta lista.",
+                "guide": "schedules"
+            },
+            {
+                "question": "Tengo un servicio programado pero no aparece el contador de fichaje.",
+                "answer": "Pide que abra la visita concreta desde Agenda. Si ve el botón deshabilitado, debe comprobar si dejó otro fichaje abierto y finalizarlo. Si aparece un error, revisad conexión, ubicación y cuenta activa. Volver a abrir la visita tras iniciar puede habilitar Incidencia; ese paso no sustituye la comprobación del contador.",
+                "guide": "time-records"
+            },
+            {
+                "question": "Un servicio no aparece en la agenda de la trabajadora.",
+                "answer": "Comprueba la fecha seleccionada en su Agenda y que el horario se guardó sin error con esa persona asignada. Revisa también que no la hayas sustituido por otra sin darte cuenta.",
+                "guide": "schedules"
+            },
+            {
+                "question": "La recurrencia quincenal no aparece en los días correctos.",
+                "answer": "La quincena se cuenta desde la fecha de inicio del horario. Revisa esa fecha, que el día de la semana esté marcado y que la visita esperada no sea anterior al inicio.",
+                "guide": "schedules"
+            },
+            {
+                "question": "He cambiado unas vacaciones y ahora no puedo reasignar el servicio.",
+                "answer": "Comprueba que no queda otro periodo de ausencia con fechas parecidas y que la disponibilidad y el solapamiento de horario siguen cumpliéndose para esa persona.",
+                "guide": "absences"
+            },
+            {
+                "question": "Una trabajadora olvidó iniciar el fichaje y no hay registro.",
+                "answer": "Anota el cliente, servicio, día y horas reales y comunícalo a la persona responsable. Esta pantalla no permite crear un fichaje desde cero ni recuperar horas anteriores sin registro. No inventes una entrada de hoy para simular el trabajo de ayer.",
+                "guide": "time-records"
+            },
+            {
+                "question": "Una trabajadora olvidó parar el contador.",
+                "answer": "Pide a la empleada que finalice el registro desde su contador. Una vez cerrado, comprueba con ella la hora real de salida y corrígela desde Vista calendario, indicando el motivo.",
+                "guide": "time-records"
+            },
+            {
+                "question": "Una trabajadora ha hecho más horas de las programadas.",
+                "answer": "No pasa nada especial en el sistema: el contador sigue corriendo hasta que ella pulsa Finalizar registro, y esa es la hora real que queda guardada.",
+                "guide": "time-records"
+            },
+            {
+                "question": "Necesito asignar varias trabajadoras al mismo servicio.",
+                "answer": "Crea un horario distinto para cada trabajadora, con sus propias horas, todos con el mismo cliente y servicio; un único horario solo admite una persona.",
+                "guide": "schedules"
+            },
+            {
+                "question": "No puedo guardar otro cliente porque tiene el mismo CIF o el mismo correo.",
+                "answer": "La versión actual no tiene una estructura de sedes dentro de un cliente y no acepta otra ficha con el mismo CIF/NIF. Comunica las sedes y direcciones a la persona responsable para acordar cómo gestionarlas. No cambies ni inventes el CIF para evitar el error. El correo de contacto también es único. Utilizar otro correo no basta si el CIF se repite. El correo de acceso al portal es un dato distinto y tampoco crea sedes.",
+                "guide": "client-locations"
+            },
+            {
+                "question": "La trabajadora está viendo datos del cliente que no necesita.",
+                "answer": "Hoy no se puede ocultar un dato concreto al personal: si está relleno en la ficha, aparecerá en la visita. Consulta la guía de Privacidad para ver exactamente qué campos se muestran.",
+                "guide": "privacy"
+            },
+            {
+                "question": "Las horas programadas y las registradas no coinciden.",
+                "answer": "Programado es lo previsto en el horario; registrado es lo realmente fichado. Revisa en Registros de horas si hay un fichaje sin cerrar o una corrección pendiente.",
+                "guide": "time-records"
+            },
+            {
+                "question": "¿Cómo sé si el problema está en la disponibilidad, el servicio o la asignación?",
+                "answer": "Revisa siempre en este orden: 1) que la empleada tenga el servicio seleccionado en su ficha, 2) que su cuenta esté activa, 3) que su disponibilidad cubra exactamente esas horas, 4) que no tenga otra visita solapada. El primer punto que falle es la causa.",
+                "guide": "employee-availability"
+            }
+        ],
+        "related": ["schedules", "employee-availability", "time-records", "absences", "privacy", "clients", "client-locations"],
+        "tasks": []
+    },
+    {
+        "id": "resources",
+        "roles": ["admin"],
+        "category": "Recursos",
+        "title": "Añadir un recurso y encontrarlo en el mapa",
+        "description": "Guarda lugares o contactos útiles, con su dirección y teléfono.",
+        "href": "/resources",
+        "steps": ["Pulsa Recursos en el menú lateral izquierdo."],
+        "effects": [
+            "El recurso queda disponible en la lista y en el mapa. No se crea ningún servicio ni se envía un correo al contacto.",
+            "Los cambios se reflejan en el directorio y el mapa. Eliminar el recurso no modifica las fichas de clientes."
+        ],
+        "questions": [
+            {
+                "question": "No encuentra la dirección.",
+                "answer": "Añade calle, número, municipio y código postal. Si indica que el servicio no está disponible, prueba más tarde; repetir rápidamente puede activar el límite de consultas."
+            },
+            {
+                "question": "El recurso no sale en el mapa.",
+                "answer": "Borra los filtros y revisa su dirección desde Editar. Comprueba que el guardado terminó correctamente."
+            }
+        ],
+        "related": ["basics"],
+        "tasks": [
+            {
+                "title": "Añadir un recurso",
+                "steps": [
+                    "Pulsa Añadir recurso, arriba a la derecha.",
+                    "Escribe el Nombre y elige el Tipo de recurso.",
+                    "En Dirección completa, escribe calle, número, población y código postal.",
+                    "Pulsa Localizar dirección y revisa que el punto del mapa esté en el lugar correcto.",
+                    "Rellena Descripción y observaciones, Teléfono y Correo electrónico cuando dispongas de esos datos.",
+                    "Pulsa Guardar y comprueba que el recurso aparece en el listado."
+                ],
+                "result": "El recurso queda disponible en la lista y en el mapa. No se crea ningún servicio ni se envía un correo al contacto."
+            },
+            {
+                "title": "Consultar o cambiar un recurso",
+                "steps": [
+                    "En Recursos, escribe parte de su nombre en el buscador o selecciona un tipo para reducir la lista.",
+                    "Lee la tarjeta del recurso o localiza su punto en el mapa.",
+                    "Para corregirlo, pulsa el botón con el lápiz de su tarjeta.",
+                    "Cambia los datos. Si cambias la dirección, vuelve a localizarla y revisa el mapa antes de guardar.",
+                    "Pulsa Guardar cambios. Para quitar el recurso, usa la papelera de su tarjeta y revisa la confirmación."
+                ],
+                "result": "Los cambios se reflejan en el directorio y el mapa. Eliminar el recurso no modifica las fichas de clientes."
+            }
+        ]
+    },
+    {
+        "id": "users",
+        "roles": ["admin"],
+        "category": "Usuarios",
+        "title": "Dar acceso a otra persona de administración",
+        "description": "Las cuentas de este apartado pueden gestionar la herramienta. Crea las empleadas desde Empleados y el acceso de clientes desde su ficha.",
+        "href": "/users",
+        "steps": ["Pulsa Usuarios en el menú lateral izquierdo."],
+        "effects": [
+            "Se crea una cuenta con acceso de administración. No es una ficha de empleada o de cliente.",
+            "Otra persona con la cuenta desactivada deja de poder entrar. Para cambiar tu contraseña, utiliza la edición de tu perfil.",
+            "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran.",
+            "Si has escrito y guardado una contraseña nueva, tendrás que utilizarla la próxima vez que entres."
+        ],
+        "questions": [
+            {
+                "question": "No encuentro un cliente o una empleada en Usuarios.",
+                "answer": "Este listado solo muestra administración. Ve a Clientes o Empleados para gestionar esos accesos."
+            },
+            {
+                "question": "¿Puedo cambiar mi perfil?",
+                "answer": "El menú del avatar de administración incluye la edición del perfil. Revisa con cuidado el correo y el estado de tu propia cuenta."
+            }
+        ],
+        "related": ["access", "employees", "client-access", "audits"],
+        "tasks": [
+            {
+                "title": "Crear una cuenta de administración",
+                "steps": [
+                    "Pulsa Crear usuario, arriba a la derecha del listado.",
+                    "Escribe el nombre y el correo de la persona que administrará la herramienta.",
+                    "Revisa el estado activo de la cuenta y completa los campos obligatorios.",
+                    "Pulsa Guardar al principio o al final del formulario.",
+                    "Pide a la persona que revise el correo de acceso que recibirá."
+                ],
+                "result": "Se crea una cuenta con acceso de administración. No es una ficha de empleada o de cliente."
+            },
+            {
+                "title": "Cambiar datos o desactivar una cuenta",
+                "steps": [
+                    "En Usuarios, busca la persona y pulsa los tres puntos de la derecha.",
+                    "Pulsa Editar.",
+                    "Cambia el nombre o correo que sea necesario. El campo de contraseña aparece al editar tu propio perfil; no aparece al editar a otra persona.",
+                    "Para impedir que otra persona entre, desmarca la opción de cuenta activa. Esta opción no aparece al editar tu propia cuenta.",
+                    "Pulsa Guardar cambios."
+                ],
+                "result": "Otra persona con la cuenta desactivada deja de poder entrar. Para cambiar tu contraseña, utiliza la edición de tu perfil."
+            },
+            {
+                "title": "Eliminar un elemento del listado",
+                "steps": [
+                    "Pulsa Usuarios en el menú lateral y localiza la fila del elemento que quieres quitar.",
+                    "Pulsa los tres puntos de la derecha y después Eliminar.",
+                    "Lee el aviso de la ventana. Si dudas de qué fila has seleccionado, cancela y comprueba su nombre en el listado antes de continuar.",
+                    "Si es el elemento correcto y quieres retirarlo, confirma Eliminar. Si no estás seguro, pulsa Cancelar.",
+                    "Comprueba que ya no aparece en el listado."
+                ],
+                "result": "El elemento se retira de la herramienta. No hay una papelera desde la que puedas recuperarlo tú mismo. Las copias descargadas o enviadas no se borran."
+            },
+            {
+                "title": "Cambiar mi contraseña",
+                "steps": [
+                    "Pulsa tu imagen o iniciales de arriba a la derecha y abre la edición del perfil.",
+                    "Escribe la nueva contraseña en Contraseña y repítela en Confirmar contraseña. Deja ambos campos vacíos si no quieres cambiarla.",
+                    "Pulsa Guardar cambios."
+                ],
+                "result": "Si has escrito y guardado una contraseña nueva, tendrás que utilizarla la próxima vez que entres."
+            }
+        ]
+    },
+    {
+        "id": "configuration",
+        "roles": ["admin"],
+        "category": "Configuración global",
+        "title": "Cambiar los datos de la entidad y la ubicación al fichar",
+        "description": "Estos ajustes se aplican a toda la entidad. Revisa qué cambiarás antes de guardar.",
+        "href": "/configuration",
+        "steps": ["Pulsa Configuración global en el menú lateral izquierdo."],
+        "effects": [
+            "Cambian los datos comunes de la entidad. Las copias de documentos ya descargadas o enviadas no cambian.",
+            "Si la exiges, no podrán registrar una entrada o salida sin que el dispositivo consiga la ubicación. Solo se recoge al entrar y salir; no se sigue el recorrido durante el trabajo."
+        ],
+        "questions": [
+            {
+                "question": "Desde que activamos la ubicación no pueden fichar.",
+                "answer": "Pide que revisen los permisos del sitio y del móvil. Si el dispositivo no consigue una posición, registra la incidencia y revisa las horas reales antes de corregirlas."
+            },
+            {
+                "question": "¿Cambiar el logotipo actualiza un PDF enviado?",
+                "answer": "No. Los archivos ya enviados son copias independientes. Genera y revisa una nueva copia si debe reflejar el cambio."
+            }
+        ],
+        "related": ["mobile", "time-records", "contracts", "budgets"],
+        "tasks": [
+            {
+                "title": "Corregir los datos o el logotipo",
+                "steps": [
+                    "Busca el campo que quieres corregir: nombre de la entidad, identificación fiscal, dirección o datos de contacto.",
+                    "Pulsa dentro del campo, borra el dato incorrecto y escribe el correcto.",
+                    "Si quieres cambiar el logotipo, selecciona la nueva imagen en el campo de logotipo y revisa la vista previa.",
+                    "Pulsa Guardar, en la parte superior derecha.",
+                    "Si has cambiado datos que aparecen en presupuestos o contratos, descarga un PDF nuevo y comprueba el resultado."
+                ],
+                "result": "Cambian los datos comunes de la entidad. Las copias de documentos ya descargadas o enviadas no cambian."
+            },
+            {
+                "title": "Pedir ubicación al iniciar y finalizar el trabajo",
+                "steps": [
+                    "Busca la opción de exigir ubicación en los fichajes.",
+                    "Antes de activarla, informa a las empleadas de que deberán permitir la ubicación en el móvil.",
+                    "Marca la casilla para exigirla, o quita la marca para dejar de exigirla.",
+                    "Pulsa Guardar, en la parte superior derecha."
+                ],
+                "result": "Si la exiges, no podrán registrar una entrada o salida sin que el dispositivo consiga la ubicación. Solo se recoge al entrar y salir; no se sigue el recorrido durante el trabajo."
+            }
+        ]
+    },
+    {
+        "id": "audits",
+        "roles": ["admin"],
+        "category": "Registros de acción",
+        "title": "Ver quién cambió un dato",
+        "description": "Consulta los cambios guardados, la persona que los hizo y los valores anteriores.",
+        "href": "/audits",
+        "steps": ["Pulsa Registros de acción en el menú lateral izquierdo."],
+        "effects": ["Solo estás consultando lo que ocurrió. Esta pantalla no deshace cambios ni recupera datos eliminados."],
+        "questions": [
+            {
+                "question": "¿Puedo deshacer una eliminación desde aquí?",
+                "answer": "No hay una acción de restaurar desde esta pantalla. Consulta con la persona responsable si necesitas recuperar información."
+            },
+            {
+                "question": "¿Dónde veo por qué se corrigió un fichaje?",
+                "answer": "Abre su modificación y revisa el motivo guardado. El calendario de registros también muestra la última modificación."
+            }
+        ],
+        "related": ["time-records", "users"],
+        "tasks": [
+            {
+                "title": "Consultar el detalle de un cambio",
+                "steps": [
+                    "Busca la operación en el listado. Revisa la fecha, la persona y el nombre del elemento afectado.",
+                    "Si necesitas otra página del listado, usa los botones de página situados debajo de la tabla.",
+                    "En la fila que quieres consultar, pulsa los tres puntos de la derecha y después Visualizar.",
+                    "Compara los valores anteriores con los nuevos. En una corrección de horas, lee también el motivo anotado."
+                ],
+                "result": "Solo estás consultando lo que ocurrió. Esta pantalla no deshace cambios ni recupera datos eliminados."
+            }
+        ]
+    },
+    {
+        "id": "basics",
+        "roles": ["admin", "employee", "client"],
+        "category": "Ayuda",
+        "title": "Cómo usar los botones y guardar",
+        "description": "Empieza aquí si no sabes cómo abrir una ficha o guardar lo que has escrito.",
+        "href": "/dashboard",
+        "steps": [
+            "En un ordenador, pulsa una vez con el ratón. En un móvil, toca una vez con el dedo.",
+            "Para ver lo que hay más abajo, mueve la rueda del ratón o desliza el dedo hacia arriba."
+        ],
+        "effects": [
+            "Si la herramienta tarda, espera y comprueba el resultado antes de pulsar Guardar otra vez. Así evitas crear el mismo dato dos veces."
+        ],
+        "questions": [
+            {
+                "question": "No encuentro un dato que antes aparecía.",
+                "answer": "Borra la búsqueda y revisa filtros de fecha, año, estado y página. Comprueba también que has entrado con la cuenta correcta. Si sigue sin aparecer, consulta con administración."
+            },
+            {
+                "question": "No sé si se guardó.",
+                "answer": "Espera a que termine la operación y comprueba el resultado en la lista o ficha. Si hubo un corte de conexión, revisa antes de repetir para evitar duplicados."
+            }
+        ],
+        "related": ["access", "mobile"],
+        "tasks": [
+            {
+                "title": "Abrir una sección y una ficha",
+                "steps": [
+                    "Si tienes un menú a la izquierda, pulsa el nombre del apartado. Si el menú está oculto, pulsa el botón de menú de arriba a la izquierda.",
+                    "Si tu pantalla muestra accesos en Inicio, pulsa el acceso que necesites.",
+                    "En los listados, busca la fila de la persona o documento. Pulsa los tres puntos de su extremo derecho.",
+                    "Pulsa Visualizar para consultar, o Editar para cambiar datos, cuando aparezcan esas opciones."
+                ],
+                "result": "Consultar una ficha no cambia sus datos."
+            },
+            {
+                "title": "Rellenar y guardar un formulario",
+                "steps": [
+                    "Pulsa dentro del recuadro del dato que quieres rellenar y escribe.",
+                    "Si el campo tiene una flecha, púlsala y elige una opción de la lista que se abre.",
+                    "Una casilla cuadrada se marca pulsándola. Vuelve a pulsarla para quitar la marca.",
+                    "Rellena los campos obligatorios, señalados con un asterisco (*).",
+                    "Pulsa Guardar si estás creando algo, o Guardar cambios si lo estás modificando.",
+                    "Si aparece un texto de error debajo de un campo, lee qué falta, corrígelo y vuelve a guardar.",
+                    "Comprueba que el dato aparece en la ficha o en la lista antes de repetir la operación."
+                ],
+                "result": "Lo escrito queda guardado cuando la herramienta acepta el formulario. Cancelar descarta los cambios que aún no hayas guardado."
+            }
+        ]
+    },
+    {
+        "id": "mobile",
+        "roles": ["admin", "employee", "client"],
+        "category": "Uso en el móvil",
+        "title": "Abrir la herramienta en el móvil y resolver problemas de conexión",
+        "description": "Puedes utilizar la herramienta desde el navegador del móvil. Necesitas Internet para guardar, enviar mensajes y fichar.",
+        "href": null,
+        "steps": ["Abre el navegador del móvil y escribe la dirección de la herramienta. Entra con tu correo y contraseña."],
+        "effects": [
+            "Instalar añade un acceso en el móvil. No crea otra cuenta y seguirás necesitando conexión.",
+            "La herramienta no guarda una cola de fichajes sin conexión para enviarlos después. Debes comprobar el resultado al recuperar Internet.",
+            "Si la entidad exige ubicación, el fichaje solo se guarda cuando se consigue una posición válida."
+        ],
+        "questions": [
+            {
+                "question": "No aparece Instalar.",
+                "answer": "La propuesta depende del navegador y de si ya está instalada o se ha descartado. Puedes seguir utilizando la dirección web."
+            },
+            {
+                "question": "No puedo fichar porque no encuentra la ubicación.",
+                "answer": "Comprueba los permisos del sitio y del dispositivo y que la ubicación esté activada. Reintenta con conexión. Si falla, comunica la hora real y el error a administración para que lo revise."
+            }
+        ],
+        "related": ["access", "employee-work", "messages"],
+        "tasks": [
+            {
+                "title": "Moverme por las pantallas",
+                "steps": [
+                    "Toca una vez el botón que quieras utilizar. En el móvil algunos botones muestran solo un dibujo.",
+                    "Si tienes menú lateral y no lo ves, toca el botón de menú de arriba a la izquierda. Después toca el apartado.",
+                    "Desliza el dedo hacia arriba para ver el contenido situado más abajo. En una tabla ancha, desplaza la tabla hacia un lado para ver las últimas columnas.",
+                    "Si aparece una propuesta para instalar la herramienta y quieres un icono de acceso, sigue sus instrucciones. También puedes seguir usando el navegador."
+                ],
+                "result": "Instalar añade un acceso en el móvil. No crea otra cuenta y seguirás necesitando conexión."
+            },
+            {
+                "title": "No hay conexión o no puedo guardar",
+                "steps": [
+                    "Comprueba si el móvil tiene wifi o datos móviles. Actívalos o busca una zona con cobertura.",
+                    "Si aparece la pantalla sin conexión, pulsa Recargar cuando el botón vuelva a estar disponible.",
+                    "Vuelve a la ficha o al registro y comprueba si la última acción se guardó antes de repetirla.",
+                    "Si se trata de un fichaje que no se registró, comunica a administración el cliente, el día, la hora real y el error."
+                ],
+                "result": "La herramienta no guarda una cola de fichajes sin conexión para enviarlos después. Debes comprobar el resultado al recuperar Internet."
+            },
+            {
+                "title": "El móvil no permite utilizar la ubicación",
+                "steps": [
+                    "Comprueba en los ajustes del móvil que la ubicación está activada.",
+                    "Abre los permisos del navegador o del sitio y permite la ubicación para esta herramienta. El lugar de ese ajuste depende del móvil y del navegador.",
+                    "Vuelve a la visita y pulsa el botón de iniciar o finalizar que corresponda. Espera a que encuentre la ubicación.",
+                    "Si sigue fallando, comunica el mensaje que aparece a administración."
+                ],
+                "result": "Si la entidad exige ubicación, el fichaje solo se guarda cuando se consigue una posición válida."
+            }
+        ]
+    }
+]

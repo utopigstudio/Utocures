@@ -78,7 +78,7 @@ function resetModal() {
 <template>
   <Card>
     <CardHeader>
-      <CardTitle class="text-xl flex flex-col md:flex-row items-start md:items-center gap-2 mb-4">
+      <CardTitle help-article="files" :help-label="$t('help.topic', { topic: $t('layout.documents_and_files') })" class="text-xl flex flex-col md:flex-row items-start md:items-center gap-2 mb-4">
         <div class="flex items-center gap-2">
           <File class="text-blue-600 w-5 h-5" />
           <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('layout.documents_and_files') }}</span>

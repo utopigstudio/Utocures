@@ -14,7 +14,7 @@ class AnnouncementIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sort' => 'in:title,created_at',
+            'sort' => 'in:title,to,created_at',
             'dir' => 'in:asc,desc',
             'filter_search' => 'nullable|string',
         ];

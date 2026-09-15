@@ -1,0 +1,2550 @@
+[
+    {
+        "id": "getting-started",
+        "roles": ["admin", "employee", "client"],
+        "category": "Primers passos amb Utocures",
+        "title": "Què és Utocures i qui la pot utilitzar",
+        "description": "Una introducció ràpida abans d’entrar: per a què serveix l’eina, qui hi té accés i des d’on es fa servir.",
+        "href": null,
+        "steps": [
+            "Utilitza l’adreça que t’hagi facilitat l’entitat. No necessites instal·lar cap programa; sí que necessites un compte i connexió a Internet."
+        ],
+        "effects": [
+            "El que veus depèn del teu perfil. Administració organitza serveis, personal i clients; el personal consulta la seva agenda i fitxa les visites; els clients llegeixen anuncis i escriuen a administració.",
+            "Entrar no depèn del dispositiu: pots utilitzar l’ordinador i el mòbil indistintament amb el mateix compte."
+        ],
+        "questions": [
+            {
+                "question": "Què és Utocures i per a què serveix?",
+                "answer": "És l’eina amb què la teva entitat organitza serveis d’atenció a persones: quina feina es fa, qui la fa, quan, i el registre de les hores realment treballades."
+            },
+            {
+                "question": "Qui pot utilitzar Utocures?",
+                "answer": "Tres perfils diferents: administració, personal (treballadores) i, si l’entitat ho activa, clients o persones usuàries. Cada perfil entra amb el seu propi compte i veu només el que li correspon."
+            },
+            {
+                "question": "Quina diferència hi ha entre una administradora i una treballadora?",
+                "answer": "Administració crea i organitza serveis, personal, clients, horaris i documents, i consulta el que ha fitxat tot l’equip. Una treballadora consulta la seva pròpia agenda, fitxa les seves entrades i sortides i anota incidències; no crea fitxes ni canvia assignacions."
+            },
+            {
+                "question": "Poden accedir les persones usuàries/clients o les seves famílies?",
+                "answer": "Sí, si administració els dona accés des de la seva fitxa. Amb el seu compte poden llegir el tauler d’anuncis i escriure a administració per Missatges; avui no consulten directament els seus horaris ni es descarreguen les factures o contractes des d’aquí, els han de demanar a administració."
+            },
+            {
+                "question": "Cal instal·lar algun programa?",
+                "answer": "No. S’utilitza des del navegador. Al mòbil pot oferir-te afegir un accés directe a la pantalla d’inici, però continua sent la mateixa web: necessites connexió a Internet per desar, fitxar i enviar missatges."
+            },
+            {
+                "question": "Des de quins dispositius puc utilitzar Utocures?",
+                "answer": "Des de qualsevol ordinador o mòbil amb navegador i connexió a Internet, amb el mateix compte."
+            }
+        ],
+        "related": ["access", "mobile", "client-area"],
+        "tasks": [
+            {
+                "title": "Entrar per primera vegada",
+                "steps": [
+                    "Obre el correu d’accés enviat per l’entitat. Si no el trobes, revisa Spam i comprova amb administració quin correu té el teu compte.",
+                    "Segueix l’enllaç del missatge. Segons el tipus de compte, permet entrar una vegada o triar una contrasenya. No has de buscar una contrasenya escrita al correu.",
+                    "Si ja tens contrasenya, obre l’adreça d’Utocures, escriu el correu i la contrasenya i prem Iniciar sessió. La guia d’Accés explica també com recuperar-la."
+                ],
+                "result": "Veuràs Tauler si ets administració o Inici si ets treballadora o client. Des d’Inici, la treballadora pot obrir Agenda."
+            },
+            {
+                "title": "Reconèixer els apartats segons el teu perfil",
+                "steps": [
+                    "Administració té un menú amb Tauler, Clients, Empleades, Serveis, Factures i altres apartats. Els horaris es gestionen dins de les fitxes de clients i empleades; no hi ha cap apartat del menú anomenat Horaris.",
+                    "Si entres com a personal, veuràs la teva Agenda, el comptador de fitxatge, Hores treballades i el Tauler d’anuncis.",
+                    "Si entres com a client, veuràs Inici, amb el Tauler d’anuncis i Missatges per escriure a l’entitat."
+                ],
+                "result": "Cada perfil veu només els apartats que li corresponen; no pots canviar de perfil des del teu propi compte."
+            }
+        ]
+    },
+    {
+        "id": "setup-order",
+        "roles": ["admin"],
+        "category": "Ordre per donar d’alta la informació",
+        "title": "En quin ordre crear serveis, característiques, personal i clients",
+        "description": "Les fitxes depenen les unes de les altres: abans de crear un client o una empleada convé tenir a punt els serveis i, si els fas servir, les característiques, per poder-los seleccionar des del seu formulari.",
+        "href": null,
+        "steps": [
+            "Abans de crear la primera fitxa, comprova quins serveis necessitaràs: se seleccionen des del formulari de client i d’empleada, i si el servei encara no està creat, no apareixerà per triar-lo."
+        ],
+        "effects": [
+            "Crear un client o una empleada sense tenir abans el servei creat obliga a tornar a la seva fitxa més endavant per seleccionar-lo, tan bon punt existeixi.",
+            "Un horari només es pot assignar quan el client té el servei seleccionat i una empleada activa té aquest mateix servei i disponibilitat horària suficient."
+        ],
+        "questions": [
+            {
+                "question": "Per on començo si l’eina és acabada de crear?",
+                "answer": "Primer Configuració global, amb les dades de l’entitat. Després Serveis i, si descriuràs les persones amb dades concretes, Característiques. Aquests dos catàlegs són la base: se seleccionen després des de les fitxes d’empleades i clients."
+            },
+            {
+                "question": "He de crear primer els serveis o les fitxes de persones?",
+                "answer": "Els serveis primer. En crear una fitxa d’empleada o de client selecciones serveis ja existents; si el servei encara no està creat, no apareixerà per triar-lo."
+            },
+            {
+                "question": "Les característiques són obligatòries abans de crear una fitxa?",
+                "answer": "No. Són opcionals: pots crear clients i empleades sense elles. Si les faràs servir, crea-les abans per poder-les seleccionar en omplir el formulari, tot i que també les pots afegir més endavant editant la fitxa."
+            },
+            {
+                "question": "Quin ordre segueixo per deixar una visita programada?",
+                "answer": "Servei, després empleada (amb aquest servei i la seva disponibilitat horària), després client (amb aquest mateix servei) i per últim l’horari des de la fitxa del client. Sense aquests passos anteriors, l’horari no té ni empleada ni servei per triar.",
+                "guide": "admin-start"
+            },
+            {
+                "question": "He creat el client abans que el servei, què faig?",
+                "answer": "Crea ara el servei que falta, edita la fitxa del client i selecciona’l. No cal tornar a crear la fitxa."
+            }
+        ],
+        "related": ["admin-start", "services-characteristics", "characteristics", "employees", "clients", "schedules"],
+        "tasks": [
+            {
+                "title": "Preparar els catàlegs abans de crear fitxes",
+                "steps": [
+                    "Obre Configuració global i completa les dades de l’entitat. Desa.",
+                    "Obre Serveis i crea els tipus de feina que oferiu, amb el seu preu i les seves tasques.",
+                    "Si anotaràs dades com idioma, al·lèrgies o preferències, obre Característiques i prepara també les opcions.",
+                    "Obre Empleats, crea la fitxa i selecciona-hi els serveis que pot realitzar; afegeix després la seva disponibilitat horària.",
+                    "Obre Clients, crea la fitxa i selecciona els serveis que necessita.",
+                    "Des de la fitxa del client, a Assignació de tasques, prem Afegir horari i tria el servei i l’empleada."
+                ],
+                "result": "Cada pas només pot triar el que ja existeix: sense servei no hi ha fitxa completa, i sense una fitxa amb servei i disponibilitat no hi ha horari a crear."
+            }
+        ]
+    },
+    {
+        "id": "access",
+        "roles": ["admin", "employee", "client"],
+        "category": "Accés i comptes d’usuari",
+        "title": "Entrar i recuperar la contrasenya",
+        "description": "Utilitza el correu del teu compte per entrar. Si no recordes la contrasenya, segueix la segona explicació.",
+        "href": null,
+        "steps": ["Obre al navegador l’adreça de l’eina que t’hagi facilitat l’entitat."],
+        "effects": [
+            "Veuràs els apartats que permet el teu compte. Un client i una empleada no veuen les mateixes pantalles que administració.",
+            "La contrasenya anterior deixa de servir. Aquesta acció no crea un compte si encara no t’han donat accés.",
+            "Aquest enllaç serveix per entrar una vegada. Si ja l’has utilitzat o ha caducat, demana’n un altre.",
+            "Canviar d’idioma torna a carregar la pantalla. Sortir del compte no finalitza un fitxatge obert."
+        ],
+        "questions": [
+            {
+                "question": "No arriba el correu.",
+                "answer": "Revisa el correu brossa i que has escrit el correu d’accés correcte. El missatge de sol·licitud no confirma que existeixi un compte amb aquell correu. Si no arriba, demana a administració que revisi l’accés i l’enviament."
+            },
+            {
+                "question": "L’enllaç ha caducat o ja s’ha fet servir.",
+                "answer": "Sol·licita’n un de nou des de la pantalla d’accés o demana que et reenviïn la invitació. Obre l’últim enllaç rebut."
+            },
+            {
+                "question": "El meu compte està desactivat.",
+                "answer": "Demana a administració que en revisi l’estat. Recuperar la contrasenya no reactiva un compte desactivat."
+            },
+            {
+                "question": "Què és l’enllaç màgic o Magic Link?",
+                "answer": "És l’enllaç d’un sol ús que pots demanar en lloc d’escriure la contrasenya: el reps per correu i, en obrir-lo, entres directament. Serveix una vegada; si el tornes a necessitar, sol·licita’n un altre."
+            },
+            {
+                "question": "Puc utilitzar el mateix compte al mòbil i a l’ordinador?",
+                "answer": "Sí. El compte no està lligat a cap dispositiu: entra amb el mateix correu i contrasenya des d’on el necessitis."
+            },
+            {
+                "question": "Com tanco la sessió?",
+                "answer": "Prem la teva imatge o inicials, a dalt a la dreta, i després Tancar sessió. Si tens un fitxatge obert, sortir del compte no el finalitza."
+            }
+        ],
+        "related": ["getting-started", "basics", "mobile"],
+        "tasks": [
+            {
+                "title": "Entrar amb la meva contrasenya",
+                "steps": [
+                    "Prem el requadre Adreça de correu i escriu el correu amb què et van donar accés.",
+                    "Prem Contrasenya i escriu la contrasenya. Respecta les majúscules i les minúscules.",
+                    "Prem Iniciar sessió, sota els camps.",
+                    "Espera que aparegui la pantalla d’inici. Si apareix un error, revisa el correu i la contrasenya."
+                ],
+                "result": "Veuràs els apartats que permet el teu compte. Un client i una empleada no veuen les mateixes pantalles que administració."
+            },
+            {
+                "title": "He oblidat la contrasenya",
+                "steps": [
+                    "A la pantalla d’entrada, prem Has oblidat la contrasenya?, sota el camp de contrasenya.",
+                    "Escriu el teu correu a Adreça de correu.",
+                    "Prem Envia un enllaç per restablir la contrasenya.",
+                    "Obre el teu correu i busca el missatge de l’eina. Revisa també Correu brossa o Spam.",
+                    "Obre l’enllaç del missatge més recent. Escriu una contrasenya nova i repeteix-la a Confirmar contrasenya.",
+                    "Prem Restablir la contrasenya. Després entra amb el teu correu i la contrasenya nova."
+                ],
+                "result": "La contrasenya anterior deixa de servir. Aquesta acció no crea un compte si encara no t’han donat accés."
+            },
+            {
+                "title": "Entrar amb un enllaç rebut per correu",
+                "steps": [
+                    "Prem Has oblidat la contrasenya? a la pantalla d’entrada.",
+                    "Escriu el teu correu i prem Sol·licitar enllaç d’un sol ús.",
+                    "Obre el teu correu i prem l’enllaç del missatge més recent."
+                ],
+                "result": "Aquest enllaç serveix per entrar una vegada. Si ja l’has utilitzat o ha caducat, demana’n un altre."
+            },
+            {
+                "title": "Canviar d’idioma o sortir del compte",
+                "steps": [
+                    "Desa primer el que estiguis escrivint.",
+                    "Prem la teva imatge o inicials, a dalt a la dreta.",
+                    "Per canviar d’idioma, obre Idioma i prem Español o Català.",
+                    "Per sortir, prem Tancar sessió al menú del teu compte."
+                ],
+                "result": "Canviar d’idioma torna a carregar la pantalla. Sortir del compte no finalitza un fitxatge obert."
+            }
+        ]
+    },
+    {
+        "id": "client-area",
+        "roles": ["client"],
+        "category": "Inici",
+        "title": "Utilitzar la meva pantalla de client",
+        "description": "Des d’aquí pots parlar amb l’entitat i llegir-ne els avisos.",
+        "href": "/dashboard",
+        "steps": ["Entra amb el correu de la invitació i la contrasenya que vas triar. Apareixerà Inici."],
+        "effects": [
+            "Administració podrà llegir la petició. Demanar un canvi per missatge no l’aplica automàticament.",
+            "El teu compte permet veure missatges i anuncis. Per obtenir contractes o factures, demana’ls a administració."
+        ],
+        "questions": [
+            {
+                "question": "On veig el meu contracte o factura?",
+                "answer": "Sol·licita’l a administració per Missatges. L’àrea de client actual no inclou un llistat d’aquells documents."
+            },
+            {
+                "question": "Vull canviar el meu correu d’accés.",
+                "answer": "Demana-ho a administració. En modificar-lo t’arribarà al nou correu un enllaç d’invitació o recuperació segons l’estat del compte."
+            }
+        ],
+        "related": ["messages", "announcement-board", "access", "mobile"],
+        "tasks": [
+            {
+                "title": "Demanar informació a l’entitat",
+                "steps": [
+                    "A Inici, prem Missatges.",
+                    "Prem el requadre de la part inferior i escriu el que necessites. Per exemple: «Necessito una còpia del meu contracte».",
+                    "Revisa el text i prem Enviar.",
+                    "Comprova que apareix a la conversa. Torna a Missatges més endavant per llegir la resposta."
+                ],
+                "result": "Administració podrà llegir la petició. Demanar un canvi per missatge no l’aplica automàticament."
+            },
+            {
+                "title": "Llegir avisos i consultar ajuda",
+                "steps": [
+                    "A Inici, prem Tauler d’anuncis.",
+                    "A l’anunci que vulguis llegir, prem Veure detall. En acabar, prem Tancar detall.",
+                    "Si necessites instruccions d’una pantalla, prem Ajuda o el signe d’interrogació de la capçalera.",
+                    "Per sortir del compte, prem la imatge o inicials de dalt a la dreta i després Tancar sessió."
+                ],
+                "result": "El teu compte permet veure missatges i anuncis. Per obtenir contractes o factures, demana’ls a administració."
+            }
+        ]
+    },
+    {
+        "id": "admin-start",
+        "roles": ["admin"],
+        "category": "Configuració inicial de l’entitat",
+        "title": "Consultar el resum i preparar l’eina per primera vegada",
+        "description": "El tauler mostra un resum. La primera vegada, segueix aquest ordre per deixar l’eina a punt abans de crear clients.",
+        "href": "/dashboard",
+        "steps": ["Prem Tauler al menú lateral esquerre."],
+        "effects": [
+            "Canviar el període canvia el que veus. No canvia fitxatges ni horaris.",
+            "La planificació queda preparada quan existeixen les visites. Crear només les fitxes no assigna feines.",
+            "Serveis, característiques i configuració global són la base: convé crear-los abans de donar d’alta empleades i clients, perquè se seleccionen des de les seves fitxes."
+        ],
+        "questions": [
+            {
+                "question": "Hi ha visites programades, però les hores treballades són zero.",
+                "answer": "Programat és el que està previst; treballat prové dels fitxatges. Comprova que existeixen entrades i sortides tancades i que el període les inclou."
+            },
+            {
+                "question": "Per on continuo després de crear un client?",
+                "answer": "Selecciona els seus serveis, prepara la disponibilitat del personal i crea l’horari des de la seva fitxa. Crea l’accés al portal només si el client necessita entrar."
+            },
+            {
+                "question": "Quina informació hauria de configurar abans de començar a crear clients?",
+                "answer": "Primer Configuració global (dades de l’entitat), després Serveis i, si les utilitzes, Característiques. Aquestes dades se seleccionen després des de les fitxes d’empleades i clients."
+            },
+            {
+                "question": "He de crear primer els serveis o les treballadores?",
+                "answer": "Primer els serveis. En crear una fitxa d’empleada o de client selecciones serveis ja existents; si el servei encara no està creat, no apareixerà per triar-lo."
+            },
+            {
+                "question": "Com preparo Utocures per començar a fitxar?",
+                "answer": "Crea el servei, dona d’alta l’empleada amb aquest servei i la seva disponibilitat horària, crea la fitxa del client amb el mateix servei i, finalment, afegeix l’horari des de la fitxa del client. Sense aquest horari no hi ha visita en què fitxar."
+            },
+            {
+                "question": "Puc importar informació que ja tinc en un Excel?",
+                "answer": "No. Avui no existeix una importació massiva de clients ni d’empleades: cada fitxa es crea una a una des del seu formulari."
+            },
+            {
+                "question": "Com comprovo que l’eina està a punt per començar a utilitzar-se?",
+                "answer": "Comprova servei, compte actiu i disponibilitat de l’empleada, i servei i horari del client. Revisa que la visita concreta apareix a l’agenda de la persona i que pot obrir-la. Per fitxar necessitarà connexió i, si s’exigeix, permetre la ubicació. No iniciïs un fitxatge de prova com si fos feina real."
+            },
+            {
+                "question": "Quines dades són obligatòries per importar clients?",
+                "answer": "No hi ha cap opció d’importació des d’Excel a la pantalla actual. Les fitxes es creen amb Crear client, emplenant els camps obligatoris del formulari; un Excel exportat no es pot tornar a carregar des d’aquí.",
+                "guide": "clients"
+            }
+        ],
+        "related": ["setup-order", "services-characteristics", "characteristics", "employees", "clients", "schedules", "configuration"],
+        "tasks": [
+            {
+                "title": "Consultar les hores d’un altre període",
+                "steps": [
+                    "Busca el resum d’hores treballades.",
+                    "Prem el selector de període i tria l’opció que necessites.",
+                    "Selecciona el mes, l’any o les dates d’inici i fi que demani l’opció triada.",
+                    "Llegeix el total que apareix. Per revisar les entrades i sortides que el componen, prem Registres d’hores al menú lateral."
+                ],
+                "result": "Canviar el període canvia el que veus. No canvia fitxatges ni horaris."
+            },
+            {
+                "title": "Preparar l’eina per primera vegada",
+                "steps": [
+                    "Prem Configuració global i completa les dades de l’entitat. Desa.",
+                    "Prem Serveis i crea els tipus de feina que oferiu. Utilitza l’ajuda d’aquella pantalla per seguir els passos.",
+                    "Si has de descriure persones amb dades concretes (idioma, al·lèrgies, preferències...), prem Característiques i prepara-les també; són opcionals.",
+                    "Prem Empleades, crea les fitxes i després edita-les per afegir la disponibilitat horària.",
+                    "Prem Clients, crea cada fitxa i selecciona els serveis que necessita.",
+                    "Obre la fitxa del client amb Visualitzar. Baixa a Assignació de tasques i prem Afegir horari per assignar dia, hores i empleada.",
+                    "Comprova les visites a la fitxa de l’empleada. A mesura que fitxi, podràs consultar el que ha treballat a Registres d’hores."
+                ],
+                "result": "La planificació queda preparada quan existeixen les visites. Crear només les fitxes no assigna feines."
+            }
+        ]
+    },
+    {
+        "id": "services-characteristics",
+        "roles": ["admin"],
+        "category": "Serveis",
+        "title": "Crear o canviar un servei",
+        "description": "Un servei és un tipus de feina, per exemple una neteja. Aquí en defineixes el preu i les tasques que inclou.",
+        "href": "/services",
+        "steps": ["Prem Serveis al menú lateral esquerre."],
+        "effects": [
+            "El servei estarà disponible per seleccionar-lo a les fitxes de clients i empleades. Encara no s’assigna a ningú.",
+            "Canvien les dades del servei. Comprova els preus abans de preparar documents nous; els documents ja desats es revisen per separat."
+        ],
+        "questions": [
+            {
+                "question": "He creat un servei però no apareix a l’horari.",
+                "answer": "Primer selecciona el servei a les fitxes del client i de l’empleada i desa els canvis. Després torna a afegir l’horari des de la fitxa del client."
+            },
+            {
+                "question": "Com indico quines treballadores poden fer un servei?",
+                "answer": "No s’indica des de Serveis: selecciona el servei a la fitxa de cada empleada (apartat Serveis) i desa. Només apareixeran com a opció, en programar un horari, les empleades que tinguin aquest servei marcat."
+            },
+            {
+                "question": "Puc assignar diversos serveis diferents a un mateix client?",
+                "answer": "Sí. Selecciona tots els serveis que necessiti a la seva fitxa i crea un horari diferent per a cadascun, amb la treballadora que correspongui a cada servei."
+            },
+            {
+                "question": "Puc assignar cada servei d’un client a una treballadora diferent?",
+                "answer": "Sí. La relació no és «una treballadora per client»: cada horari del client tria la seva pròpia treballadora, així que pots repartir els seus serveis entre diverses persones."
+            },
+            {
+                "question": "Com elimino un servei?",
+                "answer": "La pantalla actual de Serveis ofereix crear i editar, però no mostra cap botó per eliminar el servei. Treure un servei d’una fitxa de client o empleada només el desassigna d’aquella persona; no elimina el servei del catàleg."
+            }
+        ],
+        "related": ["clients", "employees", "characteristics", "schedules"],
+        "tasks": [
+            {
+                "title": "Crear un servei",
+                "steps": [
+                    "Prem Nou servei, a dalt a la dreta.",
+                    "Escriu un Nom fàcil de reconèixer i una Descripció del que inclou.",
+                    "Emplena Preu / hora i, si correspon, Descompte per a socis.",
+                    "Tria Color i Icona per reconèixer el servei a les pantalles.",
+                    "Baixa a Tasques del servei i escriu la primera tasca a la fila disponible.",
+                    "Per afegir una altra tasca, prem Afegir element, sota les files, i emplena la fila nova. Repeteix si en necessites més.",
+                    "Prem Desar al principi o al final del formulari."
+                ],
+                "result": "El servei estarà disponible per seleccionar-lo a les fitxes de clients i empleades. Encara no s’assigna a ningú."
+            },
+            {
+                "title": "Canviar un servei existent",
+                "steps": [
+                    "Prem Serveis al menú lateral.",
+                    "Busca la targeta del servei i prem Editar servei, a la part inferior d’aquesta targeta.",
+                    "Canvia el nom, preu, descripció o les tasques que correspongui.",
+                    "Per treure una fila de tasques, prem la paperera d’aquella fila.",
+                    "Prem Desar canvis i revisa la targeta del servei."
+                ],
+                "result": "Canvien les dades del servei. Comprova els preus abans de preparar documents nous; els documents ja desats es revisen per separat."
+            }
+        ]
+    },
+    {
+        "id": "characteristics",
+        "roles": ["admin"],
+        "category": "Característiques i criteris d’assignació",
+        "title": "Crear opcions per descriure les persones",
+        "description": "Les característiques permeten anotar detalls a les fitxes, triant entre opcions preparades. Són informació de consulta, no un filtre automàtic.",
+        "href": "/characteristics",
+        "steps": ["Prem Característiques al menú lateral esquerre."],
+        "effects": [
+            "La fitxa mostra l’opció triada. Una característica descriu la persona; no li assigna serveis ni horaris.",
+            "Si treus una opció, deixa d’estar assignada a les persones que la tenien. Revisa aquestes fitxes si necessites triar una altra opció.",
+            "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+        ],
+        "questions": [
+            {
+                "question": "No veig una opció a la fitxa.",
+                "answer": "Obre Característiques, edita la característica i comprova que l’opció existeix. Després torna a editar la fitxa de la persona i selecciona-la."
+            },
+            {
+                "question": "Per a què utilitza Utocures les característiques?",
+                "answer": "Només com a informació visible a la fitxa: per exemple idioma, preferències o al·lèrgies. Serveixen perquè administració les tingui en compte en decidir manualment, però l’eina no les utilitza per filtrar res."
+            },
+            {
+                "question": "Com influeixen les característiques en les treballadores que puc assignar a un servei?",
+                "answer": "No hi influeixen: avui no formen part del filtre d’assignació. El que decideix qui pot aparèixer com a opció és el servei assignat a l’empleada, que estigui activa, la seva disponibilitat horària i que no tingui una altra visita en aquelles hores."
+            },
+            {
+                "question": "Per què una treballadora no apareix entre les opcions disponibles?",
+                "answer": "Revisa el servei, la disponibilitat i els solapaments d’horari; no revisis les característiques, perquè no afecten aquella llista. La guia d’Assignar treballadores a serveis explica l’ordre complet de comprovació."
+            }
+        ],
+        "related": ["clients", "employees", "services-characteristics", "schedules"],
+        "tasks": [
+            {
+                "title": "Crear una característica i les seves opcions",
+                "steps": [
+                    "Prem Crear característica, a dalt a la dreta del llistat.",
+                    "A Nom de la característica, escriu quina dada vols descriure.",
+                    "A Opcions, escriu la primera resposta possible.",
+                    "Prem Afegir element per afegir una altra resposta i escriu-ne el text. Repeteix per a les altres opcions.",
+                    "Prem Desar.",
+                    "Per utilitzar-la, obre Clients o Empleades, entra a Editar en una fitxa i selecciona l’opció a Característiques. Prem Desar canvis."
+                ],
+                "result": "La fitxa mostra l’opció triada. Una característica descriu la persona; no li assigna serveis ni horaris."
+            },
+            {
+                "title": "Canviar una característica",
+                "steps": [
+                    "A Característiques, busca la fila i prem els tres punts de la dreta.",
+                    "Prem Editar.",
+                    "Canvia el nom o les opcions. Utilitza Afegir element per a una opció nova i la paperera d’una fila per treure-la.",
+                    "Prem Desar canvis."
+                ],
+                "result": "Si treus una opció, deixa d’estar assignada a les persones que la tenien. Revisa aquestes fitxes si necessites triar una altra opció."
+            },
+            {
+                "title": "Eliminar un element del llistat",
+                "steps": [
+                    "Prem Característiques al menú lateral i localitza la fila de l’element que vols treure.",
+                    "Prem els tres punts de la dreta i després Eliminar.",
+                    "Llegeix l’avís de la finestra. Si dubtes de quina fila has seleccionat, cancel·la i comprova’n el nom al llistat abans de continuar.",
+                    "Si és l’element correcte i vols retirar-lo, confirma Eliminar. Si no n’estàs segur, prem Cancel·lar.",
+                    "Comprova que ja no apareix al llistat."
+                ],
+                "result": "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+            }
+        ]
+    },
+    {
+        "id": "clients",
+        "roles": ["admin"],
+        "category": "Gestió de clients",
+        "title": "Crear, consultar o canviar un client",
+        "description": "Una fitxa desa les dades d’una persona. Aquí s’explica com crear-la i com tornar a trobar-la.",
+        "href": "/clients",
+        "steps": ["Prem Clients al menú lateral esquerre. Al mòbil, obre primer el menú amb el botó de dalt a l’esquerra."],
+        "effects": [
+            "Eliminar un client el retira del llistat i desactiva l’accés. Revisa abans les visites i documents: eliminar la fitxa no substitueix la revisió d’aquestes feines.",
+            "Desar l’IBAN no fa cap càrrec al compte bancari."
+        ],
+        "questions": [
+            {
+                "question": "No apareix un servei en programar.",
+                "answer": "Edita el client i comprova que té aquell servei seleccionat. Comprova també que existeix a Serveis."
+            },
+            {
+                "question": "El client no pot entrar encara que té correu.",
+                "answer": "Tenir un correu a la fitxa no crea un compte d’accés. Revisa la targeta d’accés al portal i el seu estat."
+            },
+            {
+                "question": "Puc donar d’alta una mateixa entitat amb diversos serveis diferents?",
+                "answer": "Sí: selecciona tots els serveis que necessiti a la seva fitxa. El que no admet una única fitxa és més d’una adreça o seu pròpia; el CIF/NIF i el correu són únics per fitxa, així que cada client només en pot tenir un."
+            },
+            {
+                "question": "Com consulto els seus horaris i treballadores assignades?",
+                "answer": "Obre la fitxa amb Visualitzar i baixa a Assignació de tasques: allà veus el calendari amb els horaris i la treballadora assignada a cadascun."
+            },
+            {
+                "question": "Puc exportar el llistat de clients a Excel?",
+                "answer": "Sí, amb Descarregar Excel al final del llistat. S’exporten les dades visibles del llistat (CIF/NIF, nom, correu, telèfon, si és soci, adreça, ciutat, codi postal i data d’alta), no les visites ni les factures."
+            }
+        ],
+        "related": ["client-access", "schedules", "files", "notes", "budgets", "automatic-invoices", "client-locations"],
+        "tasks": [
+            {
+                "title": "Crear un client",
+                "steps": [
+                    "Revisa el llistat per comprovar que el client no existeix. Pots escriure el nom al camp de cerca de clients.",
+                    "Prem Crear client, a dalt a la dreta, damunt del llistat.",
+                    "A Informació personal, escriu Nom complet, Data de naixement i CIF/NIF. Selecciona Gènere.",
+                    "Baixa fins a Dades de contacte. Escriu Correu electrònic, Telèfon, Adreça, Ciutat, Codi postal i País.",
+                    "A Dades de facturació, emplena les dades bancàries si correspon. Revisa les caselles Preus amb IVA i És soci.",
+                    "Deixa Crear factura automàtica sense marcar si encara no has acordat utilitzar-la amb la persona responsable. Hi ha una explicació específica d’aquesta casella a l’ajuda de Facturació.",
+                    "A Serveis, prem els serveis que necessita el client per deixar-los seleccionats.",
+                    "Si hi ha característiques que hagis d’indicar, selecciona l’opció corresponent a cadascuna.",
+                    "Prem Desar, al principi o al final del formulari.",
+                    "Si s’assenyalen errors, corregeix els camps indicats i prem Desar una altra vegada. Comprova que el client apareix al llistat."
+                ],
+                "result": "El client ja té fitxa. Encara has de crear el seu horari i, si necessita entrar a l’eina, donar-li accés al portal."
+            },
+            {
+                "title": "Consultar les dades d’un client",
+                "steps": [
+                    "Prem Clients al menú lateral.",
+                    "Busca la fila del client i prem els tres punts de la dreta.",
+                    "Prem Visualitzar.",
+                    "Prem la pestanya que necessites: Dades personals, Factures, Contractes, Pressupostos o Notes.",
+                    "A Dades personals, baixa per veure serveis, horaris, treballadores assignades, arxius i accés al portal."
+                ],
+                "result": "Pots consultar la informació sense modificar-la."
+            },
+            {
+                "title": "Corregir les dades d’un client",
+                "steps": [
+                    "Prem Clients i localitza el client.",
+                    "Prem els tres punts de la seva fila i després Editar.",
+                    "Prem dins del camp que vols canviar. Esborra la dada incorrecta i escriu la correcta.",
+                    "Prem Desar canvis al principi o al final del formulari.",
+                    "Torna a obrir la fitxa amb Visualitzar i comprova la correcció."
+                ],
+                "result": "S’actualitza aquesta fitxa. Canviar el correu de contacte no canvia el correu amb què el client entra al portal."
+            },
+            {
+                "title": "Eliminar un element del llistat",
+                "steps": [
+                    "Prem Clients al menú lateral i localitza la fila de l’element que vols treure.",
+                    "Prem els tres punts de la dreta i després Eliminar.",
+                    "Llegeix l’avís de la finestra. Si dubtes de quina fila has seleccionat, cancel·la i comprova’n el nom al llistat abans de continuar.",
+                    "Si és l’element correcte i vols retirar-lo, confirma Eliminar. Si no n’estàs segur, prem Cancel·lar.",
+                    "Comprova que ja no apareix al llistat."
+                ],
+                "result": "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+            },
+            {
+                "title": "Descarregar el llistat en Excel",
+                "steps": [
+                    "Prem Clients al menú lateral.",
+                    "Si necessites només certes dades, utilitza els filtres que apareixen damunt del llistat. Comprova quines files es mostren.",
+                    "Baixa fins al final de la taula i prem Descarregar Excel, a la dreta.",
+                    "Busca l’arxiu a les descàrregues de l’ordinador o mòbil."
+                ],
+                "result": "Es descarrega una còpia del llistat. Les dades de l’eina no canvien. El botó apareix quan hi ha resultats."
+            }
+        ]
+    },
+    {
+        "id": "client-access",
+        "roles": ["admin"],
+        "category": "Gestió de clients",
+        "title": "Permetre que un client entri a l’eina",
+        "description": "Fes-ho quan un client necessiti el seu compte per llegir anuncis i parlar amb administració.",
+        "href": "/clients",
+        "steps": [
+            "Prem Clients al menú lateral.",
+            "A la fila del client, prem els tres punts de la dreta i després Visualitzar.",
+            "Baixa fins al bloc Accés al portal de clients."
+        ],
+        "effects": [
+            "Es crea el compte i s’envia un correu real al client. Desar un correu a Dades de contacte no fa aquest pas.",
+            "S’envia un enllaç al correu d’accés. No canvia el correu de contacte que s’utilitza per enviar documents.",
+            "La fitxa del client es conserva. Desactivar l’accés impedeix utilitzar el compte fins que l’activis de nou."
+        ],
+        "questions": [
+            {
+                "question": "El correu dels documents continua sent l’antic.",
+                "answer": "Canvia el correu de contacte a la fitxa del client. La targeta d’accés modifica el correu per entrar, no el de contacte."
+            },
+            {
+                "question": "No permet reenviar la invitació.",
+                "answer": "Comprova si el compte està actiu i si ja ha acceptat la invitació. Si l’ha acceptada, utilitza recuperació de contrasenya."
+            }
+        ],
+        "related": ["clients", "access", "client-area", "messages"],
+        "tasks": [
+            {
+                "title": "Donar accés per primera vegada",
+                "steps": [
+                    "Comprova que ets a la fitxa de la persona correcta.",
+                    "Prem Correu d’accés i escriu el correu que el client utilitzarà per entrar.",
+                    "Prem Crear accés i enviar invitació, sota el correu.",
+                    "Demana al client que obri el missatge rebut i segueixi l’enllaç per triar la contrasenya."
+                ],
+                "result": "Es crea el compte i s’envia un correu real al client. Desar un correu a Dades de contacte no fa aquest pas."
+            },
+            {
+                "title": "Canviar el correu o ajudar a recuperar l’accés",
+                "steps": [
+                    "Per canviar el correu, substitueix el text de Correu d’accés i prem Desar accés.",
+                    "Si el client encara no ha acceptat la invitació, prem Reenviar invitació quan estigui disponible.",
+                    "Si ja havia entrat i no recorda la contrasenya, prem Restablir contrasenya.",
+                    "Demana al client que revisi el correu i utilitzi el missatge més recent."
+                ],
+                "result": "S’envia un enllaç al correu d’accés. No canvia el correu de contacte que s’utilitza per enviar documents."
+            },
+            {
+                "title": "Impedir o permetre de nou l’entrada",
+                "steps": [
+                    "A Accés al portal de clients, revisa si l’estat és Actiu o Inactiu.",
+                    "Prem Desactivar accés per impedir que entri.",
+                    "Quan hagi de tornar a entrar, obre aquest mateix bloc i prem Activar accés."
+                ],
+                "result": "La fitxa del client es conserva. Desactivar l’accés impedeix utilitzar el compte fins que l’activis de nou."
+            }
+        ]
+    },
+    {
+        "id": "client-locations",
+        "roles": ["admin"],
+        "category": "Clients amb diversos serveis, seus o domicilis",
+        "title": "Organitzar serveis i comprovar el cas de diverses adreces",
+        "description": "Un client pot tenir diversos serveis i treballadores. Una fitxa només té una adreça; diverses seus de la mateixa entitat necessiten una revisió a part.",
+        "href": "/clients",
+        "steps": ["Prem Clients i comprova si la persona o entitat ja té una fitxa abans de crear-ne una altra."],
+        "effects": [
+            "El CIF/NIF i el correu de contacte no es poden repetir entre fitxes. Canviar només el correu no resol un CIF duplicat.",
+            "L’horari selecciona un client i un servei, però no té cap camp propi per indicar una altra adreça de visita."
+        ],
+        "tasks": [
+            {
+                "title": "Afegir diversos serveis al mateix client",
+                "steps": [
+                    "Prem els tres punts de la fila del client i després Editar.",
+                    "Baixa a Serveis i selecciona tots els que necessiti. Prem Desar canvis.",
+                    "Obre la fitxa amb Visualitzar i baixa a Assignació de tasques.",
+                    "Prem Afegir horari i crea el primer servei amb els dies, hores i treballadora.",
+                    "Repeteix Afegir horari per als altres serveis. Pots triar una altra treballadora a cada horari."
+                ],
+                "result": "Els serveis queden a la mateixa fitxa. Cada visita conserva el servei i la treballadora; totes mostren l’adreça del client."
+            }
+        ],
+        "questions": [
+            {
+                "question": "He de crear un client diferent per cada servei?",
+                "answer": "No. Selecciona diversos serveis en una mateixa fitxa i crea un horari per a cada feina."
+            },
+            {
+                "question": "Què faig si una entitat té diverses seus amb el mateix CIF?",
+                "answer": "La versió actual no té una estructura de seus dins d’un client i no accepta una altra fitxa amb el mateix CIF/NIF. Comunica les seus i adreces a la persona responsable per acordar com gestionar-les. No canviïs ni inventis el CIF per evitar l’error."
+            },
+            {
+                "question": "I si les seus també comparteixen correu?",
+                "answer": "El correu de contacte també és únic. Utilitzar un altre correu no és suficient si el CIF es repeteix. El correu d’accés al portal és una dada diferent i tampoc crea seus."
+            },
+            {
+                "question": "Puc posar una adreça diferent a cada horari?",
+                "answer": "No hi ha cap camp d’adreça a l’horari. Canviar l’adreça de la fitxa canvia la informació que es consulta des de les visites; no crea una segona ubicació. Una nota pot explicar una indicació, però no converteix la fitxa en un sistema de seus."
+            },
+            {
+                "question": "Com apareixen diversos serveis o seus a la facturació?",
+                "answer": "Una factura pertany a una fitxa de client i pot tenir diverses línies de conceptes. En crear-la pren l’adreça d’aquella fitxa. No hi ha agrupació automàtica per seu ni cap camp de seu als registres; revisa el cas amb la persona que porta la facturació abans de preparar documents."
+            }
+        ],
+        "related": ["clients", "schedules", "invoices"]
+    },
+    {
+        "id": "employees",
+        "roles": ["admin"],
+        "category": "Gestió de treballadores",
+        "title": "Crear, consultar o canviar una treballadora",
+        "description": "Primer crea la fitxa. Després afegeix els seus serveis i la seva disponibilitat horària en una guia a part.",
+        "href": "/employees",
+        "steps": ["Prem Empleades al menú lateral esquerre."],
+        "effects": [
+            "Desactivar una empleada impedeix que entri. No cancel·la les visites; has d’organitzar les substitucions per separat.",
+            "La data de fi del contracte pot generar avisos abans del venciment. No desactiva el compte ni cancel·la feines quan arriba aquell dia."
+        ],
+        "questions": [
+            {
+                "question": "Una persona no apareix per a un servei.",
+                "answer": "Revisa que el seu compte estigui actiu, que tingui aquell servei assignat, que tingui prou disponibilitat per a tots els dies escollits i que no tingui una altra assignació solapada. La disponibilitat es configura a la seva pròpia guia."
+            },
+            {
+                "question": "Afegir disponibilitat significa que ja té feina?",
+                "answer": "No. Has de crear la programació des de la fitxa del client. Després apareixeran les visites concretes al calendari."
+            },
+            {
+                "question": "Com estableixo la seva data d’inici i finalització?",
+                "answer": "A la fitxa de l’empleada, a les dades de contractació: Data de contractació i, si la saps, Data de fi de contracte. No cal emplenar la de fi si encara no està prevista."
+            },
+            {
+                "question": "Com rep les seves dades d’accés?",
+                "answer": "En crear la fitxa s’envia un missatge per establir la contrasenya. La creació del compte també pot enviar un enllaç d’entrada d’un sol ús. Editar o desar després la fitxa no torna a enviar aquests missatges."
+            },
+            {
+                "question": "Per què no ha rebut el correu d’invitació?",
+                "answer": "Revisa el correu de la fitxa i demana que comprovi Spam. Si el correu era incorrecte, corregeix-lo i desa. Després, la treballadora ha d’obrir Has oblidat la contrasenya? a la pantalla d’entrada i sol·licitar un enllaç amb aquell correu. Tornar a desar una fitxa existent no reenvia la invitació. Si no arriba el missatge, demana que revisin l’enviament de correu.",
+                "guide": "access"
+            },
+            {
+                "question": "Com comprovo que el seu compte està correctament creat?",
+                "answer": "Obre la fitxa amb Visualitzar: si el compte està actiu i té correu, ja pot entrar en acceptar la invitació. Demana-li que et confirmi que ha pogut entrar i veure la seva Agenda."
+            }
+        ],
+        "related": ["employee-availability", "schedules", "absences", "employee-documents", "files"],
+        "tasks": [
+            {
+                "title": "Crear la fitxa d’una empleada",
+                "steps": [
+                    "Prem Crear empleada, a dalt a la dreta del llistat.",
+                    "Emplena les dades personals: nom, naixement, identificació i gènere.",
+                    "Indica la data de contractació i, si la saps, la data de fi del contracte.",
+                    "Revisa els dies anuals de vacances i la casella de compte actiu. Un compte inactiu no pot entrar.",
+                    "Emplena el correu, telèfon i adreça a les dades de contacte. Comprova especialment el correu: allà arribarà l’accés.",
+                    "Baixa a Serveis i selecciona els que pot fer. Completa les característiques que corresponguin.",
+                    "Prem Desar al principi o al final del formulari. Corregeix els errors que s’indiquin, si n’hi ha.",
+                    "Demana a l’empleada que revisi el correu rebut per establir la contrasenya."
+                ],
+                "result": "La fitxa queda creada i s’envia el correu d’accés. Encara no té disponibilitat ni visites assignades."
+            },
+            {
+                "title": "Consultar visites o canviar les dades",
+                "steps": [
+                    "Prem Empleades i obre els tres punts de la fila de l’empleada.",
+                    "Prem Visualitzar per veure la fitxa i baixa a Serveis assignats per veure les visites.",
+                    "Si necessites canviar dades personals, prem Editar a la part superior de la fitxa.",
+                    "Canvia els camps necessaris i prem Desar canvis."
+                ],
+                "result": "Canviar dades o disponibilitat no canvia per si sol els horaris ja assignats."
+            },
+            {
+                "title": "Eliminar un element del llistat",
+                "steps": [
+                    "Prem Empleades al menú lateral i localitza la fila de l’element que vols treure.",
+                    "Prem els tres punts de la dreta i després Eliminar.",
+                    "Llegeix l’avís de la finestra. Si dubtes de quina fila has seleccionat, cancel·la i comprova’n el nom al llistat abans de continuar.",
+                    "Si és l’element correcte i vols retirar-lo, confirma Eliminar. Si no n’estàs segur, prem Cancel·lar.",
+                    "Comprova que ja no apareix al llistat."
+                ],
+                "result": "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+            },
+            {
+                "title": "Descarregar el llistat en Excel",
+                "steps": [
+                    "Prem Empleades al menú lateral.",
+                    "Si necessites només certes dades, utilitza els filtres que apareixen damunt del llistat. Comprova quines files es mostren.",
+                    "Baixa fins al final de la taula i prem Descarregar Excel, a la dreta.",
+                    "Busca l’arxiu a les descàrregues de l’ordinador o mòbil."
+                ],
+                "result": "Es descarrega una còpia del llistat. Les dades de l’eina no canvien. El botó apareix quan hi ha resultats."
+            }
+        ]
+    },
+    {
+        "id": "employee-availability",
+        "roles": ["admin"],
+        "category": "Disponibilitat de les treballadores",
+        "title": "Configurar quan pot treballar cada empleada",
+        "description": "La disponibilitat són els trams horaris en què una empleada pot acceptar serveis. No assigna feina per si sola.",
+        "href": "/employees",
+        "steps": [
+            "Prem Empleades al menú lateral.",
+            "Busca la persona, prem els tres punts de la seva fila i després Editar.",
+            "Baixa fins a Disponibilitat horària. Aquest calendari apareix en editar una fitxa ja creada."
+        ],
+        "effects": [
+            "La disponibilitat només indica quan podria treballar la persona; no crea cap visita. Els horaris concrets es creen a part, des de la fitxa del client.",
+            "Un horari que surt de la disponibilitat registrada no deixa triar aquella persona en programar un servei.",
+            "Canviar o reduir la disponibilitat no elimina ni avisa sobre els horaris que aquella persona ja tenia assignats fora del nou tram: revisa’ls a part."
+        ],
+        "questions": [
+            {
+                "question": "Per a què serveix la disponibilitat setmanal?",
+                "answer": "Marca en quins dies i hores pot acceptar feina una empleada. Utocures només la mostra com a opció per a un horari si aquell horari cap dins d’un tram de la seva disponibilitat."
+            },
+            {
+                "question": "Com indico jornades partides?",
+                "answer": "Afegeix dos trams diferents el mateix dia, per exemple de 09:00 a 13:00 i de 16:00 a 19:00. No cal cap opció especial: són dos blocs independents el mateix dia de la setmana."
+            },
+            {
+                "question": "Puc posar horaris diferents segons el dia de la setmana?",
+                "answer": "Sí. Cada tram es crea per a un dia concret; afegeix tants trams com necessitis, amb les hores pròpies de cada dia."
+            },
+            {
+                "question": "Quina diferència hi ha entre disponibilitat i serveis assignats?",
+                "answer": "La disponibilitat és quan podria treballar; els serveis assignats (l’horari del client) són la feina que realment té programada. Tenir disponibilitat no significa tenir feina."
+            },
+            {
+                "question": "Què passa si canvio la disponibilitat d’una treballadora?",
+                "answer": "Els horaris que ja tenia assignats no s’eliminen ni s’avisen automàticament encara que deixin d’encaixar amb la nova disponibilitat. Revisa les seves visites després de reduir un tram."
+            },
+            {
+                "question": "Com influeix la disponibilitat en les assignacions?",
+                "answer": "En crear o canviar un horari, només apareixen com a opció les empleades actives que tenen aquell servei i la disponibilitat de les quals cobreix completament les hores triades, sense solapar-se amb una altra visita."
+            },
+            {
+                "question": "Per què una treballadora no apareix disponible per a un determinat servei?",
+                "answer": "Revisa, en aquest ordre: que tingui el servei seleccionat a la fitxa, que el seu compte estigui actiu, que la seva disponibilitat cobreixi aquell tram exacte, i que no tingui ja una altra visita en aquelles hores."
+            }
+        ],
+        "related": ["employees", "schedules", "calendars"],
+        "tasks": [
+            {
+                "title": "Afegir un tram de disponibilitat",
+                "steps": [
+                    "Busca el dia de la setmana i l’hora desitjada al calendari. Selecciona un tram buit; amb ratolí, prem i arrossega fins a l’hora final.",
+                    "A la finestra que s’obre, revisa Hora d’inici i Hora de fi. Per exemple, de 09:00 a 13:00.",
+                    "Prem Crear dins d’aquesta finestra.",
+                    "Comprova que el tram apareix al calendari. Repeteix per als altres dies que necessitis."
+                ],
+                "result": "Aquestes franges indiquen quan pot treballar. Per donar-li una feina concreta, crea un horari des de la fitxa del client."
+            },
+            {
+                "title": "Corregir o treure un tram",
+                "steps": [
+                    "Al calendari de disponibilitat, prem el tram que vulguis canviar.",
+                    "A la finestra que s’obre, corregeix Hora d’inici o Hora de fi i prem Desar canvis.",
+                    "Si necessites treure’l, prem Eliminar en aquesta mateixa finestra."
+                ],
+                "result": "Canviar o treure un tram no avisa sobre els horaris que ja en depenien: revisa’ls a Serveis assignats a la fitxa de l’empleada."
+            }
+        ]
+    },
+    {
+        "id": "calendars",
+        "roles": ["admin"],
+        "category": "Els calendaris de l’eina",
+        "title": "Diferenciar el calendari del client, el de serveis assignats i el de disponibilitat",
+        "description": "A l’eina trobaràs diversos calendaris. Encara que visualment s’assemblen, cadascun serveix per a una cosa diferent.",
+        "href": null,
+        "steps": [
+            "Fixa’t en on l’obres: cada calendari viu dins d’una fitxa concreta (client o empleada) i això determina per a què serveix."
+        ],
+        "effects": [
+            "Programar un servei des de la fitxa del client i assignar-li una treballadora fa que aquest servei aparegui també al calendari d’aquesta treballadora, a Serveis assignats.",
+            "La disponibilitat horària de la treballadora no crea feina per si sola: només determina quan pot rebre noves assignacions."
+        ],
+        "questions": [
+            {
+                "question": "Quina diferència hi ha entre el calendari del client i el de l’empleada?",
+                "answer": "El del client (Assignació de tasques) és on programes els serveis: tries quin servei, en quin horari, amb quina recurrència i quina treballadora el farà. El de l’empleada (Serveis assignats) és una vista de consulta: mostra les visites que ja té assignades i permet obrir-les per revisar-les o canviar-les."
+            },
+            {
+                "question": "Per a què serveix el calendari de disponibilitat horària d’una empleada?",
+                "answer": "Per indicar en quins dies i hores pot treballar aquesta persona. No és un calendari de visites: l’eina el consulta en assignar un servei nou, per saber si aquesta treballadora pot rebre’l."
+            },
+            {
+                "question": "Si assigno una treballadora a un servei des de la fitxa del client, he de repetir el pas a la seva fitxa?",
+                "answer": "No. Tan bon punt desis l’horari des de la fitxa del client, aquesta visita apareix automàticament al calendari Serveis assignats de la treballadora escollida."
+            },
+            {
+                "question": "Puc crear una visita directament des del calendari de disponibilitat d’una empleada?",
+                "answer": "No. Aquest calendari només defineix trams de disponibilitat. Els serveis es programen sempre des d’Assignació de tasques, a la fitxa del client."
+            },
+            {
+                "question": "Vaig canviar la disponibilitat d’una treballadora, desapareixen les seves visites d’aquestes hores?",
+                "answer": "No automàticament. Reduir o canviar la disponibilitat no elimina ni avisa sobre els horaris ja assignats fora del nou tram; revisa Serveis assignats d’aquesta empleada després del canvi."
+            },
+            {
+                "question": "Des de quin calendari canvio el dia o l’hora d’una visita concreta?",
+                "answer": "Des de qualsevol dels dos on apareix: Assignació de tasques a la fitxa del client, o Serveis assignats a la fitxa de l’empleada. Tots dos obren la mateixa visita."
+            }
+        ],
+        "related": ["schedules", "employee-availability", "clients", "employees"],
+        "tasks": [
+            {
+                "title": "Reconèixer cada calendari abans d’utilitzar-lo",
+                "steps": [
+                    "Obre la fitxa d’un client amb Visualitzar i baixa a Assignació de tasques: aquí programes quin servei, amb quina recurrència i quina treballadora.",
+                    "Obre la fitxa d’una empleada amb Visualitzar i baixa a Serveis assignats: aquí consultes i ajustes les visites que ja té.",
+                    "Edita aquesta mateixa fitxa d’empleada i baixa a Disponibilitat horària: aquí defineixes els trams en què pot treballar, no visites concretes."
+                ],
+                "result": "Sabràs en quin dels tres calendaris ets abans d’intentar programar, consultar o ajustar disponibilitat."
+            }
+        ]
+    },
+    {
+        "id": "schedules",
+        "roles": ["admin"],
+        "category": "Planificar i assignar serveis a un client",
+        "title": "Afegir un horari, triar treballadora i canviar una visita",
+        "description": "Un mateix formulari indica quin servei s’ha de fer, quin dia, a quina hora i qui el farà.",
+        "href": "/clients",
+        "steps": [
+            "Abans de començar, el client ha de tenir seleccionat el servei. L’empleada ha de tenir aquest servei i disponibilitat horària a la fitxa."
+        ],
+        "effects": [
+            "Les visites repetides es preparen amb fins a 90 dies d’antelació i es van ampliant cada dia. Si no veus una data molt llunyana, pot ser que encara no s’hagi preparat.",
+            "Canviar un horari repetit que ja va començar pot refer les visites des d’avui i substituir canvis que vas fer en dies concrets. Revisa les properes visites després de desar.",
+            "Avançar la data final pot treure visites posteriors a aquella data. L’eina impedeix canvis que afectin visites amb fitxatges.",
+            "Una empleada amb vacances o una baixa registrada en aquelles dates pot continuar apareixent a la llista de selecció, marcada amb un avís d’absència: revisa aquest avís abans de confirmar."
+        ],
+        "questions": [
+            {
+                "question": "Diu que l’horari se solapa.",
+                "answer": "La persona ja té una altra programació o visita en aquella franja. Revisa totes les assignacions, també les quinzenals, i tria una altra hora o persona."
+            },
+            {
+                "question": "Com substitueixo algú un sol dia?",
+                "answer": "Edita la visita concreta des de la seva fitxa i selecciona una altra persona que compleixi servei i disponibilitat. No canviïs la sèrie si la substitució és només d’un dia."
+            },
+            {
+                "question": "Les vacances cancel·len automàticament les visites?",
+                "answer": "No. Registra el període d’absència i revisa la programació per canviar o retirar les visites afectades."
+            },
+            {
+                "question": "Com creo un servei que passa una sola vegada?",
+                "answer": "A Recurrència, tria Una sola vegada i indica la Data concreta de la visita."
+            },
+            {
+                "question": "Com creo un servei setmanal o quinzenal?",
+                "answer": "A Recurrència, tria Setmanal o l’opció quinzenal, marca els dies de la setmana en què es repeteix i indica des de quina data comença."
+            },
+            {
+                "question": "Com programo un servei quinzenal que es fa diversos dies de la setmana?",
+                "answer": "Marca tots els dies de la setmana que corresponguin dins de la mateixa recurrència quinzenal: el sistema els repetirà junts cada dues setmanes, comptant des de la data d’inici."
+            },
+            {
+                "question": "Què faig si un horari quinzenal no apareix en els dies esperats?",
+                "answer": "La quinzena es compta des de la data d’inici de l’horari (la setmana d’aquesta data és la primera «setmana bona»). Si una visita no apareix, comprova aquesta data d’inici, que el dia de la setmana estigui marcat a Recurrència i que no sigui anterior a l’inici."
+            },
+            {
+                "question": "Com decideix Utocures quines treballadores són compatibles?",
+                "answer": "Només apareixen com a opció les empleades actives que tenen el servei seleccionat a la fitxa, la disponibilitat de les quals cobreix les hores triades i que no tenen una altra visita en aquell mateix horari. Les característiques no formen part d’aquest càlcul."
+            },
+            {
+                "question": "Per què no apareix una treballadora que vull assignar?",
+                "answer": "Revisa en aquest ordre: que tingui el servei, que el seu compte estigui actiu, que la seva disponibilitat cobreixi exactament aquelles hores i que no tingui una altra visita solapada. Si té vacances o baixa aquelles dates, continuarà apareixent però amb un avís: revisa-ho abans de confirmar."
+            },
+            {
+                "question": "Puc canviar una assignació només per a un dia concret?",
+                "answer": "Sí. Obre aquella visita concreta des de la fitxa de l’empleada i canvia únicament aquell dia; no toquis l’horari repetit si el canvi és només puntual."
+            },
+            {
+                "question": "Com registro un canvi de torn o una substitució?",
+                "answer": "Edita la visita concreta afectada i selecciona l’altra persona, sempre que compleixi servei i disponibilitat. El fitxatge d’aquella visita quedarà a nom de qui realment la faci."
+            },
+            {
+                "question": "Si diverses treballadores fan hores diferents en el mateix servei i client, com ho programo?",
+                "answer": "Cada treballadora necessita el seu propi horari: crea un Afegir horari diferent per a cadascuna, amb les seves pròpies hores i dies, tots amb el mateix client i servei. Un únic horari només admet una treballadora."
+            },
+            {
+                "question": "Com assigno quatre treballadores al mateix servei de 09:00 a 17:00?",
+                "answer": "Crea quatre horaris per al mateix client i servei, un per treballadora, amb la mateixa data i de 09:00 a 17:00. Cada persona necessita aquell servei, compte actiu, disponibilitat completa i no tenir cap altra feina en aquelles hores. Són 8 hores previstes per persona i 32 en total; no un únic fitxatge de 32 hores. Cada treballadora inicia i finalitza el seu registre."
+            }
+        ],
+        "related": ["employees", "employee-availability", "calendars", "absences", "time-records"],
+        "tasks": [
+            {
+                "title": "Crear un horari per a un client",
+                "steps": [
+                    "Prem Clients al menú lateral.",
+                    "A la fila del client, prem els tres punts i després Visualitzar.",
+                    "Baixa a Assignació de tasques i prem Afegir horari, a la dreta del títol.",
+                    "A la finestra que s’obre, prem Servei i tria la feina que necessita el client.",
+                    "Emplena Hora d’inici i Hora de fi. Per exemple, 09:00 i 11:00.",
+                    "Prem Recurrència. Tria Una sola vegada si serà un únic dia, Setmanal si es repeteix cada setmana, o l’opció quinzenal si es repeteix cada dues setmanes.",
+                    "Si has triat Una sola vegada, indica la Data. Si es repeteix, marca els dies de la setmana i indica des de quina data comença. Afegeix data final si saps quan acaba.",
+                    "Baixa a Selecciona treballadora per realitzar aquest servei. Prem la persona que farà la feina. Si no apareix ningú, revisa servei, hores i disponibilitat; si apareix amb un avís d’absència, revisa-ho abans de confirmar.",
+                    "Revisa les dades i prem Crear, a baix a la dreta.",
+                    "Prem Empleades al menú lateral, obre la fitxa de la persona amb Visualitzar i revisa les properes visites a Serveis assignats."
+                ],
+                "result": "L’empleada veurà les visites a l’agenda. Crear l’horari no inicia cap fitxatge."
+            },
+            {
+                "title": "Canviar una sola visita",
+                "steps": [
+                    "Prem Empleades i obre la fitxa de la persona amb els tres punts i Visualitzar.",
+                    "Baixa al calendari Serveis assignats i busca el dia de la visita.",
+                    "Prem la visita que vols canviar.",
+                    "A la finestra, canvia la data, les hores o la persona, segons el que necessitis.",
+                    "Prem Desar canvis i comprova la visita a la data triada."
+                ],
+                "result": "Canvia només aquesta visita. Si ja té un fitxatge, l’eina no permet modificar-la o eliminar-la des d’aquí."
+            },
+            {
+                "title": "Canviar o acabar un horari que es repeteix",
+                "steps": [
+                    "Prem Clients, obre la fitxa del client amb Visualitzar i baixa a Assignació de tasques.",
+                    "Prem l’horari al calendari del client.",
+                    "Canvia les hores o dies que correspongui. Per indicar quan acaba, emplena la data de finalització.",
+                    "Prem Desar canvis.",
+                    "Revisa les properes visites a la fitxa de l’empleada, especialment si n’havies canviat alguna per separat.",
+                    "Si necessites eliminar l’horari, utilitza Eliminar a la finestra i llegeix l’avís abans de confirmar. Comprova que estàs eliminant l’horari correcte."
+                ],
+                "result": "Canviar l’horari repetit pot canviar diverses visites futures. No és el mateix que canviar un únic dia."
+            }
+        ]
+    },
+    {
+        "id": "absences",
+        "roles": ["admin"],
+        "category": "Vacances, baixes i absències",
+        "title": "Anotar vacances, baixes i absències",
+        "description": "Registra els dies en què una empleada no estarà disponible i consulta els dies de vacances. Ho gestiona sempre administració.",
+        "href": "/employees",
+        "steps": [
+            "Prem Empleades al menú lateral.",
+            "Busca la persona, prem els tres punts de la seva fila i després Visualitzar.",
+            "Baixa al bloc Vacances, baixes i absències."
+        ],
+        "effects": [
+            "No es poden desar dos períodes que coincideixin en el temps per a la mateixa persona. Revisa les dates si apareix aquest error.",
+            "Registrar el període no cancel·la ni reassigna les visites d’aquells dies per si sol: si tornes a seleccionar aquella persona en un horari d’aquelles dates, la llista de treballadores ho permet igualment, però mostra un avís d’absència."
+        ],
+        "questions": [
+            {
+                "question": "El saldo consumeix més dies dels esperats.",
+                "answer": "El càlcul compta dies naturals, no només laborables. Revisa les dates inicial i final i la dotació anual."
+            },
+            {
+                "question": "La persona està de baixa i continua tenint visites.",
+                "answer": "El període registra la seva situació. Has de revisar i reorganitzar les visites des de la planificació."
+            },
+            {
+                "question": "Pot una treballadora sol·licitar les seves vacances des d’Utocures?",
+                "answer": "No. Avui els períodes de vacances, baixa o absència els registra sempre administració; no existeix cap formulari perquè el personal les sol·liciti des del seu compte."
+            },
+            {
+                "question": "Com sé quins serveis queden afectats?",
+                "answer": "No hi ha un llistat automàtic de «visites afectades». Obre el calendari d’aquella persona (Serveis assignats a la seva fitxa) en les dates del període i revisa una a una les visites que tenia."
+            },
+            {
+                "question": "Com reassigno aquests serveis a una altra treballadora?",
+                "answer": "Obre Empleades, visualitza la fitxa de la persona absent i busca cada visita a Serveis assignats. Prem la visita i canvia la treballadora; desa i revisa aquell dia. No canviïs l’horari repetit del client si la substitució és només per a una data. Una visita amb fitxatges no es pot reassignar des d’aquí.",
+                "guide": "schedules"
+            },
+            {
+                "question": "Com anul·lo unes vacances ja creades?",
+                "answer": "Obre-les al mateix bloc i prem Eliminar, revisant abans les dates. Elimina-les només després d’haver revisat i, si cal, reorganitzat les visites d’aquells dies."
+            },
+            {
+                "question": "Després d’eliminar unes vacances, per què no puc tornar a assignar un servei?",
+                "answer": "Comprova que no queda cap altre període de vacances, baixa o absència amb dates semblants i que la disponibilitat i el solapament d’horari es continuen complint; eliminar unes vacances no canvia per si sol aquests altres requisits."
+            }
+        ],
+        "related": ["employees", "schedules"],
+        "tasks": [
+            {
+                "title": "Afegir unes vacances o una absència",
+                "steps": [
+                    "Prem Afegir període, al costat del títol del bloc.",
+                    "Prem Tipus i selecciona Vacances, Baixa, Absència o Permís.",
+                    "A Inici, indica el dia i l’hora en què comença.",
+                    "A Fi, indica el dia i l’hora en què acaba.",
+                    "A Observacions, escriu l’explicació que hagi de quedar anotada.",
+                    "Prem Desar i comprova que el període apareix al llistat de l’any corresponent.",
+                    "Revisa per separat les visites d’aquests dies i organitza qui les farà."
+                ],
+                "result": "L’absència queda anotada, però les visites no es cancel·len ni s’assignen a una altra persona automàticament."
+            },
+            {
+                "title": "Corregir un període i revisar vacances",
+                "steps": [
+                    "Al mateix bloc, busca el període a l’any que correspon. Revisa el filtre de tipus si no apareix.",
+                    "Prem Editar al costat del període, canvia les dates o l’explicació i prem Desar.",
+                    "Per treure un període incorrecte, prem Eliminar al costat i confirma només després de revisar-ne les dates.",
+                    "Consulta Assignats, Consumits i Disponibles per veure el total anual, el que s’ha gastat i el que queda de vacances."
+                ],
+                "result": "Les vacances compten dies de calendari, inclosos caps de setmana i els dies inicial i final. Si necessites canviar el total anual, fes-ho des d’Editar a la fitxa de l’empleada."
+            }
+        ]
+    },
+    {
+        "id": "employee-agenda",
+        "roles": ["employee"],
+        "category": "L’agenda de la treballadora",
+        "title": "Consultar les meves visites d’avui i d’altres dies",
+        "description": "L’agenda mostra les visites que tens assignades. Obre-la abans de fitxar per comprovar el client i el servei.",
+        "href": "/schedule",
+        "steps": ["A Inici veuràs les feines d’avui.", "Prem Agenda per veure un altre dia o Agenda mensual per veure el mes complet."],
+        "effects": [
+            "L’agenda només mostra les visites que administració ja ha programat. Tenir disponibilitat no crea per si sola una visita.",
+            "Després d’un canvi, torna a obrir Agenda o recarrega la pàgina per consultar les visites actualitzades. No comptis amb un avís individual de cada canvi.",
+            "Una visita apareix quan està creada i assignada a tu. En horaris repetits, es preparen les properes dates per endavant; no totes les dates futures apareixen des del primer dia."
+        ],
+        "questions": [
+            {
+                "question": "On veu una treballadora els serveis que té assignats?",
+                "answer": "A Agenda (dia) i Agenda mensual (mes), accessibles des d’Inici."
+            },
+            {
+                "question": "Com consulta el que ha de fer avui?",
+                "answer": "Inici ja mostra les feines d’avui; també pots obrir Agenda i comprovar que la data seleccionada és la d’avui."
+            },
+            {
+                "question": "Pot consultar els propers serveis?",
+                "answer": "Sí, amb Agenda mensual o canviant la data a Agenda."
+            },
+            {
+                "question": "Quina informació veu de cada servei?",
+                "answer": "El nom del client, el servei i les hores previstes; en obrir la visita, a més les tasques del servei i les notes o incidències anteriors."
+            },
+            {
+                "question": "Com sap a quin client ha d’anar?",
+                "answer": "El nom del client apareix a cada visita de l’agenda; en obrir-la, també l’adreça i altres dades de contacte desades a la fitxa."
+            },
+            {
+                "question": "Com sap quin tipus de servei ha de fer?",
+                "answer": "El nom del servei apareix a la visita; a dins, la pestanya de tasques llista el que inclou aquell servei."
+            },
+            {
+                "question": "Què passa si l’administradora canvia una assignació?",
+                "answer": "L’agenda de la treballadora anterior deixa de mostrar aquella visita i apareix a l’agenda de la nova persona assignada."
+            },
+            {
+                "question": "Quan apareix un servei nou a la seva agenda?",
+                "answer": "Una visita apareix quan està creada i assignada a tu. En horaris repetits, es preparen les properes dates per endavant; no totes les dates futures apareixen des del primer dia."
+            },
+            {
+                "question": "Per què no m’apareix un servei que hauria de tenir assignat?",
+                "answer": "Comprova la data seleccionada i que continues sent la persona assignada; si continua sense aparèixer, demana a administració que revisi l’assignació de l’horari."
+            }
+        ],
+        "related": ["employee-work", "employee-hours", "mobile"],
+        "tasks": [
+            {
+                "title": "Consultar una visita abans de començar",
+                "steps": [
+                    "A Agenda, tria el dia que vols consultar.",
+                    "Prem la visita del client que atendràs.",
+                    "Comprova el nom del client, el servei i les hores previstes.",
+                    "Prem les pestanyes d’informació, notes o tasques per llegir les indicacions del servei."
+                ],
+                "result": "Consultar la visita no registra hores treballades. Encara has de prémer el botó d’iniciar quan comencis."
+            },
+            {
+                "title": "Veure el mes complet",
+                "steps": [
+                    "Torna a Inici.",
+                    "Prem Agenda mensual.",
+                    "Utilitza les fletxes per moure’t entre mesos.",
+                    "Prem un dia amb visites per veure’n el detall."
+                ],
+                "result": "Consultar el mes no registra hores ni canvia res; és només per planificar-te."
+            }
+        ]
+    },
+    {
+        "id": "employee-work",
+        "roles": ["employee"],
+        "category": "Fitxatge i registre de jornada",
+        "title": "Registrar l’entrada i la sortida d’una visita",
+        "description": "Fes l’entrada quan comencis a treballar i la sortida quan acabis. Obrir la visita no posa en marxa el comptador.",
+        "href": "/schedule",
+        "steps": [
+            "Obre la visita corresponent des de la teva Agenda. El fitxatge sempre es fa des d’una visita concreta, no hi ha un botó de fitxar independent."
+        ],
+        "effects": [
+            "Les tasques són indicacions per consultar. La pantalla no desa una marca de tasca completada.",
+            "El comptador continua en marxa encara que se superi l’hora prevista de finalització: s’atura quan tu prems Finalitzar registre, no en arribar a aquella hora.",
+            "Acabar abans del previst també és vàlid: l’hora de sortida és la real, la que marca el moment en què prems Finalitzar registre."
+        ],
+        "questions": [
+            {
+                "question": "M’he oblidat de finalitzar o he fitxat a una hora incorrecta.",
+                "answer": "Si el comptador segueix obert, finalitza’l. Després comunica a administració el client, el dia i les hores reals perquè corregeixin el registre ja tancat. Si no pots finalitzar per un error, comunica també el missatge que apareix."
+            },
+            {
+                "question": "No tinc visites avui.",
+                "answer": "Revisa la data i la vista mensual. Si falta un servei esperat, demana a administració que comprovi l’assignació. Crear disponibilitat no crea per si sol una visita."
+            },
+            {
+                "question": "No puc seleccionar Incidència.",
+                "answer": "A la visita necessita un fitxatge actiu associat. Si l’acabes d’iniciar i encara no apareix disponible, torna a obrir la visita. Després del tancament, comunica la incidència a administració; Hores treballades permet consultar les ja registrades."
+            },
+            {
+                "question": "He de seleccionar el client abans de fitxar?",
+                "answer": "No cal cap pas a part: obres la visita d’aquell client des de la teva Agenda i fitxes allà. El client i el servei ja queden determinats per la visita que has obert."
+            },
+            {
+                "question": "Necessito tenir l’aplicació oberta mentre treballo?",
+                "answer": "No tota l’estona: l’hora d’inici queda desada en prémer Iniciar registre i la de fi en prémer Finalitzar registre. Obre l’aplicació quan necessitis consultar el comptador o finalitzar el registre."
+            },
+            {
+                "question": "Pot una treballadora veure quant temps porta fitxat?",
+                "answer": "Sí: mentre el registre està obert, la visita mostra el comptador en marxa."
+            },
+            {
+                "question": "Puc fitxar si no tinc cap servei programat?",
+                "answer": "No. El fitxatge es fa sempre des d’una visita concreta de la teva agenda; si no hi ha visita programada, no hi ha on fitxar. Demana a administració que revisi l’assignació si esperaves tenir-ne una."
+            },
+            {
+                "question": "Puc fitxar des del mòbil?",
+                "answer": "Sí, és l’ús més habitual. Consulta la guia d’Ús al mòbil si tens problemes de connexió o d’ubicació."
+            },
+            {
+                "question": "Cal signar els fitxatges?",
+                "answer": "Utocures no inclou cap pantalla per signar els fitxatges. Administració pot exportar les hores. Si l’entitat necessita signatures, ha d’organitzar aquell procediment per separat; l’Excel descarregat no és una signatura."
+            }
+        ],
+        "related": ["employee-agenda", "employee-hours", "mobile", "announcement-board"],
+        "tasks": [
+            {
+                "title": "Registrar que començo a treballar",
+                "steps": [
+                    "Obre la visita correcta i comprova el client.",
+                    "Quan comencis realment la feina, prem Iniciar registre.",
+                    "Si el mòbil demana permís per accedir a la ubicació, prem l’opció que ho permet i espera.",
+                    "Comprova que apareix el comptador en marxa i l’opció de finalitzar. Si apareix un error, llegeix-lo abans de tornar a intentar-ho."
+                ],
+                "result": "Queda registrada l’hora d’entrada d’aquell moment. Només pots tenir una feina amb el comptador obert alhora."
+            },
+            {
+                "title": "Registrar que he acabat",
+                "steps": [
+                    "Torna a la feina que té el comptador en marxa.",
+                    "En acabar realment, prem Finalitzar registre. Al comptador petit pot aparèixer com a Finalitzar.",
+                    "Si se sol·licita ubicació, permet l’accés i espera que acabi l’operació.",
+                    "Comprova que el comptador ja no està en marxa.",
+                    "Torna a Inici, prem Hores treballades i comprova que el registre té hora de sortida."
+                ],
+                "result": "Queda desada la sortida. Tancar el navegador, bloquejar el mòbil o sortir del compte no substitueix aquest pas."
+            },
+            {
+                "title": "Anotar un problema durant el servei",
+                "steps": [
+                    "Amb el fitxatge iniciat, obre la visita i entra a Notes. Si acabes d’iniciar i no apareix disponible la incidència, torna a obrir la visita.",
+                    "Prem Afegir nota o incidència.",
+                    "Selecciona Incidència si estàs comunicant un problema, o Nota general si és informació general.",
+                    "Escriu què ha passat i prem Desar a la finestra.",
+                    "Comprova que apareix a les notes."
+                ],
+                "result": "La incidència queda relacionada amb aquest fitxatge i genera un avís a administració. No corregeix les hores automàticament."
+            },
+            {
+                "title": "M’he oblidat de finalitzar",
+                "steps": [
+                    "Obre la feina que segueix amb el comptador en marxa.",
+                    "Prem Finalitzar registre per tancar-lo i comprova que l’operació acaba.",
+                    "Comunica a administració el client, el dia i l’hora real a què vas acabar. Indica que l’has tancat tard per un oblit.",
+                    "Demana que revisin i corregeixin la sortida del registre ja tancat. Si no aconsegueixes finalitzar-lo per un error, comunica també el missatge d’error."
+                ],
+                "result": "El botó desa l’hora en què el prems, no l’hora que recordes haver acabat. Administració ha de corregir després l’hora real."
+            }
+        ]
+    },
+    {
+        "id": "time-records",
+        "roles": ["admin"],
+        "category": "Registre, correcció i exportació d’hores",
+        "title": "Consultar hores, corregir un fitxatge i exportar-les",
+        "description": "Un fitxatge és el registre de quan una empleada comença i acaba de treballar.",
+        "href": "/employee-time-records",
+        "steps": ["Prem Registres d’hores al menú lateral esquerre."],
+        "effects": [
+            "02:30 significa dues hores i trenta minuts. No significa 2,30 hores.",
+            "La ubicació desada és la d’entrada o sortida. Corregir una hora no torna a localitzar el mòbil.",
+            "Una feina que comença fora del període consultat pot comptar-se de manera diferent a Tauler i a la llista. Revisa les dates si els totals no coincideixen.",
+            "L’Excel exportat utilitza sempre les hores ja corregides, no les originals: una correcció desada es reflecteix també a l’exportació."
+        ],
+        "questions": [
+            {
+                "question": "Hi ha un fitxatge obert d’un altre dia.",
+                "answer": "Demana a l’empleada que finalitzi el registre des del comptador. Un cop tancat, comprova amb ella l’hora real de sortida i corregeix-la des de Vista calendari, indicant el motiu."
+            },
+            {
+                "question": "La xifra 02:30 són dues hores i trenta minuts?",
+                "answer": "Sí. El format és hores:minuts; no són 2,30 hores decimals."
+            },
+            {
+                "question": "No apareix una ubicació.",
+                "answer": "Pot ser un fitxatge anterior a l’exigència d’ubicació o un de registrat sense ubicació. No es pot reconstruir retroactivament una posició que no es va capturar."
+            },
+            {
+                "question": "Puc crear manualment un fitxatge d’un dia anterior?",
+                "answer": "No. Administració només pot corregir un fitxatge que l’empleada ja hagi iniciat des del seu comptador; no existeix cap botó per crear-ne un de nou des de zero."
+            },
+            {
+                "question": "Com deixo constància del motiu d’una correcció?",
+                "answer": "En corregir un fitxatge, el camp Motiu de la modificació és obligatori: escriu una explicació breu i concreta, per exemple amb qui la vas confirmar."
+            },
+            {
+                "question": "La correcció es reflecteix després als informes i exportacions?",
+                "answer": "Sí, tant la Vista llista com l’Excel exportat utilitzen sempre l’hora ja corregida."
+            },
+            {
+                "question": "Les substitucions apareixen assignades a la persona que realment va fer el servei?",
+                "answer": "El fitxatge pertany a qui realment el va fer: si reassignes la visita a una altra persona abans que comenci, serà ella qui podrà fitxar i qui apareixerà al registre."
+            },
+            {
+                "question": "Com obtinc les hores mensuals de cada treballadora per a la gestoria?",
+                "answer": "A Vista llista, agrupa Veure per Empleades, ajusta el període al mes que necessitis i prem Descarregar Excel al final del llistat."
+            },
+            {
+                "question": "Puc exportar només un període concret?",
+                "answer": "Sí, l’arxiu utilitza les dates inicial i final seleccionades. Inclou tres fulls: Empleades i clients, Clients i empleades, i Empleades. Canviar Veure per només canvia la llista de la pantalla: no limita l’Excel a aquella agrupació. La cerca per nom de la pantalla tampoc limita actualment l’arxiu."
+            },
+            {
+                "question": "Què faig si va oblidar iniciar el fitxatge i no existeix cap registre?",
+                "answer": "Anota el client, servei, dia i hores reals i comunica-ho a la persona responsable. Aquesta pantalla no permet crear un fitxatge des de zero ni recuperar hores anteriors sense registre. No inventis una entrada d’avui per simular la feina d’ahir."
+            }
+        ],
+        "related": ["employee-work", "employee-hours", "schedules", "audits", "configuration"],
+        "tasks": [
+            {
+                "title": "Veure les hores d’un període",
+                "steps": [
+                    "Prem Vista llista si estàs veient el calendari.",
+                    "Selecciona la data inicial i final del període que vols consultar. En entrar es mostra el mes actual.",
+                    "A Veure per, selecciona Empleades o Clients segons com vulguis consultar les hores.",
+                    "Desplega la fila de la persona o client per veure el detall de serveis.",
+                    "Compara les hores programades (el que estava previst) amb les registrades (el que s’ha fitxat).",
+                    "Per desar una còpia de l’informe, baixa al final del llistat i prem Descarregar Excel, a la dreta."
+                ],
+                "result": "Consultar o descarregar no canvia les hores. Un registre sense sortida encara no té una durada final per sumar."
+            },
+            {
+                "title": "Corregir un fitxatge",
+                "steps": [
+                    "Prem Vista calendari.",
+                    "Prem Seleccionar empleada i tria la persona.",
+                    "Utilitza les fletxes del calendari per anar al mes corresponent. Prem el dia del fitxatge.",
+                    "A Fitxatges del dia, localitza el registre i prem Editar.",
+                    "Comprova amb l’empleada quines van ser les hores reals. Corregeix Data d’entrada i Hora d’entrada si cal.",
+                    "Si el fitxatge ja està tancat, pots corregir Data de sortida i Hora de sortida. La sortida ha de ser posterior o igual a l’entrada.",
+                    "Si apareix l’avís que el fitxatge segueix obert, demana a l’empleada que el finalitzi des del comptador. Administració no pot introduir la sortida mentre estigui obert.",
+                    "Escriu a Motiu de la modificació una explicació, per exemple: «Va oblidar finalitzar; la sortida real va ser a les 13:00, confirmada amb l’empleada».",
+                    "Prem Desar canvis. Torna a consultar el dia per comprovar entrada, sortida i durada."
+                ],
+                "result": "Canvien les hores registrades i els informes. Queda desat qui ha fet la correcció i per què. L’horari previst de la visita no canvia."
+            },
+            {
+                "title": "Preparar l’Excel d’hores per a la gestoria",
+                "steps": [
+                    "Prem Registres d’hores al menú lateral i després Vista llista.",
+                    "Selecciona les dates inicial i final del mes que necessites.",
+                    "Revisa les diferències entre hores programades i registrades. Finalitza i corregeix els fitxatges pendents seguint la guia de correccions.",
+                    "Prem Descarregar Excel al final de la taula i obre l’arxiu time_records.xlsx.",
+                    "Obre el full Empleades per als totals per persona. Utilitza Empleades i clients o Clients i empleades per revisar el detall per client i servei.",
+                    "Comprova el període que apareix a l’arxiu abans de lliurar-lo. Si necessites només una persona, prepara aquella selecció a Excel: la cerca del web no retalla l’arxiu."
+                ],
+                "result": "L’arxiu inclou les hores desades i les correccions. Les incidències expliquen el que ha passat, però no canvien les hores sense una correcció del fitxatge."
+            }
+        ]
+    },
+    {
+        "id": "employee-hours",
+        "roles": ["employee"],
+        "category": "Registre i control d’hores",
+        "title": "Comprovar les meves entrades, sortides i incidències",
+        "description": "Aquí pots consultar el que has fitxat. Si una dada és incorrecta, comunica-ho a administració.",
+        "href": "/hours-worked",
+        "steps": ["Torna a Inici i prem Hores treballades."],
+        "effects": ["Aquesta pantalla permet consultar. No pots escriure una altra hora ni esborrar el fitxatge des d’aquí."],
+        "questions": [
+            {
+                "question": "02:30 significa 2,30 hores?",
+                "answer": "No. Significa dues hores i trenta minuts."
+            },
+            {
+                "question": "Puc corregir o esborrar una nota des de la visita?",
+                "answer": "La vista del personal permet afegir notes i incidències, però no ofereix les accions administratives d’editar o eliminar. Comunica la correcció a administració."
+            }
+        ],
+        "related": ["employee-work", "employee-agenda", "mobile"],
+        "tasks": [
+            {
+                "title": "Consultar un registre",
+                "steps": [
+                    "Busca la fila del client i servei que vols revisar. Comprova la data d’entrada.",
+                    "Llegeix Hora d’entrada i Hora de sortida. Si falta la sortida, comprova si vas deixar el comptador en marxa.",
+                    "Desplega el detall de la fila per llegir les incidències associades, si n’hi ha.",
+                    "Si una hora no és correcta, comunica a administració el client, el dia, l’hora que apareix i l’hora real."
+                ],
+                "result": "Aquesta pantalla permet consultar. No pots escriure una altra hora ni esborrar el fitxatge des d’aquí."
+            }
+        ]
+    },
+    {
+        "id": "notes",
+        "roles": ["admin"],
+        "category": "Incidències i notes",
+        "title": "Escriure notes i revisar incidències",
+        "description": "Una nota desa informació de seguiment. Una incidència explica un problema durant un servei.",
+        "href": "/clients",
+        "steps": [
+            "Prem Clients, obre els tres punts del client i després Visualitzar.",
+            "Prem la pestanya Notes. Per a notes d’una empleada, obre la fitxa des d’Empleades i baixa al bloc Notes."
+        ],
+        "effects": [
+            "La campana també pot avisar de contractes d’empleades propers a acabar i de visites que no han començat a fitxar-se. Els períodes d’absència registrats es tenen en compte en aquests darrers avisos."
+        ],
+        "questions": [
+            {
+                "question": "No veig la incidència a Missatges.",
+                "answer": "Les incidències són a Notes i als registres horaris; el seu avís apareix a la campana administrativa. Missatges és la conversa amb el client."
+            },
+            {
+                "question": "Una nota normal també genera l’avís d’incidència?",
+                "answer": "No. Aquell avís es crea per a incidències del personal associades a un client."
+            },
+            {
+                "question": "Quina diferència hi ha entre una nota i una incidència?",
+                "answer": "Una nota és informació de seguiment (per exemple, com s’ha trobat la persona usuària). Una incidència comunica un problema ocorregut durant un servei i genera un avís a administració; una nota general no."
+            },
+            {
+                "question": "Són visibles per a la resta de treballadores?",
+                "answer": "No hi ha un llistat general d’incidències visible per a tot el personal: cada treballadora veu, dins d’una visita, les notes associades a aquell client."
+            },
+            {
+                "question": "Amb quin client, servei o fitxatge queda relacionada una incidència?",
+                "answer": "Queda relacionada amb la visita (el fitxatge) des de la qual es va crear, i per tant amb aquell client i aquell servei concrets."
+            },
+            {
+                "question": "Com resol o corregeix un fitxatge a partir d’una incidència?",
+                "answer": "Obre l’avís des de la campana per llegir el que ha passat, i corregeix el fitxatge relacionat des de Registres d’hores, indicant el motiu de la correcció."
+            }
+        ],
+        "related": ["time-records", "messages", "audits"],
+        "tasks": [
+            {
+                "title": "Afegir una nota",
+                "steps": [
+                    "Prem Afegir nota, damunt de les notes.",
+                    "A la finestra, escriu la informació amb frases clares. Indica el dia i el que ha passat si cal.",
+                    "Prem Desar a la part inferior de la finestra.",
+                    "Comprova que la nota apareix a la llista."
+                ],
+                "result": "La nota queda a la fitxa. Les notes del client poden ser consultades pel personal des de les visites; no són un missatge privat al client."
+            },
+            {
+                "title": "Llegir avisos i corregir notes",
+                "steps": [
+                    "Prem la campana de la capçalera per obrir els avisos d’administració.",
+                    "Prem l’avís d’una incidència per anar a la informació del client i llegir el que ha passat.",
+                    "Per corregir una nota, utilitza el botó Editar, modifica el text i prem Desar canvis.",
+                    "Si has de treure una nota, utilitza el botó Eliminar i revisa l’avís abans de confirmar.",
+                    "Un cop llegit un avís, pots marcar-lo com a llegit a la campana."
+                ],
+                "result": "Marcar un avís com a llegit no soluciona el problema ni canvia les hores. Has de fer per separat l’acció que correspongui."
+            }
+        ]
+    },
+    {
+        "id": "announcements",
+        "roles": ["admin"],
+        "category": "Anuncis i comunicacions internes",
+        "title": "Publicar o canviar un anunci",
+        "description": "Escriu un avís perquè el llegeixi el grup de persones que triïs.",
+        "href": "/announcements",
+        "steps": ["Prem Anuncis al menú lateral esquerre."],
+        "effects": [
+            "L’anunci es publica per als destinataris triats. Desar no envia un correu a cada persona.",
+            "En editar, les persones veuran el text nou quan el consultin. En eliminar, l’anunci deixa d’estar disponible."
+        ],
+        "questions": [
+            {
+                "question": "Una altra persona veu un anunci i jo no.",
+                "answer": "Pot estar dirigit a un altre perfil. Comprova amb administració el públic destinatari."
+            },
+            {
+                "question": "On responc a un anunci?",
+                "answer": "El tauler no inclou respostes. Si ets client, utilitza Missatges per parlar amb l’entitat; si ets personal, utilitza el canal habitual amb administració."
+            },
+            {
+                "question": "Els anuncis són per a totes les treballadores o puc triar destinatàries?",
+                "answer": "Es trien per públic, no persona a persona: Clients o Intern (empleats i administradors). No hi ha una opció per dirigir-lo a un grup més reduït de treballadores concretes."
+            },
+            {
+                "question": "Puc utilitzar-los per comunicar canvis generals o avisos interns?",
+                "answer": "Sí, és el seu ús habitual: informació que ha d’arribar a tot un col·lectiu, com canvis d’horari general, avisos o novetats."
+            },
+            {
+                "question": "En què es diferencia un anunci d’una incidència o una nota?",
+                "answer": "L’anunci és una comunicació general d’administració cap a un col·lectiu. La incidència i la nota estan lligades a un client o a una visita concreta, no a un avís general."
+            }
+        ],
+        "related": ["messages", "client-area", "employee-agenda"],
+        "tasks": [
+            {
+                "title": "Publicar un anunci",
+                "steps": [
+                    "Prem Crear anunci, a dalt a la dreta del llistat.",
+                    "Escriu un Títol que resumeixi l’avís.",
+                    "Prem Contingut i escriu el missatge complet. Indica dates, lloc i què ha de fer qui el llegeixi, si correspon.",
+                    "Revisa Destinataris. Tria Clients perquè el vegin els clients. L’opció Intern (empleats i administradors) no inclou els clients.",
+                    "Si vols afegir una imatge, selecciona-la al camp d’imatge i comprova la vista prèvia.",
+                    "Llegeix l’anunci i prem Desar."
+                ],
+                "result": "L’anunci es publica per als destinataris triats. Desar no envia un correu a cada persona."
+            },
+            {
+                "title": "Corregir o retirar un anunci",
+                "steps": [
+                    "A Anuncis, localitza la fila de l’avís.",
+                    "Prem els tres punts de la dreta i després Editar.",
+                    "Canvia el text o els destinataris i prem Desar canvis.",
+                    "Si vols retirar l’anunci, torna a la fila, obre els tres punts i prem Eliminar. Llegeix l’avís abans de confirmar."
+                ],
+                "result": "En editar, les persones veuran el text nou quan el consultin. En eliminar, l’anunci deixa d’estar disponible."
+            }
+        ]
+    },
+    {
+        "id": "announcement-board",
+        "roles": ["employee", "client"],
+        "category": "Anuncis i comunicacions internes",
+        "title": "Llegir un anunci",
+        "description": "Aquí pots llegir els avisos que l’entitat ha publicat per a tu.",
+        "href": null,
+        "steps": ["Torna a Inici.", "Prem Tauler d’anuncis."],
+        "effects": [
+            "Llegir un anunci no envia una resposta. Si tens un dubte, contacta amb administració; els clients poden fer-ho des de Missatges."
+        ],
+        "questions": [
+            {
+                "question": "Una altra persona veu un anunci i jo no.",
+                "answer": "Pot estar dirigit a un altre perfil. Comprova amb administració el públic destinatari."
+            },
+            {
+                "question": "On responc a un anunci?",
+                "answer": "El tauler no inclou respostes. Si ets client, utilitza Missatges per parlar amb l’entitat; si ets personal, utilitza el canal habitual amb administració."
+            }
+        ],
+        "related": ["messages", "client-area", "employee-agenda"],
+        "tasks": [
+            {
+                "title": "Obrir i llegir l’avís complet",
+                "steps": [
+                    "Busca l’anunci pel títol. Els més recents apareixen primer.",
+                    "Prem Veure detall a l’anunci que vulguis llegir.",
+                    "Llegeix el text de la finestra. Llisca cap avall si el missatge no hi cap sencer.",
+                    "Prem Tancar detall per tornar al tauler."
+                ],
+                "result": "Llegir un anunci no envia una resposta. Si tens un dubte, contacta amb administració; els clients poden fer-ho des de Missatges."
+            }
+        ]
+    },
+    {
+        "id": "messages",
+        "roles": ["admin", "client"],
+        "category": "Missatges",
+        "title": "Llegir i enviar un missatge",
+        "description": "Aquest apartat permet que els clients parlin amb l’equip d’administració.",
+        "href": null,
+        "steps": [
+            "Si ets client, prem Missatges a Inici. Si ets d’administració, prem Missatges al menú lateral. També pots utilitzar la icona de missatges de la capçalera.",
+            "Administració ha de seleccionar primer la conversa del client a la llista de l’esquerra. El client entra directament a la seva conversa amb l’entitat."
+        ],
+        "effects": ["A administració, Llegit és compartit per l’equip. No indica quina persona d’administració ha obert el missatge."],
+        "questions": [
+            {
+                "question": "M’he equivocat en enviar.",
+                "answer": "Envia un aclariment a la mateixa conversa. No pots desfer l’enviament des de la pantalla."
+            },
+            {
+                "question": "No rebo avisos encara que hi ha missatges.",
+                "answer": "Comprova l’opció de notificacions, els permisos del lloc i el dispositiu on els has activat. Encara que l’avís falli, pots entrar a Missatges per consultar la conversa."
+            },
+            {
+                "question": "El client no pot consultar la conversa.",
+                "answer": "Administració ha de revisar que el client tingui un compte d’accés actiu. El personal no disposa d’aquest apartat de missatgeria."
+            }
+        ],
+        "related": ["client-access", "mobile", "announcements"],
+        "tasks": [
+            {
+                "title": "Escriure i enviar",
+                "steps": [
+                    "Revisa el nom de la conversa per comprovar a qui escrius.",
+                    "Prem el requadre per escriure, a la part inferior de la conversa.",
+                    "Escriu el missatge. Abans d’enviar-lo, llegeix el que has escrit i corregeix els errors.",
+                    "Prem Enviar, al costat del requadre.",
+                    "Espera que el text aparegui dins de la conversa."
+                ],
+                "result": "L’altra part ja pot llegir el missatge. No hi ha cap botó per esborrar o canviar un missatge enviat; si t’equivoques, envia un aclariment."
+            },
+            {
+                "title": "Llegir respostes i rebre avisos",
+                "steps": [
+                    "Obre Missatges i selecciona la conversa si apareix una llista de clients.",
+                    "Baixa fins als missatges més recents per llegir les respostes.",
+                    "Al costat dels teus missatges, revisa si apareix Enviat o Llegit. Llegit significa que l’altra part ha obert la conversa.",
+                    "Si apareix l’opció d’activar notificacions i vols avisos en aquest dispositiu, prem-la i accepta el permís del navegador."
+                ],
+                "result": "Obrir la conversa marca els missatges rebuts com a llegits. Un missatge que demana canviar una visita no modifica l’horari automàticament."
+            }
+        ]
+    },
+    {
+        "id": "automatic-invoices",
+        "roles": ["admin"],
+        "category": "Facturació",
+        "title": "Activar o desactivar Crear factura automàtica",
+        "description": "Aquesta casella permet incloure el client en la creació periòdica de factures. Acorda’n l’ús amb la persona responsable.",
+        "href": "/clients",
+        "steps": [
+            "Prem Clients al menú lateral.",
+            "Busca el client, prem els tres punts de la fila i després Editar.",
+            "Baixa fins a Dades de facturació."
+        ],
+        "effects": [
+            "La creació automàtica està prevista per al dia 1 de cada mes, si el servei automàtic està funcionant. Actualment consulta el mes en curs, no l’anterior.",
+            "El càlcul actual pot comptar les hores dues vegades en calcular l’import i utilitza un IVA del 21 %. La casella Preus amb IVA no canvia aquest càlcul. Demana revisar els imports abans d’utilitzar la factura.",
+            "Si es repeteix la creació automàtica, poden aparèixer factures duplicades. Activar i desactivar la casella no serveix per crear una factura a l’instant."
+        ],
+        "questions": [
+            {
+                "question": "Puc assumir que la factura automàtica ja és correcta?",
+                "answer": "No. Revisa el període i el càlcul amb la persona responsable abans d’utilitzar-la. Hi ha limitacions a la implementació actual i no s’ha de donar per confirmat l’import només perquè la factura existeixi."
+            },
+            {
+                "question": "No s’ha generat cap factura.",
+                "answer": "Comprova la casella i els registres del període consultat. Administració tècnica ha de comprovar l’execució automàtica. No activis i desactivis repetidament esperant que això iniciï el procés."
+            },
+            {
+                "question": "Utocures genera factures legals?",
+                "answer": "Aquest apartat registra dades i imports i permet exportar-los com a suport a la gestió. No ofereix una integració amb el sistema de facturació fiscal ni substitueix el programa de comptabilitat. Que una factura estigui desada aquí no confirma que s’hagi emès, enviat o cobrat fora d’Utocures."
+            }
+        ],
+        "related": ["clients", "services-characteristics", "invoices", "time-records"],
+        "tasks": [
+            {
+                "title": "Canviar la casella de factura automàtica",
+                "steps": [
+                    "Busca Crear factura automàtica. Si té una marca, està activada.",
+                    "Per activar-la, prem la casella buida. Per desactivar-la, prem la casella marcada.",
+                    "Revisa És soci i els serveis del client, ja que s’utilitzen per preparar imports.",
+                    "Prem Desar canvis al principi o al final del formulari."
+                ],
+                "result": "Desar no crea una factura en aquell moment. Desactivar la casella no esborra les factures que ja existeixen."
+            },
+            {
+                "title": "Revisar una factura creada automàticament",
+                "steps": [
+                    "Prem Factures al menú lateral i busca el client. Revisa l’any del llistat.",
+                    "Obre els tres punts de la factura i prem Editar per consultar-ne les dades.",
+                    "Comprova a quines dates corresponen les hores. No donis per fet que són les del mes anterior.",
+                    "Compara quantitat d’hores, preu, descompte, IVA i total amb la informació de Registres d’hores i els preus de Serveis.",
+                    "Si falta una factura o l’import no coincideix, demana que la persona responsable ho revisi abans de crear-ne una altra."
+                ],
+                "result": "Les factures automàtiques necessiten revisió. L’eina no les cobra ni les envia automàticament."
+            }
+        ]
+    },
+    {
+        "id": "invoices",
+        "roles": ["admin"],
+        "category": "Facturació",
+        "title": "Crear o corregir una factura",
+        "description": "Anota el client, les dates i els conceptes que es cobren. Comprova el total en desar.",
+        "href": "/invoices",
+        "steps": ["Prem Factures al menú lateral esquerre."],
+        "effects": [
+            "La factura copia l’adreça del client en crear-la. Canviar després l’adreça a Clients no canvia aquella factura; en triar un altre client es copia la seva adreça.",
+            "Comprova els descomptes i el total desat: poden diferir del que has vist mentre emplenaves el formulari.",
+            "Factures no ofereix els botons Descarregar PDF i Enviar de pressupostos i contractes."
+        ],
+        "questions": [
+            {
+                "question": "Acceptar un pressupost genera la factura?",
+                "answer": "No. Has de crear la factura al seu apartat."
+            },
+            {
+                "question": "On marco una factura com a pagada?",
+                "answer": "La pantalla actual no inclou un estat de pagament. Registrar la factura no confirma que estigui cobrada."
+            },
+            {
+                "question": "D’on obté les hores que ha de facturar a cada client?",
+                "answer": "No les agafa automàticament dels fitxatges: cada línia de la factura s’escriu a mà (concepte, quantitat i preu). Consulta abans les hores reals a Registres d’hores si vols facturar exactament el que s’ha treballat."
+            },
+            {
+                "question": "Es poden configurar descomptes?",
+                "answer": "Sí, cada línia admet un descompte i un tipus d’IVA propis."
+            },
+            {
+                "question": "Com porto la informació al meu programa de comptabilitat?",
+                "answer": "Descarrega el llistat amb Descarregar Excel i revisa client, conceptes i imports. Utocures no l’envia a un altre programa automàticament. El format que accepti el programa i qualsevol adaptació de l’arxiu s’han de revisar amb la persona que porta la comptabilitat."
+            }
+        ],
+        "related": ["budgets", "clients", "automatic-invoices", "client-locations"],
+        "tasks": [
+            {
+                "title": "Crear una factura",
+                "steps": [
+                    "Prem Crear factura, a dalt a la dreta del llistat.",
+                    "Prem Client i selecciona una fitxa existent.",
+                    "Indica Data d’emissió i Data de venciment. El venciment és l’últim dia previst per pagar i no pot ser anterior a l’emissió.",
+                    "A la primera línia, escriu Concepte: quina feina o producte estàs cobrant.",
+                    "Emplena Quantitat i Preu. Per exemple, per a dues hores a 15 per hora, escriu 2 a Quantitat i 15 a Preu.",
+                    "Revisa Descompte i Tipus d’IVA. Si no has d’aplicar descompte, deixa’l a zero.",
+                    "Si necessites una altra línia, prem Afegir element, sota les línies, i emplena la fila nova.",
+                    "Prem Desar, al principi o al final del formulari. Si apareixen errors, corregeix els camps indicats i torna a desar.",
+                    "Al llistat, obre els tres punts de la factura i prem Editar per comprovar les dades desades."
+                ],
+                "result": "La factura queda registrada. No s’envia per correu i no es cobra al client en prémer Desar."
+            },
+            {
+                "title": "Corregir una factura",
+                "steps": [
+                    "Prem Factures i localitza el document. Canvia el filtre d’any si pertany a un altre any.",
+                    "Prem els tres punts de la fila i després Editar.",
+                    "Canvia la data o les línies necessàries. Per treure una línia, prem la paperera d’aquella fila.",
+                    "Prem Desar canvis i revisa de nou els imports."
+                ],
+                "result": "L’eina torna a calcular el total. Aquesta pantalla no té cap botó per marcar la factura com a pagada."
+            },
+            {
+                "title": "Eliminar un element del llistat",
+                "steps": [
+                    "Prem Factures al menú lateral i localitza la fila de l’element que vols treure.",
+                    "Prem els tres punts de la dreta i després Eliminar.",
+                    "Llegeix l’avís de la finestra. Si dubtes de quina fila has seleccionat, cancel·la i comprova’n el nom al llistat abans de continuar.",
+                    "Si és l’element correcte i vols retirar-lo, confirma Eliminar. Si no n’estàs segur, prem Cancel·lar.",
+                    "Comprova que ja no apareix al llistat."
+                ],
+                "result": "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+            },
+            {
+                "title": "Descarregar el llistat en Excel",
+                "steps": [
+                    "Prem Factures al menú lateral.",
+                    "Si necessites només certes dades, utilitza els filtres que apareixen damunt del llistat. Comprova quines files es mostren.",
+                    "Baixa fins al final de la taula i prem Descarregar Excel, a la dreta.",
+                    "Busca l’arxiu a les descàrregues de l’ordinador o mòbil."
+                ],
+                "result": "Es descarrega una còpia del llistat. Les dades de l’eina no canvien. El botó apareix quan hi ha resultats."
+            }
+        ]
+    },
+    {
+        "id": "budgets",
+        "roles": ["admin"],
+        "category": "Pressupostos",
+        "title": "Crear, revisar i enviar un pressupost",
+        "description": "Prepara una proposta amb el text i els imports. Revisa-la abans d’enviar-la al client.",
+        "href": "/budgets",
+        "steps": ["Prem Pressupostos al menú lateral esquerre."],
+        "effects": [
+            "Revisa els descomptes i el total després de desar: actualment pot haver-hi diferències entre l’import que veus mentre edites i l’import finalment desat. Si no coincideix, demana revisió abans d’enviar."
+        ],
+        "questions": [
+            {
+                "question": "No puc enviar-lo per correu.",
+                "answer": "Comprova que el pressupost estigui vinculat a una fitxa real i que tingui correu de contacte. Un nom lliure no té un destinatari a qui enviar."
+            },
+            {
+                "question": "S’envia en desar-lo?",
+                "answer": "No. Desar, descarregar i enviar són accions independents. Utilitza Enviar per correu només després de revisar el document."
+            },
+            {
+                "question": "Què significa cada estat?",
+                "answer": "Esborrany (Draft): document en preparació. Enviat (Sent): consta com a tramès. Acceptat (Accepted): administració registra l’acceptació. Rebutjat (Rejected): registra que no s’accepta. Seleccionar un estat i desar no envia un correu ni obté una signatura."
+            }
+        ],
+        "related": ["clients", "contracts", "invoices", "budget-templates", "files"],
+        "tasks": [
+            {
+                "title": "Crear un pressupost",
+                "steps": [
+                    "Prem Crear pressupost, a dalt a la dreta del llistat.",
+                    "Prem Client i selecciona la persona. Si escrius un nom nou sense triar una fitxa, no podràs enviar-li el pressupost per correu des d’aquí.",
+                    "Revisa Estat. Per a un document que encara estàs preparant, utilitza Esborrany (Draft).",
+                    "Indica la Data de venciment si el pressupost té una data límit.",
+                    "Si vols partir d’un text preparat, tria una Plantilla de pressupost. Després llegeix i completa Contingut.",
+                    "A la primera línia, escriu Concepte: quina feina o producte estàs cobrant.",
+                    "Emplena Quantitat i Preu. Per exemple, per a dues hores a 15 per hora, escriu 2 a Quantitat i 15 a Preu.",
+                    "Revisa Descompte i Tipus d’IVA. Si no has d’aplicar descompte, deixa’l a zero.",
+                    "Si necessites una altra línia, prem Afegir element, sota les línies, i emplena la fila nova.",
+                    "Prem Desar, al principi o al final del formulari. Si apareixen errors, corregeix els camps indicats i torna a desar.",
+                    "Torna al llistat, prem els tres punts del pressupost i després Visualitzar. Comprova els imports desats."
+                ],
+                "result": "El pressupost queda desat. Encara no s’ha enviat, ni crea un contracte, una factura o un horari."
+            },
+            {
+                "title": "Descarregar una còpia i enviar-la al client",
+                "steps": [
+                    "Prem Pressupostos al menú lateral i localitza el document. Revisa l’any seleccionat si no el trobes.",
+                    "Prem els tres punts de la fila, a la dreta.",
+                    "Prem Descarregar PDF. Obre l’arxiu descarregat i revisa el client, el text i els imports.",
+                    "Comprova el correu de contacte a la fitxa del client: aquest és el destinatari de l’enviament.",
+                    "Torna al llistat de Pressupostos, obre els tres punts del document i prem Enviar per correu."
+                ],
+                "result": "S’envia el PDF al client. El pressupost passa a Enviat, llevat que ja estigués Acceptat. Descarregar el PDF per si sol no envia res."
+            },
+            {
+                "title": "Corregir text, imports o estat",
+                "steps": [
+                    "A Pressupostos, prem els tres punts del document i després Editar.",
+                    "Modifica els camps necessaris. Si el client ha acceptat la proposta, pots seleccionar Acceptat (Accepted) a Estat.",
+                    "Prem Desar canvis i torna a descarregar el PDF per revisar el resultat."
+                ],
+                "result": "Canviar l’estat deixa constància de la teva decisió. No recull una signatura ni torna a enviar el document."
+            },
+            {
+                "title": "Eliminar un element del llistat",
+                "steps": [
+                    "Prem Pressupostos al menú lateral i localitza la fila de l’element que vols treure.",
+                    "Prem els tres punts de la dreta i després Eliminar.",
+                    "Llegeix l’avís de la finestra. Si dubtes de quina fila has seleccionat, cancel·la i comprova’n el nom al llistat abans de continuar.",
+                    "Si és l’element correcte i vols retirar-lo, confirma Eliminar. Si no n’estàs segur, prem Cancel·lar.",
+                    "Comprova que ja no apareix al llistat."
+                ],
+                "result": "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+            },
+            {
+                "title": "Descarregar el llistat en Excel",
+                "steps": [
+                    "Prem Pressupostos al menú lateral.",
+                    "Si necessites només certes dades, utilitza els filtres que apareixen damunt del llistat. Comprova quines files es mostren.",
+                    "Baixa fins al final de la taula i prem Descarregar Excel, a la dreta.",
+                    "Busca l’arxiu a les descàrregues de l’ordinador o mòbil."
+                ],
+                "result": "Es descarrega una còpia del llistat. Les dades de l’eina no canvien. El botó apareix quan hi ha resultats."
+            }
+        ]
+    },
+    {
+        "id": "contracts",
+        "roles": ["admin"],
+        "category": "Contractes",
+        "title": "Crear, revisar i enviar un contracte",
+        "description": "Escriu l’acord amb el client i descarrega una còpia per revisar-la abans d’enviar-la.",
+        "href": "/contracts",
+        "steps": ["Prem Contractes al menú lateral esquerre."],
+        "effects": [
+            "El contracte queda desat. Desar-lo no l’envia ni significa que el client l’hagi signat.",
+            "El client rep el PDF per correu. L’estat del contracte no canvia automàticament en enviar-lo.",
+            "La còpia signada queda al costat del contracte. Els PDF que ja vas enviar conserven el contingut anterior.",
+            "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren.",
+            "Es descarrega una còpia del llistat. Les dades de l’eina no canvien. El botó apareix quan hi ha resultats."
+        ],
+        "questions": [
+            {
+                "question": "Canviar una plantilla actualitza els contractes existents?",
+                "answer": "No. El text s’incorpora al formulari quan selecciones la plantilla. Revisa i desa per separat cada contracte que hagi de canviar."
+            },
+            {
+                "question": "On queda el document signat?",
+                "answer": "Si disposes d’una còpia signada, pots pujar-la als arxius de la fitxa del contracte. L’enviament del PDF per si sol no recull una signatura."
+            },
+            {
+                "question": "Què significa cada estat?",
+                "answer": "Esborrany (Draft): document en preparació. Enviat (Sent): consta com a tramès. Acceptat (Accepted): administració registra l’acceptació. Rebutjat (Rejected): registra que no s’accepta. Seleccionar un estat i desar no envia un correu ni obté una signatura."
+            }
+        ],
+        "related": ["templates", "files", "clients", "schedules"],
+        "tasks": [
+            {
+                "title": "Crear un contracte",
+                "steps": [
+                    "Prem Crear contracte, a dalt a la dreta del llistat.",
+                    "Escriu el Títol i selecciona el Client.",
+                    "Selecciona Estat. Utilitza Esborrany (Draft) si encara estàs preparant el document.",
+                    "Emplena les dates d’inici i fi que corresponguin a l’acord.",
+                    "Si tens un text preparat, selecciona’l a Plantilla de contracte.",
+                    "Prem dins de Contingut. Llegeix el text i completa les dades i condicions d’aquest client.",
+                    "Prem Desar, al principi o al final del formulari. Si apareixen errors, corregeix els camps indicats i torna a desar."
+                ],
+                "result": "El contracte queda desat. Desar-lo no l’envia ni significa que el client l’hagi signat."
+            },
+            {
+                "title": "Descarregar i enviar el contracte",
+                "steps": [
+                    "Prem Contractes al menú lateral i busca el document.",
+                    "Prem els tres punts de la fila i després Descarregar PDF.",
+                    "Obre la còpia descarregada i revisa nom del client, dates i contingut.",
+                    "Comprova que el correu de contacte de la fitxa del client és correcte.",
+                    "Torna a Contractes, prem els tres punts del document i després Enviar per email."
+                ],
+                "result": "El client rep el PDF per correu. L’estat del contracte no canvia automàticament en enviar-lo."
+            },
+            {
+                "title": "Modificar el contracte o desar una còpia signada",
+                "steps": [
+                    "A Contractes, obre els tres punts del document.",
+                    "Per corregir el text, prem Editar, modifica el que calgui i prem Desar canvis.",
+                    "Per afegir una còpia signada, prem Visualitzar i baixa a Documents i arxius.",
+                    "Prem Afegir arxiu, selecciona la còpia i prem Desar a la finestra. Trobaràs tots els passos a la guia d’arxius."
+                ],
+                "result": "La còpia signada queda al costat del contracte. Els PDF que ja vas enviar conserven el contingut anterior."
+            },
+            {
+                "title": "Eliminar un element del llistat",
+                "steps": [
+                    "Prem Contractes al menú lateral i localitza la fila de l’element que vols treure.",
+                    "Prem els tres punts de la dreta i després Eliminar.",
+                    "Llegeix l’avís de la finestra. Si dubtes de quina fila has seleccionat, cancel·la i comprova’n el nom al llistat abans de continuar.",
+                    "Si és l’element correcte i vols retirar-lo, confirma Eliminar. Si no n’estàs segur, prem Cancel·lar.",
+                    "Comprova que ja no apareix al llistat."
+                ],
+                "result": "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+            },
+            {
+                "title": "Descarregar el llistat en Excel",
+                "steps": [
+                    "Prem Contractes al menú lateral.",
+                    "Si necessites només certes dades, utilitza els filtres que apareixen damunt del llistat. Comprova quines files es mostren.",
+                    "Baixa fins al final de la taula i prem Descarregar Excel, a la dreta.",
+                    "Busca l’arxiu a les descàrregues de l’ordinador o mòbil."
+                ],
+                "result": "Es descarrega una còpia del llistat. Les dades de l’eina no canvien. El botó apareix quan hi ha resultats."
+            }
+        ]
+    },
+    {
+        "id": "templates",
+        "roles": ["admin"],
+        "category": "Plantilles de contracte",
+        "title": "Crear i utilitzar una plantilla de contracte",
+        "description": "Una plantilla és un text preparat que pots copiar a un document nou per no escriure’l des de zero.",
+        "href": "/contract-templates",
+        "steps": ["Prem Plantilles de contracte al menú lateral esquerre."],
+        "effects": [
+            "La plantilla apareixerà a la llista i podràs triar-la en preparar un document del mateix tipus.",
+            "Canviar la plantilla no canvia els documents que ja has desat. Triar una altra plantilla mentre escrius pot substituir el text del formulari.",
+            "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+        ],
+        "questions": [
+            {
+                "question": "No veig la meva plantilla.",
+                "answer": "Comprova que l’has creada en el tipus correcte. Les plantilles de contractes i pressupostos estan separades."
+            },
+            {
+                "question": "La plantilla afegeix línies o programa serveis?",
+                "answer": "Aquestes plantilles reutilitzen el text del document. Les línies econòmiques i els horaris s’introdueixen als seus apartats."
+            }
+        ],
+        "related": ["contracts"],
+        "tasks": [
+            {
+                "title": "Crear una plantilla",
+                "steps": [
+                    "Prem Crear plantilla de contracte, a dalt a la dreta del llistat.",
+                    "Escriu Nom de la plantilla. Utilitza un nom que expliqui per a què serveix.",
+                    "Prem dins de Contingut de la plantilla i escriu el text que vulguis reutilitzar.",
+                    "Prem Desar, al principi o al final del formulari. Si apareixen errors, corregeix els camps indicats i torna a desar."
+                ],
+                "result": "La plantilla apareixerà a la llista i podràs triar-la en preparar un document del mateix tipus."
+            },
+            {
+                "title": "Utilitzar o corregir el text preparat",
+                "steps": [
+                    "Obre el formulari per crear o editar un contracte.",
+                    "Prem Plantilla de contracte i tria el nom de la plantilla.",
+                    "Llegeix el text que apareix a Contingut i completa les dades particulars del client abans de desar el document.",
+                    "Si vols corregir el text per a usos futurs, torna a Plantilles de contracte, prem els tres punts de la plantilla i després Editar.",
+                    "Canvia el text i prem Desar canvis."
+                ],
+                "result": "Canviar la plantilla no canvia els documents que ja has desat. Triar una altra plantilla mentre escrius pot substituir el text del formulari."
+            },
+            {
+                "title": "Eliminar un element del llistat",
+                "steps": [
+                    "Prem Plantilles de contracte al menú lateral i localitza la fila de l’element que vols treure.",
+                    "Prem els tres punts de la dreta i després Eliminar.",
+                    "Llegeix l’avís de la finestra. Si dubtes de quina fila has seleccionat, cancel·la i comprova’n el nom al llistat abans de continuar.",
+                    "Si és l’element correcte i vols retirar-lo, confirma Eliminar. Si no n’estàs segur, prem Cancel·lar.",
+                    "Comprova que ja no apareix al llistat."
+                ],
+                "result": "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+            }
+        ]
+    },
+    {
+        "id": "budget-templates",
+        "roles": ["admin"],
+        "category": "Plantilles de pressupost",
+        "title": "Crear i utilitzar una plantilla de pressupost",
+        "description": "Una plantilla és un text preparat que pots copiar a un document nou per no escriure’l des de zero.",
+        "href": "/budget-templates",
+        "steps": ["Prem Plantilles de pressupost al menú lateral esquerre."],
+        "effects": [
+            "La plantilla apareixerà a la llista i podràs triar-la en preparar un document del mateix tipus.",
+            "Canviar la plantilla no canvia els documents que ja has desat. Triar una altra plantilla mentre escrius pot substituir el text del formulari.",
+            "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+        ],
+        "questions": [
+            {
+                "question": "No veig la meva plantilla.",
+                "answer": "Comprova que l’has creada en el tipus correcte. Les plantilles de contractes i pressupostos estan separades."
+            },
+            {
+                "question": "La plantilla afegeix línies o programa serveis?",
+                "answer": "Aquestes plantilles reutilitzen el text del document. Les línies econòmiques i els horaris s’introdueixen als seus apartats."
+            }
+        ],
+        "related": ["budgets"],
+        "tasks": [
+            {
+                "title": "Crear una plantilla",
+                "steps": [
+                    "Prem Crear plantilla de pressupost, a dalt a la dreta del llistat.",
+                    "Escriu Nom de la plantilla. Utilitza un nom que expliqui per a què serveix.",
+                    "Prem dins de Contingut de la plantilla i escriu el text que vulguis reutilitzar.",
+                    "Prem Desar, al principi o al final del formulari. Si apareixen errors, corregeix els camps indicats i torna a desar."
+                ],
+                "result": "La plantilla apareixerà a la llista i podràs triar-la en preparar un document del mateix tipus."
+            },
+            {
+                "title": "Utilitzar o corregir el text preparat",
+                "steps": [
+                    "Obre el formulari per crear o editar un pressupost.",
+                    "Prem Plantilla de pressupost i tria el nom de la plantilla.",
+                    "Llegeix el text que apareix a Contingut i completa les dades particulars del client abans de desar el document.",
+                    "Si vols corregir el text per a usos futurs, torna a Plantilles de pressupost, prem els tres punts de la plantilla i després Editar.",
+                    "Canvia el text i prem Desar canvis."
+                ],
+                "result": "Canviar la plantilla no canvia els documents que ja has desat. Triar una altra plantilla mentre escrius pot substituir el text del formulari."
+            },
+            {
+                "title": "Eliminar un element del llistat",
+                "steps": [
+                    "Prem Plantilles de pressupost al menú lateral i localitza la fila de l’element que vols treure.",
+                    "Prem els tres punts de la dreta i després Eliminar.",
+                    "Llegeix l’avís de la finestra. Si dubtes de quina fila has seleccionat, cancel·la i comprova’n el nom al llistat abans de continuar.",
+                    "Si és l’element correcte i vols retirar-lo, confirma Eliminar. Si no n’estàs segur, prem Cancel·lar.",
+                    "Comprova que ja no apareix al llistat."
+                ],
+                "result": "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+            }
+        ]
+    },
+    {
+        "id": "files",
+        "roles": ["admin"],
+        "category": "Documents i notes internes",
+        "title": "Afegir o descarregar un arxiu d’una fitxa",
+        "description": "Un arxiu pot ser un PDF, una imatge o un document de Word que vulguis desar al costat d’una persona o document.",
+        "href": null,
+        "steps": [
+            "Obre Clients, Empleades, Pressupostos o Contractes al menú lateral, segons on vulguis desar l’arxiu.",
+            "Busca la fitxa, prem els tres punts de la fila i després Visualitzar.",
+            "Baixa fins a Documents i arxius."
+        ],
+        "effects": ["S’admeten imatges JPG i PNG, PDF i documents DOC o DOCX, de fins a 10 MB cadascun."],
+        "questions": [
+            {
+                "question": "No admet l’arxiu.",
+                "answer": "Comprova format i mida, que l’arxiu no estigui buit i que tinguis connexió. Si supera 10 MB, prepara una versió més petita."
+            },
+            {
+                "question": "Pujar documentació al personal li envia un correu?",
+                "answer": "La càrrega l’associa a les fitxes per gestionar-la. No fa un enviament automàtic de correu."
+            },
+            {
+                "question": "Qui pot consultar aquestes notes i documents?",
+                "answer": "Administració gestiona els arxius des de les fitxes. La pantalla de visita d’una treballadora no ofereix aquell bloc d’arxius, però sí que mostra les notes i incidències del client, també les d’altres visites. No utilitzis Notes del client com un espai privat d’administració.",
+                "guide": "privacy"
+            }
+        ],
+        "related": ["employee-documents", "clients", "contracts", "budgets"],
+        "tasks": [
+            {
+                "title": "Afegir un arxiu",
+                "steps": [
+                    "Prem Afegir arxiu, a la dreta del títol del bloc.",
+                    "A la finestra Pujar arxiu, prem Seleccionar arxiu.",
+                    "S’obrirà el selector d’arxius del teu ordinador o mòbil. Busca el document, selecciona’l i confirma l’elecció en aquest selector.",
+                    "Comprova que a la finestra de l’eina apareix el nom de l’arxiu correcte.",
+                    "Prem Desar, a baix a la dreta de la finestra.",
+                    "Espera que acabi i comprova que l’arxiu apareix a Documents i arxius."
+                ],
+                "result": "L’arxiu queda desat en aquesta fitxa. No s’envia per correu pel fet d’afegir-lo."
+            },
+            {
+                "title": "Descarregar o treure un arxiu",
+                "steps": [
+                    "A Documents i arxius, busca el nom del document.",
+                    "Per obtenir una còpia, prem el botó amb la fletxa de descàrrega d’aquell arxiu. Busca la còpia a les descàrregues del teu dispositiu.",
+                    "Per treure’l de la fitxa, prem la paperera de l’arxiu.",
+                    "Llegeix l’avís de confirmació. Si dubtes de quin arxiu has seleccionat, prem Cancel·lar i comprova’n el nom a la llista abans de tornar a eliminar-lo."
+                ],
+                "result": "Descarregar conserva l’original. Eliminar el treu d’aquesta fitxa; si cap altra fitxa l’utilitza, també s’esborra l’arxiu desat a l’eina."
+            }
+        ]
+    },
+    {
+        "id": "employee-documents",
+        "roles": ["admin"],
+        "category": "Documents i notes internes",
+        "title": "Afegir el mateix document a diverses empleades",
+        "description": "Utilitza aquest apartat per desar un o diversos arxius en diverses fitxes alhora.",
+        "href": "/employee-documents",
+        "steps": ["Prem Documents per a treballadores al menú lateral."],
+        "effects": [
+            "Els arxius queden a les fitxes seleccionades. Aquesta acció no envia un correu ni demana a les empleades que en confirmin la lectura.",
+            "Eliminar des del llistat de distribució afecta totes les destinatàries. Eliminar des d’una fitxa afecta només aquella fitxa."
+        ],
+        "questions": [
+            {
+                "question": "No apareix una persona a la selecció.",
+                "answer": "Comprova que la seva fitxa existeix i que el compte està actiu."
+            },
+            {
+                "question": "He triat una persona incorrecta.",
+                "answer": "Obre la seva fitxa i elimina-hi l’arxiu si només vols retirar-li a ella. L’eliminació des del llistat col·lectiu afecta totes les persones associades."
+            }
+        ],
+        "related": ["files", "employees"],
+        "tasks": [
+            {
+                "title": "Distribuir documents entre les fitxes",
+                "steps": [
+                    "Busca el bloc Nova distribució.",
+                    "Prem Seleccionar arxius i tria els documents a l’ordinador o mòbil. Confirma la selecció.",
+                    "Comprova els noms dels arxius triats. Pots seleccionar-ne fins a 20, d’un màxim de 10 MB cadascun.",
+                    "Baixa a Destinatàries. Marca la casella de cada persona que hagi de tenir aquests arxius a la fitxa.",
+                    "Utilitza Seleccionar totes només si els arxius corresponen a totes les empleades actives. Revisa la selecció abans de continuar.",
+                    "Prem Distribuir documents, a baix a la dreta.",
+                    "Comprova que apareixen a Documents distribuïts."
+                ],
+                "result": "Els arxius queden a les fitxes seleccionades. Aquesta acció no envia un correu ni demana a les empleades que en confirmin la lectura."
+            },
+            {
+                "title": "Retirar un document distribuït",
+                "steps": [
+                    "Busca l’arxiu a Documents distribuïts i revisa a quantes persones està associat.",
+                    "Si vols treure’l de totes aquestes fitxes, prem la paperera d’aquella fila i revisa l’avís abans de confirmar.",
+                    "Si només vols treure’l a una persona, ves a Empleades, obre la fitxa amb Visualitzar i elimina l’arxiu des de Documents i arxius d’aquella fitxa."
+                ],
+                "result": "Eliminar des del llistat de distribució afecta totes les destinatàries. Eliminar des d’una fitxa afecta només aquella fitxa."
+            }
+        ]
+    },
+    {
+        "id": "privacy",
+        "roles": ["admin"],
+        "category": "Privadesa i dades que veuen les treballadores",
+        "title": "Quines dades del client veu el personal en una visita",
+        "description": "Què mostra la pantalla d’una visita i quines notes del client comparteix el personal que l’atén.",
+        "href": null,
+        "steps": [],
+        "effects": [
+            "Les notes del client es comparteixen amb les treballadores que tenen una visita d’aquell client. No són privades de qui les escriu ni es limiten al dia d’aquella visita.",
+            "No hi ha cap ajust per ocultar camps individualment. La informació que no es mostra en pantalla no s’ha de descriure com a protegida només per aquest motiu."
+        ],
+        "questions": [
+            {
+                "question": "Quina informació d’un client pot veure una treballadora?",
+                "answer": "En obrir una visita assignada veu nom, data de naixement, gènere i dades de contacte del client, a més del servei i les tasques. A Notes pot llegir les notes i incidències d’aquell client, incloses les escrites en altres visites."
+            },
+            {
+                "question": "Quina informació és exclusiva d’administració?",
+                "answer": "La vista de visita no mostra els blocs de facturació ni Documents i arxius. Sí que mostra les notes del client, encara que s’hagin escrit des d’administració. No hi ha cap opció per marcar una nota del client com a privada d’administració."
+            },
+            {
+                "question": "La treballadora necessita veure el correu electrònic del client?",
+                "answer": "Avui el veu sempre que estigui emplenat a la fitxa, es necessiti o no per al servei; no hi ha manera d’amagar-lo només a ella."
+            },
+            {
+                "question": "Pot veure la seva data de naixement?",
+                "answer": "Sí, la visita la mostra igual que la resta de dades personals."
+            },
+            {
+                "question": "Puc amagar determinades dades personals?",
+                "answer": "No hi ha cap opció per ocultar cada camp a les treballadores. No esborris dades necessàries ni escriguis dades falses per intentar ocultar-les. Comunica a la persona responsable quina informació no s’hauria de compartir."
+            },
+            {
+                "question": "Què passa si deixo un camp sense emplenar?",
+                "answer": "Si el formulari marca el camp com a obligatori, l’has de completar per desar. Un camp opcional buit queda sense dada. Deixar-lo buit no és un permís de privacitat: si l’emplenes després, es mostrarà on correspongui."
+            },
+            {
+                "question": "Quines dades necessita realment una treballadora per fer el servei?",
+                "answer": "Normalment nom, adreça i telèfon per localitzar i contactar amb la persona usuària, i les tasques del servei. La resta de dades personals i de contacte es mostren igualment, encara que no sempre siguin necessàries per a la feina del dia."
+            },
+            {
+                "question": "Qui pot consultar dades sensibles i de facturació?",
+                "answer": "Administració gestiona la fitxa completa i la facturació. La pantalla de visita mostra dades personals i notes al personal assignat. No s’ha d’assumir que totes les dades sensibles queden reservades a administració: per exemple, una nota sobre salut pot ser visible a altres treballadores que atenen el client."
+            }
+        ],
+        "related": ["clients", "notes", "files"],
+        "tasks": []
+    },
+    {
+        "id": "common-problems",
+        "roles": ["admin"],
+        "category": "Problemes freqüents",
+        "title": "Resoldre els problemes més habituals",
+        "description": "Obre la pregunta que descriu el teu problema. Sota la resposta tens un enllaç a la guia amb els passos complets.",
+        "href": null,
+        "steps": [],
+        "effects": [],
+        "questions": [
+            {
+                "question": "He creat una treballadora i no ha rebut la invitació.",
+                "answer": "Revisa el correu de la fitxa i demana que comprovi Spam. Si el correu era incorrecte, corregeix-lo i desa. Després, la treballadora ha d’obrir Has oblidat la contrasenya? a la pantalla d’entrada i sol·licitar un enllaç amb aquell correu. Tornar a desar una fitxa existent no reenvia la invitació. Si no arriba el missatge, demana que revisin l’enviament de correu.",
+                "guide": "access"
+            },
+            {
+                "question": "Una treballadora no apareix per poder-la assignar.",
+                "answer": "Comprova en aquest ordre: que tingui el servei seleccionat, que el seu compte estigui actiu, que la seva disponibilitat cobreixi exactament aquelles hores i que no tingui una altra visita en aquell horari. Les característiques no influeixen en aquesta llista.",
+                "guide": "schedules"
+            },
+            {
+                "question": "Tinc un servei programat però no apareix el comptador de fitxatge.",
+                "answer": "Demana que obri la visita concreta des d’Agenda. Si veu el botó deshabilitat, ha de comprovar si ha deixat un altre fitxatge obert i finalitzar-lo. Si apareix un error, reviseu connexió, ubicació i compte actiu. Tornar a obrir la visita després d’iniciar pot habilitar Incidència; aquell pas no substitueix la comprovació del comptador.",
+                "guide": "time-records"
+            },
+            {
+                "question": "Un servei no apareix a l’agenda de la treballadora.",
+                "answer": "Comprova la data seleccionada a la seva Agenda i que l’horari es va desar sense error amb aquella persona assignada. Revisa també que no l’hagis substituïda per una altra sense adonar-te’n.",
+                "guide": "schedules"
+            },
+            {
+                "question": "La recurrència quinzenal no apareix en els dies correctes.",
+                "answer": "La quinzena es compta des de la data d’inici de l’horari. Revisa aquesta data, que el dia de la setmana estigui marcat i que la visita esperada no sigui anterior a l’inici.",
+                "guide": "schedules"
+            },
+            {
+                "question": "He canviat unes vacances i ara no puc reassignar el servei.",
+                "answer": "Comprova que no queda cap altre període d’absència amb dates semblants i que la disponibilitat i el solapament d’horari es continuen complint per a aquella persona.",
+                "guide": "absences"
+            },
+            {
+                "question": "Una treballadora va oblidar iniciar el fitxatge i no hi ha registre.",
+                "answer": "Anota el client, servei, dia i hores reals i comunica-ho a la persona responsable. Aquesta pantalla no permet crear un fitxatge des de zero ni recuperar hores anteriors sense registre. No inventis una entrada d’avui per simular la feina d’ahir.",
+                "guide": "time-records"
+            },
+            {
+                "question": "Una treballadora va oblidar aturar el comptador.",
+                "answer": "Demana a l’empleada que finalitzi el registre des del comptador. Un cop tancat, comprova amb ella l’hora real de sortida i corregeix-la des de Vista calendari, indicant el motiu.",
+                "guide": "time-records"
+            },
+            {
+                "question": "Una treballadora ha fet més hores de les programades.",
+                "answer": "No passa res d’especial al sistema: el comptador continua en marxa fins que ella prem Finalitzar registre, i aquesta és l’hora real que queda desada.",
+                "guide": "time-records"
+            },
+            {
+                "question": "Necessito assignar diverses treballadores al mateix servei.",
+                "answer": "Crea un horari diferent per a cada treballadora, amb les seves pròpies hores, tots amb el mateix client i servei; un únic horari només admet una persona.",
+                "guide": "schedules"
+            },
+            {
+                "question": "No puc desar un altre client perquè té el mateix CIF o el mateix correu.",
+                "answer": "La versió actual no té una estructura de seus dins d’un client i no accepta una altra fitxa amb el mateix CIF/NIF. Comunica les seus i adreces a la persona responsable per acordar com gestionar-les. No canviïs ni inventis el CIF per evitar l’error. El correu de contacte també és únic. Utilitzar un altre correu no és suficient si el CIF es repeteix. El correu d’accés al portal és una dada diferent i tampoc crea seus.",
+                "guide": "client-locations"
+            },
+            {
+                "question": "La treballadora veu dades del client que no necessita.",
+                "answer": "Avui no es pot amagar una dada concreta al personal: si està emplenada a la fitxa, apareixerà a la visita. Consulta la guia de Privadesa per veure exactament quins camps es mostren.",
+                "guide": "privacy"
+            },
+            {
+                "question": "Les hores programades i les registrades no coincideixen.",
+                "answer": "Programat és el que estava previst a l’horari; registrat és el que realment s’ha fitxat. Revisa a Registres d’hores si hi ha un fitxatge sense tancar o una correcció pendent.",
+                "guide": "time-records"
+            },
+            {
+                "question": "Com sé si el problema és a la disponibilitat, el servei o l’assignació?",
+                "answer": "Revisa sempre en aquest ordre: 1) que l’empleada tingui el servei seleccionat a la fitxa, 2) que el seu compte estigui actiu, 3) que la seva disponibilitat cobreixi exactament aquelles hores, 4) que no tingui una altra visita solapada. El primer punt que falli és la causa.",
+                "guide": "employee-availability"
+            }
+        ],
+        "related": ["schedules", "employee-availability", "time-records", "absences", "privacy", "clients", "client-locations"],
+        "tasks": []
+    },
+    {
+        "id": "resources",
+        "roles": ["admin"],
+        "category": "Recursos",
+        "title": "Afegir un recurs i trobar-lo al mapa",
+        "description": "Desa llocs o contactes útils, amb l’adreça i el telèfon.",
+        "href": "/resources",
+        "steps": ["Prem Recursos al menú lateral esquerre."],
+        "effects": [
+            "El recurs queda disponible a la llista i al mapa. No es crea cap servei ni s’envia cap correu al contacte.",
+            "Els canvis es reflecteixen al directori i al mapa. Eliminar el recurs no modifica les fitxes de clients."
+        ],
+        "questions": [
+            {
+                "question": "No troba l’adreça.",
+                "answer": "Afegeix carrer, número, municipi i codi postal. Si indica que el servei no està disponible, prova-ho més tard; repetir ràpidament pot activar el límit de consultes."
+            },
+            {
+                "question": "El recurs no surt al mapa.",
+                "answer": "Esborra els filtres i revisa l’adreça des d’Editar. Comprova que s’ha desat correctament."
+            }
+        ],
+        "related": ["basics"],
+        "tasks": [
+            {
+                "title": "Afegir un recurs",
+                "steps": [
+                    "Prem Afegir recurs, a dalt a la dreta.",
+                    "Escriu el Nom i tria el Tipus de recurs.",
+                    "A Adreça completa, escriu carrer, número, població i codi postal.",
+                    "Prem Localitzar adreça i revisa que el punt del mapa sigui al lloc correcte.",
+                    "Emplena Descripció i observacions, Telèfon i Correu electrònic quan disposis d’aquestes dades.",
+                    "Prem Desar i comprova que el recurs apareix al llistat."
+                ],
+                "result": "El recurs queda disponible a la llista i al mapa. No es crea cap servei ni s’envia cap correu al contacte."
+            },
+            {
+                "title": "Consultar o canviar un recurs",
+                "steps": [
+                    "A Recursos, escriu part del nom al cercador o selecciona un tipus per reduir la llista.",
+                    "Llegeix la targeta del recurs o localitza’n el punt al mapa.",
+                    "Per corregir-lo, prem el botó amb el llapis de la targeta.",
+                    "Canvia les dades. Si canvies l’adreça, torna a localitzar-la i revisa el mapa abans de desar.",
+                    "Prem Desar canvis. Per treure el recurs, utilitza la paperera de la targeta i revisa la confirmació."
+                ],
+                "result": "Els canvis es reflecteixen al directori i al mapa. Eliminar el recurs no modifica les fitxes de clients."
+            }
+        ]
+    },
+    {
+        "id": "users",
+        "roles": ["admin"],
+        "category": "Usuaris",
+        "title": "Donar accés a una altra persona d’administració",
+        "description": "Els comptes d’aquest apartat poden gestionar l’eina. Crea les empleades des d’Empleades i l’accés dels clients des de la seva fitxa.",
+        "href": "/users",
+        "steps": ["Prem Usuaris al menú lateral esquerre."],
+        "effects": [
+            "Es crea un compte amb accés d’administració. No és una fitxa d’empleada o de client.",
+            "Una altra persona amb el compte desactivat deixa de poder entrar. Per canviar la teva contrasenya, utilitza l’edició del teu perfil.",
+            "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren.",
+            "Si has escrit i desat una contrasenya nova, hauràs d’utilitzar-la la propera vegada que entris."
+        ],
+        "questions": [
+            {
+                "question": "No trobo un client o una empleada a Usuaris.",
+                "answer": "Aquest llistat només mostra administració. Ves a Clients o Empleades per gestionar aquells accessos."
+            },
+            {
+                "question": "Puc canviar el meu perfil?",
+                "answer": "El menú de l’avatar d’administració inclou l’edició del perfil. Revisa amb cura el correu i l’estat del teu propi compte."
+            }
+        ],
+        "related": ["access", "employees", "client-access", "audits"],
+        "tasks": [
+            {
+                "title": "Crear un compte d’administració",
+                "steps": [
+                    "Prem Crear usuari, a dalt a la dreta del llistat.",
+                    "Escriu el nom i el correu de la persona que administrarà l’eina.",
+                    "Revisa l’estat actiu del compte i completa els camps obligatoris.",
+                    "Prem Desar al principi o al final del formulari.",
+                    "Demana a la persona que revisi el correu d’accés que rebrà."
+                ],
+                "result": "Es crea un compte amb accés d’administració. No és una fitxa d’empleada o de client."
+            },
+            {
+                "title": "Canviar dades o desactivar un compte",
+                "steps": [
+                    "A Usuaris, busca la persona i prem els tres punts de la dreta.",
+                    "Prem Editar.",
+                    "Canvia el nom o correu que calgui. El camp de contrasenya apareix en editar el teu propi perfil; no apareix en editar una altra persona.",
+                    "Per impedir que una altra persona entri, desmarca l’opció de compte actiu. Aquesta opció no apareix en editar el teu propi compte.",
+                    "Prem Desar canvis."
+                ],
+                "result": "Una altra persona amb el compte desactivat deixa de poder entrar. Per canviar la teva contrasenya, utilitza l’edició del teu perfil."
+            },
+            {
+                "title": "Eliminar un element del llistat",
+                "steps": [
+                    "Prem Usuaris al menú lateral i localitza la fila de l’element que vols treure.",
+                    "Prem els tres punts de la dreta i després Eliminar.",
+                    "Llegeix l’avís de la finestra. Si dubtes de quina fila has seleccionat, cancel·la i comprova’n el nom al llistat abans de continuar.",
+                    "Si és l’element correcte i vols retirar-lo, confirma Eliminar. Si no n’estàs segur, prem Cancel·lar.",
+                    "Comprova que ja no apareix al llistat."
+                ],
+                "result": "L’element es retira de l’eina. No hi ha cap paperera des d’on puguis recuperar-lo tu mateix. Les còpies descarregades o enviades no s’esborren."
+            },
+            {
+                "title": "Canviar la meva contrasenya",
+                "steps": [
+                    "Prem la teva imatge o inicials de dalt a la dreta i obre l’edició del perfil.",
+                    "Escriu la contrasenya nova a Contrasenya i repeteix-la a Confirmar contrasenya. Deixa tots dos camps buits si no vols canviar-la.",
+                    "Prem Desar canvis."
+                ],
+                "result": "Si has escrit i desat una contrasenya nova, hauràs d’utilitzar-la la propera vegada que entris."
+            }
+        ]
+    },
+    {
+        "id": "configuration",
+        "roles": ["admin"],
+        "category": "Configuració global",
+        "title": "Canviar les dades de l’entitat i la ubicació en fitxar",
+        "description": "Aquests ajustos s’apliquen a tota l’entitat. Revisa què canviaràs abans de desar.",
+        "href": "/configuration",
+        "steps": ["Prem Configuració global al menú lateral esquerre."],
+        "effects": [
+            "Canvien les dades comunes de l’entitat. Les còpies de documents ja descarregades o enviades no canvien.",
+            "Si l’exigeixes, no podran registrar una entrada o sortida sense que el dispositiu aconsegueixi la ubicació. Només es recull en entrar i sortir; no se segueix el recorregut durant la feina."
+        ],
+        "questions": [
+            {
+                "question": "Des que hem activat la ubicació no poden fitxar.",
+                "answer": "Demana que revisin els permisos del lloc i del mòbil. Si el dispositiu no aconsegueix una posició, registra la incidència i revisa les hores reals abans de corregir-les."
+            },
+            {
+                "question": "Canviar el logotip actualitza un PDF enviat?",
+                "answer": "No. Els arxius ja enviats són còpies independents. Genera i revisa una còpia nova si ha de reflectir el canvi."
+            }
+        ],
+        "related": ["mobile", "time-records", "contracts", "budgets"],
+        "tasks": [
+            {
+                "title": "Corregir les dades o el logotip",
+                "steps": [
+                    "Busca el camp que vols corregir: nom de l’entitat, identificació fiscal, adreça o dades de contacte.",
+                    "Prem dins del camp, esborra la dada incorrecta i escriu la correcta.",
+                    "Si vols canviar el logotip, selecciona la imatge nova al camp de logotip i revisa la vista prèvia.",
+                    "Prem Desar, a la part superior dreta.",
+                    "Si has canviat dades que apareixen en pressupostos o contractes, descarrega un PDF nou i comprova el resultat."
+                ],
+                "result": "Canvien les dades comunes de l’entitat. Les còpies de documents ja descarregades o enviades no canvien."
+            },
+            {
+                "title": "Demanar ubicació en iniciar i finalitzar la feina",
+                "steps": [
+                    "Busca l’opció d’exigir ubicació als fitxatges.",
+                    "Abans d’activar-la, informa les empleades que hauran de permetre la ubicació al mòbil.",
+                    "Marca la casella per exigir-la, o treu la marca per deixar d’exigir-la.",
+                    "Prem Desar, a la part superior dreta."
+                ],
+                "result": "Si l’exigeixes, no podran registrar una entrada o sortida sense que el dispositiu aconsegueixi la ubicació. Només es recull en entrar i sortir; no se segueix el recorregut durant la feina."
+            }
+        ]
+    },
+    {
+        "id": "audits",
+        "roles": ["admin"],
+        "category": "Registres d’acció",
+        "title": "Veure qui ha canviat una dada",
+        "description": "Consulta els canvis desats, la persona que els ha fet i els valors anteriors.",
+        "href": "/audits",
+        "steps": ["Prem Registres d’acció al menú lateral esquerre."],
+        "effects": ["Només estàs consultant el que va passar. Aquesta pantalla no desfà canvis ni recupera dades eliminades."],
+        "questions": [
+            {
+                "question": "Puc desfer una eliminació des d’aquí?",
+                "answer": "No hi ha una acció de restaurar des d’aquesta pantalla. Consulta amb la persona responsable si necessites recuperar informació."
+            },
+            {
+                "question": "On veig per què s’ha corregit un fitxatge?",
+                "answer": "Obre la modificació i revisa el motiu desat. El calendari de registres també mostra l’última modificació."
+            }
+        ],
+        "related": ["time-records", "users"],
+        "tasks": [
+            {
+                "title": "Consultar el detall d’un canvi",
+                "steps": [
+                    "Busca l’operació al llistat. Revisa la data, la persona i el nom de l’element afectat.",
+                    "Si necessites una altra pàgina del llistat, utilitza els botons de pàgina situats sota la taula.",
+                    "A la fila que vols consultar, prem els tres punts de la dreta i després Visualitzar.",
+                    "Compara els valors anteriors amb els nous. En una correcció d’hores, llegeix també el motiu anotat."
+                ],
+                "result": "Només estàs consultant el que va passar. Aquesta pantalla no desfà canvis ni recupera dades eliminades."
+            }
+        ]
+    },
+    {
+        "id": "basics",
+        "roles": ["admin", "employee", "client"],
+        "category": "Ajuda",
+        "title": "Com utilitzar els botons i desar",
+        "description": "Comença aquí si no saps com obrir una fitxa o desar el que has escrit.",
+        "href": "/dashboard",
+        "steps": [
+            "En un ordinador, prem una vegada amb el ratolí. En un mòbil, toca una vegada amb el dit.",
+            "Per veure el que hi ha més avall, mou la roda del ratolí o llisca el dit cap amunt."
+        ],
+        "effects": [
+            "Si l’eina triga, espera i comprova el resultat abans de prémer Desar una altra vegada. Així evites crear la mateixa dada dues vegades."
+        ],
+        "questions": [
+            {
+                "question": "No trobo una dada que abans apareixia.",
+                "answer": "Esborra la cerca i revisa els filtres de data, any, estat i pàgina. Comprova també que has entrat amb el compte correcte. Si continua sense aparèixer, consulta amb administració."
+            },
+            {
+                "question": "No sé si s’ha desat.",
+                "answer": "Espera que acabi l’operació i comprova el resultat a la llista o fitxa. Si hi ha hagut un tall de connexió, revisa-ho abans de repetir per evitar duplicats."
+            }
+        ],
+        "related": ["access", "mobile"],
+        "tasks": [
+            {
+                "title": "Obrir una secció i una fitxa",
+                "steps": [
+                    "Si tens un menú a l’esquerra, prem el nom de l’apartat. Si està amagat, prem el botó de menú de dalt a l’esquerra.",
+                    "Si la pantalla mostra accessos a Inici, prem l’accés que necessitis.",
+                    "Als llistats, busca la fila de la persona o document. Prem els tres punts de l’extrem dret.",
+                    "Prem Visualitzar per consultar, o Editar per canviar dades, quan apareguin aquestes opcions."
+                ],
+                "result": "Consultar una fitxa no canvia les dades."
+            },
+            {
+                "title": "Emplenar i desar un formulari",
+                "steps": [
+                    "Prem dins del requadre de la dada que vols emplenar i escriu.",
+                    "Si el camp té una fletxa, prem-la i tria una opció de la llista que s’obre.",
+                    "Una casella quadrada es marca prement-la. Torna a prémer-la per treure la marca.",
+                    "Emplena els camps obligatoris, assenyalats amb un asterisc (*).",
+                    "Prem Desar si estàs creant alguna cosa, o Desar canvis si l’estàs modificant.",
+                    "Si apareix un text d’error sota un camp, llegeix què falta, corregeix-lo i torna a desar.",
+                    "Comprova que la dada apareix a la fitxa o a la llista abans de repetir l’operació."
+                ],
+                "result": "El que has escrit queda desat quan l’eina accepta el formulari. Cancel·lar descarta els canvis que encara no has desat."
+            }
+        ]
+    },
+    {
+        "id": "mobile",
+        "roles": ["admin", "employee", "client"],
+        "category": "Ús al mòbil",
+        "title": "Obrir l’eina al mòbil i resoldre problemes de connexió",
+        "description": "Pots utilitzar l’eina des del navegador del mòbil. Necessites Internet per desar, enviar missatges i fitxar.",
+        "href": null,
+        "steps": ["Obre el navegador del mòbil i escriu l’adreça de l’eina. Entra amb el correu i la contrasenya."],
+        "effects": [
+            "Instal·lar afegeix un accés al mòbil. No crea cap altre compte i continuaràs necessitant connexió.",
+            "L’eina no desa una cua de fitxatges sense connexió per enviar-los després. Has de comprovar el resultat en recuperar Internet.",
+            "Si l’entitat exigeix ubicació, el fitxatge només es desa quan s’aconsegueix una posició vàlida."
+        ],
+        "questions": [
+            {
+                "question": "No apareix Instal·lar.",
+                "answer": "La proposta depèn del navegador i de si ja està instal·lada o s’ha descartat. Pots continuar utilitzant l’adreça web."
+            },
+            {
+                "question": "No puc fitxar perquè no troba la ubicació.",
+                "answer": "Comprova els permisos del lloc i del dispositiu i que la ubicació estigui activada. Torna-ho a provar amb connexió. Si falla, comunica l’hora real i l’error a administració perquè ho revisi."
+            }
+        ],
+        "related": ["access", "employee-work", "messages"],
+        "tasks": [
+            {
+                "title": "Moure’m per les pantalles",
+                "steps": [
+                    "Toca una vegada el botó que vulguis utilitzar. Al mòbil alguns botons mostren només un dibuix.",
+                    "Si tens menú lateral i no el veus, toca el botó de menú de dalt a l’esquerra. Després toca l’apartat.",
+                    "Llisca el dit cap amunt per veure el contingut situat més avall. En una taula ampla, desplaça la taula cap a un costat per veure les darreres columnes.",
+                    "Si apareix una proposta per instal·lar l’eina i vols una icona d’accés, segueix-ne les instruccions. També pots continuar utilitzant el navegador."
+                ],
+                "result": "Instal·lar afegeix un accés al mòbil. No crea cap altre compte i continuaràs necessitant connexió."
+            },
+            {
+                "title": "No hi ha connexió o no puc desar",
+                "steps": [
+                    "Comprova si el mòbil té wifi o dades mòbils. Activa’ls o busca una zona amb cobertura.",
+                    "Si apareix la pantalla sense connexió, prem Recarregar quan el botó torni a estar disponible.",
+                    "Torna a la fitxa o al registre i comprova si la darrera acció s’ha desat abans de repetir-la.",
+                    "Si es tracta d’un fitxatge que no s’ha registrat, comunica a administració el client, el dia, l’hora real i l’error."
+                ],
+                "result": "L’eina no desa una cua de fitxatges sense connexió per enviar-los després. Has de comprovar el resultat en recuperar Internet."
+            },
+            {
+                "title": "El mòbil no permet utilitzar la ubicació",
+                "steps": [
+                    "Comprova als ajustos del mòbil que la ubicació està activada.",
+                    "Obre els permisos del navegador o del lloc i permet la ubicació per a aquesta eina. El lloc d’aquest ajust depèn del mòbil i del navegador.",
+                    "Torna a la visita i prem el botó d’iniciar o finalitzar que correspongui. Espera que trobi la ubicació.",
+                    "Si continua fallant, comunica el missatge que apareix a administració."
+                ],
+                "result": "Si l’entitat exigeix ubicació, el fitxatge només es desa quan s’aconsegueix una posició vàlida."
+            }
+        ]
+    }
+]

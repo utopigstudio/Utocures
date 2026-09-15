@@ -58,11 +58,21 @@ interface CalendarRecord {
   date_out?: string | null
   time_in: string
   time_out?: string | null
+  is_open: boolean
   date_in_formatted: string
   date_out_formatted?: string | null
   client_name?: string
   service_name?: string
+  location_in?: TimeRecordLocation | null
+  location_out?: TimeRecordLocation | null
   notes_count: number
+}
+
+interface TimeRecordLocation {
+  latitude: number
+  longitude: number
+  accuracy_meters?: number | null
+  position_captured_at?: string | null
 }
 
 interface CalendarPayload {

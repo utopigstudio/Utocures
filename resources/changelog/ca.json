@@ -1,0 +1,50 @@
+[
+    {
+        "version": "2.0.0",
+        "date": "15 de setembre de 2026",
+        "roles": ["admin"],
+        "items": [
+            { "type": "added", "text": "Missatges: nou apartat per escriure directament amb els clients que tenen accés al portal, amb avís de missatges no llegits." },
+            { "type": "added", "text": "Accés al portal de clients: pots crear el compte, reenviar la invitació, restablir la contrasenya o desactivar l’accés des de la mateixa fitxa del client." },
+            { "type": "added", "text": "Els anuncis del tauler ara es poden dirigir només a treballadores, només a clients o a tots dos alhora." },
+            { "type": "added", "text": "Nou apartat de Recursos: desa adreces útils (farmàcies, centres, proveïdors...) amb mapa i cerca per tipus." },
+            { "type": "added", "text": "Nou repartiment de Documents per a treballadores: envia un o diversos arxius a diverses empleades seleccionades alhora, en lloc de pujar-los fitxa a fitxa." },
+            { "type": "added", "text": "El tauler admet ara filtrar les hores treballades per mes actual, mes anterior, trimestre, any o un rang de dates personalitzat." },
+            { "type": "added", "text": "Avís automàtic quan el contracte d’una empleada està a punt de vèncer." },
+            { "type": "added", "text": "Dies anuals de vacances configurables per empleada, amb el saldo assignat, consumit i disponible." },
+            { "type": "added", "text": "Avís automàtic quan una treballadora no fitxa l’entrada d’una visita ja començada." },
+            { "type": "changed", "text": "Els horaris setmanals i quinzenals es calculen amb un motor de recurrència més fiable, amb menys errors en les dates generades." },
+            { "type": "added", "text": "Cada usuari pot triar el seu idioma, Español o Català, des del seu compte; tota l’eina ja està traduïda al català." },
+            { "type": "added", "text": "Notificacions push: administració i clients poden rebre avisos al mòbil o al navegador encara que la pestanya estigui tancada." },
+            { "type": "added", "text": "L’eina es pot instal·lar com a aplicació al mòbil o a l’ordinador, i avisa quan no hi ha connexió a Internet." },
+            { "type": "added", "text": "Els fitxatges registren ara la ubicació en iniciar i finalitzar el registre, si l’entitat ho exigeix." },
+            {
+                "type": "added",
+                "text": "Nova guia d’ajuda que explica la diferència entre el calendari del client (Assignació de tasques), el de serveis assignats i el de disponibilitat horària de l’empleada.",
+                "guide": "calendars"
+            }
+        ]
+    },
+    {
+        "version": "2.0.0",
+        "date": "15 de setembre de 2026",
+        "roles": ["employee"],
+        "items": [
+            { "type": "added", "text": "Pots instal·lar Utocures al teu mòbil com una aplicació des del navegador i consultar-la encara que no tinguis connexió en aquell moment." },
+            { "type": "changed", "text": "El fitxatge registra ara la ubicació en iniciar i finalitzar el registre, si la teva entitat ho exigeix." },
+            { "type": "added", "text": "Pots triar el teu idioma, Español o Català, des del teu compte." }
+        ]
+    },
+    {
+        "version": "2.0.0",
+        "date": "15 de setembre de 2026",
+        "roles": ["client"],
+        "items": [
+            { "type": "added", "text": "Nova pantalla d’inici per a clients, amb el tauler d’anuncis i Missatges per escriure directament a l’entitat." },
+            { "type": "added", "text": "Els anuncis del tauler ara es poden dirigir específicament a clients." },
+            { "type": "added", "text": "Notificacions push: pots rebre avisos al mòbil o al navegador encara que no tinguis la pestanya oberta." },
+            { "type": "added", "text": "Pots instal·lar Utocures al teu mòbil com una aplicació des del navegador." },
+            { "type": "added", "text": "Pots triar el teu idioma, Español o Català, des del teu compte." }
+        ]
+    }
+]

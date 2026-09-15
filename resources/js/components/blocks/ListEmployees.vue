@@ -78,7 +78,10 @@ const toApiDate = (value: string | Date) => {
 
 async function fetchEmployees() {
     const requestId = ++fetchRequestId;
+    const previousSelection = modelValue.value;
     loading.value = true;
+    employees.value = [];
+    modelValue.value = '';
 
     try {
         const queryParams = new URLSearchParams();
@@ -122,8 +125,8 @@ async function fetchEmployees() {
 
         employees.value = data.data || [];
 
-        if (employees.value.find((e) => e.id === modelValue.value) === undefined) {
-            modelValue.value = '';
+        if (employees.value.some((employee) => employee.id === previousSelection)) {
+            modelValue.value = previousSelection;
         }
     } catch (err) {
         if (requestId !== fetchRequestId) {

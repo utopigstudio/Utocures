@@ -18,14 +18,15 @@ class ConfigurationStoreRequest extends FormRequest
         $configuration = $this->route('configuration');
 
         return [
-            'company_name'        => ['required', 'string', 'max:255'],
-            'company_cif_nif'     => ['nullable', 'string', 'max:10'],
-            'company_email'       => ['required', 'string', 'email', 'max:255'],
-            'company_phone'       => ['required', 'string', 'max:15'],
-            'company_address'     => ['required', 'string', 'max:255'],
-            'company_city'        => ['required', 'string', 'max:255'],
-            'company_zip_code'    => ['required', 'string', 'max:5'],
-            'company_country_id'  => ['required', 'string', Rule::in(Country::all()->pluck('id')->all())],
+            'company_name' => ['required', 'string', 'max:255'],
+            'company_cif_nif' => ['nullable', 'string', 'max:10'],
+            'company_email' => ['required', 'string', 'email', 'max:255'],
+            'company_phone' => ['required', 'string', 'max:15'],
+            'company_address' => ['required', 'string', 'max:255'],
+            'company_city' => ['required', 'string', 'max:255'],
+            'company_zip_code' => ['required', 'string', 'max:5'],
+            'company_country_id' => ['required', 'string', Rule::in(Country::all()->pluck('id')->all())],
+            'require_time_record_location' => ['boolean'],
             'company_image' => [
                 $configuration?->company_image ? 'nullable' : 'required',
                 'image',
@@ -42,6 +43,8 @@ class ConfigurationStoreRequest extends FormRequest
         if ($this->hasFile('company_image')) {
             $data['company_image'] = $this->file('company_image')->store('uploads/company_images', 'public');
         }
+
+        $data['require_time_record_location'] = $this->boolean('require_time_record_location');
 
         return $data;
     }

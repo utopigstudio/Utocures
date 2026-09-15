@@ -1,0 +1,50 @@
+[
+    {
+        "version": "2.0.0",
+        "date": "15 de septiembre de 2026",
+        "roles": ["admin"],
+        "items": [
+            { "type": "added", "text": "Mensajes: nuevo apartado para escribir directamente con los clientes que tienen acceso al portal, con aviso de mensajes sin leer." },
+            { "type": "added", "text": "Acceso al portal de clientes: puedes crear la cuenta, reenviar la invitación, restablecer la contraseña o desactivar el acceso desde la propia ficha del cliente." },
+            { "type": "added", "text": "Los anuncios del tablón ahora se pueden dirigir solo a trabajadoras, solo a clientes o a ambos a la vez." },
+            { "type": "added", "text": "Nuevo apartado de Recursos: guarda direcciones útiles (farmacias, centros, proveedores...) con mapa y búsqueda por tipo." },
+            { "type": "added", "text": "Nuevo reparto de Documentos para trabajadoras: envía uno o varios archivos a varias empleadas seleccionadas a la vez, en lugar de subirlos ficha a ficha." },
+            { "type": "added", "text": "El tablero admite ahora filtrar las horas trabajadas por mes actual, mes anterior, trimestre, año o un rango de fechas personalizado." },
+            { "type": "added", "text": "Aviso automático cuando el contrato de una empleada está a punto de vencer." },
+            { "type": "added", "text": "Días anuales de vacaciones configurables por empleada, con el saldo asignado, consumido y disponible." },
+            { "type": "added", "text": "Aviso automático cuando una trabajadora no ficha la entrada de una visita ya empezada." },
+            { "type": "changed", "text": "Los horarios semanales y quincenales se calculan con un motor de recurrencia más fiable, con menos errores en las fechas generadas." },
+            { "type": "added", "text": "Cada usuario puede elegir su idioma, Español o Català, desde su cuenta; toda la herramienta está ya traducida al català." },
+            { "type": "added", "text": "Notificaciones push: administración y clientes pueden recibir avisos en el móvil o el navegador aunque la pestaña esté cerrada." },
+            { "type": "added", "text": "La herramienta puede instalarse como aplicación en el móvil o el ordenador, y avisa cuando no hay conexión a Internet." },
+            { "type": "added", "text": "Los fichajes registran ahora la ubicación al iniciar y finalizar el registro, si la entidad lo exige." },
+            {
+                "type": "added",
+                "text": "Nueva guía de ayuda que explica la diferencia entre el calendario del cliente (Asignación de tareas), el de servicios asignados y el de disponibilidad horaria de la empleada.",
+                "guide": "calendars"
+            }
+        ]
+    },
+    {
+        "version": "2.0.0",
+        "date": "15 de septiembre de 2026",
+        "roles": ["employee"],
+        "items": [
+            { "type": "added", "text": "Puedes instalar Utocures en tu móvil como una aplicación desde el navegador y consultarla aunque no tengas conexión en ese momento." },
+            { "type": "changed", "text": "El fichaje registra ahora la ubicación al iniciar y finalizar el registro, si tu entidad lo exige." },
+            { "type": "added", "text": "Puedes elegir tu idioma, Español o Català, desde tu cuenta." }
+        ]
+    },
+    {
+        "version": "2.0.0",
+        "date": "15 de septiembre de 2026",
+        "roles": ["client"],
+        "items": [
+            { "type": "added", "text": "Nueva pantalla de inicio para clientes, con el tablón de anuncios y Mensajes para escribir directamente a la entidad." },
+            { "type": "added", "text": "Los anuncios del tablón ahora pueden dirigirse específicamente a clientes." },
+            { "type": "added", "text": "Notificaciones push: puedes recibir avisos en el móvil o el navegador aunque no tengas la pestaña abierta." },
+            { "type": "added", "text": "Puedes instalar Utocures en tu móvil como una aplicación desde el navegador." },
+            { "type": "added", "text": "Puedes elegir tu idioma, Español o Català, desde tu cuenta." }
+        ]
+    }
+]

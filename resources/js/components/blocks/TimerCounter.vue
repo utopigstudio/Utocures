@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
-import type { Work } from '@/types';
-import { router } from '@inertiajs/vue3';
+import type { AppPageProps, Work } from '@/types';
+import { router, usePage } from '@inertiajs/vue3';
 import { Clock } from 'lucide-vue-next';
 import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 interface Props {
     work: Work;
@@ -12,15 +13,20 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const page = usePage<AppPageProps>();
+const { t } = useI18n();
 
 const emit = defineEmits(['recording-finished']);
 
 const isRecording = ref(false);
 const elapsed = ref(0);
+const isSubmitting = ref(false);
+const locationError = ref<string | null>(null);
 const workId = props.size === 'small' ? props.work.assigned_hour?.id : props.work.id;
 let interval: ReturnType<typeof setInterval> | null = null;
 
 const startTimeKey = `work_start_time_${workId}`;
+const locationRequired = computed(() => page.props.app_configuration?.require_time_record_location === true);
 
 const formattedTime = computed(() => {
     const h = String(Math.floor(elapsed.value / 3600)).padStart(2, '0');
@@ -29,12 +35,58 @@ const formattedTime = computed(() => {
     return `${h}:${m}:${s}`;
 });
 
-function formatTime(date: Date) {
-    return date.toLocaleTimeString('es-ES', {
-        hour: '2-digit',
-        minute: '2-digit',
-        hour12: false,
+function getCurrentLocation(): Promise<GeolocationPosition> {
+    return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+            reject(new Error(t('employee_time_records.location_not_supported')));
+            return;
+        }
+
+        navigator.geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0,
+        });
     });
+}
+
+function locationErrorMessage(error: unknown) {
+    if (typeof error === 'object' && error && 'code' in error) {
+        const code = Number(error.code);
+
+        if (code === 1) {
+            return t('employee_time_records.location_permission_required');
+        }
+
+        if (code === 2) {
+            return t('employee_time_records.location_unavailable');
+        }
+
+        if (code === 3) {
+            return t('employee_time_records.location_timeout');
+        }
+    }
+
+    if (error instanceof Error) {
+        return error.message;
+    }
+
+    return t('employee_time_records.location_error');
+}
+
+async function resolveLocation() {
+    if (!locationRequired.value) {
+        return null;
+    }
+
+    const position = await getCurrentLocation();
+
+    return {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
+        accuracy_meters: position.coords.accuracy,
+        position_captured_at: new Date(position.timestamp).toISOString(),
+    };
 }
 
 async function checkTimeRecord() {
@@ -45,60 +97,74 @@ async function checkTimeRecord() {
         if (!data.time_record) {
             resetTimer();
         } else if (!isRecording.value) {
-            const [day, month, year] = data.time_record.date_in.split('-').map(Number);
-            const [hour, minute] = data.time_record.time_in.split(':').map(Number);
-
-            runTimer(new Date(year, month - 1, day, hour, minute).getTime());
+            runTimer(normalizeTimeRecordDateTime(data.time_record.date_in, data.time_record.time_in).getTime());
         }
     } catch (err) {
         console.error('Error fetching clients:', err);
     }
 }
 
-function sendTimeRecord(time: number, type: 'in' | 'out' = 'in') {
-    let formatted_date_in = null;
-    let formatted_date_out = null;
-    let formatted_start_time = null;
-    let formatted_end_time = null;
+async function sendTimeRecord() {
+    if (isSubmitting.value) return;
 
-    if (time !== null) {
-        if (type === 'in') {
-            const startDate = new Date(time);
-            formatted_start_time = formatTime(startDate);
-            formatted_date_in = startDate.toISOString().split('T')[0];
-        }
+    isSubmitting.value = true;
+    locationError.value = null;
 
-        if (type === 'out') {
-            const endDate = new Date(time);
-            formatted_end_time = formatTime(endDate);
-            formatted_date_out = endDate.toISOString().split('T')[0];
-        }
+    let location = null;
 
-        router.post(
-            route('employee.time-record.store', { work: workId }),
-            {
-                date_in: formatted_date_in,
-                date_out: formatted_date_out,
-                time_in: formatted_start_time,
-                time_out: formatted_end_time,
-            },
-            {
-                onSuccess: () => {
-                    if (time !== null) {
-                        if (type === 'out') {
-                            resetTimer();
-                            emit('recording-finished');
-                        } else {
-                            runTimer(time);
-                        }
-                    }
-                },
-                onError: (errors) => {
-                    console.error('Failed to log work session', errors);
-                },
-            },
-        );
+    try {
+        location = await resolveLocation();
+    } catch (err) {
+        locationError.value = locationErrorMessage(err);
+        isSubmitting.value = false;
+        return;
     }
+
+    router.post(
+        route('employee.time-record.store', { work: workId }),
+        {
+            location,
+        },
+        {
+            onSuccess: () => {
+                if (isRecording.value) {
+                    resetTimer();
+                    emit('recording-finished');
+                } else {
+                    checkTimeRecord();
+                }
+            },
+            onError: (errors) => {
+                console.error('Failed to log work session', errors);
+                locationError.value = Object.values(errors)[0] ?? t('employee_time_records.time_record_save_error');
+            },
+            onFinish: () => {
+                isSubmitting.value = false;
+            },
+        },
+    );
+}
+
+function normalizeTimeRecordDateTime(date: string, time: string) {
+    const [hour, minute, second = 0] = time.split(':').map(Number);
+
+    if (date.includes('-')) {
+        const parts = date.split('-').map(Number);
+
+        if (parts[0] > 31) {
+            const [year, month, day] = parts;
+
+            return new Date(year, month - 1, day, hour, minute, second);
+        }
+
+        const [day, month, year] = parts;
+
+        return new Date(year, month - 1, day, hour, minute, second);
+    }
+
+    const [day, month, year] = date.split('/').map(Number);
+
+    return new Date(year, month - 1, day, hour, minute, second);
 }
 
 function resetTimer() {
@@ -132,11 +198,7 @@ function runTimer(start: number) {
 }
 
 function toggleRecording() {
-    if (isRecording.value) {
-        sendTimeRecord(Date.now(), 'out');
-    } else {
-        sendTimeRecord(Date.now());
-    }
+    sendTimeRecord();
 }
 
 onMounted(() => {
@@ -154,14 +216,15 @@ onUnmounted(() => {
     <div v-if="size === 'small'" class="mx-auto my-4 text-center">
         <div class="mb-2 text-xs">{{ work.assigned_hour?.service.name }} - {{ work.assigned_hour?.client.name }}</div>
         <div class="flex flex-row items-center justify-center gap-4">
-            <Button variant="destructive" size="sm" @click.prevent="toggleRecording">
+            <Button variant="destructive" size="sm" :disabled="isSubmitting" @click.prevent="toggleRecording">
                 <Clock class="size-4" />
-                <span class="text-xs">{{ 'Finalizar' }}</span>
+                <span class="text-xs">{{ isSubmitting ? $t('employee_time_records.getting_location') : $t('employee_time_records.finish') }}</span>
             </Button>
             <div class="text-red-600">
                 {{ formattedTime }}
             </div>
         </div>
+        <p v-if="locationError" class="mt-2 text-xs text-red-600">{{ locationError }}</p>
     </div>
     <div v-else class="container mx-auto flex flex-col items-center gap-11 bg-white px-4 pt-6 pb-4">
         <div class="text-3xl leading-9 font-bold text-blue-gray-500">
@@ -169,19 +232,21 @@ onUnmounted(() => {
         </div>
 
         <div v-if="!isRecording" class="w-full">
-            <Button size="lg" class="w-full" @click.prevent="toggleRecording" :disabled="props.hasActiveWork">
+            <Button size="lg" class="w-full" @click.prevent="toggleRecording" :disabled="props.hasActiveWork || isSubmitting">
                 <Clock class="size-4 font-semibold" />
-                <span class="text-sm leading-5 font-semibold">{{ 'Inicia registro' }}</span>
+                <span class="text-sm leading-5 font-semibold">{{ isSubmitting ? $t('employee_time_records.getting_location') : $t('employee_time_records.start_record') }}</span>
             </Button>
             <div v-if="props.hasActiveWork" class="mt-2 text-center text-sm leading-5 font-medium text-gray-600">
-                {{ 'Ya tienes un registro activo, debes finalizarlo antes de comenzar uno nuevo.' }}
+                {{ $t('employee_time_records.active_record_warning') }}
             </div>
+            <p v-if="locationError" class="mt-2 text-center text-sm font-medium text-red-600">{{ locationError }}</p>
         </div>
         <div v-else class="w-full">
-            <Button variant="destructive" size="lg" class="w-full" @click.prevent="toggleRecording">
+            <Button variant="destructive" size="lg" class="w-full" :disabled="isSubmitting" @click.prevent="toggleRecording">
                 <Clock class="size-4 font-semibold" />
-                <span class="text-sm leading-5 font-semibold">{{ 'Finalizar registro' }}</span>
+                <span class="text-sm leading-5 font-semibold">{{ isSubmitting ? $t('employee_time_records.getting_location') : $t('employee_time_records.finish_record') }}</span>
             </Button>
+            <p v-if="locationError" class="mt-2 text-center text-sm font-medium text-red-600">{{ locationError }}</p>
         </div>
     </div>
 </template>

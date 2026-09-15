@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
-import { InputText, Wysiwyg } from '@/components/ui/input';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { InputText, Select, Wysiwyg } from '@/components/ui/input';
 import { AppLayout, LayoutBasic } from '@/layouts';
 import type { Announcement, BreadcrumbItem } from '@/types';
 import { Form, Link } from '@inertiajs/vue3';
 import { Camera, Megaphone, Save, X } from 'lucide-vue-next';
-import { onBeforeUnmount, ref } from 'vue';
+import { computed, onBeforeUnmount, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 interface Props {
@@ -21,6 +21,13 @@ const previewUrl = ref<string | null>(null);
 const isDragOver = ref(false);
 
 const breadcrumbItems: BreadcrumbItem[] = [{ title: t('announcements.create'), href: '/announcements/create' }];
+
+const audienceOptions = computed(() => [
+    { value: 'employee', label: t('announcements.audience_employee') },
+    { value: 'admin', label: t('announcements.audience_admin') },
+    { value: 'client', label: t('announcements.audience_client') },
+    { value: 'boths', label: t('announcements.audience_boths') },
+]);
 
 function revokePreview() {
     if (previewUrl.value?.startsWith('blob:')) {
@@ -125,6 +132,17 @@ onBeforeUnmount(() => {
                                     :error="errors.title"
                                 />
 
+                                <Select
+                                    class="mt-1 w-full"
+                                    container-class="mt-4 w-full"
+                                    name="to"
+                                    :label="t('announcements.audience')"
+                                    :default-value="props.announcement?.to ?? 'employee'"
+                                    :options="audienceOptions"
+                                    :required="true"
+                                    :error="errors.to"
+                                />
+
                                 <div class="mt-4 grid grid-cols-4 gap-4">
                                     <label class="col-span-4 mt-2 block text-sm font-medium text-gray-700">
                                         {{ $t('announcements.image') }}
@@ -185,7 +203,7 @@ onBeforeUnmount(() => {
                                 />
                             </CardContent>
                             <CardFooter>
-                                <div class="flex flex-wrap justify-end w-full gap-6">
+                                <div class="flex w-full flex-wrap justify-end gap-6">
                                     <Link :href="route('announcements.index')">
                                         <Button variant="outline" size="lg" class="flex items-center gap-2 border-2 text-blue-gray-600">
                                             <X class="size-4" strokeWidth="3" /> {{ $t('layout.cancel') }}

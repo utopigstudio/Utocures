@@ -16,6 +16,8 @@ class EmployeeStatusPeriod extends Model implements AuditableContract
 
     public const DISPLAY_DATETIME_FORMAT = 'd/m/Y H:i';
 
+    public const DISPLAY_DATE_FORMAT = 'd/m/Y';
+
     public const INPUT_DATETIME_FORMAT = 'Y-m-d\TH:i';
 
     public const TYPE_VACATION = 'vacation';
@@ -59,6 +61,7 @@ class EmployeeStatusPeriod extends Model implements AuditableContract
         'start_at_input',
         'end_at_input',
         'updated_at_formatted',
+        'vacation_days',
     ];
 
     protected function casts(): array
@@ -104,12 +107,12 @@ class EmployeeStatusPeriod extends Model implements AuditableContract
 
     public function getStartAtFormattedAttribute(): ?string
     {
-        return $this->start_at?->format(self::DISPLAY_DATETIME_FORMAT);
+        return $this->start_at?->format(self::DISPLAY_DATE_FORMAT);
     }
 
     public function getEndAtFormattedAttribute(): ?string
     {
-        return $this->end_at?->format(self::DISPLAY_DATETIME_FORMAT);
+        return $this->end_at?->format(self::DISPLAY_DATE_FORMAT);
     }
 
     public function getStartAtInputAttribute(): ?string
@@ -125,5 +128,17 @@ class EmployeeStatusPeriod extends Model implements AuditableContract
     public function getUpdatedAtFormattedAttribute(): ?string
     {
         return $this->updated_at?->format(self::DISPLAY_DATETIME_FORMAT);
+    }
+
+    public function getVacationDaysAttribute(): ?int
+    {
+        if ($this->type !== self::TYPE_VACATION || ! $this->start_at || ! $this->end_at) {
+            return null;
+        }
+
+        return (int) $this->start_at
+            ->copy()
+            ->startOfDay()
+            ->diffInDays($this->end_at->copy()->startOfDay()) + 1;
     }
 }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HelpButton from '@/components/help/HelpButton.vue';
 import { computed, ref, watch } from 'vue'
 import { VisuallyHidden } from 'reka-ui'
 import { Form } from '@inertiajs/vue3'
@@ -69,6 +70,7 @@ function resetForm() {
         <DialogHeader>
           <DialogTitle class="text-2xl leading-8 font-bold text-blue-gray-900">
             {{ t('employees.edit_assigned_hour') }}
+            <HelpButton article="schedules" section="effects" :label="$t('help.effects')" />
           </DialogTitle>
           <VisuallyHidden asChild>
             <DialogDescription />

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserRole;
 use App\Http\Requests\User\UserIndexRequest;
 use App\Http\Requests\User\UserStoreRequest;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,7 @@ class UserController extends Controller
     public function index(UserIndexRequest $request)
     {
         $sort = $request->validated('sort') ?? 'created_at';
-        $dir  = $request->validated('dir') ?? 'desc';
+        $dir = $request->validated('dir') ?? 'desc';
         $searchable = ['name', 'email'];
         $filters = [
             'filter_search' => $request->validated('filter_search'),
@@ -24,7 +25,7 @@ class UserController extends Controller
         ];
 
         $users = User::select(self::LIST_FIELDS)
-            ->doesntHave('employee')
+            ->where('role', UserRole::ADMIN)
             ->filter($filters, $searchable)
             ->orderBy($sort, $dir)
             ->paginate(10)
@@ -45,6 +46,8 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
+        abort_unless($user->isAdmin(), 404);
+
         return Inertia::render('users/Form', [
             'user' => $user,
         ]);
@@ -53,6 +56,7 @@ class UserController extends Controller
     public function store(UserStoreRequest $request)
     {
         $data = $request->validated();
+        $data['role'] = UserRole::ADMIN;
 
         if (!empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
@@ -67,6 +71,8 @@ class UserController extends Controller
 
     public function update(UserStoreRequest $request, User $user)
     {
+        abort_unless($user->isAdmin(), 404);
+
         $data = $request->validated();
 
         if (empty($data['password'])) {
@@ -74,11 +80,11 @@ class UserController extends Controller
         } else {
             $data['password'] = Hash::make($data['password']);
         }
-        
+
         $user->update($data);
 
         if ($user->is_active === false) {
-            $user->tokens()->delete();
+            $user->deactivate();
         }
 
         return to_route('users.index')->with('success', "Usuario {$user->name} actualizado correctamente.");
@@ -86,6 +92,8 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        abort_unless($user->isAdmin(), 404);
+
         $user->delete();
 
         return redirect()->route('users.index')->with('success', 'User deleted successfully.');

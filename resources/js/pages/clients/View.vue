@@ -1,32 +1,31 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { router } from '@inertiajs/vue3'
-import { AppLayout, LayoutTabs } from '@/layouts';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Files } from '@/components/blocks'
-import { LabelData, BooleanData } from '@/components/ui/basic'
-import { Trash2, Pencil, UserRound, Phone, FileText, Clock3, Star, BadgeCheck, Users } from 'lucide-vue-next'
-import { ButtonDelete, Button } from '@/components/ui/button';
-import { Link } from '@inertiajs/vue3'
-import { ModalCalendar, ListEmployeesAssigned } from '@/components/blocks';
+import { ClientAccessCard, Files, ListEmployeesAssigned, ModalCalendar } from '@/components/blocks';
+import { BooleanData, LabelData } from '@/components/ui/basic';
+import { Button, ButtonDelete } from '@/components/ui/button';
 import { WeekCalendar } from '@/components/ui/calendar';
-import { useI18n } from 'vue-i18n'
-import type { BreadcrumbItem, TabItem, Client, ServiceOption, AssignedHourTemplate, File as FileType } from '@/types'
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { AppLayout, LayoutTabs } from '@/layouts';
+import type { AssignedHourTemplate, BreadcrumbItem, Client, File as FileType, ServiceOption, TabItem } from '@/types';
+import { Link, router } from '@inertiajs/vue3';
+import { addDays, format, startOfWeek } from 'date-fns';
+import { BadgeCheck, Clock3, FileText, Pencil, Phone, Star, Trash2, UserRound, Users } from 'lucide-vue-next';
+import { computed, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 interface Props {
-  client: Client
-  assigned_hours_templates: AssignedHourTemplate[]
-  services: ServiceOption[]
-  files: FileType[]
+  client: Client;
+  assigned_hours_templates: AssignedHourTemplate[];
+  services: ServiceOption[];
+  files: FileType[];
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
-const { t } = useI18n()
+const { t } = useI18n();
 
 const breadcrumbItems: BreadcrumbItem[] = [
   { title: t('clients.show'), href: '/clients/view' },
-]
+];
 
 const modalShow = ref(false);
 const templateModify = ref<AssignedHourTemplate | null>(null);
@@ -35,55 +34,54 @@ const tabItems: TabItem[] = [
   { title: t('clients.invoices'), href: route('clients.invoices', props.client.id) },
   { title: t('clients.contracts'), href: route('clients.contracts', props.client.id) },
   { title: t('clients.budgets'), href: route('clients.budgets', props.client.id) },
-  { title: t('clients.notes'), href: route('clients.notes', props.client.id) }
-]
+  { title: t('clients.notes'), href: route('clients.notes', props.client.id) },
+];
 
 const formatCallback = (events: AssignedHourTemplate[] = []) => {
-  if (!events?.length) return []
+  if (!events?.length) return [];
 
-  const formatted: any[] = []
+  const formatted: any[] = [];
+  const currentWeekMonday = startOfWeek(new Date(), { weekStartsOn: 1 });
 
   for (const item of events) {
-    const cloned = JSON.parse(JSON.stringify(item))
-    const days = cloned.days_of_week
+    const cloned = JSON.parse(JSON.stringify(item));
+    const days = Number(cloned.recurrency) === 0
+      ? [dayOfWeek(cloned.date)]
+      : (cloned.days_of_week ?? []).map(Number);
+    for (const day of days) {
+      if (day === null || day < 0 || day > 6) continue;
 
-    if (days) {
-      for (const day of days) {
-        formatted.push({
-          id: `${item.id}-${day}`,
-          title: cloned.employee.user.name + '<br>' + (cloned.service?.name || t('clients.no_service')),
-          daysOfWeek: [Number(day)],
-          startTime: cloned.time_start,
-          endTime: cloned.time_end,
-          backgroundColor: 'rgba(209, 250, 229, 1)',
-          borderColor: 'rgb(114 201 156)',
-          textColor: '#065F46',
-          extendedProps: { ...cloned, original_id: cloned.id },
-        })
-      }
-    } else {
-      const dayOfWeek = getDayOfWeekFromDDMMYYYY(cloned.date)
+      const date = addDays(currentWeekMonday, day === 0 ? 6 : day - 1);
       formatted.push({
-        id: `${item.id}-${dayOfWeek}`,
+        id: `${cloned.id}-${day}`,
         title: cloned.employee.user.name + '<br>' + (cloned.service?.name || t('clients.no_service')),
-        daysOfWeek: [Number(dayOfWeek)],
-        startTime: cloned.time_start,
-        endTime: cloned.time_end,
-        display: 'background',
+        start: `${format(date, 'yyyy-MM-dd')}T${cloned.time_start}`,
+        end: `${format(date, 'yyyy-MM-dd')}T${cloned.time_end}`,
         backgroundColor: 'rgba(209, 250, 229, 1)',
+        borderColor: 'rgb(114 201 156)',
         textColor: '#065F46',
         extendedProps: { ...cloned, original_id: cloned.id },
-      })
+      });
     }
   }
 
-  return formatted
-}
+  return formatted;
+};
 
-function getDayOfWeekFromDDMMYYYY(str: string): number {
-  const [day, month, year] = str.split('/').map(Number)
-  const d = new Date(year, month - 1, day)
-  return d.getDay()
+function dayOfWeek(value?: string | null): number | null {
+  if (!value) return null;
+
+  const iso = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  const local = value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+
+  if (!iso && !local) return null;
+
+  const [, first, month, last] = iso ?? local!;
+  const year = Number(iso ? first : last);
+  const day = Number(iso ? last : first);
+  const date = new Date(year, Number(month) - 1, day);
+
+  return Number.isNaN(date.getTime()) ? null : date.getDay();
 }
 
 function reloadHourTemplates() {
@@ -96,24 +94,23 @@ function reloadFiles() {
 }
 
 const grouped_characteristics = computed(() => {
-  const groups: { [key: string]: string[] } = {}
+  const groups: { [key: string]: string[] } = {};
 
   props.client.assigned_characteristics?.forEach((option) => {
-    const characteristicName = option.characteristic?.name || 'Other'
+    const characteristicName = option.characteristic?.name || 'Other';
     if (!groups[characteristicName]) {
-      groups[characteristicName] = []
+      groups[characteristicName] = [];
     }
-    groups[characteristicName].push(option.name)
-  })
+    groups[characteristicName].push(option.name);
+  });
 
-  return groups
-})
+  return groups;
+});
 </script>
 
 <template>
   <AppLayout>
     <LayoutTabs :tabs="tabItems" :breadcrumbs="breadcrumbItems" backTo="clients.index">
-
       <Card>
         <CardContent class="md:flex md:items-center md:justify-between">
           <div class="min-w-0 flex-1">
@@ -121,12 +118,12 @@ const grouped_characteristics = computed(() => {
           </div>
           <div class="mt-4 flex md:mt-0 md:ml-4 gap-x-6">
             <ButtonDelete :action="route('clients.destroy', props.client.id)">
-              <Trash2 class="text-white"/>
+              <Trash2 class="text-white" />
               {{ $t('layout.delete') }}
             </ButtonDelete>
             <Link :href="route('clients.edit', props.client.id)">
               <Button>
-                <Pencil class="text-white"/>
+                <Pencil class="text-white" />
                 {{ $t('layout.edit') }}
               </Button>
             </Link>
@@ -137,41 +134,37 @@ const grouped_characteristics = computed(() => {
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 items-stretch mb-6">
         <div class="relative lg:col-span-4 flex">
           <Card class="flex flex-col flex-1">
-              <CardHeader>
-                <CardTitle class="text-xl flex items-center gap-2 mb-4">
-                  <UserRound class="text-blue-600 w-5 h-5" />
-                  <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.personal_information') }}</span>
-                </CardTitle>
-              </CardHeader>
+            <CardHeader>
+              <CardTitle class="text-xl flex items-center gap-2 mb-4">
+                <UserRound class="text-blue-600 w-5 h-5" />
+                <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.personal_information') }}</span>
+              </CardTitle>
+            </CardHeader>
             <CardContent>
-
-              <LabelData :label="$t('clients.full_name')" :value="props.client.name"/>
-              <LabelData :label="$t('clients.birth_date')" :value="props.client.birth_date"/>
-              <LabelData :label="$t('clients.cif_nif')" :value="props.client.cif_nif"/>
-              <LabelData :label="$t('clients.gender')" :value="props.client.gender?.name"/>
-
+              <LabelData :label="$t('clients.full_name')" :value="props.client.name" />
+              <LabelData :label="$t('clients.birth_date')" :value="props.client.birth_date" />
+              <LabelData :label="$t('clients.cif_nif')" :value="props.client.cif_nif" />
+              <LabelData :label="$t('clients.gender')" :value="props.client.gender?.name" />
             </CardContent>
           </Card>
         </div>
 
         <div class="relative lg:col-span-8 flex">
           <Card class="flex flex-col flex-1">
-              <CardHeader>
-                <CardTitle class="text-xl flex items-center gap-2 mb-4">
-                  <Phone class="text-blue-600 w-5 h-5" />
-                  <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.contact_data') }}</span>
-                </CardTitle>
-              </CardHeader>
+            <CardHeader>
+              <CardTitle class="text-xl flex items-center gap-2 mb-4">
+                <Phone class="text-blue-600 w-5 h-5" />
+                <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.contact_data') }}</span>
+              </CardTitle>
+            </CardHeader>
             <CardContent>
-
-              <LabelData :label="$t('clients.email')" :value="props.client.email"/>
-              <LabelData :label="$t('clients.phone')" :value="props.client.phone"/>
-              <LabelData :label="$t('clients.phone_2')" :value="props.client.phone_2"/>
-              <LabelData :label="$t('clients.address')" :value="props.client.address"/>
-              <LabelData :label="$t('clients.city')" :value="props.client.city"/>
-              <LabelData :label="$t('clients.zip_code')" :value="props.client.zip_code"/>
-              <LabelData :label="$t('clients.country')" :value="props.client.country.name"/>
-
+              <LabelData :label="$t('clients.email')" :value="props.client.email" />
+              <LabelData :label="$t('clients.phone')" :value="props.client.phone" />
+              <LabelData :label="$t('clients.phone_2')" :value="props.client.phone_2" />
+              <LabelData :label="$t('clients.address')" :value="props.client.address" />
+              <LabelData :label="$t('clients.city')" :value="props.client.city" />
+              <LabelData :label="$t('clients.zip_code')" :value="props.client.zip_code" />
+              <LabelData :label="$t('clients.country')" :value="props.client.country.name" />
             </CardContent>
           </Card>
         </div>
@@ -180,17 +173,17 @@ const grouped_characteristics = computed(() => {
       <div class="grid grid-cols-1 mb-6">
         <div class="relative lg:col-span-12">
           <Card>
-              <CardHeader>
-                <CardTitle class="text-xl flex items-center gap-2 mb-4">
-                  <FileText class="text-blue-600 w-5 h-5" />
-                  <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.billing_data') }}</span>
-                </CardTitle>
-              </CardHeader>
+            <CardHeader>
+              <CardTitle help-article="automatic-invoices" help-section="effects" :help-label="$t('help.topic', { topic: $t('clients.billing_data') })" class="text-xl flex items-center gap-2 mb-4">
+                <FileText class="text-blue-600 w-5 h-5" />
+                <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.billing_data') }}</span>
+              </CardTitle>
+            </CardHeader>
             <CardContent>
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div class="flex flex-col gap-4">
                   <div>
-                    <LabelData :label="$t('clients.bank_name')" :value="props.client.bank_name"/>
+                    <LabelData :label="$t('clients.bank_name')" :value="props.client.bank_name" />
                   </div>
                   <div class="flex items-center gap-4">
                     <div>
@@ -202,7 +195,7 @@ const grouped_characteristics = computed(() => {
                   </div>
                 </div>
                 <div>
-                  <LabelData :label="$t('clients.bank_account')" :value="props.client.bank_account"/>
+                  <LabelData :label="$t('clients.bank_account')" :value="props.client.bank_account" />
                 </div>
               </div>
             </CardContent>
@@ -210,11 +203,13 @@ const grouped_characteristics = computed(() => {
         </div>
       </div>
 
+      <ClientAccessCard :client="props.client" />
+
       <div class="grid grid-cols-1 gap-6 lg:grid-cols-12 items-stretch mb-6">
         <div class="relative lg:col-span-5 flex">
           <Card class="flex flex-col flex-1">
             <CardHeader>
-              <CardTitle class="text-xl flex items-center gap-2 mb-4">
+              <CardTitle help-article="characteristics" :help-label="$t('help.topic', { topic: $t('layout.assigned_characteristics') })" class="text-xl flex items-center gap-2 mb-4">
                 <Star class="text-blue-600 w-5 h-5" />
                 <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('layout.assigned_characteristics') }}</span>
               </CardTitle>
@@ -234,7 +229,7 @@ const grouped_characteristics = computed(() => {
         <div class="relative lg:col-span-7 flex">
           <Card class="flex flex-col flex-1">
             <CardHeader>
-              <CardTitle class="text-xl flex items-center gap-2 mb-4">
+              <CardTitle help-article="services-characteristics" :help-label="$t('help.topic', { topic: $t('layout.services') })" class="text-xl flex items-center gap-2 mb-4">
                 <BadgeCheck class="text-blue-600 w-5 h-5" />
                 <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('layout.services') }}</span>
               </CardTitle>
@@ -255,7 +250,7 @@ const grouped_characteristics = computed(() => {
         <div class="relative lg:col-span-12">
           <Card>
             <CardHeader>
-              <CardTitle class="text-xl flex flex-col md:flex-row items-start md:items-center gap-2 mb-4">
+              <CardTitle help-article="schedules" :help-label="$t('help.topic', { topic: $t('clients.add_task_assignment') })" class="text-xl flex flex-col md:flex-row items-start md:items-center gap-2 mb-4">
                 <div class="flex items-center gap-2">
                   <Clock3 class="text-blue-600 w-5 h-5" />
                   <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.add_task_assignment') }}</span>
@@ -264,6 +259,7 @@ const grouped_characteristics = computed(() => {
                   {{ $t('clients.add_schedule') }}
                 </Button>
               </CardTitle>
+              <CardDescription class="mb-2">{{ $t('clients.assigned_schedule_help') }}</CardDescription>
             </CardHeader>
             <CardContent>
               <WeekCalendar
@@ -298,13 +294,17 @@ const grouped_characteristics = computed(() => {
         <div class="relative lg:col-span-12">
           <Card>
             <CardHeader>
-              <CardTitle class="text-xl flex items-center gap-2 mb-4">
+              <CardTitle help-article="schedules" :help-label="$t('help.topic', { topic: $t('clients.assigned_employees') })" class="text-xl flex items-center gap-2 mb-4">
                 <Users class="text-blue-600 w-5 h-5" />
                 <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.assigned_employees') }}</span>
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <ListEmployeesAssigned v-if="props.assigned_hours_templates.length" :items="props.assigned_hours_templates" />
+              <ListEmployeesAssigned
+                v-if="props.assigned_hours_templates.length"
+                :items="props.assigned_hours_templates"
+                @edit="(template) => { templateModify = JSON.parse(JSON.stringify(template)); modalShow = true }"
+              />
               <div v-else class="text-center text-gray-500">
                 {{ $t('clients.no_assigned_employees') }}
               </div>

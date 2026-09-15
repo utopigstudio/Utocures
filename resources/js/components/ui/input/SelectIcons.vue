@@ -6,6 +6,7 @@ import { useVModel } from '@vueuse/core'
 import { Label } from '@/components/ui/label'
 import InputError from '@/components/ui/input/InputError.vue'
 import type { IconOption } from '@/types'
+import { useI18n } from 'vue-i18n'
 
 import {
   SelectPortal,
@@ -33,6 +34,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const { t } = useI18n()
 
 const options = ref<IconOption[]>([])
 const loading = ref(false)
@@ -141,7 +143,7 @@ onMounted(() => {
           @scroll="onScroll"
         >
           <SelectGroup>
-            <SelectLabel class="sr-only">Iconos</SelectLabel>
+            <SelectLabel class="sr-only">{{ t('inputs.icons.label') }}</SelectLabel>
 
             <div class="grid grid-cols-5 gap-3">
               <SelectItem
@@ -163,13 +165,13 @@ onMounted(() => {
                 v-if="loading"
                 class="col-span-5 text-center text-xs text-gray-500 py-2"
               >
-                Cargando más iconos…
+                {{ t('inputs.icons.loading_more') }}
               </div>
               <div
                 v-if="!hasMore && !loading"
                 class="col-span-5 text-center text-xs text-gray-400 py-2"
               >
-                No hay más iconos
+                {{ t('inputs.icons.no_more') }}
               </div>
             </div>
           </SelectGroup>

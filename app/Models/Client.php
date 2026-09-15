@@ -2,21 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\Filterable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use App\Models\Traits\Filterable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-use Illuminate\Notifications\Notifiable;
 
 class Client extends Model implements AuditableContract
 {
-    use HasFactory, HasUuids, SoftDeletes, Filterable, Auditable, Notifiable;
+    use Auditable, Filterable, HasFactory, HasUuids, Notifiable, SoftDeletes;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
@@ -26,6 +29,29 @@ class Client extends Model implements AuditableContract
     ];
 
     protected $appends = ['gender', 'country'];
+
+    /**
+     * Get the user account associated with the client.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function messageConversation(): HasOne
+    {
+        return $this->hasOne(MessageConversation::class);
+    }
+
+    public function messages(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            Message::class,
+            MessageConversation::class,
+            'client_id',
+            'conversation_id',
+        );
+    }
 
     /**
      * Get the characteristics options associated with the client.

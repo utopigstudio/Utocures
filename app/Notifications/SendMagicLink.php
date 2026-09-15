@@ -30,10 +30,9 @@ class SendMagicLink extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Enlace mágico de inicio de sesión')
+            ->subject('Enlace de un uso para acceder a Utocures')
             ->line('Haga clic en el siguiente enlace para iniciar sesión:')
-            ->action('Iniciar sesión', $this->link)
-            ->line('Si no has solicitado este enlace, puedes ignorar este correo.');
+            ->action('Iniciar sesión', $this->link);
     }
 
     /**

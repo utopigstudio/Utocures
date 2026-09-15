@@ -6,29 +6,36 @@ use App\Http\Controllers\AuditController;
 use App\Http\Controllers\BudgetController;
 use App\Http\Controllers\BudgetTemplateController;
 use App\Http\Controllers\CharacteristicController;
+use App\Http\Controllers\ClientAccessController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ConfigurationController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ContractTemplateController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeAssignedHourController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeDocumentController;
 use App\Http\Controllers\EmployeeStatusPeriodController;
 use App\Http\Controllers\EmployeeTimeRecordController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NoteController;
+use App\Http\Controllers\ResourceController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth', 'is_admin'])->group(function () {
 
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
     Route::resource('clients', ClientController::class);
 
     Route::prefix('clients')->name('clients.')->group(function () {
+        Route::post('{client}/access', [ClientAccessController::class, 'store'])->name('access.store');
+        Route::put('{client}/access', [ClientAccessController::class, 'update'])->name('access.update');
+        Route::post('{client}/access/invitation', [ClientAccessController::class, 'invite'])->name('access.invitation');
+        Route::post('{client}/access/password-reset', [ClientAccessController::class, 'resetPassword'])->name('access.password-reset');
+        Route::patch('{client}/access/activate', [ClientAccessController::class, 'activate'])->name('access.activate');
+        Route::delete('{client}/access', [ClientAccessController::class, 'destroy'])->name('access.destroy');
         Route::get('{client}/contracts', [ClientController::class, 'contracts'])->name('contracts');
         Route::get('{client}/budgets', [ClientController::class, 'budgets'])->name('budgets');
         Route::get('{client}/invoices', [ClientController::class, 'invoices'])->name('invoices');
@@ -65,7 +72,19 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     Route::resource('services', ServiceController::class)->except(['show']);
 
+    Route::get('resources/geocode', [ResourceController::class, 'geocode'])
+        ->middleware('throttle:20,1')
+        ->name('resources.geocode');
+    Route::resource('resources', ResourceController::class)->except(['show']);
+
     Route::resource('announcements', AnnouncementController::class)->except(['show']);
+
+    Route::prefix('messages')->name('messages.')->group(function () {
+        Route::get('/', [MessageController::class, 'adminIndex'])->name('index');
+        Route::get('{client}', [MessageController::class, 'adminShow'])->name('show');
+        Route::post('{client}', [MessageController::class, 'adminStore'])->middleware('throttle:30,1')->name('store');
+        Route::patch('{client}/read', [MessageController::class, 'adminRead'])->name('read');
+    });
 
     Route::resource('budget-templates', BudgetTemplateController::class)->except(['show']);
 
@@ -76,6 +95,13 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::resource('audits', AuditController::class)->only(['index', 'show']);
 
     Route::resource('employee-time-records', EmployeeTimeRecordController::class)->only(['index', 'update']);
+
+    Route::prefix('employee-documents')->name('employee-documents.')->group(function () {
+        Route::get('/', [EmployeeDocumentController::class, 'index'])->name('index');
+        Route::post('/', [EmployeeDocumentController::class, 'store'])->name('store');
+        Route::get('{file}/download', [EmployeeDocumentController::class, 'download'])->name('download');
+        Route::delete('{file}', [EmployeeDocumentController::class, 'destroy'])->name('destroy');
+    });
 
     Route::prefix('files')->name('files.')->group(function () {
         Route::post('/', [FileController::class, 'store'])->name('store');

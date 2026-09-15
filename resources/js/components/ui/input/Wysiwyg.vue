@@ -6,6 +6,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Placeholder from '@tiptap/extension-placeholder'
 import { Label } from '@/components/ui/label'
 import InputError from '@/components/ui/input/InputError.vue';
+import { useI18n } from 'vue-i18n'
 
 type Props = {
   label?: string
@@ -20,6 +21,7 @@ type Props = {
 }
 const props = defineProps<Props>()
 const emit = defineEmits<{ (e:'update:modelValue', v:string):void }>()
+const { t } = useI18n()
 
 const value = useVModel(props, 'modelValue', emit, {
   passive: true,
@@ -41,14 +43,14 @@ onMounted(() => {
     extensions: [
       StarterKit.configure({ heading: { levels: [1,2,3] } }),
       Placeholder.configure({
-        placeholder: props.placeholder ?? 'Escribe aquí...',
+        placeholder: props.placeholder ?? t('inputs.wysiwyg.placeholder'),
       }),
     ],
     content: initialContent,
     editable: !props.disabled,
     editorProps: {
       attributes: {
-        class: 'ProseMirror prose max-w-none focus:outline-none [&_h1]:text-4xl [&_h2]:text-3xl [&_h3]:text-2xl',
+        class: 'ProseMirror wysiwyg-content prose max-w-none focus:outline-none [&_h1]:text-4xl [&_h2]:text-3xl [&_h3]:text-2xl',
       },
     },
     onUpdate: ({ editor }) => {
@@ -95,14 +97,14 @@ function clearFormatting() {
 
       <span class="mx-1 w-px h-5 bg-slate-200"></span>
 
-      <button :class="[btnBase, isActive('bulletList') && btnActive]" @click="editor?.chain().focus().toggleBulletList().run()" type="button">• Lista</button>
-      <button :class="[btnBase, isActive('orderedList') && btnActive]" @click="editor?.chain().focus().toggleOrderedList().run()" type="button">1. Lista</button>
+      <button :class="[btnBase, isActive('bulletList') && btnActive]" @click="editor?.chain().focus().toggleBulletList().run()" type="button">• {{ $t('inputs.wysiwyg.list') }}</button>
+      <button :class="[btnBase, isActive('orderedList') && btnActive]" @click="editor?.chain().focus().toggleOrderedList().run()" type="button">1. {{ $t('inputs.wysiwyg.list') }}</button>
 
       <span class="mx-1 w-px h-5 bg-slate-200"></span>
 
       <button :class="btnBase" @click="editor?.chain().focus().undo().run()" type="button">↶</button>
       <button :class="btnBase" @click="editor?.chain().focus().redo().run()" type="button">↷</button>
-      <button :class="btnBase" @click="clearFormatting" type="button">Limpiar</button>
+      <button :class="btnBase" @click="clearFormatting" type="button">{{ $t('inputs.wysiwyg.clear') }}</button>
     </div>
 
     <div class="px-6 py-8">

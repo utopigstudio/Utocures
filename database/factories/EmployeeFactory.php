@@ -2,23 +2,23 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\AssignedCharacteristic;
 use App\Models\AssignedHoursTemplate;
 use App\Models\AssignedService;
+use App\Models\AvailableHour;
 use App\Models\CharacteristicOption;
-use App\Models\Employee;
 use App\Models\Client;
+use App\Models\Country;
+use App\Models\Employee;
 use App\Models\File;
+use App\Models\Gender;
 use App\Models\Note;
 use App\Models\Service;
 use App\Models\User;
-use App\Models\Gender;
-use App\Models\Country;
-use App\Models\AvailableHour;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employee>
+ * @extends Factory<Employee>
  */
 class EmployeeFactory extends Factory
 {
@@ -29,12 +29,12 @@ class EmployeeFactory extends Factory
      */
     public function definition(): array
     {
-        $users = User::whereNotIn('email', ['test@test.es', 'employee@test.es'])->get();
+        $user = User::where('email', 'employee@test.es')->first();
         $genders = Gender::all();
         $countries = Country::all();
 
         return [
-            'user_id' => $users->isNotEmpty() ? fake()->randomElement($users)->id : null,
+            'user_id' => $user->id,
             'nif' => fake()->dni(),
             'gender_id' => $genders->isNotEmpty() ? fake()->randomElement($genders)->id : null,
             'birth_date' => fake()->date(),

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HelpButton from '@/components/help/HelpButton.vue';
 import { computed, ref, watch } from 'vue'
 import { Link, useForm, router } from '@inertiajs/vue3'
 import { Button } from '@/components/ui/button'
@@ -19,10 +20,13 @@ interface CalendarRecord {
   date_out?: string | null
   time_in: string
   time_out?: string | null
+  is_open: boolean
   date_in_formatted: string
   date_out_formatted?: string | null
   client_name?: string
   service_name?: string
+  location_in?: TimeRecordLocation | null
+  location_out?: TimeRecordLocation | null
   notes_count: number
   latest_modification?: {
     audit_id: string
@@ -30,6 +34,13 @@ interface CalendarRecord {
     user_name?: string | null
     created_at_formatted: string
   } | null
+}
+
+interface TimeRecordLocation {
+  latitude: number
+  longitude: number
+  accuracy_meters?: number | null
+  position_captured_at?: string | null
 }
 
 interface Props {
@@ -169,6 +180,18 @@ function submitTimeRecordUpdate() {
     onSuccess: () => resetEditModal(),
   })
 }
+
+function mapUrl(location: TimeRecordLocation) {
+  return `https://www.google.com/maps/search/?api=1&query=${location.latitude},${location.longitude}`
+}
+
+function formatAccuracy(location: TimeRecordLocation) {
+  if (location.accuracy_meters === null || location.accuracy_meters === undefined) {
+    return null
+  }
+
+  return `${Math.round(location.accuracy_meters)} m`
+}
 </script>
 
 <template>
@@ -235,6 +258,32 @@ function submitTimeRecordUpdate() {
                 <p>{{ record.service_name }}</p>
                 <p class="text-xs text-amber-700">{{ t('employee_time_records.incidences') }}: {{ record.notes_count }}</p>
 
+                <div v-if="record.location_in || record.location_out" class="mt-3 grid gap-2 text-xs text-gray-700 sm:grid-cols-2">
+                  <a
+                    v-if="record.location_in"
+                    class="rounded-xl border border-emerald-100 bg-emerald-50 px-3 py-2 text-emerald-800 hover:bg-emerald-100"
+                    :href="mapUrl(record.location_in)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span class="font-semibold">{{ t('employee_time_records.location_in') }}</span>
+                    <span class="block">{{ record.location_in.latitude }}, {{ record.location_in.longitude }}</span>
+                    <span v-if="formatAccuracy(record.location_in)" class="block">{{ t('employee_time_records.accuracy') }}: {{ formatAccuracy(record.location_in) }}</span>
+                  </a>
+
+                  <a
+                    v-if="record.location_out"
+                    class="rounded-xl border border-red-100 bg-red-50 px-3 py-2 text-red-800 hover:bg-red-100"
+                    :href="mapUrl(record.location_out)"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <span class="font-semibold">{{ t('employee_time_records.location_out') }}</span>
+                    <span class="block">{{ record.location_out.latitude }}, {{ record.location_out.longitude }}</span>
+                    <span v-if="formatAccuracy(record.location_out)" class="block">{{ t('employee_time_records.accuracy') }}: {{ formatAccuracy(record.location_out) }}</span>
+                  </a>
+                </div>
+
                 <div v-if="record.latest_modification" class="mt-3 rounded-2xl border border-blue-100 bg-blue-50 px-3 py-2 text-xs leading-5 text-blue-900">
                   <p class="font-semibold text-blue-950">{{ t('employee_time_records.last_modification') }}</p>
                   <p class="mt-1 whitespace-pre-wrap">{{ record.latest_modification.reason }}</p>
@@ -276,7 +325,8 @@ function submitTimeRecordUpdate() {
     <Dialog v-model:open="editModalOpen" @update:open="value => { if (!value) resetEditModal() }">
       <DialogContent class="sm:max-w-2xl">
         <DialogHeader>
-          <DialogTitle>{{ t('employee_time_records.edit_title') }}</DialogTitle>
+          <DialogTitle>{{ t('employee_time_records.edit_title') }}<HelpButton article="time-records" section="effects" :label="$t('help.effects')" />
+          </DialogTitle>
         </DialogHeader>
 
         <DialogDescription>
@@ -309,6 +359,7 @@ function submitTimeRecordUpdate() {
               type="date"
               :label="t('employee_time_records.date_out')"
               :error="editForm.errors.date_out"
+              :disabled="selectedTimeRecord?.is_open"
             />
 
             <InputText
@@ -317,8 +368,13 @@ function submitTimeRecordUpdate() {
               type="time"
               :label="t('employee_time_records.time_out')"
               :error="editForm.errors.time_out"
+              :disabled="selectedTimeRecord?.is_open"
             />
           </div>
+
+          <p v-if="selectedTimeRecord?.is_open" class="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
+            {{ t('employee_time_records.employee_must_close_record') }}
+          </p>
 
           <InputTextarea
             v-model="editForm.modification_reason"

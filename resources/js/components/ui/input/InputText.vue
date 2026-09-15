@@ -27,6 +27,7 @@ interface Props {
   tabindex?: number
   icon?: any
   disabled?: boolean
+  list?: string
 }
 
 const props = defineProps<Props>()
@@ -63,6 +64,7 @@ const eyeIcon = computed(() => showPassword.value ? EyeOff : Eye)
         :required="props.required || undefined"
         :tabindex="props.tabindex"
         :disabled="props.disabled"
+        :list="props.list"
       />
       <button v-if="isPassword" type="button" @click="showPassword = !showPassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 transition-colors focus:outline-none" :aria-label="showPassword ? $t('inputs.password.hide') : $t('inputs.password.show')">
         <component :is="eyeIcon" class="w-5 h-5" />

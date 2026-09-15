@@ -2,18 +2,23 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Notifications\Notifiable;
 use App\Models\Traits\Filterable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Storage;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class User extends Authenticatable implements AuditableContract
 {
-    use HasFactory, HasUuids, Notifiable, Filterable, Auditable;
+    use Auditable, Filterable, HasFactory, HasPushSubscriptions, HasUuids, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,9 +26,12 @@ class User extends Authenticatable implements AuditableContract
     protected $fillable = [
         'name',
         'email',
+        'role',
         'password',
         'is_active',
         'avatar',
+        'locale',
+        'last_seen_changelog_version',
     ];
 
     /**
@@ -42,6 +50,7 @@ class User extends Authenticatable implements AuditableContract
         return [
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'invitation_accepted_at' => 'datetime',
         ];
     }
 
@@ -51,17 +60,61 @@ class User extends Authenticatable implements AuditableContract
     protected $auditInclude = [
         'name',
         'email',
+        'role',
         'is_active',
         'avatar',
+        'locale',
         'password',
     ];
 
     /**
      * Get the employee record associated with the user.
      */
-    public function employee()
+    public function employee(): HasOne
     {
         return $this->hasOne(Employee::class);
+    }
+
+    /**
+     * Get the client record associated with the user.
+     */
+    public function client(): HasOne
+    {
+        return $this->hasOne(Client::class);
+    }
+
+    public function sentMessages(): HasMany
+    {
+        return $this->hasMany(Message::class, 'sender_user_id');
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === UserRole::ADMIN;
+    }
+
+    public function isEmployee(): bool
+    {
+        return $this->role === UserRole::EMPLOYEE;
+    }
+
+    public function isClient(): bool
+    {
+        return $this->role === UserRole::CLIENT;
+    }
+
+    public function deactivate(): void
+    {
+        $this->update(['is_active' => false]);
+        DB::table(config('session.table', 'sessions'))
+            ->where('user_id', $this->getKey())
+            ->delete();
+        Password::broker()->deleteToken($this);
+    }
+
+    public function activate(): void
+    {
+        $this->update(['is_active' => true]);
     }
 
     /**

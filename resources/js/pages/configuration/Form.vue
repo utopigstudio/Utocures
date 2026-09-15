@@ -1,10 +1,11 @@
 <script setup lang="ts">
+import HelpButton from '@/components/help/HelpButton.vue';
 import { ref } from 'vue'
 import { AppLayout, LayoutBasic } from '@/layouts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Camera, Settings } from 'lucide-vue-next'
 import { Form } from '@inertiajs/vue3'
-import { InputText, Select } from '@/components/ui/input'
+import { InputCheckbox, InputText, Select } from '@/components/ui/input'
 import { Button } from '@/components/ui/button';
 import type { Country, Configuration } from '@/types';
 
@@ -78,7 +79,7 @@ function onDragLeave(e: DragEvent) {
           <div class="relative lg:col-span-12">
             <Card>
               <CardHeader>
-                <CardTitle class="text-xl">{{ $t('setup.config.title') }}</CardTitle>
+                <CardTitle help-article="configuration" :help-label="$t('help.topic', { topic: $t('setup.config.title') })" class="text-xl">{{ $t('setup.config.title') }}</CardTitle>
               </CardHeader>
               <CardContent>
                 <InputText
@@ -164,6 +165,19 @@ function onDragLeave(e: DragEvent) {
                   :required="true"
                   :error="errors.company_country_id"
                 />
+
+                <div class="mt-6 rounded-lg border border-gray-200 bg-gray-50 p-4">
+                  <InputCheckbox
+                    name="require_time_record_location"
+                    :label="$t('setup.config.require_time_record_location')"
+                    :default-value="configuration.require_time_record_location"
+                    :error="errors.require_time_record_location"
+                  />
+                  <HelpButton article="configuration" section="effects" :label="$t('help.topic', { topic: $t('setup.config.require_time_record_location') })" />
+                  <p class="mt-2 text-sm text-gray-600">
+                    {{ $t('setup.config.require_time_record_location_help') }}
+                  </p>
+                </div>
 
                 <div class="grid grid-cols-4 gap-4 mt-4">
                   <label class="col-span-4 block text-sm font-medium text-gray-700 mt-2">

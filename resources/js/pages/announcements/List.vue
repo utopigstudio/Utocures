@@ -22,9 +22,21 @@ interface Props<T = any> {
 const props = defineProps<Props<Announcement>>()
 const { t } = useI18n()
 
+const audienceTranslationKeys: Record<Announcement['to'], string> = {
+  employee: 'announcements.audience_employee',
+  admin: 'announcements.audience_admin',
+  client: 'announcements.audience_client',
+  boths: 'announcements.audience_boths',
+}
+
+function audienceLabel(audience: Announcement['to']) {
+  return t(audienceTranslationKeys[audience])
+}
+
 const columns: Column<Announcement>[] = [
   { key: 'image', label: t('announcements.image'), sortable: false, format: 'avatar' },
   { key: 'title', label: t('announcements.title_field'), sortable: true },
+  { key: 'to', label: t('announcements.type'), sortable: true },
   { key: 'created_at', label: t('announcements.created_at'), sortable: true },
 ]
 
@@ -79,6 +91,11 @@ watchDebounced(
         </template>
         <template #empty>
           <div class="text-center text-gray-500">{{ $t('announcements.no_results') }}</div>
+        </template>
+        <template #cell-to="{ value }">
+          <span class="inline-flex rounded-full bg-blue-100 px-2 py-0.5 text-xs text-blue-800">
+            {{ audienceLabel(value) }}
+          </span>
         </template>
       </DataTable>
     </LayoutBasic>

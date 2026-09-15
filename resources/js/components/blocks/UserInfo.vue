@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { usePage } from '@inertiajs/vue3';
 import { useInitials } from '@/composables/useInitials';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import type { User, Employee } from '@/types';
+import type { User } from '@/types';
 
 interface Props {
   user: User;
@@ -12,7 +12,7 @@ interface Props {
 }
 
 const page = usePage();
-const employee = page.props.auth.employee as Employee; 
+const isEmployee = Boolean(page.props.auth.employee);
 const props = withDefaults(defineProps<Props>(), {
   showEmail: false,
 });
@@ -22,7 +22,7 @@ const showAvatar = computed(() => props.user.avatar && props.user.avatar !== '')
 </script>
 
 <template>
-  <div v-if="!props.showOnlyAvatar && !employee" class="grid flex-1 text-left text-sm leading-tight">
+  <div v-if="!props.showOnlyAvatar && !isEmployee" class="grid flex-1 text-left text-sm leading-tight">
     <span class="truncate font-medium">{{ props.user.name }}</span>
     <span v-if="props.showEmail" class="truncate text-xs text-muted-foreground">{{ props.user.email }}</span>
   </div>

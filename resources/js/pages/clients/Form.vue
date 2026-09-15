@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import HelpButton from '@/components/help/HelpButton.vue';
 import { ref } from 'vue';
 import { AppLayout, LayoutBasic } from '@/layouts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -200,7 +201,7 @@ const clientName = ref(props.client ? props.client.name : '')
           <div class="relative lg:col-span-12">
             <Card>
               <CardHeader>
-                <CardTitle class="text-xl flex items-center gap-2 mb-4">
+                <CardTitle help-article="automatic-invoices" help-section="effects" :help-label="$t('help.topic', { topic: $t('clients.billing_data') })" class="text-xl flex items-center gap-2 mb-4">
                   <FileText class="text-blue-600 w-5 h-5" />
                   <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.billing_data') }}</span>
                 </CardTitle>
@@ -231,7 +232,7 @@ const clientName = ref(props.client ? props.client.name : '')
                       name="tax_included"
                       :label="$t('clients.tax_included')"
                       :default-value="props.client?.tax_included ? 1 : 0"
-                      :options="[{ label: 'Sí', value: '1' }, { label: 'No', value: '0' }]"
+                      :options="[{ label: $t('generic.yes'), value: '1' }, { label: $t('generic.no'), value: '0' }]"
                       :error="errors.tax_included"
                     />
                   </div>
@@ -240,7 +241,7 @@ const clientName = ref(props.client ? props.client.name : '')
                       name="is_partner"
                       :label="$t('clients.is_partner')"
                       :default-value="props.client?.is_partner ? 1 : 0"
-                      :options="[{ label: 'Sí', value: '1' }, { label: 'No', value: '0' }]"
+                      :options="[{ label: $t('generic.yes'), value: '1' }, { label: $t('generic.no'), value: '0' }]"
                       :error="errors.is_partner"
                     />
                   </div>
@@ -252,6 +253,7 @@ const clientName = ref(props.client ? props.client.name : '')
                       :default-value="!!props.client?.automatic_invoice"
                       :error="errors.automatic_invoice"
                     />
+                  <HelpButton article="automatic-invoices" section="effects" :label="$t('help.topic', { topic: $t('clients.automatic_invoice') })" />
                   </div>
                 </div>
               </CardContent>
@@ -263,7 +265,7 @@ const clientName = ref(props.client ? props.client.name : '')
           <div class="relative lg:col-span-12">
             <Card>
               <CardHeader>
-                <CardTitle class="text-xl flex items-center gap-2 mb-4">
+                <CardTitle help-article="services-characteristics" :help-label="$t('help.topic', { topic: $t('clients.assigned_services') })" class="text-xl flex items-center gap-2 mb-4">
                   <BadgeCheck class="text-blue-600 w-5 h-5" />
                   <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.assigned_services') }}</span>
                 </CardTitle>
@@ -289,7 +291,7 @@ const clientName = ref(props.client ? props.client.name : '')
           <div class="relative lg:col-span-1">
             <Card class="gap-2">
               <CardHeader>
-                <CardTitle class="text-xl flex items-center gap-6 mb-4">
+                <CardTitle help-article="characteristics" :help-label="$t('help.topic', { topic: $t('clients.assigned_characteristics') })" class="text-xl flex items-center gap-6 mb-4">
                   <Star class="text-blue-600 w-5 h-5" />
                   <span class="text-gray-800 text-xl leading-7 font-bold">{{ $t('clients.assigned_characteristics') }}</span>
                 </CardTitle>
