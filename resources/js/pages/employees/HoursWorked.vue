@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { formatRecordedDuration } from '@/lib/timeRecords'
 import { watchDebounced } from '@vueuse/core'
 import { Link, router } from '@inertiajs/vue3';
 import { AppLayoutEmployee } from '@/layouts';
@@ -15,6 +16,7 @@ interface TimeRecord {
   date_out?: string
   time_in: string
   time_out?: string
+  registered_hours: string
   notes?: Array<{
     id: string
     content: string
@@ -42,10 +44,10 @@ const { t } = useI18n()
 const columns: Column<TimeRecord>[] = [
   { key: 'assigned_hour.client.name', label: t('employee_time_records.client_name') },
   { key: 'assigned_hour.service.name', label: t('employee_time_records.service_name') },
-  { key: 'date_in', label: t('employee_time_records.date_in') },
+  { key: 'date_in', label: t('employee_time_records.date') },
   { key: 'time_in', label: t('employee_time_records.time_in') },
-  { key: 'date_out', label: t('employee_time_records.date_out') },
   { key: 'time_out', label: t('employee_time_records.time_out') },
+  { key: 'registered_hours', label: t('employee_time_records.registered_hours'), sortable: false },
   { key: 'notes.length', label: t('employee_time_records.incidences'), sortable: false }
 ]
 
@@ -120,6 +122,15 @@ watchDebounced(
         </template>
         <template #empty>
           <div class="text-center text-gray-500">{{ $t('layout.no_results_found') }}</div>
+        </template>
+        <template #cell-time_in="{ row }">
+          {{ row.time_in?.slice(0, 5) }}
+        </template>
+        <template #cell-time_out="{ row }">
+          {{ row.time_out?.slice(0, 5) ?? '--:--' }}
+        </template>
+        <template #cell-registered_hours="{ row }">
+          {{ formatRecordedDuration(row.time_out && row.date_out ? row.registered_hours : null) }}
         </template>
         <template #rowDetails="{ row }">
           <div class="p-4 bg-gray-50 border-t border-gray-200">

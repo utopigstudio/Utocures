@@ -59,6 +59,7 @@ interface CalendarRecord {
   time_in: string
   time_out?: string | null
   is_open: boolean
+  registered_hours: string | null
   date_in_formatted: string
   date_out_formatted?: string | null
   client_name?: string

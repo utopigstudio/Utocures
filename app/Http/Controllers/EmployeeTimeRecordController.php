@@ -365,6 +365,9 @@ class EmployeeTimeRecordController extends Controller
                     'time_in' => $this->formatTime($timeRecord->time_in),
                     'time_out' => $this->formatTime($timeRecord->time_out),
                     'is_open' => ! $timeRecord->time_out,
+                    'registered_hours' => $timeRecord->time_out && $timeRecord->date_out
+                        ? $timeRecord->registered_hours
+                        : null,
                     'date_in_formatted' => $timeRecord->date_in?->format('d/m/Y'),
                     'date_out_formatted' => $timeRecord->date_out?->format('d/m/Y'),
                     'client_name' => $timeRecord->assignedHour?->client?->name,

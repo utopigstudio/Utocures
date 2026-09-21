@@ -1,0 +1,1 @@
+function o(t){if(t==null)return"--:--";const r=Math.max(0,Math.floor(Number(t)));return Number.isFinite(r)?`${Math.floor(r/60).toString().padStart(2,"0")}:${(r%60).toString().padStart(2,"0")}`:"--:--"}export{o as f};

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import HelpButton from '@/components/help/HelpButton.vue';
+import { formatRecordedDuration } from '@/lib/timeRecords'
 import { computed, ref, watch } from 'vue'
 import { Link, useForm, router } from '@inertiajs/vue3'
 import { Button } from '@/components/ui/button'
@@ -21,6 +22,7 @@ interface CalendarRecord {
   time_in: string
   time_out?: string | null
   is_open: boolean
+  registered_hours: string | null
   date_in_formatted: string
   date_out_formatted?: string | null
   client_name?: string
@@ -250,10 +252,9 @@ function formatAccuracy(location: TimeRecordLocation) {
               <div class="min-w-0 space-y-1 text-sm text-gray-600">
                 <p class="font-medium text-gray-900">
                   {{ record.date_in_formatted }} · {{ record.time_in }}
-                  <span v-if="record.date_out_formatted || record.time_out">
-                    → {{ record.date_out_formatted ?? record.date_in_formatted }} · {{ record.time_out ?? '--:--' }}
-                  </span>
+                  → {{ record.time_out ?? '--:--' }}
                 </p>
+                <p class="font-semibold text-gray-900">{{ t('employee_time_records.registered_hours') }}: {{ formatRecordedDuration(record.registered_hours) }}</p>
                 <p>{{ record.client_name }}</p>
                 <p>{{ record.service_name }}</p>
                 <p class="text-xs text-amber-700">{{ t('employee_time_records.incidences') }}: {{ record.notes_count }}</p>
