@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useTableQuery } from '@/composables/useTableQuery'
 import { ref } from 'vue';
 import { watchDebounced } from '@vueuse/core'
 import { AppLayout, LayoutBasic } from '@/layouts';
@@ -20,6 +21,7 @@ interface Props<T = any> {
 }
 
 const props = defineProps<Props<Characteristic>>()
+const { tableQuery } = useTableQuery()
 const { t } = useI18n()
 const columns: Column<Characteristic>[] = [
   { key: 'name', label: t('characteristics.name'), sortable: true },
@@ -29,7 +31,7 @@ const columns: Column<Characteristic>[] = [
 function onSortChange({ key, dir }: { key: string, dir: SortDir }) {
   router.get(
     route('characteristics.index'),
-    { sort: key, dir },
+    { ...tableQuery(), sort: key, dir },
     { preserveState: true, replace: true }
   )
 }
@@ -44,6 +46,7 @@ watchDebounced(
     router.get(
       route('characteristics.index'),
       {
+        ...tableQuery(),
         filter_search: newSearch,
         sort: props.sort,
         dir: props.dir

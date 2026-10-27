@@ -38,7 +38,7 @@ return [
     'action'   => 'Acción',
     'resource' => 'Recurso',
     'resource_name' => 'Nombre del recurso',
-    'created_at' => 'Fecha de creación',
+    'created_at' => 'Creado',
     'general_information' => 'Información general',
     'before' => 'Antes',
     'after' => 'Después',

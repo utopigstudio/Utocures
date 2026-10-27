@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Button, ButtonDelete } from '@/components/ui/button'
 import { Datepicker, InputText, Timepicker } from '@/components/ui/input'
 import { ListEmployees } from '@/components/blocks'
-import { AlertTriangle, Calendar, Save, Trash2, UserRound, X } from 'lucide-vue-next'
+import { AlertTriangle, Calendar, LoaderCircle, Save, Trash2, UserRound, X } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import type { AssignedHour } from '@/types'
 
@@ -78,6 +78,15 @@ function resetForm() {
         </DialogHeader>
 
         <DialogDescription>
+          <div
+            v-if="!isLocked"
+            role="note"
+            class="mb-6 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800"
+          >
+            <AlertTriangle aria-hidden="true" class="mt-0.5 size-5 shrink-0 text-amber-600" />
+            <p>{{ t('employees.assigned_hour_occurrence_warning') }}</p>
+          </div>
+
           <div
             v-if="isLocked"
             class="mb-6 flex items-start gap-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-800"
@@ -197,6 +206,7 @@ function resetForm() {
           <ButtonDelete
             v-if="!isLocked"
             :action="route('employees.assigned-hour-events.destroy', { employee: employeeId, assignedHour: assignedHour.id })"
+            :description="t('employees.assigned_hour_delete_warning')"
             @deleted="() => { emit('close'); emit('saved'); }"
             class="has-[>svg]:px-6 bg-red-700 hover:bg-red-600 text-white"
           >
@@ -216,9 +226,10 @@ function resetForm() {
               </Button>
             </DialogClose>
 
-            <Button v-if="!isLocked" type="submit" :disabled="processing" class="has-[>svg]:px-6">
-              <Save class="size-4 text-white" />
-              {{ t('clients.save_changes') }}
+            <Button v-if="!isLocked" type="submit" :disabled="processing" :aria-busy="processing" class="has-[>svg]:px-6">
+              <LoaderCircle v-if="processing" aria-hidden="true" class="size-4 animate-spin text-white" />
+              <Save v-else aria-hidden="true" class="size-4 text-white" />
+              <span role="status">{{ processing ? t('layout.saving') : t('clients.save_changes') }}</span>
             </Button>
           </div>
         </DialogFooter>

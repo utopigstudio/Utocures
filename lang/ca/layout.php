@@ -41,6 +41,8 @@ return [
     'weekly' => 'Setmanal',
     'biweekly' => 'Quinzenal',
     'download_excel' => 'Descarregar Excel',
+    'items_per_page' => 'Elements per pàgina',
+    'loading' => 'Carregant...',
     'total_data' => 'Total registres',
     'actions' => 'Accions',
     'logout' => 'Tancar sessió',

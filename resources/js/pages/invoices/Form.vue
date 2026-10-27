@@ -2,20 +2,34 @@
 import { ref, watch } from 'vue'
 import { AppLayout, LayoutBasic } from '@/layouts'
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card'
-import { Form, Link } from '@inertiajs/vue3'
+import { Form, Link, router } from '@inertiajs/vue3'
 import { Datepicker, SelectClients } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Repeatable } from '@/components/blocks'
 import FormLine from './components/FormLine.vue'
+import BillingRecipientDetails from '@/components/blocks/BillingRecipientDetails.vue'
 import { FileMinus, X, Save } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n';
-import type { BreadcrumbItem, Invoice, InvoiceLine } from '@/types'
+import type { BillingRecipient, BreadcrumbItem, Invoice, InvoiceLine } from '@/types'
 
 interface Props {
   invoice?: Invoice
   client_id?: string
+  billing_recipient?: BillingRecipient | null
 }
 const props = defineProps<Props>()
+const selectedClientId = ref(props.client_id ?? props.invoice?.client_id)
+const loadingRecipient = ref(false)
+
+watch(selectedClientId, (clientId) => {
+  if (!clientId) return
+  router.reload({
+    only: ['billing_recipient'],
+    data: { recipient_client_id: clientId },
+    onStart: () => { loadingRecipient.value = true },
+    onFinish: () => { loadingRecipient.value = false },
+  })
+})
 const lines = ref<InvoiceLine[]>(props.invoice?.lines ?? [])
 const total_base = ref(0)
 const total_tax = ref(0)
@@ -92,7 +106,7 @@ watch(
                         <X class="size-4" strokeWidth="3" /> {{ $t('layout.cancel') }}
                       </Button>
                     </Link>
-                    <Button type="submit" size="lg" :disabled="processing">
+                    <Button type="submit" size="lg" :disabled="processing || loadingRecipient">
                       <Save class="size-4 text-white" />
                       {{ props.invoice ? $t('layout.save_changes') : $t('layout.save') }}
                     </Button>
@@ -106,7 +120,7 @@ watch(
                       name="client_id"
                       :label="$t('invoices.client')"
                       class="mt-1 w-full"
-                      :default-value="props.client_id ?? props.invoice?.client.id"
+                      v-model="selectedClientId"
                       :required="true"
                       :error="errors.client_id"
                     />
@@ -136,6 +150,15 @@ watch(
                     />
                   </div>
                 </div>
+                <section class="my-6 rounded-xl border border-blue-gray-200 bg-blue-gray-50 p-5" aria-live="polite" :aria-busy="loadingRecipient">
+                  <h3 class="mb-3 font-semibold text-blue-gray-900">{{ $t('clients.billing_recipient') }}</h3>
+                  <p v-if="loadingRecipient" class="text-sm text-blue-gray-500">{{ $t('layout.loading') }}</p>
+                  <template v-else-if="props.billing_recipient">
+                    <BillingRecipientDetails :recipient="props.billing_recipient" />
+                    <p class="mt-4 text-sm text-blue-gray-500">{{ props.invoice && selectedClientId === props.invoice.client_id ? $t('invoices.billing_recipient_saved_help') : $t('invoices.billing_recipient_help') }}</p>
+                  </template>
+                  <p v-else class="text-sm text-blue-gray-500">{{ $t('invoices.billing_recipient_select_client') }}</p>
+                </section>
                 <Repeatable
                   v-model="lines"
                   name="lines"
@@ -176,7 +199,7 @@ watch(
                         <X class="size-4" strokeWidth="3" /> {{ $t('layout.cancel') }}
                       </Button>
                     </Link>
-                    <Button type="submit" size="lg" :disabled="processing">
+                    <Button type="submit" size="lg" :disabled="processing || loadingRecipient">
                       <Save class="size-4 text-white" />
                       {{ props.invoice ? $t('layout.save_changes') : $t('layout.save') }}
                     </Button>

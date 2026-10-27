@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useTableQuery } from '@/composables/useTableQuery'
 import { ref } from 'vue';
 import { watchDebounced } from '@vueuse/core'
 import { AppLayout, LayoutTabs } from '@/layouts';
@@ -23,6 +24,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const { tableQuery } = useTableQuery()
 
 const { t } = useI18n()
 
@@ -48,7 +50,7 @@ const columns: Column<Contract>[] = [
 function onSortChange({ key, dir }: { key: string, dir: SortDir }) {
   router.get(
     route('clients.contracts', props.client.id),
-    { sort: key, dir },
+    { ...tableQuery(), sort: key, dir },
     { preserveState: true, replace: true }
   )
 }
@@ -61,6 +63,7 @@ watchDebounced(
     router.get(
       route('clients.contracts', props.client.id),
       {
+        ...tableQuery(),
         filter_status: newStatus,
         sort: props.sort,
         dir: props.dir

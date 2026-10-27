@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import BillingRecipientDetails from '@/components/blocks/BillingRecipientDetails.vue';
 import { ClientAccessCard, Files, ListEmployeesAssigned, ModalCalendar } from '@/components/blocks';
 import { BooleanData, LabelData } from '@/components/ui/basic';
 import { Button, ButtonDelete } from '@/components/ui/button';
@@ -180,6 +181,7 @@ const grouped_characteristics = computed(() => {
               </CardTitle>
             </CardHeader>
             <CardContent>
+              <BillingRecipientDetails :recipient="props.client.billing_recipient ?? props.client" class="mb-6 border-b border-blue-gray-200 pb-6" />
               <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div class="flex flex-col gap-4">
                   <div>

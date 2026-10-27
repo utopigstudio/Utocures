@@ -58,7 +58,7 @@ class EmployeeController extends Controller
             return Excel::download(new BaseExport($employees, 'employees', self::EXPORT_FIELDS), 'employees.xlsx');
         }
 
-        $employees = $employees->paginate(10)
+        $employees = $employees->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('employees/List', [

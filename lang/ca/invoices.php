@@ -1,6 +1,18 @@
 <?php
 
 return [
+    'billing_recipient_help' => 'Aquestes dades es desaran amb la factura. Pots configurar el destinatari habitual des de la fitxa del client.',
+    'billing_recipient_saved_help' => 'Dades desades en aquesta factura. Canviar la fitxa del client no modifica aquest destinatari. Si canvies el client de la factura, es farà servir el destinatari del client nou.',
+    'billing_recipient_select_client' => 'Selecciona el client que rep el servei per veure a qui s’emetrà la factura.',
+    'billing_recipient' => [
+        'name' => 'Destinatari de facturació',
+        'cif_nif' => 'NIF/CIF del destinatari',
+        'address' => 'Adreça fiscal',
+        'zip_code' => 'Codi postal fiscal',
+        'city' => 'Població fiscal',
+        'country_id' => 'País fiscal',
+        'email' => 'Correu de facturació',
+    ],
     'title' => 'Factures',
     'create' => 'Crear factura',
     'edit' => 'Editar factura',

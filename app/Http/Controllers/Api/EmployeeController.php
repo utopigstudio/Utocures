@@ -30,8 +30,6 @@ class EmployeeController extends Controller
         $serviceId = $data['service_id'] ?? null;
         $timeStart = Carbon::parse($data['time_start'])->format('H:i');
         $timeEnd = Carbon::parse($data['time_end'])->format('H:i');
-        $databaseTimeStart = Carbon::parse($data['time_start'])->format('H:i:s');
-        $databaseTimeEnd = Carbon::parse($data['time_end'])->format('H:i:s');
         $date = isset($data['date']) ? Carbon::parse($data['date'])->toDateString() : null;
         $dateStart = isset($data['date_start']) ? Carbon::parse($data['date_start'])->toDateString() : Carbon::now()->toDateString();
         $dateEnd = isset($data['date_end']) ? Carbon::parse($data['date_end'])->toDateString() : null;
@@ -60,6 +58,7 @@ class EmployeeController extends Controller
         $employees = Employee::select(['id', 'user_id', 'phone'])
             ->with([
                 'user:id,name,email,avatar',
+                'availableHours',
                 'statusPeriods' => fn ($query) => $query
                     ->where('start_at', '<', $statusCheckEnd)
                     ->where('end_at', '>', $statusCheckStart)
@@ -72,40 +71,27 @@ class EmployeeController extends Controller
                 $q->where('services.id', $serviceId);
             });
 
-        if ($recurrency === '0') {
-            $employees->whereHas('availableHours', function ($q) use ($databaseTimeStart, $databaseTimeEnd, $date) {
-                $dayOfWeek = Carbon::parse($date)->dayOfWeek;
-                $q->where('day_of_week', $dayOfWeek)
-                    ->where('time_start', '<=', $databaseTimeStart)
-                    ->where('time_end', '>=', $databaseTimeEnd);
-            });
-        } else {
-            foreach ($daysOfWeek as $day) {
-                $employees->whereHas('availableHours', function ($q) use ($day, $databaseTimeStart, $databaseTimeEnd) {
-                    $q->where('day_of_week', $day)
-                        ->where('time_start', '<=', $databaseTimeStart)
-                        ->where('time_end', '>=', $databaseTimeEnd);
-                });
-            }
-        }
-
-        $employees = $employees->get()
-            ->reject(fn (Employee $employee) => $this->schedulingService->hasConflict(
-                employeeId: $employee->id,
-                data: $scheduleData,
-                ignoreTemplateId: $eventId,
-                ignoreAssignedHourId: $assignedHourId,
-            ))
+        $employees = $employees->get();
+        $conflicts = $this->schedulingService->conflictsForEmployees(
+            $employees->modelKeys(), $scheduleData, $eventId, $assignedHourId,
+        );
+        $employees = $employees
             ->values()
-            ->map(function (Employee $employee) use ($occurrenceWindows) {
+            ->map(function (Employee $employee) use ($occurrenceWindows, $scheduleData, $conflicts) {
                 /** @var EmployeeStatusPeriod|null $blockingPeriod */
                 $blockingPeriod = $this->findFirstBlockingStatusPeriod($employee->statusPeriods, $occurrenceWindows);
 
+                $employeeConflicts = $conflicts->get($employee->id, collect())->values();
+                $unavailableDays = $this->schedulingService->unavailableDays($employee, $scheduleData);
+
                 return [
+                    'conflicts' => $employeeConflicts,
+                    'outside_availability' => $unavailableDays !== [],
+                    'unavailable_days' => $unavailableDays,
                     'id' => $employee->id,
                     'phone' => $employee->phone,
                     'user' => $employee->user,
-                    'is_selectable' => true,
+                    'is_selectable' => $unavailableDays === [] && $employeeConflicts->isEmpty(),
                     'unavailability_reason' => $blockingPeriod
                         ? $this->formatUnavailabilityReason($blockingPeriod)
                         : null,
@@ -114,7 +100,10 @@ class EmployeeController extends Controller
             })
             ->values();
 
-        return response()->json(['data' => $employees]);
+        return response()->json([
+            'data' => $employees->where('is_selectable', true)->values(),
+            'unavailable' => $employees->where('is_selectable', false)->values(),
+        ]);
     }
 
     private function buildOccurrenceTimeWindows(

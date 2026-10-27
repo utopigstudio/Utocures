@@ -2,5 +2,5 @@
 
 return [
     'name' => 'Nombre',
-    'date_created' => 'Fecha de creación',
+    'date_created' => 'Creado',
 ];

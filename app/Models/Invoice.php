@@ -2,20 +2,21 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Invoice extends Model implements AuditableContract
 {
-    use HasFactory, HasUuids, Filterable, Auditable;
+    use Auditable, Filterable, HasFactory, HasUuids;
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $casts = [
+        'billing_recipient' => 'array',
         'created_at' => 'date:d/m/Y',
         'date' => 'date:d/m/Y',
         'due_date' => 'date:d/m/Y',

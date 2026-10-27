@@ -14,6 +14,7 @@ class BudgetTemplateIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'per_page' => 'nullable|integer|in:10,15,25,50,100',
             'sort' => 'in:name,created_at',
             'dir' => 'in:asc,desc',
             'filter_search' => 'nullable|string',

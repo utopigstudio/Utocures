@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useTableQuery } from '@/composables/useTableQuery'
 import { computed, ref } from 'vue'
 import { watchDebounced } from '@vueuse/core'
 import { router } from '@inertiajs/vue3'
@@ -106,6 +107,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const { tableQuery } = useTableQuery()
 const { t } = useI18n()
 
 const currentView = computed<PageView>(() => props.view ?? 'list')
@@ -146,6 +148,7 @@ const emptyPaginated: Paginated<ListRow> = {
 
 function buildListParams(overrides: Partial<Record<string, string>>) {
   const params: Record<string, string> = {
+    ...tableQuery(),
     view: 'list',
     filter_search: searchFilter.value,
     filter_start: dateStartFilter.value,
@@ -228,6 +231,7 @@ function changeView(view: PageView) {
     router.get(
       route('employee-time-records.index'),
       {
+        ...tableQuery(),
         view: 'calendar',
         employee_id: props.calendar?.selected_employee_id ?? props.employee_options?.[0]?.value,
         filter_date: props.calendar?.selected_date ?? props.filters?.filter_date ?? new Date().toISOString().split('T')[0],

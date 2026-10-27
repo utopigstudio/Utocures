@@ -47,7 +47,7 @@ class AnnouncementController extends Controller
         $announcements = Announcement::select(self::LIST_FIELDS)
             ->filter($filters, ['title'])
             ->orderBy($sort, $dir)
-            ->paginate(10)
+            ->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('announcements/List', [

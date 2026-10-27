@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\UserRole;
 use App\Http\Requests\User\UserIndexRequest;
 use App\Http\Requests\User\UserStoreRequest;
+use App\Models\User;
+use App\Models\UserRole;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -28,7 +28,7 @@ class UserController extends Controller
             ->where('role', UserRole::ADMIN)
             ->filter($filters, $searchable)
             ->orderBy($sort, $dir)
-            ->paginate(10)
+            ->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('users/List', [
@@ -58,7 +58,7 @@ class UserController extends Controller
         $data = $request->validated();
         $data['role'] = UserRole::ADMIN;
 
-        if (!empty($data['password'])) {
+        if (! empty($data['password'])) {
             $data['password'] = Hash::make($data['password']);
         } else {
             $data['password'] = Hash::make(Str::random(12));

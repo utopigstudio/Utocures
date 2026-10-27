@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Audit\AuditIndexRequest;
-use OwenIt\Auditing\Models\Audit;
-use Inertia\Inertia;
 use Illuminate\Support\Str;
+use Inertia\Inertia;
+use OwenIt\Auditing\Models\Audit;
 
 class AuditController extends Controller
 {
@@ -14,14 +14,14 @@ class AuditController extends Controller
     public function index(AuditIndexRequest $request)
     {
         $sort = $request->validated('sort') ?? 'created_at';
-        $dir  = $request->validated('dir') ?? 'desc';
+        $dir = $request->validated('dir') ?? 'desc';
 
-        $audits = Audit::when(in_array($sort, self::LIST_FIELDS), fn($q) => $q->orderBy($sort, $dir))
+        $audits = Audit::when(in_array($sort, self::LIST_FIELDS), fn ($q) => $q->orderBy($sort, $dir))
             ->with('user:id,name,avatar')
-            ->paginate(50)
+            ->paginate((int) ($request->validated('per_page') ?? 50))
             ->withQueryString();
 
-        $audits = $audits->getCollection()->transform(function ($audit) {
+        $audits = $audits->through(function ($audit) {
             return $this->transformData($audit);
         });
 
@@ -46,7 +46,7 @@ class AuditController extends Controller
         if ($realModel) {
             if (method_exists($realModel, 'user') && $realModel->user) {
                 return $realModel->user->name;
-            } else if (isset($realModel->name)) {
+            } elseif (isset($realModel->name)) {
                 return $realModel->name;
             }
         }
@@ -72,7 +72,7 @@ class AuditController extends Controller
         $resourceKey = class_basename($audit->auditable_type);
 
         $audit->resource = __("audit.resources.$resourceKey");
-        $audit->action = __("audit.events.{$audit->event}") ?: __("audit.fallback");
+        $audit->action = __("audit.events.{$audit->event}") ?: __('audit.fallback');
         $audit->trans_prefix = $resourceKey ? Str::snake($resourceKey) : 'audit';
         $audit->resource_name = $this->resolveResourceName($audit, $realModel);
         $audit->created_at_formatted = $audit->created_at->format('d/m/Y H:i:s');

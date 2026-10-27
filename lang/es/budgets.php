@@ -29,7 +29,7 @@ return [
     'status_2' => 'Aceptado',
     'status_3' => 'Rechazado',
     'content' => 'Contenido',
-    'created_at' => 'Fecha de creación',
+    'created_at' => 'Creado',
     'concept' => 'Concepto',
     'quantity' => 'Cantidad',
     'price' => 'Precio',

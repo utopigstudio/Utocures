@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, computed, getCurrentInstance } from 'vue'
-import { Link, router } from '@inertiajs/vue3'
+import { Link, router, usePage } from '@inertiajs/vue3'
+import { useTableQuery } from '@/composables/useTableQuery'
 import { BooleanIcon } from '@/components/ui/basic'
 import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 import { DeleteModal, DataTableActions } from '@/components/blocks'
 import { Button } from '@/components/ui/button'
+import { Select } from '@/components/ui/input'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
 import { cn } from '@/lib/utils'
@@ -24,6 +26,28 @@ interface Props<T = any> {
 }
 
 const props = defineProps<Props>()
+
+const page = usePage()
+const { tableQuery } = useTableQuery()
+const changingPageSize = ref(false)
+const pageSizes = computed(() => {
+  const sizes = [10, 25, 50, 100]
+  if (isPaginated(props.items) && props.items.per_page === 15) sizes.push(15)
+  return sizes.sort((a, b) => a - b)
+})
+
+function changePageSize(value: string) {
+  const perPage = Number(value)
+  if (!isPaginated(props.items) || perPage === props.items.per_page) return
+
+  router.get(page.url.split('?')[0], { ...tableQuery(), per_page: perPage, page: 1 }, {
+    preserveState: true,
+    preserveScroll: true,
+    replace: true,
+    onStart: () => { changingPageSize.value = true },
+    onFinish: () => { changingPageSize.value = false },
+  })
+}
 
 const { getInitials } = useInitials();
 const selectedRowId = ref<string | null>(null)
@@ -143,7 +167,7 @@ function toggleRow(row: any) {
           props.cardClass
         )"
       >
-        <div class="w-full overflow-x-auto border-b border-gray-200">
+        <div class="data-table-scroll w-full overflow-x-auto border-b border-gray-200">
           <table class="min-w-max w-full divide-y divide-gray-300">
             <thead>
               <tr>
@@ -298,6 +322,24 @@ function toggleRow(row: any) {
             {{ $t('layout.download_excel') }}
           </Button>
         </div>
+        <div v-if="isPaginated(props.items)" class="flex flex-wrap items-center justify-between gap-4">
+          <span class="text-sm text-blue-gray-500">
+            {{ $t('layout.total_data') }}: {{ props.items.total }}
+          </span>
+          <div class="flex items-center gap-3">
+            <span class="text-sm text-blue-gray-500">{{ $t('layout.items_per_page') }}</span>
+            <Select
+              variant="filter"
+              :model-value="String(props.items.per_page)"
+              :options="pageSizes.map(size => ({ label: String(size), value: String(size) }))"
+              :aria-label="$t('layout.items_per_page')"
+              :disabled="changingPageSize"
+              container-class="w-20 shrink-0 [&_[role=option]]:mb-1 [&_[role=option]]:px-2 [&_[role=option]]:py-1.5 [&_[role=listbox]>div]:p-1"
+              @update:model-value="changePageSize"
+            />
+            <span v-if="changingPageSize" role="status" class="text-sm text-blue-gray-500">{{ $t('layout.loading') }}</span>
+          </div>
+        </div>
         <nav
           v-if="isPaginated(props.items)"
           class="flex items-center justify-between px-4"
@@ -354,9 +396,6 @@ function toggleRow(row: any) {
             </component>
           </div>
         </nav>
-        <div v-if="isPaginated(props.items) && props.items.total > 0" class="inline-flex items-center text-sm text-gray-700 self-center">
-          {{ $t('layout.total_data') }}: {{ props.items.total }}
-        </div>
       </div>
     </div>
     <DeleteModal
@@ -368,3 +407,29 @@ function toggleRow(row: any) {
     />
   </div>
 </template>
+
+<style scoped>
+.data-table-scroll::-webkit-scrollbar {
+  height: 6px;
+}
+
+.data-table-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.data-table-scroll::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+}
+
+.data-table-scroll::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+@supports not selector(::-webkit-scrollbar) {
+  .data-table-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #cbd5e1 transparent;
+  }
+}
+</style>

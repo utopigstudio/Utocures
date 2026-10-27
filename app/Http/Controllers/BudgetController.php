@@ -3,19 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Exports\BaseExport;
-use App\Models\Budget;
 use App\Http\Requests\Budget\BudgetIndexRequest;
 use App\Http\Requests\Budget\BudgetStoreRequest;
+use App\Models\Budget;
+use App\Notifications\SendDocument;
+use App\Services\Document;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Services\Document;
-use App\Notifications\SendDocument;
-use Illuminate\Http\Request;
 
 class BudgetController extends Controller
 {
     private const LIST_FIELDS = ['id', 'client_id', 'client_name', 'status', 'created_at', 'subtotal', 'discount', 'tax', 'total'];
+
     private const EXPORT_FIELDS = ['client_name', 'status', 'created_at', 'subtotal', 'discount', 'tax', 'total'];
+
     private const SEARCHABLE = ['client_name', 'client.cif_nif'];
 
     public function index(BudgetIndexRequest $request)
@@ -39,10 +41,11 @@ class BudgetController extends Controller
 
         if ($export) {
             $budgets = $budgets->get();
+
             return Excel::download(new BaseExport($budgets, 'budgets', self::EXPORT_FIELDS), 'budgets.xlsx');
         }
 
-        $budgets = $budgets->paginate(10)
+        $budgets = $budgets->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('budgets/List', [
@@ -86,7 +89,7 @@ class BudgetController extends Controller
 
         return Inertia::render('budgets/Form', [
             'budget' => $budget,
-            'statuses' => $statuses
+            'statuses' => $statuses,
         ]);
     }
 
@@ -121,7 +124,7 @@ class BudgetController extends Controller
 
     public function sendByEmail(Budget $budget)
     {
-        if (!$budget->client?->email) {
+        if (! $budget->client?->email) {
             return back()->with('error', __('budgets.email_not_found'));
         }
 

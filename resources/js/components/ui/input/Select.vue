@@ -24,6 +24,7 @@ interface Props {
   variant?: SelectVariants['variant']
   name?: string
   label?: string
+  ariaLabel?: string
   defaultValue?: string | number
   modelValue?: string
   options: { label: string; icon?: string; value: string }[]
@@ -59,6 +60,7 @@ const modelValue = useVModel(props, 'modelValue', emits, {
           props.class,
         )"
         :disabled="props.disabled"
+        :aria-label="props.ariaLabel ?? props.label"
       >
         <SelectValue as="div" :placeholder="props.placeholder ?? $t('generic.select_placeholder')" class="text-blue-gray-600 flex items-center gap-2">
           <slot name="valueStart" :value="modelValue" />

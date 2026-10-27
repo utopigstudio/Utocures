@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContractTemplate;
 use App\Http\Requests\ContractTemplate\ContractTemplateIndexRequest;
 use App\Http\Requests\ContractTemplate\ContractTemplateStoreRequest;
+use App\Models\ContractTemplate;
 use Inertia\Inertia;
 
 class ContractTemplateController extends Controller
@@ -23,7 +23,7 @@ class ContractTemplateController extends Controller
         $contractTemplates = ContractTemplate::select(self::LIST_FIELDS)
             ->filter($filters, $searchable)
             ->orderBy($sort, $dir)
-            ->paginate(10)
+            ->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('contractTemplates/List', [

@@ -8,6 +8,7 @@ use App\Models\Client;
 use App\Models\Employee;
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Collection;
 use Illuminate\Validation\ValidationException;
 
 class AssignedHoursSchedulingService
@@ -101,11 +102,21 @@ class AssignedHoursSchedulingService
 
     public function hasAvailability(Employee $employee, array $data): bool
     {
+        return $this->unavailableDays($employee, $data) === [];
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     * @return array<int, int>
+     */
+    public function unavailableDays(Employee $employee, array $data): array
+    {
         $recurrency = (int) $data['recurrency'];
         $days = $recurrency === 0
             ? [CarbonImmutable::parse($data['date'])->dayOfWeek]
             : array_map('intval', $data['days_of_week'] ?? []);
 
+        $unavailableDays = [];
         foreach (array_unique($days) as $day) {
             $isAvailable = $employee->availableHours->contains(function ($availableHour) use ($day, $data) {
                 return (int) $availableHour->day_of_week === $day
@@ -114,11 +125,11 @@ class AssignedHoursSchedulingService
             });
 
             if (! $isAvailable) {
-                return false;
+                $unavailableDays[] = $day;
             }
         }
 
-        return true;
+        return $unavailableDays;
     }
 
     public function hasConflict(
@@ -134,7 +145,7 @@ class AssignedHoursSchedulingService
             ->where('time_end', '>', $this->databaseTime($data['time_start']))
             ->get();
 
-        if ($templates->contains(fn (AssignedHoursTemplate $template) => $this->templatesOverlap($data, $template))) {
+        if ($templates->contains(fn (AssignedHoursTemplate $template) => $this->firstTemplateConflictDate($data, $template) !== null)) {
             return true;
         }
 
@@ -163,7 +174,76 @@ class AssignedHoursSchedulingService
         );
     }
 
-    private function templatesOverlap(array $requested, AssignedHoursTemplate $existing): bool
+    /**
+     * @param  array<int, string>  $employeeIds
+     * @param  array<string, mixed>  $data
+     * @return Collection<string, Collection<int, array<string, mixed>>>
+     */
+    public function conflictsForEmployees(array $employeeIds, array $data, ?string $ignoreTemplateId = null, ?string $ignoreAssignedHourId = null): Collection
+    {
+        $templates = AssignedHoursTemplate::query()
+            ->with(['client:id,name', 'service:id,name'])
+            ->whereIn('employee_id', $employeeIds)
+            ->when($ignoreTemplateId, fn ($query) => $query->whereKeyNot($ignoreTemplateId))
+            ->where('time_start', '<', $this->databaseTime($data['time_end']))
+            ->where('time_end', '>', $this->databaseTime($data['time_start']))
+            ->get();
+        $conflicts = collect();
+        foreach ($templates as $template) {
+            $date = $this->firstTemplateConflictDate($data, $template);
+            if ($date !== null) {
+                $conflicts->push($this->describeConflict($template, $date->toDateString(), 'template'));
+            }
+        }
+
+        $hours = AssignedHour::query()
+            ->with(['client:id,name', 'service:id,name'])
+            ->whereIn('employee_id', $employeeIds)
+            ->when($ignoreAssignedHourId, fn ($query) => $query->whereKeyNot($ignoreAssignedHourId))
+            ->when($ignoreTemplateId && ! $ignoreAssignedHourId, fn ($query) => $query->where('assigned_hours_template_id', '!=', $ignoreTemplateId))
+            ->where('time_start', '<', $this->databaseTime($data['time_end']))
+            ->where('time_end', '>', $this->databaseTime($data['time_start']))
+            ->when((int) $data['recurrency'] === 0,
+                fn ($query) => $query->whereDate('date', $data['date']),
+                fn ($query) => $query->whereDate('date', '>=', $this->effectiveStart($data)->toDateString())
+                    ->when(! empty($data['date_end']), fn ($query) => $query->whereDate('date', '<=', $data['date_end'])))
+            ->orderBy('date')->get();
+        foreach ($hours as $hour) {
+            if (! $this->requestedScheduleOccursOn($data, CarbonImmutable::instance($hour->date))) {
+                continue;
+            }
+            $represented = $conflicts->contains(fn (array $conflict) => $conflict['type'] === 'template'
+                && $conflict['id'] === $hour->assigned_hours_template_id
+                && $conflict['client_id'] === $hour->client_id
+                && $conflict['service_id'] === $hour->service_id
+                && $conflict['time_start'] === $hour->time_start->format('H:i')
+                && $conflict['time_end'] === $hour->time_end->format('H:i'));
+            if (! $represented) {
+                $conflicts->push($this->describeConflict($hour, $hour->date->toDateString(), 'assigned_hour'));
+            }
+        }
+
+        return $conflicts->sortBy('date')->groupBy('employee_id');
+    }
+
+    /** @return array<string, mixed> */
+    private function describeConflict(AssignedHoursTemplate|AssignedHour $schedule, string $date, string $type): array
+    {
+        return [
+            'id' => $schedule->id,
+            'type' => $type,
+            'employee_id' => $schedule->employee_id,
+            'client_id' => $schedule->client?->id,
+            'service_id' => $schedule->service_id,
+            'client_name' => $schedule->client?->name,
+            'service_name' => $schedule->service?->name,
+            'date' => $date,
+            'time_start' => $schedule->time_start->format('H:i'),
+            'time_end' => $schedule->time_end->format('H:i'),
+        ];
+    }
+
+    private function firstTemplateConflictDate(array $requested, AssignedHoursTemplate $existing): ?CarbonImmutable
     {
         $requestedRecurrency = (int) $requested['recurrency'];
         $existingRecurrency = (int) $existing->recurrency;
@@ -171,15 +251,17 @@ class AssignedHoursSchedulingService
         if ($requestedRecurrency === 0) {
             $date = CarbonImmutable::parse($requested['date']);
 
-            return $existingRecurrency === 0
+            $occurs = $existingRecurrency === 0
                 ? $existing->date?->isSameDay($date) === true
                 : $this->templateOccursOn($existing, $date);
+
+            return $occurs ? $date : null;
         }
 
         if ($existingRecurrency === 0) {
-            return $existing->date
-                ? $this->requestedScheduleOccursOn($requested, CarbonImmutable::instance($existing->date))
-                : false;
+            $date = $existing->date ? CarbonImmutable::instance($existing->date) : null;
+
+            return $date && $this->requestedScheduleOccursOn($requested, $date) ? $date : null;
         }
 
         $requestedStart = $this->effectiveStart($requested);
@@ -198,7 +280,7 @@ class AssignedHoursSchedulingService
             $overlapEnd = $existingEnd;
         }
         if ($overlapEnd->lessThan($overlapStart)) {
-            return false;
+            return null;
         }
 
         $requestedDates = $this->recurrenceCalculator->dates(
@@ -216,7 +298,9 @@ class AssignedHoursSchedulingService
             anchorDate: $existing->recurrenceAnchorDate(),
         )->map->toDateString();
 
-        return $requestedDates->intersect($existingDates)->isNotEmpty();
+        $firstDate = $requestedDates->intersect($existingDates)->first();
+
+        return $firstDate ? CarbonImmutable::parse($firstDate) : null;
     }
 
     private function requestedScheduleOccursOn(array $data, CarbonImmutable $date): bool

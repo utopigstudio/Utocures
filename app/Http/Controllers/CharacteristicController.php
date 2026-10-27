@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Characteristic;
 use App\Http\Requests\Characteristic\CharacteristicIndexRequest;
 use App\Http\Requests\Characteristic\CharacteristicStoreRequest;
+use App\Models\Characteristic;
 use Inertia\Inertia;
 
 class CharacteristicController extends Controller
@@ -14,7 +14,7 @@ class CharacteristicController extends Controller
     public function index(CharacteristicIndexRequest $request)
     {
         $sort = $request->validated('sort') ?? 'created_at';
-        $dir  = $request->validated('dir') ?? 'desc';
+        $dir = $request->validated('dir') ?? 'desc';
         $searchable = ['name'];
         $filters = [
             'filter_search' => $request->validated('filter_search'),
@@ -24,7 +24,7 @@ class CharacteristicController extends Controller
             ->with('options')
             ->filter($filters, $searchable)
             ->orderBy($sort, $dir)
-            ->paginate(10)
+            ->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('characteristics/List', [
@@ -77,7 +77,7 @@ class CharacteristicController extends Controller
         }
 
         foreach ($optionsData as $option) {
-            if (!empty($option['id'])) {
+            if (! empty($option['id'])) {
                 $characteristic->options()->where('id', $option['id'])->update($option);
             } else {
                 $characteristic->options()->create($option);

@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\Client;
 use App\Models\Invoice;
 
 class InvoiceObserver
@@ -11,10 +12,12 @@ class InvoiceObserver
      */
     public function creating(Invoice $invoice): void
     {
-        $invoice->address = $invoice->client->address;
-        $invoice->city = $invoice->client->city;
-        $invoice->zip_code = $invoice->client->zip_code;
-        $invoice->country_id = $invoice->client->country_id;
+        $recipient = Client::findOrFail($invoice->client_id)->billingRecipientData();
+        $invoice->billing_recipient = $recipient;
+        $invoice->address = $recipient['address'];
+        $invoice->city = $recipient['city'];
+        $invoice->zip_code = $recipient['zip_code'];
+        $invoice->country_id = $recipient['country_id'];
     }
 
     /**

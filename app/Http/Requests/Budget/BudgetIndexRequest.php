@@ -3,8 +3,8 @@
 namespace App\Http\Requests\Budget;
 
 use App\Models\Budget;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class BudgetIndexRequest extends FormRequest
 {
@@ -16,11 +16,12 @@ class BudgetIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'per_page' => 'nullable|integer|in:10,15,25,50,100',
             'sort' => 'in:client_name,status,subtotal,discount,total,created_at',
             'dir' => 'in:asc,desc',
             'filter_search' => 'nullable|string',
             'filter_status' => ['nullable', Rule::in(array_keys(Budget::STATUSES))],
-            'filter_year' => 'nullable|integer|max:' . date('Y'),
+            'filter_year' => 'nullable|integer|max:'.date('Y'),
             'export' => 'nullable|boolean',
         ];
     }

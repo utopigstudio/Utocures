@@ -4,6 +4,7 @@ namespace App\Exports;
 
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\ShouldAutoSize;
@@ -75,6 +76,9 @@ class BaseExport implements FromCollection, ShouldAutoSize, WithCustomStartCell,
     public function headings(): array
     {
         $fieldNames = array_map(function ($field) {
+            if (Lang::has($this->entity.'.'.$field)) {
+                return trans($this->entity.'.'.$field);
+            }
             if (str_contains($field, '.')) {
                 $field = last(explode('.', $field));
             }

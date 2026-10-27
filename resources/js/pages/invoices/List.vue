@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useTableQuery } from '@/composables/useTableQuery'
 import { ref } from 'vue';
 import { watchDebounced } from '@vueuse/core'
 import { AppLayout, LayoutBasic } from '@/layouts';
@@ -22,12 +23,14 @@ interface Props<T = any> {
 }
 
 const props = defineProps<Props<Invoice>>()
+const { tableQuery } = useTableQuery()
 
 const { t } = useI18n()
 
 const currentYear = new Date().getFullYear()
 const years = Array.from({ length: 5 }, (_, i) => (currentYear - i).toString())
 const columns: Column<Invoice>[] = [
+  { key: 'billing_recipient.name', label: t('clients.billing_recipient') },
   { key: 'client.name', label: t('invoices.client'), sortable: true, link: (row) => !row.client.deleted_at ? route('clients.show', row.client.id) : undefined },
   { key: 'date', label: t('invoices.date'), sortable: true },
   { key: 'subtotal', label: t('invoices.subtotal'), sortable: true, format: 'currency' },
@@ -38,7 +41,7 @@ const columns: Column<Invoice>[] = [
 function onSortChange({ key, dir }: { key: string, dir: SortDir }) {
   router.get(
     route('invoices.index'),
-    { sort: key, dir },
+    { ...tableQuery(), sort: key, dir },
     { preserveState: true, replace: true }
   )
 }
@@ -54,6 +57,7 @@ watchDebounced(
     router.get(
       route('invoices.index'),
       {
+        ...tableQuery(),
         filter_search: newSearch,
         filter_year: newYear,
         sort: props.sort,

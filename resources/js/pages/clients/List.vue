@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import { useTableQuery } from '@/composables/useTableQuery'
 import { ref } from 'vue';
+import { format } from 'date-fns'
 import { watchDebounced } from '@vueuse/core'
 import { AppLayout, LayoutBasic } from '@/layouts';
 import { DataTable } from '@/components/blocks'
@@ -21,6 +23,7 @@ interface Props<T = any> {
 }
 
 const props = defineProps<Props<Client>>()
+const { tableQuery } = useTableQuery()
 
 const { t } = useI18n()
 
@@ -30,13 +33,14 @@ const columns: Column<Client>[] = [
   { key: 'email', label: t('clients.email'), sortable: true },
   { key: 'phone', label: t('clients.phone'), sortable: true },
   { key: 'is_partner', label: t('clients.is_partner'), sortable: true, format: 'boolean' },
-  { key: 'address', label: t('clients.address'), sortable: true }
+  { key: 'address', label: t('clients.address'), sortable: true },
+  { key: 'created_at', label: t('clients.created_at'), sortable: true }
 ]
 
 function onSortChange({ key, dir }: { key: string, dir: SortDir }) {
   router.get(
     route('clients.index'),
-    { sort: key, dir },
+    { ...tableQuery(), sort: key, dir },
     { preserveState: true, replace: true }
   )
 }
@@ -52,6 +56,7 @@ watchDebounced(
     router.get(
       route('clients.index'),
       {
+        ...tableQuery(),
         filter_search: newSearch,
         filter_is_partner: newIsPartner,
         sort: props.sort,
@@ -90,6 +95,9 @@ function downloadExcel() {
       >
         <template #headerActions>
           <Link :href="route('clients.create')"> <Button as="span"><Plus class="size-4" />{{ t('clients.create_client') }}</Button></Link>
+        </template>
+        <template #cell-created_at="{ value }">
+          {{ value ? format(new Date(value), 'dd/MM/yyyy') : '—' }}
         </template>
         <template #headerFilters>
           <div class="flex gap-4">

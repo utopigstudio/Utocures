@@ -55,6 +55,8 @@ return [
     'selected_day' => 'Dia seleccionat',
     'no_services_scheduled' => 'No hi ha serveis programats.',
     'edit_assigned_hour' => 'Editar servei programat',
+    'assigned_hour_occurrence_warning' => 'En desar els canvis o eliminar aquest esdeveniment des del calendari de la treballadora, només es modificarà o eliminarà aquest esdeveniment concret, no tota la recurrència. Per modificar o eliminar tota la recurrència, ho has de fer des de la fitxa del CLIENT, on està configurat el servei recurrent.',
+    'assigned_hour_delete_warning' => 'Vols eliminar aquest esdeveniment? Només s’eliminarà aquest esdeveniment concret, no tota la recurrència. Per modificar o eliminar tota la recurrència, ho has de fer des de la fitxa del CLIENT, on està configurat el servei recurrent. Aquesta acció no es pot desfer.',
     'assigned_hour_client' => 'Client',
     'assigned_hour_service' => 'Servei',
     'assigned_hour_date' => 'Data',

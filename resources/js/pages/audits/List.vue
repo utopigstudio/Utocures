@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useTableQuery } from '@/composables/useTableQuery'
 import { AppLayout, LayoutBasic } from '@/layouts';
 import { DataTable } from '@/components/blocks'
 import { router } from '@inertiajs/vue3'
@@ -13,6 +14,7 @@ interface Props<T = any> {
 }
 
 const props = defineProps<Props<Audit>>()
+const { tableQuery } = useTableQuery()
 const { t } = useI18n()
 
 const columns: Column<Audit>[] = [
@@ -27,7 +29,7 @@ const columns: Column<Audit>[] = [
 function onSortChange({ key, dir }: { key: string, dir: SortDir }) {
   router.get(
     route('audits.index'),
-    { sort: key, dir },
+    { ...tableQuery(), sort: key, dir },
     { preserveState: true, replace: true }
   )
 }

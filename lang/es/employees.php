@@ -40,7 +40,7 @@ return [
     'city' => 'Ciudad',
     'zip_code' => 'Código postal',
     'country' => 'País',
-    'created_at' => 'Fecha de creación',
+    'created_at' => 'Creado',
     'select_services' => 'Selecciona todos los servicios correspondientes:',
     'created' => 'Empleado creado correctamente.',
     'updated' => 'Empleado actualizado correctamente.',
@@ -66,6 +66,8 @@ return [
     'selected_day' => 'Día seleccionado',
     'no_services_scheduled' => 'No hay servicios programados para este día.',
     'edit_assigned_hour' => 'Editar servicio programado',
+    'assigned_hour_occurrence_warning' => 'Al guardar los cambios o eliminar este evento desde el calendario de la trabajadora, solo se modificará o eliminará este evento concreto, no toda la recurrencia. Para modificar o eliminar toda la recurrencia, debes hacerlo desde la ficha del CLIENTE, donde está configurado el servicio recurrente.',
+    'assigned_hour_delete_warning' => '¿Quieres eliminar este evento? Solo se eliminará este evento concreto, no toda la recurrencia. Para modificar o eliminar toda la recurrencia, debes hacerlo desde la ficha del CLIENTE, donde está configurado el servicio recurrente. Esta acción no se puede deshacer.',
     'assigned_hour_client' => 'Cliente',
     'assigned_hour_service' => 'Servicio',
     'assigned_hour_date' => 'Fecha',
@@ -124,5 +126,5 @@ return [
     'vacation_allowance_not_configured' => 'La empleada no tiene días de vacaciones disponibles configurados.',
     'vacation_allowance_exceeded' => 'Las vacaciones de :year superarían el límite anual de :allowance días. Ya hay :used días consumidos y este período solicita :requested.',
     'assigned_services_with_employees' => 'Servicios asignados con trabajadoras',
-    'assigned_services_with_employees_help' => 'Usa este calendario para consultar y gestionar los servicios asignados a la trabajadora. Abre un servicio para modificar su fecha, horario o trabajadora asignada'
+    'assigned_services_with_employees_help' => 'Usa este calendario para consultar y gestionar los servicios asignados a la trabajadora. Abre un servicio para modificar su fecha, horario o trabajadora asignada',
 ];

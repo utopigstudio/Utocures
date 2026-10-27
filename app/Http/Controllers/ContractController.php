@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Exports\BaseExport;
-use App\Models\Contract;
 use App\Http\Requests\Contract\ContractIndexRequest;
 use App\Http\Requests\Contract\ContractStoreRequest;
+use App\Models\Contract;
 use App\Notifications\SendDocument;
 use App\Services\Document;
 use Inertia\Inertia;
@@ -14,7 +14,9 @@ use Maatwebsite\Excel\Facades\Excel;
 class ContractController extends Controller
 {
     private const LIST_FIELDS = ['id', 'client_id', 'status', 'title', 'content', 'date_start', 'date_end'];
+
     private const EXPORT_FIELDS = ['title', 'client.name', 'status', 'date_start', 'date_end'];
+
     private const SEARCHABLE = ['client.name', 'client.cif_nif'];
 
     public function index(ContractIndexRequest $request)
@@ -38,10 +40,11 @@ class ContractController extends Controller
 
         if ($export) {
             $contracts = $contracts->get();
+
             return Excel::download(new BaseExport($contracts, 'contracts', self::EXPORT_FIELDS), 'contracts.xlsx');
         }
 
-        $contracts = $contracts->paginate(10)
+        $contracts = $contracts->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('contracts/List', [
@@ -58,7 +61,7 @@ class ContractController extends Controller
         $statuses = Contract::getStatuses();
 
         return Inertia::render('contracts/Form', [
-            'statuses' => $statuses
+            'statuses' => $statuses,
         ]);
     }
 
@@ -80,7 +83,7 @@ class ContractController extends Controller
 
         return Inertia::render('contracts/Form', [
             'contract' => $contract,
-            'statuses' => $statuses
+            'statuses' => $statuses,
         ]);
     }
 
@@ -117,6 +120,6 @@ class ContractController extends Controller
             new SendDocument(__('contracts.send_mail_subject', ['company' => config('app.name')]), __('contracts.send_mail_message'), $document->pdf, $document->fileName)
         );
 
-        return back()->with('success', "Contrato enviado por correo correctamente.");
+        return back()->with('success', 'Contrato enviado por correo correctamente.');
     }
 }

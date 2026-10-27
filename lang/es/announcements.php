@@ -14,7 +14,7 @@ return [
     'audience_client' => 'Clientes',
     'audience_boths' => 'Interno (empleados y administradores)',
     'image' => 'Imagen',
-    'created_at' => 'Fecha de creación',
+    'created_at' => 'Creado',
     'published_at' => 'Publicado',
     'search_placeholder' => 'Buscar anuncio...',
     'no_results' => 'No hay anuncios registrados.',

@@ -14,6 +14,7 @@ class EmployeeTimeRecordIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'per_page' => 'nullable|integer|in:10,15,25,50,100',
             'sort' => 'in:id,nif,name,email,phone,created_at',
             'dir' => 'in:asc,desc',
             'filter_search' => 'nullable|string',
@@ -31,7 +32,7 @@ class EmployeeTimeRecordIndexRequest extends FormRequest
     {
         return [
             'sort.in' => 'El campo sort debe ser employee_id.',
-            'dir.in'  => 'El campo dir debe ser asc o desc.',
+            'dir.in' => 'El campo dir debe ser asc o desc.',
             'group_by.in' => 'La agrupación debe ser por empleado o por cliente.',
             'view.in' => 'La vista debe ser lista o calendario.',
         ];

@@ -7,6 +7,7 @@ import type { HTMLAttributes } from 'vue'
 
 interface Props {
   action: string
+  description?: string
   showCloseButton?: boolean
   variant?: ButtonVariants['variant']
   size?: ButtonVariants['size']
@@ -28,6 +29,6 @@ const show = ref(false)
   <Button type="button" :variant="props.variant" :size="props.size" @click.prevent="show = true" :class="props.class">
     <slot />
   </Button>
-  <DeleteModal :show="show" :action="props.action" @deleted="emit('deleted'); show = false" @close="show = false"
+  <DeleteModal :show="show" :action="props.action" :description="props.description" @deleted="emit('deleted'); show = false" @close="show = false"
   />
 </template>

@@ -1,6 +1,18 @@
 <?php
 
 return [
+    'billing_recipient_help' => 'Estos datos se guardarán con la factura. Puedes configurar el destinatario habitual desde la ficha del cliente.',
+    'billing_recipient_saved_help' => 'Datos guardados en esta factura. Cambiar la ficha del cliente no modifica este destinatario. Si cambias el cliente de la factura, se utilizará el destinatario del nuevo cliente.',
+    'billing_recipient_select_client' => 'Selecciona el cliente que recibe el servicio para ver a quién se emitirá la factura.',
+    'billing_recipient' => [
+        'name' => 'Destinatario de facturación',
+        'cif_nif' => 'NIF/CIF del destinatario',
+        'address' => 'Dirección fiscal',
+        'zip_code' => 'Código postal fiscal',
+        'city' => 'Población fiscal',
+        'country_id' => 'País fiscal',
+        'email' => 'Correo de facturación',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -26,7 +38,7 @@ return [
     'due_date' => 'Fecha de vencimiento',
     'status' => 'Estado',
     'content' => 'Contenido',
-    'created_at' => 'Fecha de creación',
+    'created_at' => 'Creado',
     'concept' => 'Concepto',
     'quantity' => 'Cantidad',
     'price' => 'Precio',
@@ -45,6 +57,6 @@ return [
     'search_placeholder' => 'Buscar factura...',
     'vat_21' => 'IVA 21%',
     'vat_10' => 'IVA 10%',
-    'vat_4'  => 'IVA 4%',
-    'no_tax'  => 'Sin IVA 0%',
+    'vat_4' => 'IVA 4%',
+    'no_tax' => 'Sin IVA 0%',
 ];

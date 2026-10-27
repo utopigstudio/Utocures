@@ -48,10 +48,10 @@ class EmployeeTimeRecordController extends Controller
         }
 
         if ($filters['group_by'] === 'client') {
-            return $this->indexByClient($filters, $sort, $dir, $requestedSort, $requestedDir, $employeeOptions);
+            return $this->indexByClient($filters, $sort, $dir, $requestedSort, $requestedDir, $employeeOptions, (int) ($request->validated('per_page') ?? 15));
         }
 
-        return $this->indexByEmployee($filters, $sort, $dir, $requestedSort, $requestedDir, $employeeOptions);
+        return $this->indexByEmployee($filters, $sort, $dir, $requestedSort, $requestedDir, $employeeOptions, (int) ($request->validated('per_page') ?? 15));
     }
 
     public function update(EmployeeTimeRecordUpdateRequest $request, EmployeeTimeRecord $employeeTimeRecord)
@@ -93,13 +93,13 @@ class EmployeeTimeRecordController extends Controller
         return back()->with('success', 'Registro de tiempo actualizado correctamente.');
     }
 
-    private function indexByEmployee(array $filters, string $sort, string $dir, ?string $requestedSort, ?string $requestedDir, array $employeeOptions)
+    private function indexByEmployee(array $filters, string $sort, string $dir, ?string $requestedSort, ?string $requestedDir, array $employeeOptions, int $perPage)
     {
         $employees = $this->employeeTimeRecordEmployeesQuery($filters)
             ->filter($filters, ['user.name'])
             ->orderBy($sort, $dir);
 
-        $employees = $this->transformEmployeePaginator($employees->paginate(15)->withQueryString());
+        $employees = $this->transformEmployeePaginator($employees->paginate($perPage)->withQueryString());
 
         return Inertia::render('employeeTimeRecords/List', [
             'view' => 'list',
@@ -112,13 +112,13 @@ class EmployeeTimeRecordController extends Controller
         ]);
     }
 
-    private function indexByClient(array $filters, string $sort, string $dir, ?string $requestedSort, ?string $requestedDir, array $employeeOptions)
+    private function indexByClient(array $filters, string $sort, string $dir, ?string $requestedSort, ?string $requestedDir, array $employeeOptions, int $perPage)
     {
         $clients = $this->employeeTimeRecordClientsQuery($filters)
             ->filter($filters, ['name'])
             ->orderBy($sort, $dir);
 
-        $clients = $this->transformClientPaginator($clients->paginate(15)->withQueryString());
+        $clients = $this->transformClientPaginator($clients->paginate($perPage)->withQueryString());
 
         return Inertia::render('employeeTimeRecords/List', [
             'view' => 'list',

@@ -14,8 +14,9 @@ class CharacteristicIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'per_page' => 'nullable|integer|in:10,15,25,50,100',
             'sort' => 'in:name,created_at',
-            'dir'  => 'in:asc,desc',
+            'dir' => 'in:asc,desc',
             'filter_search' => 'nullable|string',
         ];
     }
@@ -24,7 +25,7 @@ class CharacteristicIndexRequest extends FormRequest
     {
         return [
             'sort.in' => 'El campo sort debe ser name.',
-            'dir.in'  => 'El campo dir debe ser asc o desc.',
+            'dir.in' => 'El campo dir debe ser asc o desc.',
         ];
     }
 }

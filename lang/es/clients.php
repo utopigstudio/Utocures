@@ -1,6 +1,19 @@
 <?php
 
 return [
+    'unavailable_employees' => 'No disponibles para este horario',
+    'employee_outside_requested_hours' => 'Fuera de su disponibilidad habitual: {days}, de {start} a {end}.',
+    'employee_schedule_conflict' => 'Coincide con {service} · {client}, el {date} de {start} a {end}.',
+    'view_conflicting_service' => 'Ver servicio',
+    'employee_schedule_conflict_label' => 'Conflicto horario',
+    'employee_outside_availability_label' => 'Fuera de disponibilidad',
+    'unavailable_employees_help' => 'Consulta el motivo y revisa el servicio que impide la asignación.',
+
+    'billing_recipient' => 'Destinatario de facturación',
+    'use_billing_recipient' => 'Facturar a otra persona o entidad',
+    'billing_name' => 'Nombre completo o razón social',
+    'billing_email' => 'Correo de facturación (opcional)',
+    'billing_recipient_help' => 'Indica los datos de quien debe figurar en la factura. Si eliges No, se utilizarán los datos del cliente que recibe el servicio. Los cambios se aplican a las nuevas facturas.',
 
     /*
     |--------------------------------------------------------------------------
@@ -36,7 +49,7 @@ return [
     'city' => 'Ciudad',
     'zip_code' => 'Código postal',
     'country' => 'País',
-    'created_at' => 'Fecha de creación',
+    'created_at' => 'Creado',
     'bank_name' => 'Nombre del banco',
     'bank_account' => 'Cuenta bancaria (IBAN)',
     'tax_included' => 'Precios con IVA',

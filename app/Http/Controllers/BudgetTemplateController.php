@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BudgetTemplate;
 use App\Http\Requests\BudgetTemplate\BudgetTemplateIndexRequest;
 use App\Http\Requests\BudgetTemplate\BudgetTemplateStoreRequest;
+use App\Models\BudgetTemplate;
 use Inertia\Inertia;
 
 class BudgetTemplateController extends Controller
@@ -23,7 +23,7 @@ class BudgetTemplateController extends Controller
         $budgetsTemplates = BudgetTemplate::select(self::LIST_FIELDS)
             ->filter($filters, $searchable)
             ->orderBy($sort, $dir)
-            ->paginate(10)
+            ->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('budgetTemplates/List', [
@@ -52,7 +52,7 @@ class BudgetTemplateController extends Controller
 
         return to_route('budget-templates.index')->with('success', "Plantilla de presupuesto {$budgetTemplate->name} creada con éxito.");
     }
-    
+
     public function update(BudgetTemplateStoreRequest $request, BudgetTemplate $budgetTemplate)
     {
         $budgetTemplate->update($request->validated());

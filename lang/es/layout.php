@@ -53,6 +53,8 @@ return [
     'weekly' => 'Semanal',
     'biweekly' => 'Quincenal',
     'download_excel' => 'Descargar Excel',
+    'items_per_page' => 'Elementos por página',
+    'loading' => 'Cargando...',
     'total_data' => 'Total registros',
     'actions' => 'Acciones',
     'logout' => 'Cerrar sesión',

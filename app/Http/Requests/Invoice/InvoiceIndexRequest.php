@@ -14,11 +14,12 @@ class InvoiceIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'per_page' => 'nullable|integer|in:10,15,25,50,100',
             'sort' => 'in:subtotal,discount,total,created_at,date',
             'dir' => 'in:asc,desc',
             'filter_search' => 'nullable|string',
             'filter_date' => 'nullable|string',
-            'filter_year' => 'nullable|integer|max:' . date('Y'),
+            'filter_year' => 'nullable|integer|max:'.date('Y'),
             'export' => 'nullable|boolean',
         ];
     }

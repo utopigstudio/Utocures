@@ -35,7 +35,7 @@ class ClientController extends Controller
 
     private const LIST_CONTRACTS_FIELDS = ['id', 'status', 'title', 'date_start', 'date_end'];
 
-    private const LIST_INVOICES_FIELDS = ['id', 'client_id', 'created_at', 'subtotal', 'discount', 'total'];
+    private const LIST_INVOICES_FIELDS = ['id', 'client_id', 'billing_recipient', 'created_at', 'subtotal', 'discount', 'total'];
 
     private const LIST_BUDGETS_FIELDS = ['id', 'client_name', 'status', 'created_at', 'subtotal', 'discount', 'total'];
 
@@ -61,7 +61,7 @@ class ClientController extends Controller
             return Excel::download(new BaseExport($clients, 'clients', self::EXPORT_FIELDS), 'clients.xlsx');
         }
 
-        $clients = $clients->paginate(10)
+        $clients = $clients->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('clients/List', [
@@ -110,7 +110,7 @@ class ClientController extends Controller
             ->select(self::LIST_CONTRACTS_FIELDS)
             ->filter($filters, $searchable)
             ->orderBy($sort, $dir)
-            ->paginate(10)
+            ->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('clients/Contracts', [
@@ -137,7 +137,7 @@ class ClientController extends Controller
             ->with('client:id,name')
             ->filter($filters, $searchable)
             ->orderBy($sort, $dir)
-            ->paginate(10)
+            ->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('clients/Invoices', [
@@ -162,7 +162,7 @@ class ClientController extends Controller
             ->select(self::LIST_BUDGETS_FIELDS)
             ->filter($filters, $searchable)
             ->orderBy($sort, $dir)
-            ->paginate(10)
+            ->paginate((int) ($request->validated('per_page') ?? 10))
             ->withQueryString();
 
         return Inertia::render('clients/Budgets', [
@@ -242,7 +242,9 @@ class ClientController extends Controller
     public function store(ClientStoreRequest $request)
     {
         $client = DB::transaction(function () use ($request) {
-            $client = Client::create($request->safe()->except(self::RELATION_FIELDS));
+            $data = $request->safe()->except([...self::RELATION_FIELDS, 'use_billing_recipient']);
+            $data['billing_recipient'] = $request->boolean('use_billing_recipient') ? $request->validated('billing_recipient') : null;
+            $client = Client::create($data);
 
             if ($request->filled('services')) {
                 $client->auditSync('services', $request->validated('services'));
@@ -261,7 +263,11 @@ class ClientController extends Controller
     public function update(ClientStoreRequest $request, Client $client)
     {
         DB::transaction(function () use ($client, $request) {
-            $client->update($request->safe()->except(self::RELATION_FIELDS));
+            $data = $request->safe()->except([...self::RELATION_FIELDS, 'use_billing_recipient']);
+            if ($request->has('use_billing_recipient')) {
+                $data['billing_recipient'] = $request->boolean('use_billing_recipient') ? $request->validated('billing_recipient') : null;
+            }
+            $client->update($data);
 
             if ($request->filled('services')) {
                 $client->auditSync('services', $request->validated('services'));

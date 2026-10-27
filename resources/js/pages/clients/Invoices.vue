@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useTableQuery } from '@/composables/useTableQuery'
 import { AppLayout, LayoutTabs } from '@/layouts';
 import { DataTable } from '@/components/blocks'
 import { router, Link } from '@inertiajs/vue3'
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const { tableQuery } = useTableQuery()
 
 const { t } = useI18n()
   
@@ -32,6 +34,7 @@ const tabItems: TabItem[] = [
 ]
 
 const columns: Column<Invoice>[] = [
+  { key: 'billing_recipient.name', label: t('clients.billing_recipient') },
   { key: 'client.name', label: t('clients.client') },
   { key: 'created_at', label: t('clients.created_at'), sortable: true },
   { key: 'subtotal', label: t('clients.subtotal'), sortable: true, format: 'currency' },
@@ -42,7 +45,7 @@ const columns: Column<Invoice>[] = [
 function onSortChange({ key, dir }: { key: string, dir: SortDir }) {
   router.get(
     route('clients.invoices', props.client.id),
-    { sort: key, dir },
+    { ...tableQuery(), sort: key, dir },
     { preserveState: true, replace: true }
   )
 }

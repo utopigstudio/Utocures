@@ -24,11 +24,28 @@ class Client extends Model implements AuditableContract
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $casts = [
+        'billing_recipient' => 'array',
         'birth_date' => 'date:d/m/Y',
         'is_partner' => 'boolean',
     ];
 
     protected $appends = ['gender', 'country'];
+
+    /**
+     * @return array{name: string, cif_nif: string, address: string, city: string, zip_code: string, country_id: string, email: ?string}
+     */
+    public function billingRecipientData(): array
+    {
+        return $this->billing_recipient ?? [
+            'name' => $this->name,
+            'cif_nif' => $this->cif_nif,
+            'address' => $this->address,
+            'city' => $this->city,
+            'zip_code' => $this->zip_code,
+            'country_id' => $this->country_id,
+            'email' => $this->email,
+        ];
+    }
 
     /**
      * Get the user account associated with the client.

@@ -14,8 +14,9 @@ class AuditIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'per_page' => 'nullable|integer|in:10,15,25,50,100',
             'sort' => 'in:user_id,original,changes,created_at',
-            'dir'  => 'in:asc,desc',
+            'dir' => 'in:asc,desc',
         ];
     }
 
@@ -23,7 +24,7 @@ class AuditIndexRequest extends FormRequest
     {
         return [
             'sort.in' => 'El campo sort debe ser user_id, original o changes.',
-            'dir.in'  => 'El campo dir debe ser asc o desc.',
+            'dir.in' => 'El campo dir debe ser asc o desc.',
         ];
     }
 }

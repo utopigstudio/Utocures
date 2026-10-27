@@ -272,7 +272,19 @@ export interface AvailableHour {
   time_end: string;
 }
 
+export interface BillingRecipient {
+  name: string;
+  cif_nif: string;
+  address: string;
+  city: string;
+  zip_code: string;
+  country_id: string;
+  email?: string | null;
+}
+
 export interface Invoice {
+  client_id: string;
+  billing_recipient?: BillingRecipient | null;
   id: string;
   client: Client;
   date: string;
@@ -346,6 +358,7 @@ export interface Country {
 }
 
 export interface Client {
+  billing_recipient?: BillingRecipient | null;
   id: string;
   user_id?: string;
   user?: User;

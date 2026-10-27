@@ -8,7 +8,7 @@ import { InputText, Select, InputCheckbox, InputCheckboxGroup, Datepicker } from
 import { Button } from '@/components/ui/button';
 import { UserRound, Phone, FileText, BadgeCheck, Star, Save, X } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
-import type { BreadcrumbItem, Country, Gender, Client, ServiceOption, CharacteristicOptionsGrouped } from '@/types'
+import type { BillingRecipient, BreadcrumbItem, Country, Gender, Client, ServiceOption, CharacteristicOptionsGrouped } from '@/types'
 
 interface Props {
   client?: Client
@@ -27,6 +27,10 @@ const breadcrumbItems: BreadcrumbItem[] = [
 ]
 
 const clientName = ref(props.client ? props.client.name : '')
+const useBillingRecipient = ref(props.client?.billing_recipient ? '1' : '0')
+const billingRecipient = ref<BillingRecipient>(props.client?.billing_recipient ?? {
+  name: '', cif_nif: '', address: '', city: '', zip_code: '', country_id: 'es', email: '',
+})
 </script>
 
 <template>
@@ -254,6 +258,26 @@ const clientName = ref(props.client ? props.client.name : '')
                       :error="errors.automatic_invoice"
                     />
                   <HelpButton article="automatic-invoices" section="effects" :label="$t('help.topic', { topic: $t('clients.automatic_invoice') })" />
+                  </div>
+                </div>
+                <div class="mt-6 border-t border-blue-gray-200 pt-6">
+                  <Select
+                    name="use_billing_recipient"
+                    v-model="useBillingRecipient"
+                    :label="$t('clients.use_billing_recipient')"
+                    :options="[{ label: $t('generic.no'), value: '0' }, { label: $t('generic.yes'), value: '1' }]"
+                    :error="errors.use_billing_recipient"
+                    container-class="max-w-md"
+                  />
+                  <p class="mt-2 text-sm text-blue-gray-500">{{ $t('clients.billing_recipient_help') }}</p>
+                  <div v-if="useBillingRecipient === '1'" class="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <InputText name="billing_recipient[name]" v-model="billingRecipient.name" :label="$t('clients.billing_name')" :error="errors['billing_recipient.name']" required />
+                    <InputText name="billing_recipient[cif_nif]" v-model="billingRecipient.cif_nif" :label="$t('clients.cif_nif')" :error="errors['billing_recipient.cif_nif']" required />
+                    <InputText name="billing_recipient[address]" v-model="billingRecipient.address" :label="$t('clients.address')" :error="errors['billing_recipient.address']" required />
+                    <InputText name="billing_recipient[zip_code]" v-model="billingRecipient.zip_code" :label="$t('clients.zip_code')" :error="errors['billing_recipient.zip_code']" required />
+                    <InputText name="billing_recipient[city]" v-model="billingRecipient.city" :label="$t('clients.city')" :error="errors['billing_recipient.city']" required />
+                    <Select name="billing_recipient[country_id]" v-model="billingRecipient.country_id" :label="$t('clients.country')" :options="props.countries.map(country => ({ label: country.name, value: country.id }))" :error="errors['billing_recipient.country_id']" required />
+                    <InputText type="email" name="billing_recipient[email]" :model-value="billingRecipient.email ?? ''" @update:model-value="billingRecipient.email = String($event)" :label="$t('clients.billing_email')" :error="errors['billing_recipient.email']" />
                   </div>
                 </div>
               </CardContent>

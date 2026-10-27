@@ -1,6 +1,19 @@
 <?php
 
 return [
+    'unavailable_employees' => 'No disponibles per a aquest horari',
+    'employee_outside_requested_hours' => 'Fora de la seva disponibilitat habitual: {days}, de {start} a {end}.',
+    'employee_schedule_conflict' => 'Coincideix amb {service} · {client}, el {date} de {start} a {end}.',
+    'view_conflicting_service' => 'Veure el servei',
+    'employee_schedule_conflict_label' => 'Conflicte horari',
+    'employee_outside_availability_label' => 'Fora de disponibilitat',
+    'unavailable_employees_help' => 'Consulta el motiu i revisa el servei que impedeix l’assignació.',
+
+    'billing_recipient' => 'Destinatari de facturació',
+    'use_billing_recipient' => 'Facturar a una altra persona o entitat',
+    'billing_name' => 'Nom complet o raó social',
+    'billing_email' => 'Correu de facturació (opcional)',
+    'billing_recipient_help' => 'Indica les dades de qui ha de constar a la factura. Si tries No, es faran servir les dades del client que rep el servei. Els canvis s’apliquen a les factures noves.',
     'title' => 'Clients',
     'create' => 'Crear client',
     'edit' => 'Editar client',
