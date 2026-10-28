@@ -2,6 +2,8 @@
 import { Button, ButtonDelete } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AppLayout, LayoutBasic } from '@/layouts';
+import DocumentFolderBrowser from '@/components/blocks/DocumentFolderBrowser.vue';
+import DocumentFolders from '@/components/blocks/DocumentFolders.vue';
 import { Form } from '@inertiajs/vue3';
 import { Download, FileText, FileUp, Search, Trash2, UploadCloud, UsersRound, X } from 'lucide-vue-next';
 import { computed, ref } from 'vue';
@@ -9,6 +11,7 @@ import { useI18n } from 'vue-i18n';
 import type { EmployeeOption, DistributedDocument } from '@/types';
 
 interface Props {
+    folders: import('@/types').DocumentFolder[];
     employees: EmployeeOption[];
     documents: DistributedDocument[];
 }
@@ -19,6 +22,8 @@ const { t } = useI18n();
 const selectedEmployeeIds = ref<string[]>(props.employees.map((employee) => employee.id));
 const selectedFiles = ref<File[]>([]);
 const search = ref('');
+const folderFilter = ref('');
+const visibleDocuments = computed(() => props.documents.filter(document => !folderFilter.value || document.employee_document_folder_id === folderFilter.value));
 const isDragOver = ref(false);
 const fileInput = ref<HTMLInputElement | null>(null);
 
@@ -104,6 +109,8 @@ function documentError(errors: Record<string, string>): string | undefined {
         <LayoutBasic :title="t('employee_documents.title')" :icon="FileUp">
             <p class="-mt-4 mb-6 px-4 text-sm text-gray-500 md:px-0">{{ t('employee_documents.description') }}</p>
 
+            <DocumentFolders :folders="folders" />
+
             <Form
                 method="post"
                 :action="route('employee-documents.store')"
@@ -123,6 +130,14 @@ function documentError(errors: Record<string, string>): string | undefined {
                             </CardTitle>
                         </CardHeader>
                         <CardContent>
+                            <label class="mb-4 block text-sm font-medium">
+                                {{ t('employee_documents.folder') }}
+                                <select name="employee_document_folder_id" required class="mt-2 block w-full rounded-md border px-3 py-2">
+                                    <option v-for="folder in folders" :key="folder.id" :value="folder.id">{{ folder.name }}</option>
+                                </select>
+                                <span v-if="errors.employee_document_folder_id" class="text-red-600">{{ errors.employee_document_folder_id }}</span>
+                            </label>
+                            <p class="mb-4 text-sm text-gray-500">{{ t('employee_documents.folder_help') }}</p>
                             <div
                                 class="flex min-h-56 justify-center rounded-lg border-2 border-dashed px-6 py-10 transition-colors"
                                 :class="isDragOver ? 'border-blue-600 bg-blue-50' : 'border-gray-200'"
@@ -247,7 +262,8 @@ function documentError(errors: Record<string, string>): string | undefined {
                     <p class="text-sm text-gray-500">{{ t('employee_documents.history_description') }}</p>
                 </CardHeader>
                 <CardContent class="overflow-x-auto px-0 md:px-6">
-                    <table v-if="documents.length" class="w-full min-w-2xl text-left text-sm">
+                    <DocumentFolderBrowser v-model="folderFilter" :folders="folders" :items="documents" class="px-4 md:px-0">
+                    <table v-if="visibleDocuments.length" class="w-full min-w-2xl text-left text-sm">
                         <thead class="border-b bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
                             <tr>
                                 <th class="px-4 py-3">{{ t('employee_documents.name') }}</th>
@@ -257,9 +273,10 @@ function documentError(errors: Record<string, string>): string | undefined {
                             </tr>
                         </thead>
                         <tbody class="divide-y">
-                            <tr v-for="document in documents" :key="document.id" class="hover:bg-gray-50">
+                            <tr v-for="document in visibleDocuments" :key="document.id" class="hover:bg-gray-50">
                                 <td class="px-4 py-3 font-medium text-gray-800">
                                     <span class="flex items-center gap-2"><FileText class="size-4 text-blue-600" />{{ document.name }}</span>
+                                    <span class="text-xs text-gray-500">{{ folders.find(folder => folder.id === document.employee_document_folder_id)?.name }}</span>
                                 </td>
                                 <td class="px-4 py-3 text-gray-500">{{ document.created_at }}</td>
                                 <td class="px-4 py-3 text-center text-gray-800">{{ document.employee_count }}</td>
@@ -289,8 +306,9 @@ function documentError(errors: Record<string, string>): string | undefined {
                     </table>
                     <div v-else class="py-12 text-center text-sm text-gray-500">
                         <FileText class="mx-auto mb-3 size-10 text-gray-300" />
-                        {{ t('employee_documents.empty') }}
+                        {{ t('employee_documents.folder_empty') }}
                     </div>
+                    </DocumentFolderBrowser>
                 </CardContent>
             </Card>
         </LayoutBasic>

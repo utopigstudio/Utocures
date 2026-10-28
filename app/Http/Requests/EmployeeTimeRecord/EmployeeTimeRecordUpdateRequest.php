@@ -34,10 +34,15 @@ class EmployeeTimeRecordUpdateRequest extends FormRequest
                     $timeRecord = $this->route('employeeTimeRecord');
                 }
 
-                if ($timeRecord && ! $timeRecord->time_out && ($this->filled('date_out') || $this->filled('time_out'))) {
+                if ($timeRecord && $timeRecord->assigned_hour_id && ! $timeRecord->time_out && ($this->filled('date_out') || $this->filled('time_out'))) {
                     $validator->errors()->add('time_out', 'La salida debe registrarla la empleada desde su contador.');
 
                     return;
+                }
+
+                if ($timeRecord && ! $timeRecord->assigned_hour_id && ! $this->filled('time_out')
+                    && $timeRecord->employee->timeRecords()->whereKeyNot($timeRecord->id)->whereNull('time_out')->exists()) {
+                    $validator->errors()->add('time_out', __('employee_time_records.active_record_warning'));
                 }
 
                 if (! $this->filled('date_out') || ! $this->filled('time_out')) {

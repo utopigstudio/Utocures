@@ -1,6 +1,28 @@
 <?php
 
 return [
+    'folder_help' => '¿Necesitas una categoría nueva? En Documentos para trabajadoras, pulsa Gestionar carpetas, escribe el nombre y pulsa Crear carpeta. Las carpetas son comunes a todas las empleadas.',
+    'folder_help_individual' => '¿Necesitas una categoría nueva? Créala desde Documentos para trabajadoras → Gestionar carpetas → Crear carpeta y después vuelve a esta ficha para seleccionarla.',
+    'folder_navigation' => 'Navegación de carpetas',
+    'back_to_folders' => 'Volver a las carpetas',
+    'folder_file_count' => '{count} archivos',
+    'no_folders' => 'No hay carpetas.',
+    'folder_empty' => 'Esta carpeta está vacía.',
+
+    'delete_folder' => 'Eliminar carpeta',
+    'folder' => 'Carpeta',
+    'all_folders' => 'Todas las carpetas',
+    'manage_folders' => 'Gestionar carpetas',
+    'shared_folders' => 'Las carpetas son comunes a todas las empleadas. Solo se pueden eliminar carpetas vacías.',
+    'folder_name' => 'Nombre de la carpeta',
+    'create_folder' => 'Crear carpeta',
+    'rename_folder' => 'Renombrar',
+    'move_document' => 'Mover documento a una carpeta',
+    'folder_saved' => 'Carpeta guardada correctamente.',
+    'folder_deleted' => 'Carpeta eliminada correctamente.',
+    'folder_not_empty' => 'No se puede eliminar una carpeta que contiene documentos.',
+    'document_moved' => 'Documento movido correctamente.',
+
     'title' => 'Documentos para trabajadoras',
     'description' => 'Distribuye uno o varios documentos a todas las trabajadoras seleccionadas desde un único lugar.',
     'new_distribution' => 'Nueva distribución',
@@ -28,7 +50,7 @@ return [
     'delete' => 'Eliminar distribución de :name',
     'empty' => 'Todavía no se han distribuido documentos.',
     'uploaded' => '{1} :documents documento distribuido a :employees trabajadoras.|[2,*] :documents documentos distribuidos a :employees trabajadoras.',
-    'deleted' => 'Documento eliminado de todas las trabajadoras correctamente.',
+    'deleted' => 'Documento eliminado de las trabajadoras de esta carpeta correctamente.',
     'validation_employees_required' => 'Selecciona al menos una trabajadora.',
     'validation_employee_invalid' => 'Una de las trabajadoras seleccionadas no está disponible.',
     'validation_documents_required' => 'Selecciona al menos un documento.',

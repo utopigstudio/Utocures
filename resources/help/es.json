@@ -658,12 +658,16 @@
     },
     {
         "id": "employees",
-        "roles": ["admin"],
+        "roles": [
+            "admin"
+        ],
         "category": "Gestión de trabajadoras",
         "title": "Crear, consultar o cambiar una trabajadora",
         "description": "Primero crea la ficha. Después añade sus servicios y su disponibilidad horaria en una guía aparte.",
         "href": "/employees",
-        "steps": ["Pulsa Empleados en el menú lateral izquierdo."],
+        "steps": [
+            "Pulsa Empleados en el menú lateral izquierdo."
+        ],
         "effects": [
             "Desactivar una empleada impide que entre. No cancela sus visitas; debes organizar las sustituciones por separado.",
             "La fecha de fin de contrato puede generar avisos antes del vencimiento. No desactiva la cuenta ni cancela trabajos cuando llega ese día."
@@ -695,7 +699,13 @@
                 "answer": "Abre su ficha con Visualizar: si la cuenta está activa y tiene correo, ya puede entrar en cuanto acepte la invitación. Pide que confirme que ha podido entrar y ver su Agenda."
             }
         ],
-        "related": ["employee-availability", "schedules", "absences", "employee-documents", "files"],
+        "related": [
+            "employee-availability",
+            "schedules",
+            "absences",
+            "employee-documents",
+            "files"
+        ],
         "tasks": [
             {
                 "title": "Crear la ficha de una empleada",
@@ -741,6 +751,16 @@
                     "Busca el archivo en las descargas de tu ordenador o móvil."
                 ],
                 "result": "Se descarga una copia del listado. Los datos de la herramienta no cambian. El botón aparece cuando hay resultados."
+            },
+            {
+                "title": "Configurar fichaje libre para personal administrativo",
+                "steps": [
+                    "Abre la ficha del empleado y pulsa Editar. En Modalidad de fichaje, selecciona Personal administrativo · fichaje libre y guarda.",
+                    "La persona conserva su cuenta de empleado. Esta modalidad no es el rol admin: los admins solo gestionan la plataforma y no fichan.",
+                    "El personal de servicios mantiene la modalidad por trabajo asignado. Las horas disponibles no restringen el fichaje libre ni generan horas asignadas.",
+                    "No cambies la modalidad con un fichaje abierto: primero debe finalizarse. El histórico se conserva."
+                ],
+                "result": "El personal administrativo ficha desde su dashboard de empleado sin necesitar trabajos asignados."
             }
         ]
     },
@@ -1056,12 +1076,17 @@
     },
     {
         "id": "employee-agenda",
-        "roles": ["employee"],
+        "roles": [
+            "employee"
+        ],
         "category": "La agenda de la trabajadora",
         "title": "Consultar mis visitas de hoy y de otros días",
         "description": "La agenda muestra las visitas que tienes asignadas. Ábrela antes de fichar para comprobar el cliente y el servicio.",
         "href": "/schedule",
-        "steps": ["En Inicio verás los trabajos de hoy.", "Pulsa Agenda para ver otro día o Calendario mensual para ver el mes completo."],
+        "steps": [
+            "En Inicio verás los trabajos de hoy.",
+            "Pulsa Agenda para ver otro día o Calendario mensual para ver el mes completo."
+        ],
         "effects": [
             "La agenda solo muestra las visitas que administración ya ha programado. Tener disponibilidad no crea por sí sola una visita.",
             "Después de un cambio, vuelve a abrir Agenda o recarga la página para consultar las visitas actualizadas. No cuentes con un aviso individual de cada cambio.",
@@ -1105,7 +1130,11 @@
                 "answer": "Comprueba la fecha seleccionada y que sigues siendo la persona asignada; si sigue sin aparecer, pide a administración que revise la asignación del horario."
             }
         ],
-        "related": ["employee-work", "employee-hours", "mobile"],
+        "related": [
+            "employee-work",
+            "employee-hours",
+            "mobile"
+        ],
         "tasks": [
             {
                 "title": "Consultar una visita antes de empezar",
@@ -1126,6 +1155,17 @@
                     "Pulsa un día con visitas para ver su detalle."
                 ],
                 "result": "Consultar el mes no registra horas ni cambia nada; es solo para planificarte."
+            },
+            {
+                "title": "Fichar como personal administrativo",
+                "steps": [
+                    "Si tu ficha tiene la modalidad Personal administrativo · fichaje libre, en Inicio verás Jornada administrativa en lugar de los trabajos del día.",
+                    "Pulsa Iniciar jornada al comenzar y Finalizar jornada al terminar o para hacer una pausa. Puedes abrir nuevos tramos durante el día, pero solo uno a la vez.",
+                    "Permite la ubicación si la herramienta la solicita, igual que en el fichaje de servicios.",
+                    "Puedes finalizar el tramo aunque haya pasado la medianoche. En Inicio verás los tramos del día y el tiempo de los tramos cerrados correspondiente a hoy.",
+                    "Consulta el histórico en Horas trabajadas. Para corregir una entrada o salida, pide a un admin que la revise."
+                ],
+                "result": "Tus fichajes aparecen como Jornada administrativa en el registro de fichajes. No necesitas trabajos asignados y tu horario disponible no limita el fichaje."
             }
         ]
     },
@@ -1230,17 +1270,22 @@
     },
     {
         "id": "time-records",
-        "roles": ["admin"],
+        "roles": [
+            "admin"
+        ],
         "category": "Registro, corrección y exportación de horas",
         "title": "Consultar horas, corregir un fichaje y exportarlas",
         "description": "Un fichaje es el registro de cuándo una empleada empieza y termina de trabajar.",
         "href": "/employee-time-records",
-        "steps": ["Pulsa Registros de horas en el menú lateral izquierdo."],
+        "steps": [
+            "Pulsa Registros de horas en el menú lateral izquierdo."
+        ],
         "effects": [
             "02:30 significa dos horas y treinta minutos. No significa 2,30 horas.",
             "La ubicación guardada es la de entrada o salida. Corregir una hora no vuelve a localizar el móvil.",
             "Un trabajo que empieza fuera del periodo consultado puede contarse de forma distinta en Tablero y en la lista. Revisa sus fechas si los totales no coinciden.",
-            "El Excel exportado usa siempre las horas ya corregidas, no las originales: una corrección guardada se refleja también en la exportación."
+            "El Excel exportado usa siempre las horas ya corregidas, no las originales: una corrección guardada se refleja también en la exportación.",
+            "Los fichajes libres del personal administrativo aparecen como Jornada administrativa. En la agrupación por cliente están en Sin cliente · Jornada administrativa y sus horas asignadas figuran como No aplica. También se incluyen en calendario y exportaciones. Administración puede corregirlos indicando un motivo, incluida una salida olvidada."
         ],
         "questions": [
             {
@@ -1284,7 +1329,13 @@
                 "answer": "Anota el cliente, servicio, día y horas reales y comunícalo a la persona responsable. Esta pantalla no permite crear un fichaje desde cero ni recuperar horas anteriores sin registro. No inventes una entrada de hoy para simular el trabajo de ayer."
             }
         ],
-        "related": ["employee-work", "employee-hours", "schedules", "audits", "configuration"],
+        "related": [
+            "employee-work",
+            "employee-hours",
+            "schedules",
+            "audits",
+            "configuration"
+        ],
         "tasks": [
             {
                 "title": "Ver las horas de un periodo",
@@ -2007,7 +2058,9 @@
     },
     {
         "id": "files",
-        "roles": ["admin"],
+        "roles": [
+            "admin"
+        ],
         "category": "Documentos y notas internas",
         "title": "Añadir o descargar un archivo de una ficha",
         "description": "Un archivo puede ser un PDF, una imagen o un documento de Word que quieras guardar junto a una persona o documento.",
@@ -2017,7 +2070,9 @@
             "Busca la ficha, pulsa los tres puntos de su fila y después Visualizar.",
             "Baja hasta Documentos y archivos."
         ],
-        "effects": ["Se admiten imágenes JPG y PNG, PDF y documentos DOC o DOCX, de hasta 10 MB cada uno."],
+        "effects": [
+            "Se admiten imágenes JPG y PNG, PDF y documentos DOC o DOCX, de hasta 10 MB cada uno."
+        ],
         "questions": [
             {
                 "question": "No admite el archivo.",
@@ -2031,14 +2086,24 @@
                 "question": "¿Quién puede consultar estas notas y documentos?",
                 "answer": "Administración gestiona los archivos desde las fichas. La pantalla de visita de una trabajadora no ofrece ese bloque de archivos, pero sí muestra las notas e incidencias del cliente, también las de otras visitas. No utilices Notas del cliente como un espacio privado de administración.",
                 "guide": "privacy"
+            },
+            {
+                "question": "¿Dónde creo una categoría o carpeta nueva?",
+                "answer": "Las categorías se organizan como carpetas. Ve a Documentos para trabajadoras en el menú lateral y pulsa Gestionar carpetas, encima del formulario de subida. Escribe el Nombre de la carpeta y pulsa Crear carpeta. Después selecciónala en Carpeta al subir el documento, también si lo subes desde una ficha individual."
             }
         ],
-        "related": ["employee-documents", "clients", "contracts", "budgets"],
+        "related": [
+            "employee-documents",
+            "clients",
+            "contracts",
+            "budgets"
+        ],
         "tasks": [
             {
                 "title": "Añadir un archivo",
                 "steps": [
                     "Pulsa Añadir archivo, a la derecha del título del bloque.",
+                    "Si estás en la ficha de una empleada: Selecciona la Carpeta de destino. Si necesitas una categoría nueva, créala antes en Gestionar carpetas, encima del formulario.",
                     "En la ventana Subir archivo, pulsa Seleccionar archivo.",
                     "Se abrirá el selector de archivos de tu ordenador o móvil. Busca el documento, selecciónalo y confirma la elección en ese selector.",
                     "Comprueba que en la ventana de la herramienta aparece el nombre del archivo correcto.",
@@ -2050,7 +2115,7 @@
             {
                 "title": "Descargar o quitar un archivo",
                 "steps": [
-                    "En Documentos y archivos, busca el nombre del documento.",
+                    "En Documentos y archivos, si estás en la ficha de una empleada, entra primero en la carpeta correspondiente y busca el documento.",
                     "Para obtener una copia, pulsa el botón con la flecha de descarga de ese archivo. Busca la copia en las descargas de tu dispositivo.",
                     "Para quitarlo de la ficha, pulsa la papelera del archivo.",
                     "Lee el aviso de confirmación. Si dudas de qué archivo has seleccionado, pulsa Cancelar y comprueba su nombre en la lista antes de volver a eliminarlo."
@@ -2061,12 +2126,16 @@
     },
     {
         "id": "employee-documents",
-        "roles": ["admin"],
+        "roles": [
+            "admin"
+        ],
         "category": "Documentos y notas internas",
         "title": "Añadir el mismo documento a varias empleadas",
         "description": "Utiliza este apartado para guardar uno o varios archivos en varias fichas a la vez.",
         "href": "/employee-documents",
-        "steps": ["Pulsa Documentos para trabajadoras en el menú lateral."],
+        "steps": [
+            "Pulsa Documentos para trabajadoras en el menú lateral."
+        ],
         "effects": [
             "Los archivos quedan en las fichas seleccionadas. Esta acción no envía un correo ni pide a las empleadas que confirmen su lectura.",
             "Eliminar desde el listado de distribución afecta a todas sus destinatarias. Eliminar desde una ficha afecta solo a esa ficha."
@@ -2079,31 +2148,58 @@
             {
                 "question": "He elegido a una persona incorrecta.",
                 "answer": "Abre su ficha y elimina allí el archivo si solo quieres retirárselo a ella. La eliminación desde el listado colectivo afecta a todas las personas asociadas."
+            },
+            {
+                "question": "¿Dónde creo una categoría o carpeta nueva?",
+                "answer": "Las categorías se organizan como carpetas. Ve a Documentos para trabajadoras en el menú lateral y pulsa Gestionar carpetas, encima del formulario de subida. Escribe el Nombre de la carpeta y pulsa Crear carpeta. Después selecciónala en Carpeta al subir el documento, también si lo subes desde una ficha individual."
             }
         ],
-        "related": ["files", "employees"],
+        "related": [
+            "files",
+            "employees"
+        ],
         "tasks": [
             {
                 "title": "Distribuir documentos entre las fichas",
                 "steps": [
-                    "Busca el bloque Nueva distribución.",
+                    "En el bloque Documentos, selecciona la Carpeta de destino. Si necesitas otra, créala primero en Gestionar carpetas.",
                     "Pulsa Seleccionar archivos y elige los documentos en tu ordenador o móvil. Confirma la selección.",
                     "Comprueba los nombres de los archivos elegidos. Puedes seleccionar hasta 20, de un máximo de 10 MB cada uno.",
                     "Baja a Destinatarias. Marca la casilla de cada persona que deba tener esos archivos en su ficha.",
                     "Usa Seleccionar todas solo si los archivos corresponden a todas las empleadas activas. Revisa la selección antes de continuar.",
                     "Pulsa Distribuir documentos, abajo a la derecha.",
-                    "Comprueba que aparecen en Documentos distribuidos."
+                    "En Documentos distribuidos, entra en la carpeta elegida y comprueba que aparecen los archivos."
                 ],
                 "result": "Los archivos quedan en las fichas seleccionadas. Esta acción no envía un correo ni pide a las empleadas que confirmen su lectura."
             },
             {
                 "title": "Retirar un documento distribuido",
                 "steps": [
-                    "Busca el archivo en Documentos distribuidos y revisa a cuántas personas está asociado.",
+                    "En Documentos distribuidos, pulsa una carpeta para ver sus archivos. En la ficha individual, haz lo mismo en Documentos y archivos. Busca el archivo en Documentos distribuidos y revisa a cuántas personas está asociado.",
                     "Si quieres quitarlo de todas esas fichas, pulsa la papelera de esa fila y revisa el aviso antes de confirmar.",
                     "Si solo quieres quitárselo a una persona, ve a Empleados, abre su ficha con Visualizar y elimina el archivo desde Documentos y archivos de esa ficha."
                 ],
                 "result": "Eliminar desde el listado de distribución afecta a todas sus destinatarias. Eliminar desde una ficha afecta solo a esa ficha."
+            },
+            {
+                "title": "Crear, renombrar o eliminar carpetas",
+                "steps": [
+                    "En Documentos para trabajadoras, pulsa Gestionar carpetas, encima del formulario de subida.",
+                    "Para crear una categoría nueva, escribe su nombre en Nombre de la carpeta y pulsa Crear carpeta.",
+                    "Para cambiar un nombre, edita el campo de esa carpeta y pulsa Renombrar. El cambio se aplica a todas las empleadas.",
+                    "Para eliminar una carpeta, pulsa Eliminar carpeta y confirma. Solo se permite si está vacía en todas las fichas; si contiene archivos, muévelos o retíralos primero."
+                ],
+                "result": "Las carpetas son comunes a todas las empleadas. Crear o renombrar una carpeta no cambia las destinatarias de los documentos."
+            },
+            {
+                "title": "Encontrar documentos dentro de las carpetas",
+                "steps": [
+                    "En Documentos distribuidos, pulsa una carpeta para ver sus archivos. En la ficha individual, haz lo mismo en Documentos y archivos.",
+                    "Para volver, pulsa la flecha de regreso o Todas las carpetas en la ruta superior.",
+                    "Los documentos que ya existían antes de incorporar las carpetas están en VARIAS. Las otras carpetas iniciales son Contratos, Nóminas, Formación y Prevención.",
+                    "Para mover un archivo de una empleada, abre su ficha, entra en la carpeta y cambia la carpeta en el selector de la fila del archivo."
+                ],
+                "result": "La navegación permite localizar los archivos por carpeta. Mover un archivo desde una ficha solo cambia su clasificación en esa ficha."
             }
         ]
     },

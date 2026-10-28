@@ -51,7 +51,7 @@ function buildDeletePayload() {
       </DropdownMenuItem>
     </DropdownMenuContent>
   </DropdownMenu>
-  <div class="flex justify-end gap-4" v-else-if="inlineActions && inlineActions.length > 0">
+  <div class="flex items-center justify-end gap-4" v-else-if="inlineActions && inlineActions.length > 0">
     <slot name="inlineActions" :id="props.id" />
     <Button
       variant="icon"

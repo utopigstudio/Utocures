@@ -658,12 +658,16 @@
     },
     {
         "id": "employees",
-        "roles": ["admin"],
+        "roles": [
+            "admin"
+        ],
         "category": "Gestió de treballadores",
         "title": "Crear, consultar o canviar una treballadora",
         "description": "Primer crea la fitxa. Després afegeix els seus serveis i la seva disponibilitat horària en una guia a part.",
         "href": "/employees",
-        "steps": ["Prem Empleades al menú lateral esquerre."],
+        "steps": [
+            "Prem Empleades al menú lateral esquerre."
+        ],
         "effects": [
             "Desactivar una empleada impedeix que entri. No cancel·la les visites; has d’organitzar les substitucions per separat.",
             "La data de fi del contracte pot generar avisos abans del venciment. No desactiva el compte ni cancel·la feines quan arriba aquell dia."
@@ -695,7 +699,13 @@
                 "answer": "Obre la fitxa amb Visualitzar: si el compte està actiu i té correu, ja pot entrar en acceptar la invitació. Demana-li que et confirmi que ha pogut entrar i veure la seva Agenda."
             }
         ],
-        "related": ["employee-availability", "schedules", "absences", "employee-documents", "files"],
+        "related": [
+            "employee-availability",
+            "schedules",
+            "absences",
+            "employee-documents",
+            "files"
+        ],
         "tasks": [
             {
                 "title": "Crear la fitxa d’una empleada",
@@ -741,6 +751,16 @@
                     "Busca l’arxiu a les descàrregues de l’ordinador o mòbil."
                 ],
                 "result": "Es descarrega una còpia del llistat. Les dades de l’eina no canvien. El botó apareix quan hi ha resultats."
+            },
+            {
+                "title": "Configurar fitxatge lliure per al personal administratiu",
+                "steps": [
+                    "Obre la fitxa de l’empleat i prem Editar. A Modalitat de fitxatge, selecciona Personal administratiu · fitxatge lliure i desa.",
+                    "La persona conserva el compte d’empleat. Aquesta modalitat no és el rol admin: els admins només gestionen la plataforma i no fitxen.",
+                    "El personal de serveis manté la modalitat per treball assignat. Les hores disponibles no restringeixen el fitxatge lliure ni generen hores assignades.",
+                    "No canviïs la modalitat amb un fitxatge obert: primer cal finalitzar-lo. L’històric es conserva."
+                ],
+                "result": "El personal administratiu fitxa des del seu dashboard d’empleat sense necessitar treballs assignats."
             }
         ]
     },
@@ -1056,12 +1076,17 @@
     },
     {
         "id": "employee-agenda",
-        "roles": ["employee"],
+        "roles": [
+            "employee"
+        ],
         "category": "L’agenda de la treballadora",
         "title": "Consultar les meves visites d’avui i d’altres dies",
         "description": "L’agenda mostra les visites que tens assignades. Obre-la abans de fitxar per comprovar el client i el servei.",
         "href": "/schedule",
-        "steps": ["A Inici veuràs les feines d’avui.", "Prem Agenda per veure un altre dia o Agenda mensual per veure el mes complet."],
+        "steps": [
+            "A Inici veuràs les feines d’avui.",
+            "Prem Agenda per veure un altre dia o Agenda mensual per veure el mes complet."
+        ],
         "effects": [
             "L’agenda només mostra les visites que administració ja ha programat. Tenir disponibilitat no crea per si sola una visita.",
             "Després d’un canvi, torna a obrir Agenda o recarrega la pàgina per consultar les visites actualitzades. No comptis amb un avís individual de cada canvi.",
@@ -1105,7 +1130,11 @@
                 "answer": "Comprova la data seleccionada i que continues sent la persona assignada; si continua sense aparèixer, demana a administració que revisi l’assignació de l’horari."
             }
         ],
-        "related": ["employee-work", "employee-hours", "mobile"],
+        "related": [
+            "employee-work",
+            "employee-hours",
+            "mobile"
+        ],
         "tasks": [
             {
                 "title": "Consultar una visita abans de començar",
@@ -1126,6 +1155,17 @@
                     "Prem un dia amb visites per veure’n el detall."
                 ],
                 "result": "Consultar el mes no registra hores ni canvia res; és només per planificar-te."
+            },
+            {
+                "title": "Fitxar com a personal administratiu",
+                "steps": [
+                    "Si la fitxa té la modalitat Personal administratiu · fitxatge lliure, a Inici veuràs Jornada administrativa en lloc dels treballs del dia.",
+                    "Prem Iniciar jornada quan comencis i Finalitzar jornada quan acabis o per fer una pausa. Pots obrir nous trams durant el dia, però només un alhora.",
+                    "Permet la ubicació si l’eina la demana, igual que en el fitxatge de serveis.",
+                    "Pots finalitzar el tram encara que hagi passat la mitjanit. A Inici veuràs els trams del dia i el temps dels trams tancats corresponent a avui.",
+                    "Consulta l’històric a Hores treballades. Per corregir una entrada o sortida, demana a un admin que la revisi."
+                ],
+                "result": "Els teus fitxatges apareixen com a Jornada administrativa al registre de fitxatges. No necessites treballs assignats i el teu horari disponible no limita el fitxatge."
             }
         ]
     },
@@ -1230,17 +1270,22 @@
     },
     {
         "id": "time-records",
-        "roles": ["admin"],
+        "roles": [
+            "admin"
+        ],
         "category": "Registre, correcció i exportació d’hores",
         "title": "Consultar hores, corregir un fitxatge i exportar-les",
         "description": "Un fitxatge és el registre de quan una empleada comença i acaba de treballar.",
         "href": "/employee-time-records",
-        "steps": ["Prem Registres d’hores al menú lateral esquerre."],
+        "steps": [
+            "Prem Registres d’hores al menú lateral esquerre."
+        ],
         "effects": [
             "02:30 significa dues hores i trenta minuts. No significa 2,30 hores.",
             "La ubicació desada és la d’entrada o sortida. Corregir una hora no torna a localitzar el mòbil.",
             "Una feina que comença fora del període consultat pot comptar-se de manera diferent a Tauler i a la llista. Revisa les dates si els totals no coincideixen.",
-            "L’Excel exportat utilitza sempre les hores ja corregides, no les originals: una correcció desada es reflecteix també a l’exportació."
+            "L’Excel exportat utilitza sempre les hores ja corregides, no les originals: una correcció desada es reflecteix també a l’exportació.",
+            "Els fitxatges lliures del personal administratiu apareixen com a Jornada administrativa. A l’agrupació per client són a Sense client · Jornada administrativa i les hores assignades figuren com a No escau. També s’inclouen al calendari i les exportacions. Administració pot corregir-los indicant un motiu, inclosa una sortida oblidada."
         ],
         "questions": [
             {
@@ -1284,7 +1329,13 @@
                 "answer": "Anota el client, servei, dia i hores reals i comunica-ho a la persona responsable. Aquesta pantalla no permet crear un fitxatge des de zero ni recuperar hores anteriors sense registre. No inventis una entrada d’avui per simular la feina d’ahir."
             }
         ],
-        "related": ["employee-work", "employee-hours", "schedules", "audits", "configuration"],
+        "related": [
+            "employee-work",
+            "employee-hours",
+            "schedules",
+            "audits",
+            "configuration"
+        ],
         "tasks": [
             {
                 "title": "Veure les hores d’un període",
@@ -2007,7 +2058,9 @@
     },
     {
         "id": "files",
-        "roles": ["admin"],
+        "roles": [
+            "admin"
+        ],
         "category": "Documents i notes internes",
         "title": "Afegir o descarregar un arxiu d’una fitxa",
         "description": "Un arxiu pot ser un PDF, una imatge o un document de Word que vulguis desar al costat d’una persona o document.",
@@ -2017,7 +2070,9 @@
             "Busca la fitxa, prem els tres punts de la fila i després Visualitzar.",
             "Baixa fins a Documents i arxius."
         ],
-        "effects": ["S’admeten imatges JPG i PNG, PDF i documents DOC o DOCX, de fins a 10 MB cadascun."],
+        "effects": [
+            "S’admeten imatges JPG i PNG, PDF i documents DOC o DOCX, de fins a 10 MB cadascun."
+        ],
         "questions": [
             {
                 "question": "No admet l’arxiu.",
@@ -2031,14 +2086,24 @@
                 "question": "Qui pot consultar aquestes notes i documents?",
                 "answer": "Administració gestiona els arxius des de les fitxes. La pantalla de visita d’una treballadora no ofereix aquell bloc d’arxius, però sí que mostra les notes i incidències del client, també les d’altres visites. No utilitzis Notes del client com un espai privat d’administració.",
                 "guide": "privacy"
+            },
+            {
+                "question": "On creo una categoria o carpeta nova?",
+                "answer": "Les categories s’organitzen com a carpetes. Ves a Documents per a treballadores al menú lateral i prem Gestionar carpetes, damunt del formulari de pujada. Escriu el Nom de la carpeta i prem Crear carpeta. Després selecciona-la a Carpeta quan pugis el document, també si el puges des d’una fitxa individual."
             }
         ],
-        "related": ["employee-documents", "clients", "contracts", "budgets"],
+        "related": [
+            "employee-documents",
+            "clients",
+            "contracts",
+            "budgets"
+        ],
         "tasks": [
             {
                 "title": "Afegir un arxiu",
                 "steps": [
                     "Prem Afegir arxiu, a la dreta del títol del bloc.",
+                    "Si ets a la fitxa d’una treballadora: Selecciona la Carpeta de destinació. Si necessites una categoria nova, crea-la abans a Gestionar carpetes, damunt del formulari.",
                     "A la finestra Pujar arxiu, prem Seleccionar arxiu.",
                     "S’obrirà el selector d’arxius del teu ordinador o mòbil. Busca el document, selecciona’l i confirma l’elecció en aquest selector.",
                     "Comprova que a la finestra de l’eina apareix el nom de l’arxiu correcte.",
@@ -2050,7 +2115,7 @@
             {
                 "title": "Descarregar o treure un arxiu",
                 "steps": [
-                    "A Documents i arxius, busca el nom del document.",
+                    "A Documents i arxius, si ets a la fitxa d’una treballadora, entra primer a la carpeta corresponent i busca el document.",
                     "Per obtenir una còpia, prem el botó amb la fletxa de descàrrega d’aquell arxiu. Busca la còpia a les descàrregues del teu dispositiu.",
                     "Per treure’l de la fitxa, prem la paperera de l’arxiu.",
                     "Llegeix l’avís de confirmació. Si dubtes de quin arxiu has seleccionat, prem Cancel·lar i comprova’n el nom a la llista abans de tornar a eliminar-lo."
@@ -2061,12 +2126,16 @@
     },
     {
         "id": "employee-documents",
-        "roles": ["admin"],
+        "roles": [
+            "admin"
+        ],
         "category": "Documents i notes internes",
         "title": "Afegir el mateix document a diverses empleades",
         "description": "Utilitza aquest apartat per desar un o diversos arxius en diverses fitxes alhora.",
         "href": "/employee-documents",
-        "steps": ["Prem Documents per a treballadores al menú lateral."],
+        "steps": [
+            "Prem Documents per a treballadores al menú lateral."
+        ],
         "effects": [
             "Els arxius queden a les fitxes seleccionades. Aquesta acció no envia un correu ni demana a les empleades que en confirmin la lectura.",
             "Eliminar des del llistat de distribució afecta totes les destinatàries. Eliminar des d’una fitxa afecta només aquella fitxa."
@@ -2079,31 +2148,58 @@
             {
                 "question": "He triat una persona incorrecta.",
                 "answer": "Obre la seva fitxa i elimina-hi l’arxiu si només vols retirar-li a ella. L’eliminació des del llistat col·lectiu afecta totes les persones associades."
+            },
+            {
+                "question": "On creo una categoria o carpeta nova?",
+                "answer": "Les categories s’organitzen com a carpetes. Ves a Documents per a treballadores al menú lateral i prem Gestionar carpetes, damunt del formulari de pujada. Escriu el Nom de la carpeta i prem Crear carpeta. Després selecciona-la a Carpeta quan pugis el document, també si el puges des d’una fitxa individual."
             }
         ],
-        "related": ["files", "employees"],
+        "related": [
+            "files",
+            "employees"
+        ],
         "tasks": [
             {
                 "title": "Distribuir documents entre les fitxes",
                 "steps": [
-                    "Busca el bloc Nova distribució.",
+                    "Al bloc Documents, selecciona la Carpeta de destinació. Si en necessites una altra, crea-la primer a Gestionar carpetes.",
                     "Prem Seleccionar arxius i tria els documents a l’ordinador o mòbil. Confirma la selecció.",
                     "Comprova els noms dels arxius triats. Pots seleccionar-ne fins a 20, d’un màxim de 10 MB cadascun.",
                     "Baixa a Destinatàries. Marca la casella de cada persona que hagi de tenir aquests arxius a la fitxa.",
                     "Utilitza Seleccionar totes només si els arxius corresponen a totes les empleades actives. Revisa la selecció abans de continuar.",
                     "Prem Distribuir documents, a baix a la dreta.",
-                    "Comprova que apareixen a Documents distribuïts."
+                    "A Documents distribuïts, entra a la carpeta escollida i comprova que hi apareixen els arxius."
                 ],
                 "result": "Els arxius queden a les fitxes seleccionades. Aquesta acció no envia un correu ni demana a les empleades que en confirmin la lectura."
             },
             {
                 "title": "Retirar un document distribuït",
                 "steps": [
-                    "Busca l’arxiu a Documents distribuïts i revisa a quantes persones està associat.",
+                    "A Documents distribuïts, prem una carpeta per veure’n els arxius. A la fitxa individual, fes el mateix a Documents i arxius. Busca l’arxiu a Documents distribuïts i revisa a quantes persones està associat.",
                     "Si vols treure’l de totes aquestes fitxes, prem la paperera d’aquella fila i revisa l’avís abans de confirmar.",
                     "Si només vols treure’l a una persona, ves a Empleades, obre la fitxa amb Visualitzar i elimina l’arxiu des de Documents i arxius d’aquella fitxa."
                 ],
                 "result": "Eliminar des del llistat de distribució afecta totes les destinatàries. Eliminar des d’una fitxa afecta només aquella fitxa."
+            },
+            {
+                "title": "Crear, canviar el nom o eliminar carpetes",
+                "steps": [
+                    "A Documents per a treballadores, prem Gestionar carpetes, damunt del formulari de pujada.",
+                    "Per crear una categoria nova, escriu-ne el nom a Nom de la carpeta i prem Crear carpeta.",
+                    "Per canviar un nom, edita el camp de la carpeta i prem Canviar el nom. El canvi s’aplica a totes les treballadores.",
+                    "Per eliminar una carpeta, prem Eliminar carpeta i confirma. Només es permet si és buida a totes les fitxes; si conté arxius, mou-los o retira’ls primer."
+                ],
+                "result": "Les carpetes són comunes a totes les treballadores. Crear una carpeta o canviar-ne el nom no canvia les destinatàries dels documents."
+            },
+            {
+                "title": "Trobar documents dins de les carpetes",
+                "steps": [
+                    "A Documents distribuïts, prem una carpeta per veure’n els arxius. A la fitxa individual, fes el mateix a Documents i arxius.",
+                    "Per tornar, prem la fletxa de retorn o Totes les carpetes a la ruta superior.",
+                    "Els documents que ja existien abans d’incorporar les carpetes són a VARIAS. Les altres carpetes inicials són Contratos, Nóminas, Formación i Prevención.",
+                    "Per moure un arxiu d’una treballadora, obre’n la fitxa, entra a la carpeta i canvia la carpeta al selector de la fila de l’arxiu."
+                ],
+                "result": "La navegació permet localitzar els arxius per carpeta. Moure un arxiu des d’una fitxa només en canvia la classificació en aquella fitxa."
             }
         ]
     },

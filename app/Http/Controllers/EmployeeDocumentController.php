@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\EmployeeDocument\EmployeeDocumentStoreRequest;
 use App\Models\Employee;
+use App\Models\EmployeeDocumentFolder;
 use App\Models\File;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Carbon;
@@ -40,13 +41,14 @@ class EmployeeDocumentController extends Controller
         $documents = File::query()
             ->where('fileable_type', $employeeMorphType)
             ->where('path', 'like', self::STORAGE_DIRECTORY.'/%')
-            ->selectRaw('MIN(id) as id, name, path, COUNT(*) as employee_count, MAX(created_at) as latest_created_at')
-            ->groupBy('name', 'path')
+            ->selectRaw('MIN(id) as id, name, path, employee_document_folder_id, COUNT(*) as employee_count, MAX(created_at) as latest_created_at')
+            ->groupBy('name', 'path', 'employee_document_folder_id')
             ->orderByDesc('latest_created_at')
             ->get()
             ->map(fn (File $file) => [
                 'id' => $file->id,
                 'name' => $file->name,
+                'employee_document_folder_id' => $file->employee_document_folder_id,
                 'employee_count' => (int) $file->employee_count,
                 'created_at' => Carbon::parse($file->latest_created_at)->format('d/m/Y H:i'),
             ]);
@@ -54,6 +56,7 @@ class EmployeeDocumentController extends Controller
         return Inertia::render('employeeDocuments/Index', [
             'employees' => $employees,
             'documents' => $documents,
+            'folders' => EmployeeDocumentFolder::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -71,11 +74,12 @@ class EmployeeDocumentController extends Controller
             ]);
         }
 
+        $folderId = $request->validated('employee_document_folder_id');
         $storedPaths = [];
         $documents = $request->file('documents');
 
         try {
-            DB::transaction(function () use ($documents, $employees, &$storedPaths) {
+            DB::transaction(function () use ($documents, $employees, $folderId, &$storedPaths) {
                 foreach ($documents as $document) {
                     $path = $document->store(self::STORAGE_DIRECTORY, 'public');
                     $storedPaths[] = $path;
@@ -84,6 +88,7 @@ class EmployeeDocumentController extends Controller
                     $rows = $employees->map(fn (Employee $employee) => [
                         'id' => (string) Str::uuid(),
                         'name' => $document->getClientOriginalName(),
+                        'employee_document_folder_id' => $folderId,
                         'path' => $path,
                         'fileable_type' => $employee->getMorphClass(),
                         'fileable_id' => $employee->id,
@@ -126,6 +131,8 @@ class EmployeeDocumentController extends Controller
             File::query()
                 ->where('fileable_type', (new Employee)->getMorphClass())
                 ->where('path', $file->path)
+                ->where('name', $file->name)
+                ->where('employee_document_folder_id', $file->employee_document_folder_id)
                 ->delete();
         });
 

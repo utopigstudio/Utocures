@@ -118,7 +118,19 @@ class EmployeeTimeRecordController extends Controller
             ->filter($filters, ['name'])
             ->orderBy($sort, $dir);
 
-        $clients = $this->transformClientPaginator($clients->paginate($perPage)->withQueryString());
+        $freeGroup = $this->administrativeClientGroup($filters);
+        $includeFreeGroup = $freeGroup && (! $filters['filter_search'] || str_contains(mb_strtolower($freeGroup->name), mb_strtolower($filters['filter_search'])));
+        $page = \Illuminate\Pagination\LengthAwarePaginator::resolveCurrentPage();
+        $clientCount = (clone $clients)->count();
+        $offset = ($page - 1) * $perPage;
+        $rows = $this->transformClientCollection($clients->skip($offset)->take($perPage)->get());
+        if ($includeFreeGroup && $clientCount >= $offset && $clientCount < $offset + $perPage) {
+            $rows->push($freeGroup);
+        }
+        $clients = new \Illuminate\Pagination\LengthAwarePaginator(
+            $rows, $clientCount + ($includeFreeGroup ? 1 : 0), $perPage, $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
 
         return Inertia::render('employeeTimeRecords/List', [
             'view' => 'list',
@@ -227,6 +239,17 @@ class EmployeeTimeRecordController extends Controller
             })
             ->values();
 
+        $freeRecords = $employee->timeRecords->whereNull('assigned_hour_id');
+        if ($freeRecords->isNotEmpty()) {
+            $groupedDetails->push([
+                'detail_key' => 'administrative',
+                'client_name' => __('employee_time_records.without_client'),
+                'service_name' => __('employee_time_records.administrative_day'),
+                'programmed_hours' => __('employee_time_records.not_applicable'),
+                'registered_hours' => $this->formatMinutes((int) $freeRecords->sum('registered_hours')),
+                'incident_notes' => [],
+            ]);
+        }
         $employee->grouped_details = $groupedDetails;
 
         return $employee->append(['programmed_hours', 'registered_hours']);
@@ -268,6 +291,9 @@ class EmployeeTimeRecordController extends Controller
     {
         $employees = $this->transformEmployeeCollection($this->employeeTimeRecordEmployeesQuery($filters)->get());
         $clients = $this->transformClientCollection($this->employeeTimeRecordClientsQuery($filters)->get());
+        if ($freeGroup = $this->administrativeClientGroup($filters)) {
+            $clients->push($freeGroup);
+        }
         $exportPreRows = [
             ['Fecha inicio:', $filters['filter_start']],
             ['Fecha fin:', $filters['filter_end']],
@@ -285,7 +311,7 @@ class EmployeeTimeRecordController extends Controller
             ->with([
                 'timeRecords' => function ($query) use ($filters) {
                     $query->where('date_in', '>=', $filters['filter_start'])
-                        ->where('date_out', '<=', $filters['filter_end']);
+                        ->where(fn ($dates) => $dates->whereNull('date_out')->orWhere('date_out', '<=', $filters['filter_end']));
                 },
                 'assignedHours' => function ($query) use ($filters) {
                     $query->whereBetween('date', [$filters['filter_start'], $filters['filter_end']])
@@ -304,6 +330,33 @@ class EmployeeTimeRecordController extends Controller
                 },
                 'user:id,name,avatar',
             ]);
+    }
+
+    private function administrativeClientGroup(array $filters): ?Client
+    {
+        $records = EmployeeTimeRecord::query()->whereNull('assigned_hour_id')
+            ->whereBetween('date_in', [$filters['filter_start'], $filters['filter_end']])
+            ->where(fn ($query) => $query->whereNull('date_out')->orWhere('date_out', '<=', $filters['filter_end']))
+            ->with('employee.user:id,name,avatar')->get();
+        if ($records->isEmpty()) {
+            return null;
+        }
+        $group = new Client;
+        $group->id = 'administrative';
+        $group->name = __('employee_time_records.without_client').' Ã‚Â· '.__('employee_time_records.administrative_day');
+        $group->programmed_hours = __('employee_time_records.not_applicable');
+        $group->registered_hours = $this->formatMinutes((int) $records->sum('registered_hours'));
+        $group->grouped_details = $records->groupBy('employee_id')->map(fn ($items) => [
+            'detail_key' => $items->first()->employee_id,
+            'employee_name' => $items->first()->employee?->user?->name,
+            'employee_avatar' => $items->first()->employee?->user?->avatar,
+            'service_name' => __('employee_time_records.administrative_day'),
+            'programmed_hours' => __('employee_time_records.not_applicable'),
+            'registered_hours' => $this->formatMinutes((int) $items->sum('registered_hours')),
+            'incident_notes' => [],
+        ])->values();
+
+        return $group;
     }
 
     private function employeeTimeRecordClientsQuery(array $filters)
@@ -365,13 +418,14 @@ class EmployeeTimeRecordController extends Controller
                     'time_in' => $this->formatTime($timeRecord->time_in),
                     'time_out' => $this->formatTime($timeRecord->time_out),
                     'is_open' => ! $timeRecord->time_out,
+                    'is_administrative' => $timeRecord->assigned_hour_id === null,
                     'registered_hours' => $timeRecord->time_out && $timeRecord->date_out
                         ? $timeRecord->registered_hours
                         : null,
                     'date_in_formatted' => $timeRecord->date_in?->format('d/m/Y'),
                     'date_out_formatted' => $timeRecord->date_out?->format('d/m/Y'),
-                    'client_name' => $timeRecord->assignedHour?->client?->name,
-                    'service_name' => $timeRecord->assignedHour?->service?->name,
+                    'client_name' => $timeRecord->assignedHour?->client?->name ?? __('employee_time_records.without_client'),
+                    'service_name' => $timeRecord->assignedHour?->service?->name ?? __('employee_time_records.administrative_day'),
                     'location_in' => $this->mapLocation($timeRecord->locationIn),
                     'location_out' => $this->mapLocation($timeRecord->locationOut),
                     'notes_count' => $timeRecord->notes->where('type', Note::TYPE_INCIDENT)->count(),

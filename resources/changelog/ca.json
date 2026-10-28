@@ -1,5 +1,29 @@
 [
     {
+        "version": "2.2.0",
+        "date": "28 d’octubre de 2026",
+        "roles": ["admin"],
+        "items": [
+            { "type": "added", "text": "Pots configurar la modalitat de fitxatge lliure a la fitxa del personal administratiu. Permet registrar la jornada sense treballs assignats i conserva l’històric en canviar de modalitat. Per canviar-la, primer cal tancar qualsevol fitxatge obert.", "guide": "employees" },
+            { "type": "added", "text": "Els fitxatges administratius s’inclouen al calendari, als llistats i a les exportacions d’hores com a Jornada administrativa, sense client ni hores assignades. Pots corregir-ne les entrades i sortides indicant el motiu.", "guide": "time-records" },
+            { "type": "added", "text": "Pots organitzar els documents de les empleades en carpetes comunes: crear-les, canviar-ne el nom i eliminar-les quan estiguin buides. Tria la carpeta en pujar o distribuir documents i canvia la d’un arxiu des de la fitxa individual.", "guide": "employee-documents" },
+            { "type": "changed", "text": "Les fitxes de clients i empleades i les notificacions carreguen menys dades en cada consulta. El calendari de la fitxa d’una empleada carrega els serveis de la setmana seleccionada." },
+            { "type": "changed", "text": "L’ajuda inclou instruccions per configurar el fitxatge administratiu i gestionar les carpetes de documents." }
+        ]
+    },
+    {
+        "version": "2.1.0",
+        "date": "27 d’octubre de 2026",
+        "roles": ["admin"],
+        "items": [
+            { "type": "added", "text": "En assignar un servei, pots consultar quines treballadores no estan disponibles i per què: coincidències amb altres serveis o manca de disponibilitat habitual. Els conflictes mostren el client, el servei, la data i l’horari, amb un enllaç per revisar-los." },
+            { "type": "added", "text": "Pots triar quants registres vols veure per pàgina als llistats. La selecció es conserva en cercar, filtrar i ordenar els resultats." },
+            { "type": "added", "text": "Pots indicar a la fitxa d’un client que les factures vagin a nom d’una altra persona o entitat, amb les seves dades fiscals i un correu de facturació opcional." },
+            { "type": "changed", "text": "El calendari de la treballadora mostra un avís en editar o eliminar un servei: el canvi afecta només aquest esdeveniment. Per modificar tota la recurrència, ho has de fer des de la fitxa del client." },
+            { "type": "changed", "text": "El llistat de clients mostra la data de creació de cada fitxa i permet ordenar per aquesta data per trobar les altes més recents." }
+        ]
+    },
+    {
         "version": "2.0.0",
         "date": "15 de setembre de 2026",
         "roles": ["admin"],

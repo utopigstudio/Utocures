@@ -11,6 +11,7 @@ import { useI18n } from 'vue-i18n';
 import type { Column, SortKey, SortDir, Paginated } from '@/types'
 
 interface TimeRecord {
+  assigned_hour?: { id: string; client?: { name: string }; service?: { name: string } } | null
   id: string
   date_in: string
   date_out?: string
@@ -18,7 +19,8 @@ interface TimeRecord {
   time_out?: string
   registered_hours: string
   notes?: Array<{
-    id: string
+    assigned_hour?: { id: string; client?: { name: string }; service?: { name: string } } | null
+  id: string
     content: string
     created_at: string
     user: {
@@ -60,7 +62,7 @@ function formatDateTime(dateStr: string) {
 function onSortChange({ key, dir }: { key: string, dir: SortDir }) {
   router.get(
     route('employee.hours-worked'),
-    { sort: key, dir },
+    { ...props.filters, per_page: props.time_records.per_page, sort: key, dir },
     { preserveState: true, replace: true }
   )
 }
@@ -77,7 +79,8 @@ watchDebounced(
         filter_date: newDate,
         filter_period: newPeriod,
         sort: props.sort,
-        dir: props.dir
+        dir: props.dir,
+        per_page: props.time_records.per_page,
       },
       { preserveState: true, replace: true }
     )
@@ -110,7 +113,7 @@ watchDebounced(
         <template #headerFilters>
           <div class="flex gap-4 w-full px-4">
             <div class="flex-1 min-w-0">
-              <Datepicker variant="filter" :default-value="searchFilter" :placeholder="t('employee_time_records.date')" class="w-full"/>
+              <Datepicker variant="filter" v-model="searchFilter" :placeholder="t('employee_time_records.date')" class="w-full"/>
             </div>
             <div class="flex-1 min-w-0">
               <Select class="w-full" variant="filter" v-model="periodFilter" :options="[
@@ -123,6 +126,8 @@ watchDebounced(
         <template #empty>
           <div class="text-center text-gray-500">{{ $t('layout.no_results_found') }}</div>
         </template>
+        <template #cell-assigned_hour.client.name="{ row }">{{ row.assigned_hour?.client?.name ?? t('employee_time_records.without_client') }}</template>
+        <template #cell-assigned_hour.service.name="{ row }">{{ row.assigned_hour?.service?.name ?? t('employee_time_records.administrative_day') }}</template>
         <template #cell-time_in="{ row }">
           {{ row.time_in?.slice(0, 5) }}
         </template>

@@ -1,6 +1,23 @@
 <?php
 
 return [
+    'clock_in' => 'Iniciar jornada',
+    'clock_out' => 'Finalizar jornada',
+
+    'mode' => 'Modalidad de fichaje',
+    'mode_work' => 'Servicios · por trabajo asignado',
+    'mode_free' => 'Personal administrativo · fichaje libre',
+    'mode_help' => 'Ambas modalidades son empleados. Los usuarios admin solo gestionan la plataforma y no fichan.',
+    'administrative_day' => 'Jornada administrativa',
+    'without_client' => 'Sin cliente',
+    'not_applicable' => 'No aplica',
+    'free_clock_help' => 'Registra tu entrada y salida. Puedes realizar varios tramos al día, sin necesitar un trabajo asignado.',
+    'today_total' => 'Tiempo registrado hoy',
+    'clock_open' => 'En curso',
+    'clock_saved' => 'Fichaje registrado correctamente.',
+    'clock_state_changed' => 'El fichaje ha cambiado. Actualiza la página antes de continuar.',
+    'mode_open_record' => 'Finaliza el fichaje abierto antes de cambiar la modalidad.',
+
     'title' => 'Registros de horas',
     'list_view' => 'Vista lista',
     'calendar_view' => 'Vista calendario',

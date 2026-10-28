@@ -215,6 +215,15 @@ function onDragLeave(e: DragEvent) {
                 />
 
                 <Select
+                  name="time_record_mode"
+                  :label="t('employee_time_records.mode')"
+                  :default-value="props.employee?.time_record_mode ?? 'work'"
+                  :options="[{ label: t('employee_time_records.mode_work'), value: 'work' }, { label: t('employee_time_records.mode_free'), value: 'free' }]"
+                  :required="true"
+                  :error="errors.time_record_mode"
+                />
+                <p class="text-sm text-gray-500">{{ t('employee_time_records.mode_help') }}</p>
+                <Select
                   name="gender_id"
                   :label="$t('employees.gender')"
                   class="mt-1 w-full"

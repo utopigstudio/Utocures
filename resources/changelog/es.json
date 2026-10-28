@@ -1,5 +1,29 @@
 [
     {
+        "version": "2.2.0",
+        "date": "28 de octubre de 2026",
+        "roles": ["admin"],
+        "items": [
+            { "type": "added", "text": "Puedes configurar la modalidad de fichaje libre en la ficha del personal administrativo. Permite registrar la jornada sin trabajos asignados y conserva el histórico al cambiar de modalidad. Para cambiarla, primero hay que cerrar cualquier fichaje abierto.", "guide": "employees" },
+            { "type": "added", "text": "Los fichajes administrativos se incluyen en el calendario, los listados y las exportaciones de horas como Jornada administrativa, sin cliente ni horas asignadas. Puedes corregir sus entradas y salidas indicando el motivo.", "guide": "time-records" },
+            { "type": "added", "text": "Puedes organizar los documentos de las empleadas en carpetas comunes: crearlas, renombrarlas y eliminarlas cuando estén vacías. Elige la carpeta al subir o distribuir documentos y cambia la de un archivo desde la ficha individual.", "guide": "employee-documents" },
+            { "type": "changed", "text": "Las fichas de clientes y empleadas y las notificaciones cargan menos datos en cada consulta. El calendario de la ficha de una empleada carga los servicios de la semana seleccionada." },
+            { "type": "changed", "text": "La ayuda incluye instrucciones para configurar el fichaje administrativo y gestionar las carpetas de documentos." }
+        ]
+    },
+    {
+        "version": "2.1.0",
+        "date": "27 de octubre de 2026",
+        "roles": ["admin"],
+        "items": [
+            { "type": "added", "text": "Al asignar un servicio, puedes consultar qué trabajadoras no están disponibles y por qué: coincidencias con otros servicios o falta de disponibilidad habitual. Los conflictos muestran el cliente, el servicio, la fecha y el horario, con un enlace para revisarlos." },
+            { "type": "added", "text": "Puedes elegir cuántos registros ver por página en los listados. La selección se conserva al buscar, filtrar y ordenar los resultados." },
+            { "type": "added", "text": "Puedes indicar en la ficha de un cliente que las facturas vayan a nombre de otra persona o entidad, con sus datos fiscales y un correo de facturación opcional." },
+            { "type": "changed", "text": "El calendario de la trabajadora muestra un aviso al editar o eliminar un servicio: el cambio afecta solo a ese evento. Para modificar toda la recurrencia, debes hacerlo desde la ficha del cliente." },
+            { "type": "changed", "text": "El listado de clientes muestra la fecha de creación de cada ficha y permite ordenar por ella para localizar las altas más recientes." }
+        ]
+    },
+    {
         "version": "2.0.0",
         "date": "15 de septiembre de 2026",
         "roles": ["admin"],

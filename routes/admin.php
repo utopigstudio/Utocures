@@ -14,6 +14,7 @@ use App\Http\Controllers\ContractTemplateController;
 use App\Http\Controllers\EmployeeAssignedHourController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeDocumentController;
+use App\Http\Controllers\EmployeeDocumentFolderController;
 use App\Http\Controllers\EmployeeStatusPeriodController;
 use App\Http\Controllers\EmployeeTimeRecordController;
 use App\Http\Controllers\FileController;
@@ -96,6 +97,9 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
 
     Route::resource('employee-time-records', EmployeeTimeRecordController::class)->only(['index', 'update']);
 
+    Route::resource('employee-document-folders', EmployeeDocumentFolderController::class)
+        ->parameters(['employee-document-folders' => 'folder'])->only(['store', 'update', 'destroy']);
+
     Route::prefix('employee-documents')->name('employee-documents.')->group(function () {
         Route::get('/', [EmployeeDocumentController::class, 'index'])->name('index');
         Route::post('/', [EmployeeDocumentController::class, 'store'])->name('store');
@@ -106,6 +110,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::prefix('files')->name('files.')->group(function () {
         Route::post('/', [FileController::class, 'store'])->name('store');
         Route::get('{file}/download', [FileController::class, 'download'])->name('download');
+        Route::patch('{file}/folder', [FileController::class, 'move'])->name('move');
         Route::delete('{file}', [FileController::class, 'destroy'])->name('destroy');
     });
 

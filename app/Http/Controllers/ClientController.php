@@ -23,6 +23,7 @@ use App\Services\AssignedHoursSchedulingService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Inertia\Response;
 use Maatwebsite\Excel\Facades\Excel;
 
 class ClientController extends Controller
@@ -72,25 +73,21 @@ class ClientController extends Controller
         ]);
     }
 
-    public function show(Client $client)
+    public function show(Client $client): Response
     {
-        $services = Service::select('id', 'name')->get();
-        $assigned_hours_templates = $client->assignedHoursTemplates()->with([
-            'service',
-            'employee:id,phone,user_id',
-            'employee.user:id,name,email,avatar',
-        ])->get();
-        $client->load([
-            'services',
-            'assignedCharacteristics.characteristic',
-            'user:id,name,email,is_active,invitation_accepted_at,created_at',
-        ]);
-
         return Inertia::render('clients/View', [
-            'client' => $client,
-            'services' => $services,
-            'files' => $client->files()->get(),
-            'assigned_hours_templates' => $assigned_hours_templates,
+            'client' => fn () => $client->load([
+                'services',
+                'assignedCharacteristics.characteristic',
+                'user:id,name,email,is_active,invitation_accepted_at,created_at',
+            ]),
+            'services' => fn () => Service::select('id', 'name')->get(),
+            'files' => fn () => $client->files()->get(),
+            'assigned_hours_templates' => fn () => $client->assignedHoursTemplates()->with([
+                'service',
+                'employee:id,phone,user_id',
+                'employee.user:id,name,email,avatar',
+            ])->get(),
         ]);
     }
 

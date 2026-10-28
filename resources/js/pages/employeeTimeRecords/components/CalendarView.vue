@@ -21,6 +21,7 @@ interface CalendarRecord {
   date_out?: string | null
   time_in: string
   time_out?: string | null
+  is_administrative?: boolean
   is_open: boolean
   registered_hours: string | null
   date_in_formatted: string
@@ -360,7 +361,7 @@ function formatAccuracy(location: TimeRecordLocation) {
               type="date"
               :label="t('employee_time_records.date_out')"
               :error="editForm.errors.date_out"
-              :disabled="selectedTimeRecord?.is_open"
+              :disabled="selectedTimeRecord?.is_open && !selectedTimeRecord?.is_administrative"
             />
 
             <InputText
@@ -369,11 +370,11 @@ function formatAccuracy(location: TimeRecordLocation) {
               type="time"
               :label="t('employee_time_records.time_out')"
               :error="editForm.errors.time_out"
-              :disabled="selectedTimeRecord?.is_open"
+              :disabled="selectedTimeRecord?.is_open && !selectedTimeRecord?.is_administrative"
             />
           </div>
 
-          <p v-if="selectedTimeRecord?.is_open" class="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
+          <p v-if="selectedTimeRecord?.is_open && !selectedTimeRecord?.is_administrative" class="rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800">
             {{ t('employee_time_records.employee_must_close_record') }}
           </p>
 

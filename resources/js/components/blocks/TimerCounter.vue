@@ -7,7 +7,8 @@ import { computed, onMounted, onUnmounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 interface Props {
-    work: Work;
+    work?: Work;
+    freeClock?: boolean;
     hasActiveWork?: boolean;
     size?: 'small' | 'large';
 }
@@ -22,10 +23,11 @@ const isRecording = ref(false);
 const elapsed = ref(0);
 const isSubmitting = ref(false);
 const locationError = ref<string | null>(null);
-const workId = props.size === 'small' ? props.work.assigned_hour?.id : props.work.id;
+const workId = props.size === 'small' ? props.work?.assigned_hour?.id : props.work?.id;
 let interval: ReturnType<typeof setInterval> | null = null;
 
-const startTimeKey = `work_start_time_${workId}`;
+const activeRecordId = ref<string | null>(null);
+const startTimeKey = props.freeClock ? `employee_clock_${page.props.auth.user?.id}` : `work_start_time_${workId}`;
 const locationRequired = computed(() => page.props.app_configuration?.require_time_record_location === true);
 
 const formattedTime = computed(() => {
@@ -91,9 +93,10 @@ async function resolveLocation() {
 
 async function checkTimeRecord() {
     try {
-        const res = await fetch(route('employee.time-record.check', { work: workId }));
+        const res = await fetch(props.freeClock ? route('employee.clock.show') : route('employee.time-record.check', { work: workId }));
         const data = await res.json();
 
+        activeRecordId.value = data.time_record?.id ?? null;
         if (!data.time_record) {
             resetTimer();
         } else if (!isRecording.value) {
@@ -121,9 +124,10 @@ async function sendTimeRecord() {
     }
 
     router.post(
-        route('employee.time-record.store', { work: workId }),
+        props.freeClock ? route('employee.clock.store') : route('employee.time-record.store', { work: workId }),
         {
             location,
+            ...(props.freeClock ? { action: isRecording.value ? 'out' : 'in', time_record_id: activeRecordId.value } : {}),
         },
         {
             onSuccess: () => {
@@ -132,6 +136,7 @@ async function sendTimeRecord() {
                     emit('recording-finished');
                 } else {
                     checkTimeRecord();
+                    if (props.freeClock) emit('recording-finished');
                 }
             },
             onError: (errors) => {
@@ -214,7 +219,7 @@ onUnmounted(() => {
 
 <template>
     <div v-if="size === 'small'" class="mx-auto my-4 text-center">
-        <div class="mb-2 text-xs">{{ work.assigned_hour?.service.name }} - {{ work.assigned_hour?.client.name }}</div>
+        <div class="mb-2 text-xs">{{ work?.assigned_hour?.service.name }} - {{ work?.assigned_hour?.client.name }}</div>
         <div class="flex flex-row items-center justify-center gap-4">
             <Button variant="destructive" size="sm" :disabled="isSubmitting" @click.prevent="toggleRecording">
                 <Clock class="size-4" />
@@ -234,7 +239,7 @@ onUnmounted(() => {
         <div v-if="!isRecording" class="w-full">
             <Button size="lg" class="w-full" @click.prevent="toggleRecording" :disabled="props.hasActiveWork || isSubmitting">
                 <Clock class="size-4 font-semibold" />
-                <span class="text-sm leading-5 font-semibold">{{ isSubmitting ? $t('employee_time_records.getting_location') : $t('employee_time_records.start_record') }}</span>
+                <span class="text-sm leading-5 font-semibold">{{ isSubmitting ? $t('employee_time_records.getting_location') : (freeClock ? $t('employee_time_records.clock_in') : $t('employee_time_records.start_record')) }}</span>
             </Button>
             <div v-if="props.hasActiveWork" class="mt-2 text-center text-sm leading-5 font-medium text-gray-600">
                 {{ $t('employee_time_records.active_record_warning') }}
@@ -244,7 +249,7 @@ onUnmounted(() => {
         <div v-else class="w-full">
             <Button variant="destructive" size="lg" class="w-full" :disabled="isSubmitting" @click.prevent="toggleRecording">
                 <Clock class="size-4 font-semibold" />
-                <span class="text-sm leading-5 font-semibold">{{ isSubmitting ? $t('employee_time_records.getting_location') : $t('employee_time_records.finish_record') }}</span>
+                <span class="text-sm leading-5 font-semibold">{{ isSubmitting ? $t('employee_time_records.getting_location') : (freeClock ? $t('employee_time_records.clock_out') : $t('employee_time_records.finish_record')) }}</span>
             </Button>
             <p v-if="locationError" class="mt-2 text-center text-sm font-medium text-red-600">{{ locationError }}</p>
         </div>

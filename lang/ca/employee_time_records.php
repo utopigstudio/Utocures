@@ -1,6 +1,23 @@
 <?php
 
 return [
+    'clock_in' => 'Iniciar jornada',
+    'clock_out' => 'Finalitzar jornada',
+
+    'mode' => 'Modalitat de fitxatge',
+    'mode_work' => 'Serveis · per treball assignat',
+    'mode_free' => 'Personal administratiu · fitxatge lliure',
+    'mode_help' => 'Ambdues modalitats són empleats. Els usuaris admin només gestionen la plataforma i no fitxen.',
+    'administrative_day' => 'Jornada administrativa',
+    'without_client' => 'Sense client',
+    'not_applicable' => 'No escau',
+    'free_clock_help' => 'Registra l’entrada i la sortida. Pots fer diversos trams al dia, sense necessitar un treball assignat.',
+    'today_total' => 'Temps registrat avui',
+    'clock_open' => 'En curs',
+    'clock_saved' => 'Fitxatge registrat correctament.',
+    'clock_state_changed' => 'El fitxatge ha canviat. Actualitza la pàgina abans de continuar.',
+    'mode_open_record' => 'Finalitza el fitxatge obert abans de canviar la modalitat.',
+
     'title' => 'Registres d\'hores',
     'list_view' => 'Vista llista',
     'calendar_view' => 'Vista calendari',

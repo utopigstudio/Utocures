@@ -11,7 +11,10 @@ const props = defineProps({
   select: { type: Function, default: null },
   formatCallback: { type: Function },
   mode: { type: String, default: 'compact' },
+  initialDate: { type: String, default: undefined },
 })
+
+const emit = defineEmits(['dates-change'])
 
 const calendarEvents = computed(() => {
   if (props.formatCallback) {
@@ -25,6 +28,10 @@ const showHeader = computed(() => props.mode === 'full')
 const calendarOptions = ref({
   plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
   initialView: 'timeGridWeek',
+  initialDate: props.initialDate,
+  datesSet(info) {
+    emit('dates-change', info.startStr.slice(0, 10))
+  },
   headerToolbar: showHeader.value
     ? {
         left: 'title',

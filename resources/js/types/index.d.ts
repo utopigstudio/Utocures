@@ -165,7 +165,13 @@ export interface TimeRecord {
   time_end: string;
 }
 
+export interface DocumentFolder {
+    id: string;
+    name: string;
+}
+
 export interface File {
+    employee_document_folder_id?: string | null;
   name: string;
   created_at: string;
   url: string;
@@ -432,6 +438,7 @@ export interface ContractTemplate {
 }
 
 export interface Employee {
+    time_record_mode?: 'work' | 'free';
   id: string;
   name: string;
   birth_date?: string;
@@ -573,6 +580,7 @@ export interface EmployeeOption {
 }
 
 export interface DistributedDocument {
+    employee_document_folder_id: string | null;
   id: string;
   name: string;
   employee_count: number;

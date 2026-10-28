@@ -37,7 +37,25 @@ class DashboardController extends Controller
                 ->orderByDesc('created_at')
                 ->get();
 
+            $clockRecords = $employee->time_record_mode === Employee::TIME_RECORD_FREE
+                ? $employee->timeRecords()->whereNull('assigned_hour_id')->whereDate('date_in', '<=', today())
+                    ->where(fn ($query) => $query->whereNull('date_out')->orWhereDate('date_out', '>=', today()))
+                    ->orderBy('date_in')->orderBy('time_in')->get()
+                : collect();
+            $todayMinutes = $clockRecords->sum(function (EmployeeTimeRecord $record): int {
+                if (! $record->time_out || ! $record->date_out) {
+                    return 0;
+                }
+                $start = CarbonImmutable::parse($record->getRawOriginal('date_in').' '.$record->time_in)->max(today());
+                $end = CarbonImmutable::parse($record->getRawOriginal('date_out').' '.$record->time_out)->min(today()->endOfDay());
+
+                return max(0, (int) $start->diffInMinutes($end));
+            });
+
             return Inertia::render('EmployeeDashboard', [
+                'time_record_mode' => $employee->time_record_mode,
+                'clock_records' => $clockRecords,
+                'clock_today_minutes' => $todayMinutes,
                 'works' => $works,
                 'active_work' => $active_work,
                 'announcements' => $announcements,

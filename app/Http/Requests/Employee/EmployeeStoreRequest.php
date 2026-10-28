@@ -2,9 +2,9 @@
 
 namespace App\Http\Requests\Employee;
 
+use App\Models\Country;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use App\Models\Country;
 
 class EmployeeStoreRequest extends FormRequest
 {
@@ -16,6 +16,7 @@ class EmployeeStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'time_record_mode' => ['sometimes', 'required', Rule::in(['work', 'free'])],
             'name' => ['required', 'string', 'max:255'],
             'nif' => ['required', 'string', 'max:10', Rule::unique('employees', 'nif')->ignore($this->employee)],
             'birth_date' => ['nullable', 'date'],

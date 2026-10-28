@@ -2,21 +2,25 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Filterable;
 use Carbon\CarbonInterface;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use App\Models\Traits\Filterable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Employee extends Model implements AuditableContract
 {
-    use HasFactory, HasUuids, SoftDeletes, Filterable, Auditable;
+    use Auditable, Filterable, HasFactory, HasUuids, SoftDeletes;
+
+    public const TIME_RECORD_WORK = 'work';
+
+    public const TIME_RECORD_FREE = 'free';
 
     public const STATUS_ACTIVE = 'active';
 
@@ -142,6 +146,10 @@ class Employee extends Model implements AuditableContract
      */
     public function getProgrammedHoursAttribute(): ?string
     {
+        if ($this->time_record_mode === self::TIME_RECORD_FREE && $this->assignedHours->isEmpty()) {
+            return __('employee_time_records.not_applicable');
+        }
+
         $totalMinutes = $this->assignedHours->append('programmed_hours')->sum('programmed_hours');
 
         return sprintf('%02d:%02d', floor($totalMinutes / 60), $totalMinutes % 60);
@@ -191,7 +199,7 @@ class Employee extends Model implements AuditableContract
     {
         $meta = static::STATUSES[$status] ?? null;
 
-        if (!$meta) {
+        if (! $meta) {
             return ucfirst(str_replace('_', ' ', $status));
         }
 

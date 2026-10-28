@@ -2,18 +2,18 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class EmployeeTimeRecord extends Model implements AuditableContract
 {
-    use HasFactory, HasUuids, Auditable;
+    use Auditable, HasFactory, HasUuids;
 
     protected $guarded = ['id'];
 
@@ -70,6 +70,10 @@ class EmployeeTimeRecord extends Model implements AuditableContract
      */
     public function getRegisteredHoursAttribute(): string
     {
+        if (! $this->date_out || ! $this->time_out) {
+            return '0';
+        }
+
         $start = $this->date_in->setTimeFromTimeString($this->time_in);
         $end = $this->date_out?->setTimeFromTimeString($this->time_out);
 

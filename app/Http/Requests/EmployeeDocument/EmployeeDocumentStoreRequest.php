@@ -15,6 +15,7 @@ class EmployeeDocumentStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'employee_document_folder_id' => ['required', 'uuid', 'exists:employee_document_folders,id'],
             'employee_ids' => ['required', 'array', 'min:1'],
             'employee_ids.*' => [
                 'required',

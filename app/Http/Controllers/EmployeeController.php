@@ -13,6 +13,8 @@ use App\Models\Characteristic;
 use App\Models\Configuration;
 use App\Models\Country;
 use App\Models\Employee;
+use App\Models\EmployeeDocumentFolder;
+use App\Models\EmployeeStatusPeriod;
 use App\Models\EmployeeTimeRecord;
 use App\Models\EmployeeTimeRecordLocation;
 use App\Models\Gender;
@@ -20,13 +22,18 @@ use App\Models\Service;
 use App\Models\User;
 use App\Models\UserRole;
 use App\Services\EmployeeStatusPeriodService;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Inertia\Response;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
@@ -68,36 +75,43 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function show(Employee $employee, EmployeeStatusPeriodService $statusPeriodService)
+    public function show(Request $request, Employee $employee, EmployeeStatusPeriodService $statusPeriodService): Response
     {
-        $employee->load(['notes', 'notes.user', 'services', 'user:id,name,email,avatar', 'assignedCharacteristics.characteristic']);
-        $files = $employee->files()->get();
-        $notes = $employee->notes()->get();
-        $hours = $employee->assignedHours()
-            ->with(['service', 'client', 'employee.user:id,name,avatar', 'timeRecords'])
-            ->withCount('timeRecords')
-            ->get();
-        $statusPeriods = $employee->statusPeriods()
-            ->with('updatedBy:id,name')
-            ->orderByDesc('start_at')
-            ->get();
-        $activeStatusPeriod = $employee->activeStatusPeriodAt(now())?->loadMissing('updatedBy:id,name');
-        $nextStatusPeriod = $employee->nextStatusPeriodAfter(now())?->loadMissing('updatedBy:id,name');
-        $currentStatusCode = $employee->statusForMoment(now());
+        $data = $request->validate(['filter_date' => 'nullable|date_format:Y-m-d']);
+        $weekStart = Carbon::parse($data['filter_date'] ?? today()->toDateString())->startOfWeek(Carbon::MONDAY);
+        $weekEnd = $weekStart->copy()->addDays(6);
+        $periods = null;
+        $statusPeriods = function () use ($employee, &$periods): Collection {
+            return $periods ??= $employee->statusPeriods()
+                ->with('updatedBy:id,name')
+                ->orderByDesc('start_at')
+                ->get();
+        };
+        $moment = now();
+        $activeStatusPeriod = fn (): ?EmployeeStatusPeriod => $statusPeriods()->first(
+            fn (EmployeeStatusPeriod $period): bool => $period->start_at->lte($moment) && $period->end_at->gte($moment),
+        );
 
         return Inertia::render('employees/View', [
-            'employee' => $employee,
-            'files' => $files,
-            'notes' => $notes,
-            'hours' => $hours,
+            'employee' => fn () => $employee->load(['services', 'user:id,name,email,avatar', 'assignedCharacteristics.characteristic']),
+            'files' => fn () => $employee->files()->get(),
+            'document_folders' => fn () => EmployeeDocumentFolder::orderBy('name')->get(['id', 'name']),
+            'notes' => fn () => $employee->notes()->with('user:id,name,avatar')->get(),
+            'hours' => fn () => $employee->assignedHours()
+                ->whereBetween('date', [$weekStart->toDateString(), $weekEnd->toDateString()])
+                ->with(['service', 'client:id,name', 'employee:id,user_id', 'employee.user:id,name,avatar', 'timeRecords'])
+                ->withCount('timeRecords')
+                ->get(),
+            'calendar_date' => $weekStart->toDateString(),
             'status_periods' => $statusPeriods,
-            'vacation_balances' => $statusPeriodService->vacationBalances($employee, $statusPeriods),
-            'current_status' => [
-                'code' => $currentStatusCode,
-                'label' => Employee::statusLabel($currentStatusCode),
-            ],
+            'vacation_balances' => fn () => $statusPeriodService->vacationBalances($employee, $statusPeriods()),
+            'current_status' => function () use ($activeStatusPeriod): array {
+                $code = $activeStatusPeriod()?->type ?? Employee::STATUS_ACTIVE;
+
+                return ['code' => $code, 'label' => Employee::statusLabel($code)];
+            },
             'active_status_period' => $activeStatusPeriod,
-            'next_status_period' => $nextStatusPeriod,
+            'next_status_period' => fn (): ?EmployeeStatusPeriod => $statusPeriods()->reverse()->first(fn (EmployeeStatusPeriod $period): bool => $period->start_at->gt($moment)),
         ]);
     }
 
@@ -205,36 +219,43 @@ class EmployeeController extends Controller
         return to_route('employees.index')->with('success', "Empleado {$employee->name} creado correctamente.");
     }
 
-    public function update(EmployeeStoreRequest $request, Employee $employee)
+    public function update(EmployeeStoreRequest $request, Employee $employee): RedirectResponse
     {
-        $data = $request->validated();
-        $employeeData = ['name' => $data['name'], 'email' => $data['email']];
+        return DB::transaction(function () use ($request, $employee): RedirectResponse {
+            $employee = Employee::whereKey($employee->id)->lockForUpdate()->firstOrFail();
+            $data = $request->validated();
+            if (isset($data['time_record_mode']) && $data['time_record_mode'] !== $employee->time_record_mode && $employee->timeRecords()->whereNull('time_out')->exists()) {
+                throw ValidationException::withMessages(['time_record_mode' => __('employee_time_records.mode_open_record')]);
+            }
 
-        if ($request->has('avatar')) {
-            $employeeData['avatar'] = $data['avatar'];
-        }
+            $employeeData = ['name' => $data['name'], 'email' => $data['email']];
 
-        $employee->user->update($employeeData);
+            if ($request->has('avatar')) {
+                $employeeData['avatar'] = $data['avatar'];
+            }
 
-        if ($request->has('is_active') && $employee->user->is_active !== $data['is_active']) {
-            $employee->user->update(['is_active' => $data['is_active']]);
-        }
+            $employee->user->update($employeeData);
 
-        $employee->update($request->except(['name', 'email', 'is_active', 'services', 'characteristics']));
+            if ($request->has('is_active') && $employee->user->is_active !== $data['is_active']) {
+                $employee->user->update(['is_active' => $data['is_active']]);
+            }
 
-        if ($request->filled('services')) {
-            $employee->auditSync('services', $data['services']);
-        } else {
-            $employee->auditDetach('services');
-        }
+            $employee->update($request->except(['name', 'email', 'is_active', 'services', 'characteristics']));
 
-        if ($request->filled('characteristics')) {
-            $employee->auditSync('assignedCharacteristics', $data['characteristics']);
-        } else {
-            $employee->auditDetach('assignedCharacteristics');
-        }
+            if ($request->filled('services')) {
+                $employee->auditSync('services', $data['services']);
+            } else {
+                $employee->auditDetach('services');
+            }
 
-        return to_route('employees.index')->with('success', "Empleado {$employee->name} actualizado correctamente.");
+            if ($request->filled('characteristics')) {
+                $employee->auditSync('assignedCharacteristics', $data['characteristics']);
+            } else {
+                $employee->auditDetach('assignedCharacteristics');
+            }
+
+            return to_route('employees.index')->with('success', "Empleado {$employee->name} actualizado correctamente.");
+        });
     }
 
     public function destroy(Employee $employee)
@@ -260,7 +281,7 @@ class EmployeeController extends Controller
 
         if (! $hour) {
             return response()->json([
-                'message' => 'No se encontró el registro.',
+                'message' => 'No se encontrÃ³ el registro.',
             ], 404);
         }
 
@@ -301,6 +322,7 @@ class EmployeeController extends Controller
 
     public function storeTimeRecord(Request $request, AssignedHour $work)
     {
+        abort_unless($request->user()?->employee?->time_record_mode === Employee::TIME_RECORD_WORK, 403);
         $this->authorize('view', $work);
         $employee = $request->user()?->employee;
         $locationRequired = (bool) Configuration::query()->value('require_time_record_location');
@@ -317,19 +339,16 @@ class EmployeeController extends Controller
             return back()->withErrors(['employee' => 'No se pudo obtener la empleada autenticada.']);
         }
 
-        $timeRecord = EmployeeTimeRecord::where('assigned_hour_id', $work->id)
-            ->where('employee_id', $employee->id)
-            ->whereNull('time_out')
-            ->orderBy('created_at', 'desc')
-            ->first();
+        DB::transaction(function () use ($data, $employee, $work): void {
+            $employee = Employee::whereKey($employee->id)->lockForUpdate()->firstOrFail();
+            abort_unless($employee->time_record_mode === Employee::TIME_RECORD_WORK, 403);
+            $timeRecord = EmployeeTimeRecord::where('assigned_hour_id', $work->id)
+                ->where('employee_id', $employee->id)->whereNull('time_out')->latest('created_at')->first();
+            if (! $timeRecord && $employee->timeRecords()->whereNull('time_out')->exists()) {
+                throw ValidationException::withMessages(['time_record' => __('employee_time_records.active_record_warning')]);
+            }
+            $recordedAt = now();
 
-        if (! $timeRecord && $employee->timeRecords()->whereNull('time_out')->exists()) {
-            return back()->withErrors(['time_record' => 'Ya tienes un registro activo, debes finalizarlo antes de comenzar uno nuevo.']);
-        }
-
-        $recordedAt = now();
-
-        DB::transaction(function () use ($data, $employee, $recordedAt, $timeRecord, $work) {
             if ($timeRecord) {
                 $timeRecord->update([
                     'date_out' => $recordedAt->toDateString(),
@@ -428,7 +447,7 @@ class EmployeeController extends Controller
         ]);
     }
 
-    public function hoursWorked()
+    public function hoursWorked(Request $request): Response|JsonResponse
     {
         $employee = Auth::user()?->employee;
 
@@ -438,19 +457,42 @@ class EmployeeController extends Controller
             ], 400);
         }
 
+        $data = $request->validate([
+            'filter_date' => 'nullable|date_format:Y-m-d',
+            'filter_period' => 'nullable|in:monthly,yearly',
+            'per_page' => 'nullable|integer|in:10,15,25,50,100',
+            'sort' => 'nullable|in:date_in,date_out,time_in,time_out,created_at,id',
+            'dir' => 'nullable|in:asc,desc',
+        ]);
+        $filters = [
+            'filter_date' => $data['filter_date'] ?? today()->toDateString(),
+            'filter_period' => $data['filter_period'] ?? 'monthly',
+        ];
+        $selectedDate = Carbon::parse($filters['filter_date']);
+        $rangeStart = $filters['filter_period'] === 'yearly' ? $selectedDate->copy()->startOfYear() : $selectedDate->copy()->startOfMonth();
+        $rangeEnd = $filters['filter_period'] === 'yearly' ? $selectedDate->copy()->endOfYear() : $selectedDate->copy()->endOfMonth();
+        $sort = $data['sort'] ?? 'date_in';
+        $dir = $data['dir'] ?? 'desc';
+
         $time_records = $employee->timeRecords()
+            ->whereBetween('date_in', [$rangeStart->toDateString(), $rangeEnd->toDateString()])
             ->with([
                 'assignedHour',
                 'assignedHour.timeRecords',
-                'assignedHour.service',
-                'assignedHour.client',
+                'assignedHour.service:id,name',
+                'assignedHour.client:id,name',
                 'notes.user:id,name,avatar',
             ])
-            ->orderBy('date_in', 'desc')
-            ->get();
+            ->orderBy($sort, $dir)
+            ->orderBy('id')
+            ->paginate((int) ($data['per_page'] ?? 15))
+            ->withQueryString();
 
         return Inertia::render('employees/HoursWorked', [
             'time_records' => $time_records,
+            'filters' => $filters,
+            'sort' => $sort,
+            'dir' => $dir,
         ]);
     }
 }

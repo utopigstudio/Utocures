@@ -138,22 +138,21 @@ class HandleInertiaRequests extends Middleware
             return null;
         }
 
-        $unreadNotifications = AdminNotification::query()
-            ->where('read_at', '=', null)
+        $unreadCount = AdminNotification::query()->pending()->count();
+        $notifications = AdminNotification::query()
+            ->pending()
             ->latest()
+            ->limit(10)
             ->get();
 
         $readNotifications = AdminNotification::query()
+            ->whereNotNull('read_at')
             ->latest('created_at')
-            ->get()
-            ->filter(fn (AdminNotification $notification) => $notification->read_at !== null)
-            ->take(20)
-            ->values();
-
-        $notifications = $unreadNotifications->take(10)->values();
+            ->limit(20)
+            ->get();
 
         return [
-            'count' => $unreadNotifications->count(),
+            'count' => $unreadCount,
             'items' => $notifications
                 ->map(fn (AdminNotification $notification) => [
                     'id' => $notification->id,

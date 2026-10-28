@@ -9,6 +9,7 @@ use App\Models\Contract;
 use App\Models\Employee;
 use App\Models\File;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -21,6 +22,18 @@ class FileController extends Controller
         $model->files()->create($request->validated());
 
         return back()->with('success', 'Archivo subido correctamente.');
+    }
+
+    public function move(Request $request, File $file): RedirectResponse
+    {
+        [$model, $type, $id] = $this->resolveResource($request);
+        $this->verifyOwnership($file, $model, $type, $id);
+        abort_unless($model instanceof Employee, 404);
+        $file->update($request->validate([
+            'employee_document_folder_id' => ['required', 'uuid', 'exists:employee_document_folders,id'],
+        ]));
+
+        return back()->with('success', __('employee_documents.document_moved'));
     }
 
     public function download(Request $request, File $file)

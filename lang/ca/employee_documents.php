@@ -1,6 +1,28 @@
 <?php
 
 return [
+    'folder_help' => 'Necessites una categoria nova? A Documents per a treballadores, prem Gestionar carpetes, escriu el nom i prem Crear carpeta. Les carpetes són comunes a totes les treballadores.',
+    'folder_help_individual' => 'Necessites una categoria nova? Crea-la des de Documents per a treballadores → Gestionar carpetes → Crear carpeta i després torna a aquesta fitxa per seleccionar-la.',
+    'folder_navigation' => 'Navegació de carpetes',
+    'back_to_folders' => 'Tornar a les carpetes',
+    'folder_file_count' => '{count} fitxers',
+    'no_folders' => 'No hi ha carpetes.',
+    'folder_empty' => 'Aquesta carpeta està buida.',
+
+    'delete_folder' => 'Eliminar carpeta',
+    'folder' => 'Carpeta',
+    'all_folders' => 'Totes les carpetes',
+    'manage_folders' => 'Gestionar carpetes',
+    'shared_folders' => 'Les carpetes són comunes a totes les treballadores. Només es poden eliminar carpetes buides.',
+    'folder_name' => 'Nom de la carpeta',
+    'create_folder' => 'Crear carpeta',
+    'rename_folder' => 'Canviar el nom',
+    'move_document' => 'Moure document a una carpeta',
+    'folder_saved' => 'Carpeta desada correctament.',
+    'folder_deleted' => 'Carpeta eliminada correctament.',
+    'folder_not_empty' => 'No es pot eliminar una carpeta que conté documents.',
+    'document_moved' => 'Document mogut correctament.',
+
     'title' => 'Documents per a treballadores',
     'description' => 'Distribueix un o diversos documents a totes les treballadores seleccionades des d’un únic lloc.',
     'new_distribution' => 'Nova distribució',
@@ -28,7 +50,7 @@ return [
     'delete' => 'Eliminar la distribució de :name',
     'empty' => 'Encara no s’han distribuït documents.',
     'uploaded' => '{1} :documents document distribuït a :employees treballadores.|[2,*] :documents documents distribuïts a :employees treballadores.',
-    'deleted' => 'Document eliminat de totes les treballadores correctament.',
+    'deleted' => 'Document eliminat de les treballadores d’aquesta carpeta correctament.',
     'validation_employees_required' => 'Selecciona almenys una treballadora.',
     'validation_employee_invalid' => 'Una de les treballadores seleccionades no està disponible.',
     'validation_documents_required' => 'Selecciona almenys un document.',

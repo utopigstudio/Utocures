@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Support\ChangelogCatalog;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class ChangelogController extends Controller
 {
@@ -16,7 +16,7 @@ class ChangelogController extends Controller
         return response()->json(['entries' => $entries])->header('Cache-Control', 'private, no-store');
     }
 
-    public function markSeen(Request $request): Response
+    public function markSeen(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'version' => ['required', 'string', 'max:30'],
@@ -24,6 +24,6 @@ class ChangelogController extends Controller
 
         $request->user()->update(['last_seen_changelog_version' => $validated['version']]);
 
-        return response()->noContent();
+        return back();
     }
 }

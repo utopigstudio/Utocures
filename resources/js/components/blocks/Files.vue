@@ -1,15 +1,17 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import DocumentFolderBrowser from '@/components/blocks/DocumentFolderBrowser.vue'
+import { computed, ref } from 'vue'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose, DialogDescription } from '@/components/ui/dialog'
 import { DataTable } from '@/components/blocks'
 import { Button } from '@/components/ui/button'
-import { Form } from '@inertiajs/vue3'
+import { Form, router } from '@inertiajs/vue3'
 import { useI18n } from 'vue-i18n'
 import { File, Download, Camera } from 'lucide-vue-next'
 import type { Column, File as FileType } from '@/types'
 
 interface Props {
+  folders?: import('@/types').DocumentFolder[]
   files: Array<FileType> | undefined
   resource: string
   parentId: string
@@ -24,6 +26,11 @@ const columns: Column<FileType>[] = [
   { key: 'created_at', label: t('files.date_created'), sortable: true }
 ]
 
+const folderFilter = ref('')
+const visibleFiles = computed(() => props.resource === 'employee' && folderFilter.value ? props.files?.filter(file => file.employee_document_folder_id === folderFilter.value) : props.files)
+function moveFile(fileId: string, event: Event) {
+  router.patch(route('files.move', { file: fileId, resource: props.resource, id: props.parentId }), { employee_document_folder_id: (event.target as HTMLSelectElement).value }, { preserveScroll: true, onSuccess: () => emit('saved') })
+}
 const modalShow = ref(false)
 const selectedFile = ref<File | null>(null)
 const previewUrl = ref<string | null>(null)
@@ -88,18 +95,23 @@ function resetModal() {
     </CardHeader>
 
     <CardContent>
+      <DocumentFolderBrowser :enabled="resource === 'employee'" v-model="folderFilter" :folders="folders ?? []" :items="files ?? []">
+      <p v-if="$page.props.errors.employee_document_folder_id" class="mb-3 text-sm text-red-600">{{ $page.props.errors.employee_document_folder_id }}</p>
       <DataTable
         v-if="files"
-        :items="files"
+        :items="visibleFiles ?? []"
         :columns="columns"
         :inlineActions="['delete']"
         :deleteRouteParams="(payload: any) => route('files.destroy', { file: payload.id, resource: props.resource, id: props.parentId })"
         resource="files"
       >
         <template #inlineActions="{ row }">
+          <select v-if="resource === 'employee'" :value="row.employee_document_folder_id" :aria-label="t('employee_documents.move_document')" class="h-9 min-w-40 shrink-0 rounded border py-1 pr-10 pl-3 text-sm" @change="moveFile(row.id, $event)">
+            <option v-for="folder in folders" :key="folder.id" :value="folder.id">{{ folder.name }}</option>
+          </select>
           <a
             :href="route('files.download', { file: row.id, resource: props.resource, id: props.parentId })"
-            class="text-primary hover:underline"
+            class="text-primary inline-flex size-9 shrink-0 items-center justify-center rounded-md hover:bg-gray-100"
             download
           >
             <Download class="size-5" />
@@ -109,6 +121,7 @@ function resetModal() {
           <div class="text-center text-gray-500">{{ $t('layout.no_results_found') }}</div>
         </template>
       </DataTable>
+      </DocumentFolderBrowser>
 
       <Dialog v-model:open="modalShow" @update:open="resetModal">
         <DialogContent class="sm:max-w-3xl" :showCloseButton="true">
@@ -130,6 +143,14 @@ function resetModal() {
               </DialogTitle>
             </DialogHeader>
 
+            <label v-if="resource === 'employee'" class="block text-sm font-medium">
+              {{ t('employee_documents.folder') }}
+              <select name="employee_document_folder_id" required class="mt-2 block w-full rounded-md border px-3 py-2">
+                <option v-for="folder in folders" :key="folder.id" :value="folder.id" :selected="folder.id === folderFilter">{{ folder.name }}</option>
+              </select>
+              <span v-if="errors.employee_document_folder_id" class="text-red-600">{{ errors.employee_document_folder_id }}</span>
+            </label>
+            <p v-if="resource === 'employee'" class="text-sm text-gray-500">{{ t('employee_documents.folder_help_individual') }}</p>
             <DialogDescription>
               <div class="col-span-full">
                 <div

@@ -12,13 +12,16 @@ import WeekCalendar from '@/components/ui/calendar/WeekCalendar.vue';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useInitials } from '@/composables/useInitials';
 import { useI18n } from 'vue-i18n';
-import type { AssignedHour, BreadcrumbItem, Employee, EmployeeStatus, EmployeeStatusPeriod, EmployeeVacationBalance, File as FileType } from '@/types'
+import type { AssignedHour, BreadcrumbItem, Employee, EmployeeStatus, EmployeeStatusPeriod, EmployeeVacationBalance, File as FileType, Note } from '@/types'
 import CardDescription from '@/components/ui/card/CardDescription.vue';
 
 interface Props {
   employee: Employee
+  document_folders: import('@/types').DocumentFolder[]
   files: FileType[]
   hours: AssignedHour[]
+  notes: Note[]
+  calendar_date: string
   status_periods: EmployeeStatusPeriod[]
   vacation_balances: EmployeeVacationBalance[]
   current_status: EmployeeStatus
@@ -52,6 +55,17 @@ function reloadNotes() {
 
 function reloadHours() {
   router.reload({ only: ['hours'] });
+}
+
+function loadCalendarWeek(date: string) {
+  if (date === props.calendar_date) return;
+
+  router.get(route('employees.show', props.employee.id), { filter_date: date }, {
+    only: ['hours', 'calendar_date'],
+    preserveState: true,
+    preserveScroll: true,
+    replace: true,
+  });
 }
 
 const toISO = (d: string) => {
@@ -175,6 +189,7 @@ function handleCalendarEventClick(
               </CardHeader>
             <CardContent>
 
+              <LabelData :label="$t('employee_time_records.mode')" :value="props.employee.time_record_mode === 'free' ? $t('employee_time_records.mode_free') : $t('employee_time_records.mode_work')"/>
               <LabelData :label="$t('employees.full_name')" :value="props.employee.user.name"/>
               <LabelData :label="$t('employees.birth_date')" :value="props.employee.birth_date"/>
               <LabelData :label="$t('employees.hire_date')" :value="props.employee.hire_date"/>
@@ -262,7 +277,9 @@ function handleCalendarEventClick(
             </CardHeader>
             <CardContent>
               <WeekCalendar
+                :initial-date="props.calendar_date"
                 :events="calendarItems"
+                @dates-change="loadCalendarWeek"
                 :eventClick="handleCalendarEventClick"
                 :formatCallback="formatCallback"
                 mode="full"
@@ -290,9 +307,9 @@ function handleCalendarEventClick(
         @saved="reloadHours"
       />
 
-      <Files :files="props.files" resource="employee" :parent-id="props.employee.id" @saved="reloadFiles" />
+      <Files :files="props.files" :folders="props.document_folders" resource="employee" :parent-id="props.employee.id" @saved="reloadFiles" />
 
-      <Notes :notes="props.employee.notes" resource="employee" :parent-id="props.employee.id" @saved="reloadNotes" />
+      <Notes :notes="props.notes" resource="employee" :parent-id="props.employee.id" @saved="reloadNotes" />
 
     </LayoutBasic>
   </AppLayout>
