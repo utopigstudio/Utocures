@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { router, Link } from '@inertiajs/vue3'
 import { watchDebounced } from '@vueuse/core'
 import { AppLayoutEmployee } from '@/layouts';
 import { TimerCounter, Notes } from '@/components/blocks';
 import { Button } from '@/components/ui/button';
 import { LabelData } from '@/components/ui/basic';
-import { UserRound, Phone, ChevronLeft } from 'lucide-vue-next'
+import { UserRound, Phone, ChevronLeft, MapPin } from 'lucide-vue-next'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useI18n } from 'vue-i18n';
 import type { Work, Note } from '@/types';
@@ -15,6 +15,7 @@ interface Props {
   work: Work
   notes: Note[]
   hasActiveWork: boolean
+  can_record_time: boolean
   current_time_record_id?: string | null
   filters?: {
     filter_search?: string
@@ -22,6 +23,16 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const directionsUrl = computed(() => {
+  const client = props.work.client
+  if (!client.address?.trim()) return null
+
+  const destination = [client.address, client.zip_code, client.city, client.country?.name]
+    .filter(value => value?.trim())
+    .join(', ')
+
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}`
+})
 
 const { t } = useI18n()
 
@@ -72,10 +83,11 @@ watchDebounced(
         <h1 class="text-lg leading-7 font-bold text-gray-800">{{ work.client.name }}</h1>
       </Link>
     </div>
-    <TimerCounter :work="work" :hasActiveWork="hasActiveWork" />
-    <div class="flex flex-col container mx-auto bg-white">
+    <div class="container mx-auto pb-6">
+      <TimerCounter v-if="props.can_record_time" :work="work" :hasActiveWork="hasActiveWork" />
+      <div class="flex flex-col bg-white">
       <aside class="w-full">
-        <nav class="flex flex-row">
+        <nav class="flex flex-row px-4 sm:px-6">
           <Button
             v-for="item in tabs"
             :key="item.id"
@@ -95,9 +107,9 @@ watchDebounced(
 
       <div class="flex flex-col lg:flex-row">
         <div class="flex-1">
-          <section>
+          <section class="px-4 py-4 sm:px-6">
             <div v-if="activeTab === 'information'" class="flex flex-col gap-4">
-              <Card class="rounded-none">
+              <Card class="rounded-md">
                 <CardHeader>
                   <CardTitle class="text-xl flex items-center gap-2 mb-4">
                     <UserRound class="text-blue-600 w-5 h-5" />
@@ -111,7 +123,7 @@ watchDebounced(
                 </CardContent>
               </Card>
 
-              <Card class="rounded-none">
+              <Card class="rounded-md">
                 <CardHeader>
                   <CardTitle class="text-xl flex items-center gap-2 mb-4">
                     <Phone class="text-blue-600 w-5 h-5" />
@@ -123,6 +135,12 @@ watchDebounced(
                   <LabelData :label="t('employees.phone')" :value="work.client.phone"/>
                   <LabelData :label="t('employees.phone_2')" :value="work.client.phone_2"/>
                   <LabelData :label="t('employees.address')" :value="work.client.address"/>
+                  <Button v-if="directionsUrl" as-child variant="outline" class="mb-4">
+                    <a :href="directionsUrl" target="_blank" rel="noopener noreferrer">
+                      <MapPin class="size-4" />
+                      {{ t('employees.google_maps_directions') }}
+                    </a>
+                  </Button>
                   <LabelData :label="t('employees.city')" :value="work.client.city"/>
                   <LabelData :label="t('employees.zip_code')" :value="work.client.zip_code"/>
                   <LabelData :label="t('employees.country')" :value="work.client.country.name"/>
@@ -141,13 +159,13 @@ watchDebounced(
                 :employee-time-record-id="props.current_time_record_id"
                 @search="searchFilter = $event"
                 @saved="reloadNotes"
-                class="rounded-none"
+                class="rounded-md"
                 titleClass="hidden"
               />
             </div>
 
             <div v-if="activeTab === 'tasks'" class="flex flex-col gap-4">
-              <Card class="rounded-none">
+              <Card class="rounded-md">
                 <CardContent>
                   <template v-if="props.work.service.tasks">
                     <div
@@ -163,6 +181,7 @@ watchDebounced(
           </section>
         </div>
       </div>
+    </div>
     </div>
   </AppLayoutEmployee>
 </template>

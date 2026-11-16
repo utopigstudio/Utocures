@@ -38,7 +38,7 @@ function goBack() {
 </script>
 
 <template>
-  <div class="md:p-8 bg-gray-50 h-full">
+  <div class="md:p-8 bg-background h-full">
     <div class="flex flex-col md:flex-row md:justify-between md:items-center pt-3 pb-6 md:pb-12 px-4 md:px-0">
       <div>
         <template v-if="title">

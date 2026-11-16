@@ -2,10 +2,10 @@
 import { computed, ref } from 'vue';
 import { AppLayout, LayoutBasic } from '@/layouts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Link } from '@inertiajs/vue3'
+import { Link, useForm } from '@inertiajs/vue3'
 import { Button, ButtonDelete } from '@/components/ui/button';
 import { LabelData } from '@/components/ui/basic';
-import { Trash2, Pencil, UserRound, Phone, BadgeCheck, Star, Clock3 } from 'lucide-vue-next'
+import { Trash2, Pencil, UserRound, Phone, BadgeCheck, Star, Clock3, Mail } from 'lucide-vue-next'
 import { EmployeeStatusPeriods, Files, ModalAssignedHour, Notes } from '@/components/blocks'
 import { router } from '@inertiajs/vue3'
 import WeekCalendar from '@/components/ui/calendar/WeekCalendar.vue';
@@ -30,6 +30,13 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const magicLinkForm = useForm<{ magic_link?: string }>({})
+
+function sendMagicLink() {
+  magicLinkForm.post(route('employees.magic-link.store', props.employee.id), {
+    preserveScroll: true,
+  })
+}
 
 const { t } = useI18n()
 
@@ -84,10 +91,10 @@ const formatCallback = (events: any[]) => {
   return events.map((event: CalendarItem) => {
     if (event.kind === 'status_period') {
       const palette = {
-        vacation: 'rgba(16, 185, 129, 0.16)',
-        sick_leave: 'rgba(244, 63, 94, 0.16)',
-        absence: 'rgba(100, 116, 139, 0.18)',
-        permission: 'rgba(245, 158, 11, 0.18)',
+        vacation: 'var(--color-success-100)',
+        sick_leave: 'var(--color-danger-100)',
+        absence: 'var(--color-neutral-100)',
+        permission: 'var(--color-warning-100)',
       }
 
       return {
@@ -108,9 +115,9 @@ const formatCallback = (events: any[]) => {
       title: hour.service.name + '<br>' + hour.client.name,
       start: `${toISO(hour.date)}T${hour.time_start}`,
       end: `${toISO(hour.date)}T${hour.time_end}`,
-      backgroundColor: 'rgba(209, 250, 229, 1)',
-      borderColor: 'rgb(114 201 156)',
-      textColor: '#065F46',
+      backgroundColor: 'var(--color-success-100)',
+      borderColor: 'var(--color-success-600)',
+      textColor: 'var(--color-success-700)',
       extendedProps: hour
     }
   })
@@ -163,7 +170,14 @@ function handleCalendarEventClick(
             </Avatar>
             <h2 class="text-2xl leading-8 font-bold text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">{{ props.employee.user.name }}</h2>
           </div>
-          <div class="mt-4 flex md:mt-0 md:ml-4 gap-x-6">
+          <div class="mt-4 flex flex-wrap items-center gap-4 md:mt-0 md:ml-4">
+            <form @submit.prevent="sendMagicLink">
+              <Button type="submit" variant="outline" :disabled="magicLinkForm.processing || !props.employee.user.is_active" :title="!props.employee.user.is_active ? $t('employees.magic_link_inactive') : props.employee.user.email">
+                <Mail />
+                {{ magicLinkForm.processing ? $t('employees.magic_link_sending') : $t('employees.send_magic_link') }}
+              </Button>
+              <p v-if="magicLinkForm.errors.magic_link" role="alert" class="mt-2 text-sm text-red-600">{{ magicLinkForm.errors.magic_link }}</p>
+            </form>
             <ButtonDelete :action="route('employees.destroy', props.employee.id)">
               <Trash2 class="text-white"/>
               {{ $t('layout.delete') }}

@@ -1,17 +1,11 @@
 <?php
 
 return [
-
-    /*
-    |--------------------------------------------------------------------------
-    | Employees Language Lines
-    |--------------------------------------------------------------------------
-    |
-    | The following language lines are used for employee-related translations
-    | in the application.
-    |
-    */
-
+    'google_maps_directions' => 'Cómo llegar con Google Maps',
+    'send_magic_link' => 'Enviar enlace mágico',
+    'magic_link_sending' => 'Enviando enlace…',
+    'magic_link_sent' => 'Se ha enviado el enlace mágico al correo electrónico de la empleada.',
+    'magic_link_inactive' => 'Activa la cuenta de la empleada para enviarle un enlace mágico.',
     'title' => 'Empleados',
     'create' => 'Crear empleado',
     'edit' => 'Editar empleado',

@@ -5,6 +5,7 @@ import { Link, usePage, usePoll } from '@inertiajs/vue3';
 import { Home, PanelLeft } from 'lucide-vue-next';
 import HelpButton from '@/components/help/HelpButton.vue';
 import ChangelogButton from '@/components/changelog/ChangelogButton.vue';
+import { Button } from '@/components/ui/button';
 import { SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON, useSidebar } from '@/components/ui/sidebar/utils';
 import type { AppPageProps } from '@/types';
 import { useMediaQuery } from '@vueuse/core';
@@ -78,26 +79,32 @@ const dateEl = ref(null);
         :target="dateEl"
         class="hidden md:block absolute inset-0 z-10 pointer-events-none top-5"
       />
-      <Link
+      <Button
         v-if="isAdmin || isClient"
-        :href="messagesUrl"
-        class="relative flex h-10 w-10 items-center justify-center cursor-pointer"
-        :aria-label="$t('messages.open_messages')"
+        variant="icon"
+        size="icon"
+        class="group relative size-10 rounded-full text-muted-foreground"
+        as-child
       >
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="flex flex-shrink-0 cursor-pointer">
-            <circle cx="16" cy="16" r="15.75" fill="#EFF4FB" stroke="#E2E8F0" stroke-width="0.5"/>
-            <g transform="translate(16 16) scale(0.8) translate(-12 -12)" stroke="#5D6F88" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" >
-            <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />
-            <path d="M8 12h.01" />
-            <path d="M12 12h.01" />
-            <path d="M16 12h.01" />
+        <Link
+          :href="messagesUrl"
+          :aria-label="$t('messages.open_messages')"
+        >
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-8" aria-hidden="true">
+            <circle cx="16" cy="16" r="15.75" class="fill-neutral-50 transition-colors group-hover:fill-accent" stroke="var(--border)" stroke-width="0.5" />
+            <g transform="translate(16 16) scale(0.8) translate(-12 -12)" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2.992 16.342a2 2 0 0 1 .094 1.167l-1.065 3.29a1 1 0 0 0 1.236 1.168l3.413-.998a2 2 0 0 1 1.099.092 10 10 0 1 0-4.777-4.719" />
+              <path d="M8 12h.01" />
+              <path d="M12 12h.01" />
+              <path d="M16 12h.01" />
             </g>
-            <circle v-if="unreadMessagesCount > 0" cx="26.3529" cy="4.70588" r="3.70588" fill="#E11D48" stroke="white" stroke-width="2"/>
-        </svg>
-      </Link>
+            <circle v-if="unreadMessagesCount > 0" cx="26.3529" cy="4.70588" r="3.70588" fill="var(--destructive)" stroke="white" stroke-width="2" />
+          </svg>
+        </Link>
+      </Button>
       <NavNotifications v-if="isAdmin" />
-      <ChangelogButton />
-      <HelpButton :compact="false" link-only />
+      <ChangelogButton v-if="isAdmin" />
+      <HelpButton v-if="isAdmin" :compact="false" link-only />
       <NavUser />
     </div>
   </header>

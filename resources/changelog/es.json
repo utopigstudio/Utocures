@@ -1,5 +1,18 @@
 [
     {
+        "version": "2.3.0",
+        "date": "16 de noviembre de 2026",
+        "roles": ["admin"],
+        "items": [
+            { "type": "changed", "text": "Utocures estrena logotipo y una nueva paleta de colores, aplicada a la navegación, los botones y los demás elementos de la interfaz." },
+            { "type": "added", "text": "Puedes enviar un enlace mágico de un solo uso desde la ficha de una empleada para que acceda sin contraseña. El envío solo está disponible para cuentas activas." },
+            { "type": "changed", "text": "Las empleadas pueden consultar sus horas trabajadas con selectores independientes de mes y año. Se muestran los doce meses y los años desde el actual hasta el primer año con fichajes de la empleada; por defecto, se selecciona el mes en curso." },
+            { "type": "added", "text": "La consulta de horas trabajadas incluye un resumen por cliente y el total del mes, calculados con todos los fichajes finalizados del periodo, independientemente de la página del listado. Los fichajes sin cliente se muestran por separado." },
+            { "type": "added", "text": "Desde la agenda semanal y mensual, las empleadas pueden abrir los trabajos de días futuros y consultar la información del cliente para planificar sus desplazamientos. El botón Cómo llegar con Google Maps abre la ruta con la dirección del cliente como destino." },
+            { "type": "fixed", "text": "Solo se puede iniciar el registro horario de un trabajo asignado para hoy. Los trabajos de otras fechas siguen disponibles para consulta y permiten finalizar un fichaje que ya estuviera abierto, incluso después de medianoche." }
+        ]
+    },
+    {
         "version": "2.2.0",
         "date": "28 de octubre de 2026",
         "roles": ["admin"],

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -75,16 +76,21 @@ onMounted(() => {
 <template>
   <Dialog v-model:open="open">
     <DialogTrigger as-child>
-      <button
+      <Button
         type="button"
+        variant="icon"
+        size="icon"
         :aria-label="$t('changelog.short_title')"
         :title="$t('changelog.short_title')"
-        class="relative inline-flex shrink-0 cursor-pointer items-center justify-center gap-2 rounded-lg p-2 align-middle text-sm font-semibold text-blue-700 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
+        class="group relative size-10 rounded-full text-muted-foreground"
         @click.stop
       >
-        <Megaphone class="size-5" aria-hidden="true" />
-        <span v-if="changelog?.hasUnseen" class="absolute top-1 right-1 size-2 rounded-full bg-rose-600" aria-hidden="true" />
-      </button>
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-8" aria-hidden="true">
+          <circle cx="16" cy="16" r="15.75" class="fill-neutral-50 transition-colors group-hover:fill-accent" stroke="var(--border)" stroke-width="0.5" />
+          <Megaphone x="6.4" y="6.4" :size="19.2" :stroke-width="1.5" class="size-[19.2px]" />
+          <circle v-if="changelog?.hasUnseen" cx="26.3529" cy="4.70588" r="3.70588" fill="var(--destructive)" stroke="white" stroke-width="2" />
+        </svg>
+      </Button>
     </DialogTrigger>
     <DialogContent class="max-h-[85dvh] overflow-y-auto sm:max-w-2xl" :show-close-button="false">
       <DialogHeader>
@@ -135,7 +141,7 @@ onMounted(() => {
           </ul>
         </section>
       </div>
-      <DialogFooter class="sticky -bottom-6 border-t bg-white py-4">
+      <DialogFooter class="sticky -bottom-6 border-t bg-background py-4">
         <DialogClose as-child>
           <button type="button" class="cursor-pointer rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800">
             {{ $t('changelog.close') }}

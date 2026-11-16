@@ -1,6 +1,14 @@
 <?php
 
 return [
+    'only_today' => 'Només pots iniciar el registre horari de treballs assignats per a avui.',
+    'client_summary' => 'Hores treballades per client',
+    'client_summary_help' => 'Total del mes seleccionat en hores i minuts. Només inclou fitxatges finalitzats.',
+    'month_total' => 'Total del mes',
+    'month' => 'Mes',
+    'year' => 'Any',
+    'filter_start' => 'Data d’inici',
+    'filter_end' => 'Data de fi',
     'clock_in' => 'Iniciar jornada',
     'clock_out' => 'Finalitzar jornada',
 

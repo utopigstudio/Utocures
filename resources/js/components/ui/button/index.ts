@@ -9,13 +9,13 @@ export const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          'bg-blue-600 text-white shadow-xs hover:bg-blue-700',
+          'bg-primary text-primary-foreground shadow-xs hover:bg-primary-700',
         destructive:
-          'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20',
+          'bg-destructive text-destructive-foreground shadow-xs hover:bg-danger-700 focus-visible:ring-destructive/20',
         outline:
           'border border-blue-gray-500 bg-background shadow-xs hover:bg-accent hover:text-accent-foreground',
         secondary:
-          'bg-blue-gray-200 text-blue-gray-600 shadow-xs hover:bg-blue-gray-200/80 ',
+          'bg-secondary text-secondary-foreground shadow-xs hover:bg-gray-200',
         ghost:
           'hover:bg-accent hover:text-accent-foreground',
         link: 

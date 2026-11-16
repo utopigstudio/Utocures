@@ -54,7 +54,8 @@ onMounted(async () => {
   ctx.globalCompositeOperation = 'lighter'
 
   const particles: Particle[] = []
-  const colors = ['#fbbf24', '#f472b6', '#a78bfa', '#38bdf8']
+  const theme = getComputedStyle(canvas.value)
+  const colors = ['--warning', '--danger', '--primary', '--success'].map(name => theme.getPropertyValue(name).trim())
 
   function firework(): void {
     if (!running) return

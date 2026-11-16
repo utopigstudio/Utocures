@@ -438,7 +438,7 @@ export interface ContractTemplate {
 }
 
 export interface Employee {
-    time_record_mode?: 'work' | 'free';
+  time_record_mode?: 'work' | 'free';
   id: string;
   name: string;
   birth_date?: string;

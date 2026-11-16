@@ -50,9 +50,9 @@ const formatCallback = (events: any[]) => {
     daysOfWeek: [parseInt(hour.day_of_week)],
     startTime: hour.time_start,
     endTime: hour.time_end,
-    backgroundColor: 'rgba(209, 250, 229, 1)',
-    borderColor: 'rgb(114 201 156)',
-    textColor: '#065F46',
+    backgroundColor: 'var(--color-success-100)',
+    borderColor: 'var(--color-success-600)',
+    textColor: 'var(--color-success-700)',
     extendedProps: hour
   }))
 }

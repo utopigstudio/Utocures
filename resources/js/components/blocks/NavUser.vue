@@ -15,7 +15,10 @@ const { isMobile, state } = useSidebar();
     <SidebarMenuItem>
       <DropdownMenu>
         <DropdownMenuTrigger as-child>
-          <SidebarMenuButton size="lg" class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer flex gap-6">
+          <SidebarMenuButton
+            size="lg"
+            class="flex cursor-pointer gap-2 tracking-normal data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground [&>div]:text-sm [&>div>span]:font-semibold"
+          >
             <UserInfo :user="user" />
           </SidebarMenuButton>
         </DropdownMenuTrigger>

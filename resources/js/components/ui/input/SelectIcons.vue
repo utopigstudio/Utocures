@@ -126,7 +126,7 @@ onMounted(() => {
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="8" viewBox="0 0 16 8">
         <path
           d="M8 7.82c-.17 0-.31-.06-.45-.17L1.08 1.3a.64.64 0 0 1 0-.9.64.64 0 0 1 .9 0L8 6.28l6.02-5.94a.64.64 0 0 1 .9 0 .64.64 0 0 1 0 .9L8.45 7.6c-.14.14-.28.22-.45.22Z"
-          fill="black"
+          fill="var(--foreground)"
         />
       </svg>
     </SelectTrigger>
@@ -169,7 +169,7 @@ onMounted(() => {
               </div>
               <div
                 v-if="!hasMore && !loading"
-                class="col-span-5 text-center text-xs text-gray-400 py-2"
+                class="col-span-5 text-center text-xs text-gray-600 py-2"
               >
                 {{ t('inputs.icons.no_more') }}
               </div>

@@ -160,7 +160,7 @@ watch([open, articleId, () => page.props.locale, attempt], async ([isOpen, artic
           </details>
         </section>
       </div>
-      <DialogFooter class="sticky -bottom-6 border-t bg-white py-4">
+      <DialogFooter class="sticky -bottom-6 border-t bg-background py-4">
         <a
           :href="fullUrl"
           target="_blank"

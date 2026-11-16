@@ -22,9 +22,9 @@ const icon = {
 }
 
 const color = {
-    success: 'text-green-400',
-    error: 'text-red-400',
-    warning: 'text-yellow-400',
+    success: 'text-success-600',
+    error: 'text-danger-600',
+    warning: 'text-warning-600',
 }
 </script>
 
@@ -42,7 +42,7 @@ const color = {
                 <p class="mt-1 text-sm text-gray-500">{{ notification.message }}</p>
               </div>
               <div class="ml-4 flex shrink-0">
-                <button type="button" @click="showNotification = false" class="inline-flex rounded-md text-gray-400 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600">
+                <button type="button" @click="showNotification = false" class="inline-flex rounded-md text-gray-600 hover:text-gray-500 focus:outline-2 focus:outline-offset-2 focus:outline-indigo-600">
                   <span class="sr-only">Close</span>
                   <X class="size-5" aria-hidden="true" />
                 </button>

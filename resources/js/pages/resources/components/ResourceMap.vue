@@ -22,7 +22,7 @@ let markerLayer: LayerGroup | null = null
 let leaflet: typeof import('leaflet') | null = null
 const markers = new Map<string, Marker>()
 
-const palette = ['#2563eb', '#16a34a', '#ea580c', '#9333ea', '#db2777', '#0891b2', '#4f46e5']
+const palette = ['var(--primary)', 'var(--color-success-600)', 'var(--color-warning-600)', 'var(--color-primary-800)', 'var(--color-danger-600)', 'var(--color-success-800)', 'var(--color-primary-500)']
 
 function colorFor(type: string): string {
   let hash = 0
@@ -159,7 +159,7 @@ onBeforeUnmount(() => {
   border: 3px solid white;
   border-radius: 50% 50% 50% 0;
   background: var(--marker-color);
-  box-shadow: 0 3px 10px rgb(15 23 42 / 30%);
+  box-shadow: 0 3px 10px color-mix(in srgb, var(--color-neutral-900) 30%, transparent);
 }
 
 .resource-map-marker > span {
@@ -181,7 +181,7 @@ onBeforeUnmount(() => {
 }
 
 .resource-map-popup__type {
-  color: #2563eb;
+  color: var(--primary);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.04em;
@@ -189,12 +189,12 @@ onBeforeUnmount(() => {
 }
 
 .resource-map-popup__title {
-  color: #111827;
+  color: var(--foreground);
   font-size: 15px;
 }
 
 .resource-map-popup__address {
-  color: #637381;
+  color: var(--muted-foreground);
   line-height: 1.4;
 }
 </style>

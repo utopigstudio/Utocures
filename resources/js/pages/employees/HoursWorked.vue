@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { formatRecordedDuration } from '@/lib/timeRecords'
 import { watchDebounced } from '@vueuse/core'
 import { Link, router } from '@inertiajs/vue3';
 import { AppLayoutEmployee } from '@/layouts';
 import { DataTable } from '@/components/blocks'
 import { ChevronLeft, CalendarClock } from 'lucide-vue-next';
-import { Datepicker, Select } from '@/components/ui/input'
+import { Select } from '@/components/ui/input'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useI18n } from 'vue-i18n';
 import type { Column, SortKey, SortDir, Paginated } from '@/types'
 
@@ -31,17 +32,24 @@ interface TimeRecord {
 
 interface Props {
   time_records: Paginated<TimeRecord>
+  client_summary: Array<{
+    client_id: string | null
+    client_name: string
+    registered_minutes: number
+  }>
+  years: number[]
   sort?: SortKey
   dir?: SortDir
   filters?: {
-    filter_date?: string
-    filter_period?: string
+    filter_month?: string
+    filter_year?: string
   }
 }
 
 const props = defineProps<Props>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
+const totalMinutes = computed(() => props.client_summary.reduce((total, client) => total + client.registered_minutes, 0))
 
 const columns: Column<TimeRecord>[] = [
   { key: 'assigned_hour.client.name', label: t('employee_time_records.client_name') },
@@ -67,17 +75,22 @@ function onSortChange({ key, dir }: { key: string, dir: SortDir }) {
   )
 }
 
-const searchFilter = ref<string>(props.filters?.filter_date ?? '')
-const periodFilter = ref<string>(props.filters?.filter_period ?? 'monthly')
+const monthFilter = ref<string>(props.filters?.filter_month ?? '')
+const yearFilter = ref<string>(props.filters?.filter_year ?? '')
+const monthOptions = computed(() => Array.from({ length: 12 }, (_, month) => ({
+  value: String(month + 1),
+  label: new Date(2000, month, 1).toLocaleDateString(locale.value, { month: 'long' }),
+})))
+const yearOptions = computed(() => props.years.map(year => ({ value: String(year), label: String(year) })))
 
 watchDebounced(
-  [searchFilter, periodFilter],
-  ([newDate, newPeriod]) => {
+  [monthFilter, yearFilter],
+  ([newMonth, newYear]) => {
     router.get(
       route('employee.hours-worked'),
       {
-        filter_date: newDate,
-        filter_period: newPeriod,
+        filter_month: newMonth,
+        filter_year: newYear,
         sort: props.sort,
         dir: props.dir,
         per_page: props.time_records.per_page,
@@ -92,14 +105,43 @@ watchDebounced(
 <template>
   <AppLayoutEmployee>
     <div class="container mx-auto flex items-center gap-2 px-4 pt-0 pb-4 bg-gray-50">
-      <Link :href="route('dashboard')" class="flex items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
+      <Link :href="route('dashboard')" class="flex items-center justify-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
         <ChevronLeft class="size-6" />
         <CalendarClock class="size-6 text-blue-600" />
         <h1 class="text-xl leading-7 font-bold text-gray-800">{{ t('employees.hours_worked') }}</h1>
       </Link>
     </div>
 
-    <div class="container mx-auto">
+    <div class="container mx-auto space-y-6 px-4 pb-6">
+      <div class="flex gap-4">
+        <div class="min-w-0 flex-1">
+          <Select variant="filter" name="filter_month" v-model="monthFilter" :options="monthOptions" :label="t('employee_time_records.month')" class="w-full" />
+        </div>
+        <div class="min-w-0 flex-1">
+          <Select variant="filter" name="filter_year" v-model="yearFilter" :options="yearOptions" :label="t('employee_time_records.year')" class="w-full" />
+        </div>
+      </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>{{ t('employee_time_records.client_summary') }}</CardTitle>
+          <p class="text-sm text-gray-500">{{ t('employee_time_records.client_summary_help') }}</p>
+        </CardHeader>
+        <CardContent>
+          <dl v-if="props.client_summary.length" class="divide-y divide-gray-200">
+            <div v-for="client in props.client_summary" :key="client.client_id ?? 'without_client'" class="flex items-center justify-between gap-4 py-3">
+              <dt class="min-w-0 break-words">{{ client.client_name }}</dt>
+              <dd class="shrink-0 font-medium tabular-nums">{{ formatRecordedDuration(client.registered_minutes) }}</dd>
+            </div>
+          </dl>
+          <p v-else class="py-3 text-sm text-gray-500">{{ t('employee_time_records.no_time_records') }}</p>
+          <div class="flex items-center justify-between gap-4 border-t border-gray-200 pt-4 font-semibold">
+            <span>{{ t('employee_time_records.month_total') }}</span>
+            <span class="tabular-nums">{{ formatRecordedDuration(totalMinutes) }}</span>
+          </div>
+        </CardContent>
+      </Card>
+
       <DataTable
         :items="props.time_records"
         :columns="columns"
@@ -110,19 +152,6 @@ watchDebounced(
         cardClass="shadow-none rounded-none px-0 pt-0 bg-transparent border-0"
         :striped="true"
       >
-        <template #headerFilters>
-          <div class="flex gap-4 w-full px-4">
-            <div class="flex-1 min-w-0">
-              <Datepicker variant="filter" v-model="searchFilter" :placeholder="t('employee_time_records.date')" class="w-full"/>
-            </div>
-            <div class="flex-1 min-w-0">
-              <Select class="w-full" variant="filter" v-model="periodFilter" :options="[
-                { label: 'Mensual', value: 'monthly' },
-                { label: 'Anual', value: 'yearly' }
-              ]" />
-            </div>
-          </div>
-        </template>
         <template #empty>
           <div class="text-center text-gray-500">{{ $t('layout.no_results_found') }}</div>
         </template>

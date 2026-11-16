@@ -126,7 +126,7 @@ const calendarOptions = ref({
 }
 
 :deep(td.fc-timegrid-slot.fc-timegrid-slot-lane[data-time$=":00:00"]) {
-  border-top: 1px solid #e5e7eb !important;
+  border-top: 1px solid var(--border) !important;
 }
 :deep(td.fc-timegrid-slot.fc-timegrid-slot-lane[data-time="00:00:00"]) {
   border-top: none !important;
@@ -142,13 +142,13 @@ const calendarOptions = ref({
   left: 0;
   width: 1px;
   height: 100%;
-  background-color: #e5e7eb;
+  background-color: var(--border);
   pointer-events: none;
 }
 
 :deep(.fc-timegrid-more-link) {
-  background-color: #ebebeb;
-  border: 2px solid #ccc;
+  background-color: var(--color-neutral-100);
+  border: 2px solid var(--color-neutral-300);
 }
 
 :deep(.fc-timegrid-axis),
@@ -164,7 +164,7 @@ const calendarOptions = ref({
 }
 
 :deep(.fc-scrollgrid-sync-inner) {
-  border-left: 1px solid #e5e7eb !important;
+  border-left: 1px solid var(--border) !important;
   height: 60px !important;
   line-height: 60px !important;
 }

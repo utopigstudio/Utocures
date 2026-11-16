@@ -1,6 +1,14 @@
 <?php
 
 return [
+    'only_today' => 'Solo puedes iniciar el registro horario de trabajos asignados para hoy.',
+    'client_summary' => 'Horas trabajadas por cliente',
+    'client_summary_help' => 'Total del mes seleccionado en horas y minutos. Solo incluye fichajes finalizados.',
+    'month_total' => 'Total del mes',
+    'month' => 'Mes',
+    'year' => 'Año',
+    'filter_start' => 'Fecha de inicio',
+    'filter_end' => 'Fecha de fin',
     'clock_in' => 'Iniciar jornada',
     'clock_out' => 'Finalizar jornada',
 

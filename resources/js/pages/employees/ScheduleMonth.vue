@@ -2,7 +2,7 @@
 import { computed, ref, watch } from 'vue'
 import { Link, router } from '@inertiajs/vue3'
 import { AppLayoutEmployee } from '@/layouts'
-import { ChevronLeft, Calendar, CalendarDays } from 'lucide-vue-next'
+import { ChevronLeft, ChevronRight, Calendar, CalendarDays } from 'lucide-vue-next'
 import { MonthlyDayCalendar } from '@/components/ui/calendar'
 import { darken } from '@/lib/utils'
 import { useI18n } from 'vue-i18n'
@@ -112,14 +112,14 @@ function handleSelectDay(day: Date) {
 <template>
   <AppLayoutEmployee>
     <div class="container mx-auto flex items-center gap-2 px-4 pt-0 pb-4 bg-gray-50">
-      <Link :href="route('home')" class="flex items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
+      <Link :href="route('home')" class="flex items-center justify-center gap-2 text-gray-600 hover:text-gray-900 transition-colors">
         <ChevronLeft class="size-6" />
         <Calendar class="size-6 text-blue-600" />
         <h1 class="text-xl leading-7 font-bold text-gray-800">{{ t('employees.schedule') }}</h1>
       </Link>
     </div>
 
-    <div class="container mx-auto space-y-4 p-4 sm:space-y-6">
+    <div class="container mx-auto space-y-4 px-4 pb-6 sm:space-y-6">
       <div class="grid w-full grid-cols-2 rounded-xl border border-gray-200 bg-white p-1 shadow-sm sm:inline-flex sm:w-auto">
         <Link
           :href="route('employee.schedule', { filter_date: props.selected_date })"
@@ -168,7 +168,7 @@ function handleSelectDay(day: Date) {
 
           <ul v-if="selectedDayWorks.length" role="list" class="flex flex-col gap-4">
             <li v-for="work in selectedDayWorks" :key="work.id" class="flex rounded-md shadow-xs">
-                <div class="flex w-full items-center">
+                <Link :href="route('employee.work.show', work.id)" class="flex w-full items-center">
                     <div class="flex h-full w-16 shrink-0 items-center justify-center rounded-l-md font-medium text-white" :style="{ backgroundColor: work.service.color }">
                     <span
                         v-html="work.service.icon"
@@ -182,8 +182,11 @@ function handleSelectDay(day: Date) {
                         <p class="text-gray-500">{{ work.time_start }} - {{ work.time_end }}</p>
                         <p class="text-gray-500">{{ work.service.name }}</p>
                     </div>
+                    <div class="flex shrink-0 items-center justify-center pr-2">
+                        <ChevronRight class="size-6 text-blue-gray-600" />
                     </div>
-                </div>
+                    </div>
+                </Link>
             </li>
           </ul>
 

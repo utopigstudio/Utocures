@@ -21,6 +21,7 @@ use App\Models\Gender;
 use App\Models\Service;
 use App\Models\User;
 use App\Models\UserRole;
+use App\Notifications\SendMagicLink;
 use App\Services\EmployeeStatusPeriodService;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -35,6 +36,8 @@ use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
 use Inertia\Response;
 use Maatwebsite\Excel\Facades\Excel;
+use MagicLink\Actions\LoginAction;
+use MagicLink\MagicLink;
 
 class EmployeeController extends Controller
 {
@@ -75,6 +78,24 @@ class EmployeeController extends Controller
         ]);
     }
 
+    public function sendMagicLink(Employee $employee): RedirectResponse
+    {
+        $user = $employee->user;
+
+        abort_unless($user, 404);
+
+        if (! $user->is_active) {
+            throw ValidationException::withMessages([
+                'magic_link' => __('employees.magic_link_inactive'),
+            ]);
+        }
+
+        $link = MagicLink::create(new LoginAction($user), null, 1)->url;
+        $user->notify(new SendMagicLink($link));
+
+        return back()->with('success', __('employees.magic_link_sent'));
+    }
+
     public function show(Request $request, Employee $employee, EmployeeStatusPeriodService $statusPeriodService): Response
     {
         $data = $request->validate(['filter_date' => 'nullable|date_format:Y-m-d']);
@@ -93,7 +114,7 @@ class EmployeeController extends Controller
         );
 
         return Inertia::render('employees/View', [
-            'employee' => fn () => $employee->load(['services', 'user:id,name,email,avatar', 'assignedCharacteristics.characteristic']),
+            'employee' => fn () => $employee->load(['services', 'user:id,name,email,avatar,is_active', 'assignedCharacteristics.characteristic']),
             'files' => fn () => $employee->files()->get(),
             'document_folders' => fn () => EmployeeDocumentFolder::orderBy('name')->get(['id', 'name']),
             'notes' => fn () => $employee->notes()->with('user:id,name,avatar')->get(),
@@ -149,6 +170,8 @@ class EmployeeController extends Controller
             'work' => $work,
             'hasActiveWork' => $hasActiveWork,
             'current_time_record_id' => $currentTimeRecordId,
+            'can_record_time' => $request->user()->employee->time_record_mode === Employee::TIME_RECORD_WORK
+                && ($work->date->isToday() || $currentTimeRecordId !== null),
             'notes' => $notes,
             'filters' => $filters,
         ]);
@@ -360,6 +383,12 @@ class EmployeeController extends Controller
                 return;
             }
 
+            if (! $work->date->isToday()) {
+                throw ValidationException::withMessages([
+                    'time_record' => __('employee_time_records.only_today'),
+                ]);
+            }
+
             $timeRecord = EmployeeTimeRecord::create([
                 'assigned_hour_id' => $work->id,
                 'employee_id' => $employee->id,
@@ -457,25 +486,41 @@ class EmployeeController extends Controller
             ], 400);
         }
 
+        $currentYear = today()->year;
+        $firstRecordDate = $employee->timeRecords()->min('date_in');
+        $firstYear = $firstRecordDate ? min(Carbon::parse($firstRecordDate)->year, $currentYear) : $currentYear;
+
         $data = $request->validate([
-            'filter_date' => 'nullable|date_format:Y-m-d',
-            'filter_period' => 'nullable|in:monthly,yearly',
+            'filter_month' => 'nullable|integer|between:1,12',
+            'filter_year' => 'nullable|integer|between:'.$firstYear.','.$currentYear,
             'per_page' => 'nullable|integer|in:10,15,25,50,100',
             'sort' => 'nullable|in:date_in,date_out,time_in,time_out,created_at,id',
             'dir' => 'nullable|in:asc,desc',
         ]);
         $filters = [
-            'filter_date' => $data['filter_date'] ?? today()->toDateString(),
-            'filter_period' => $data['filter_period'] ?? 'monthly',
+            'filter_month' => (string) ($data['filter_month'] ?? today()->month),
+            'filter_year' => (string) ($data['filter_year'] ?? $currentYear),
         ];
-        $selectedDate = Carbon::parse($filters['filter_date']);
-        $rangeStart = $filters['filter_period'] === 'yearly' ? $selectedDate->copy()->startOfYear() : $selectedDate->copy()->startOfMonth();
-        $rangeEnd = $filters['filter_period'] === 'yearly' ? $selectedDate->copy()->endOfYear() : $selectedDate->copy()->endOfMonth();
+        $selectedMonth = Carbon::createFromDate((int) $filters['filter_year'], (int) $filters['filter_month'], 1);
         $sort = $data['sort'] ?? 'date_in';
         $dir = $data['dir'] ?? 'desc';
 
-        $time_records = $employee->timeRecords()
-            ->whereBetween('date_in', [$rangeStart->toDateString(), $rangeEnd->toDateString()])
+        $recordsQuery = $employee->timeRecords()
+            ->whereBetween('date_in', [$selectedMonth->toDateString(), $selectedMonth->copy()->endOfMonth()->toDateString()]);
+        $clientSummary = (clone $recordsQuery)
+            ->whereNotNull('date_out')
+            ->whereNotNull('time_out')
+            ->with(['assignedHour:id,client_id', 'assignedHour.client:id,name'])
+            ->get(['id', 'assigned_hour_id', 'date_in', 'time_in', 'date_out', 'time_out'])
+            ->groupBy(fn (EmployeeTimeRecord $record): string => $record->assignedHour?->client_id ?? 'without_client')
+            ->map(fn (Collection $records): array => [
+                'client_id' => $records->first()->assignedHour?->client_id,
+                'client_name' => $records->first()->assignedHour?->client?->name ?? __('employee_time_records.without_client'),
+                'registered_minutes' => (int) $records->sum('registered_hours'),
+            ])
+            ->sortBy('client_name')->values();
+
+        $time_records = (clone $recordsQuery)
             ->with([
                 'assignedHour',
                 'assignedHour.timeRecords',
@@ -490,6 +535,8 @@ class EmployeeController extends Controller
 
         return Inertia::render('employees/HoursWorked', [
             'time_records' => $time_records,
+            'client_summary' => $clientSummary,
+            'years' => range($currentYear, $firstYear),
             'filters' => $filters,
             'sort' => $sort,
             'dir' => $dir,

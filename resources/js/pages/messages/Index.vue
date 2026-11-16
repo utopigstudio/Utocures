@@ -216,7 +216,7 @@ onBeforeUnmount(() => {
                     {{ conversation.last_message.sender_role === 'admin' ? `${$t('messages.administration')}: ` : ''
                     }}{{ excerpt(conversation.last_message.body) }}
                   </p>
-                  <p v-else class="mt-1 text-xs text-slate-400">{{ conversation.email }}</p>
+                  <p v-else class="mt-1 text-xs text-slate-600">{{ conversation.email }}</p>
                   <p v-if="!conversation.has_access" class="mt-1 text-[11px] font-medium text-amber-700">
                     {{ $t('messages.no_portal_access') }}
                   </p>
@@ -279,7 +279,7 @@ onBeforeUnmount(() => {
                 >
                   <p class="break-words whitespace-pre-wrap">{{ message.body }}</p>
                 </div>
-                <div class="mt-1 flex items-center gap-1 px-1 text-[10px] text-slate-400">
+                <div class="mt-1 flex items-center gap-1 px-1 text-[10px] text-slate-600">
                   <span>{{ formatDate(message.created_at) }}</span>
                   <template v-if="message.is_from_current_side">
                     <CheckCheck v-if="message.read_at" class="size-3.5 text-blue-600" />

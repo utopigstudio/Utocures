@@ -58,9 +58,9 @@ const formatCallback = (events: AssignedHourTemplate[] = []) => {
         title: cloned.employee.user.name + '<br>' + (cloned.service?.name || t('clients.no_service')),
         start: `${format(date, 'yyyy-MM-dd')}T${cloned.time_start}`,
         end: `${format(date, 'yyyy-MM-dd')}T${cloned.time_end}`,
-        backgroundColor: 'rgba(209, 250, 229, 1)',
-        borderColor: 'rgb(114 201 156)',
-        textColor: '#065F46',
+        backgroundColor: 'var(--color-success-100)',
+        borderColor: 'var(--color-success-600)',
+        textColor: 'var(--color-success-700)',
         extendedProps: { ...cloned, original_id: cloned.id },
       });
     }

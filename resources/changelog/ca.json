@@ -1,5 +1,18 @@
 [
     {
+        "version": "2.3.0",
+        "date": "16 de novembre de 2026",
+        "roles": ["admin"],
+        "items": [
+            { "type": "changed", "text": "Utocures estrena logotip i una nova paleta de colors, aplicada a la navegació, els botons i la resta d’elements de la interfície." },
+            { "type": "added", "text": "Pots enviar un enllaç màgic d’un sol ús des de la fitxa d’una empleada perquè accedeixi sense contrasenya. L’enviament només està disponible per a comptes actius." },
+            { "type": "changed", "text": "Les empleades poden consultar les hores treballades amb selectors independents de mes i any. Es mostren els dotze mesos i els anys des de l’actual fins al primer any amb fitxatges de l’empleada; per defecte, se selecciona el mes en curs." },
+            { "type": "added", "text": "La consulta d’hores treballades inclou un resum per client i el total del mes, calculats amb tots els fitxatges finalitzats del període, independentment de la pàgina del llistat. Els fitxatges sense client es mostren per separat." },
+            { "type": "added", "text": "Des de l’agenda setmanal i mensual, les empleades poden obrir els treballs de dies futurs i consultar la informació del client per planificar els desplaçaments. El botó Com arribar amb Google Maps obre la ruta amb l’adreça del client com a destinació." },
+            { "type": "fixed", "text": "Només es pot iniciar el registre horari d’un treball assignat per a avui. Els treballs d’altres dates continuen disponibles per a consulta i permeten finalitzar un fitxatge que ja estigués obert, fins i tot després de mitjanit." }
+        ]
+    },
+    {
         "version": "2.2.0",
         "date": "28 d’octubre de 2026",
         "roles": ["admin"],

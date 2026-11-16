@@ -49,6 +49,7 @@ Route::middleware(['auth', 'is_admin'])->group(function () {
     Route::resource('employees', EmployeeController::class);
 
     Route::prefix('employees')->name('employees.')->group(function () {
+        Route::post('{employee}/magic-link', [EmployeeController::class, 'sendMagicLink'])->middleware('throttle:5,1')->name('magic-link.store');
         Route::post('{employee}/assigned-hours', [EmployeeController::class, 'storeAssignedHour'])->name('assigned-hours.store');
         Route::put('{employee}/assigned-hours/{hour}', [EmployeeController::class, 'editAssignedHour'])->name('assigned-hours.update');
         Route::delete('{employee}/assigned-hours/{hour}', [EmployeeController::class, 'destroyAssignedHour'])->name('assigned-hours.destroy');

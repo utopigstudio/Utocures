@@ -418,18 +418,18 @@ function toggleRow(row: any) {
 }
 
 .data-table-scroll::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: var(--color-neutral-300);
   border-radius: 999px;
 }
 
 .data-table-scroll::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+  background: var(--color-neutral-500);
 }
 
 @supports not selector(::-webkit-scrollbar) {
   .data-table-scroll {
     scrollbar-width: thin;
-    scrollbar-color: #cbd5e1 transparent;
+    scrollbar-color: var(--color-neutral-300) transparent;
   }
 }
 </style>

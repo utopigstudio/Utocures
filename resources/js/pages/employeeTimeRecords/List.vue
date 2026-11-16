@@ -337,7 +337,7 @@ function changeView(view: PageView) {
                           </li>
                         </ul>
                       </div>
-                      <span v-else class="text-xs text-gray-400">{{ t('employee_time_records.no_incidences') }}</span>
+                      <span v-else class="text-xs text-gray-600">{{ t('employee_time_records.no_incidences') }}</span>
                     </td>
                   </template>
 
@@ -370,7 +370,7 @@ function changeView(view: PageView) {
                           </li>
                         </ul>
                       </div>
-                      <span v-else class="text-xs text-gray-400">{{ t('employee_time_records.no_incidences') }}</span>
+                      <span v-else class="text-xs text-gray-600">{{ t('employee_time_records.no_incidences') }}</span>
                     </td>
                   </template>
                 </tr>

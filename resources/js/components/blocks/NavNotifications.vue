@@ -3,6 +3,7 @@ import { computed, ref } from 'vue';
 import { router, usePage, usePoll } from '@inertiajs/vue3';
 import { Check, LoaderCircle } from 'lucide-vue-next';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 import type { AdminNotificationItem, AdminNotificationsPayload, AppPageProps } from '@/types';
 import { useI18n } from 'vue-i18n';
 
@@ -96,23 +97,26 @@ const emptyLabel = computed(() => activeTab.value === 'unread'
 <template>
   <DropdownMenu>
     <DropdownMenuTrigger as-child>
-      <button
+      <Button
         type="button"
-        class="relative flex h-10 w-10 items-center justify-center cursor-pointer"
+        variant="icon"
+        size="icon"
+        :aria-label="$t('notifications.title')"
+        class="group relative size-10 rounded-full text-muted-foreground"
       >
-        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="flex flex-shrink-0 cursor-pointer">
-            <circle cx="16" cy="16" r="15.75" fill="#EFF4FB" stroke="#E2E8F0" stroke-width="0.5"/>
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="size-8" aria-hidden="true">
+            <circle cx="16" cy="16" r="15.75" class="fill-neutral-50 transition-colors group-hover:fill-accent" stroke="var(--border)" stroke-width="0.5"/>
             <g clip-path="url(#clip0_678_3164)">
-            <path d="M22.7765 21.5854L22.2471 20.7648C22.1412 20.606 22.0883 20.4471 22.0883 20.2618V14.756C22.0883 13.1942 21.4265 11.7383 20.2088 10.653C19.2294 9.77949 17.9588 9.22361 16.6088 9.11773V8.58832C16.6088 8.27067 16.3441 7.97949 16 7.97949C15.6824 7.97949 15.3912 8.2442 15.3912 8.58832V9.09126C15.3383 9.09126 15.2853 9.09126 15.2324 9.11773C12.1618 9.46185 9.85884 11.9236 9.85884 14.8618V20.2618C9.83237 20.5265 9.77943 20.6589 9.72649 20.7383L9.22355 21.5854C9.06473 21.8501 9.06473 22.1677 9.22355 22.4324C9.38237 22.6707 9.64708 22.8295 9.93825 22.8295H15.4177V23.4118C15.4177 23.7295 15.6824 24.0207 16.0265 24.0207C16.3441 24.0207 16.6353 23.756 16.6353 23.4118V22.8295H22.0883C22.3794 22.8295 22.6441 22.6707 22.803 22.4324C22.9618 22.1677 22.9618 21.8501 22.7765 21.5854ZM10.5735 21.6383L10.7588 21.3207C10.9177 21.056 10.9971 20.7383 11.05 20.3677V14.8618C11.05 12.5324 12.903 10.5736 15.3647 10.3089C16.8735 10.1501 18.3559 10.6001 19.4412 11.553C20.3941 12.4001 20.9236 13.5383 20.9236 14.756V20.2618C20.9236 20.6589 21.0294 21.0295 21.2677 21.4001L21.4265 21.6383H10.5735Z" fill="#5D6F88"/>
+            <path d="M22.7765 21.5854L22.2471 20.7648C22.1412 20.606 22.0883 20.4471 22.0883 20.2618V14.756C22.0883 13.1942 21.4265 11.7383 20.2088 10.653C19.2294 9.77949 17.9588 9.22361 16.6088 9.11773V8.58832C16.6088 8.27067 16.3441 7.97949 16 7.97949C15.6824 7.97949 15.3912 8.2442 15.3912 8.58832V9.09126C15.3383 9.09126 15.2853 9.09126 15.2324 9.11773C12.1618 9.46185 9.85884 11.9236 9.85884 14.8618V20.2618C9.83237 20.5265 9.77943 20.6589 9.72649 20.7383L9.22355 21.5854C9.06473 21.8501 9.06473 22.1677 9.22355 22.4324C9.38237 22.6707 9.64708 22.8295 9.93825 22.8295H15.4177V23.4118C15.4177 23.7295 15.6824 24.0207 16.0265 24.0207C16.3441 24.0207 16.6353 23.756 16.6353 23.4118V22.8295H22.0883C22.3794 22.8295 22.6441 22.6707 22.803 22.4324C22.9618 22.1677 22.9618 21.8501 22.7765 21.5854ZM10.5735 21.6383L10.7588 21.3207C10.9177 21.056 10.9971 20.7383 11.05 20.3677V14.8618C11.05 12.5324 12.903 10.5736 15.3647 10.3089C16.8735 10.1501 18.3559 10.6001 19.4412 11.553C20.3941 12.4001 20.9236 13.5383 20.9236 14.756V20.2618C20.9236 20.6589 21.0294 21.0295 21.2677 21.4001L21.4265 21.6383H10.5735Z" fill="currentColor"/>
             </g>
-            <circle v-if="unreadCount > 0" cx="26.3529" cy="4.70588" r="3.70588" fill="#E11D48" stroke="white" stroke-width="2"/>
+            <circle v-if="unreadCount > 0" cx="26.3529" cy="4.70588" r="3.70588" fill="var(--destructive)" stroke="white" stroke-width="2"/>
             <defs>
             <clipPath id="clip0_678_3164">
             <rect width="16.9412" height="16.9412" fill="white" transform="translate(7.52942 7.5293)"/>
             </clipPath>
             </defs>
         </svg>
-      </button>
+      </Button>
     </DropdownMenuTrigger>
 
     <DropdownMenuContent align="end" :side-offset="8" class="w-[24rem] p-0">
@@ -144,7 +148,7 @@ const emptyLabel = computed(() => activeTab.value === 'unread'
           @click="activeTab = 'unread'"
         >
           {{ $t('notifications.unread_tab') }}
-          <span class="ml-1 text-xs " :class="activeTab === 'unread' ? 'bg-blue-600 text-white' : 'text-gray-400'">({{ unreadCount }})</span>
+          <span class="ml-1 text-xs " :class="activeTab === 'unread' ? 'bg-blue-600 text-white' : 'text-gray-600'">({{ unreadCount }})</span>
         </button>
         <button
           type="button"
@@ -153,7 +157,7 @@ const emptyLabel = computed(() => activeTab.value === 'unread'
           @click="activeTab = 'read'"
         >
           {{ $t('notifications.read_tab') }}
-          <span class="ml-1 text-xs " :class="activeTab === 'read' ? 'bg-blue-600 text-white' : 'text-gray-400'">({{ readCount }})</span>
+          <span class="ml-1 text-xs " :class="activeTab === 'read' ? 'bg-blue-600 text-white' : 'text-gray-600'">({{ readCount }})</span>
         </button>
       </div>
 
@@ -178,10 +182,10 @@ const emptyLabel = computed(() => activeTab.value === 'unread'
               <p v-if="hasExcerpt(notification)" class="text-xs text-gray-500">
                 {{ notification.data.excerpt }}
               </p>
-              <p class="text-xs text-gray-400">
+              <p class="text-xs text-gray-600">
                 {{ formatCreatedAt(notification.created_at) }}
               </p>
-              <p v-if="activeTab === 'read' && notification.read_at" class="text-xs text-gray-400">
+              <p v-if="activeTab === 'read' && notification.read_at" class="text-xs text-gray-600">
                 {{ $t('notifications.read_on') }}: {{ formatCreatedAt(notification.read_at) }}
               </p>
             </div>

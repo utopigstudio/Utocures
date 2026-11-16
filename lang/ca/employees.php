@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'google_maps_directions' => 'Com arribar amb Google Maps',
+    'send_magic_link' => 'Enviar enllaç màgic',
+    'magic_link_sending' => 'Enviant enllaç…',
+    'magic_link_sent' => 'S’ha enviat l’enllaç màgic al correu electrònic de l’empleada.',
+    'magic_link_inactive' => 'Activa el compte de l’empleada per enviar-li un enllaç màgic.',
     'title' => 'Empleades',
     'create' => 'Crear empleada',
     'edit' => 'Editar empleada',

@@ -73,7 +73,7 @@ watch(() => props.data, (resources) => {
       </div>
 
       <div class="mx-4 grid min-h-[640px] overflow-hidden rounded-xl border bg-white shadow-sm md:mx-0 lg:grid-cols-[minmax(0,2fr)_minmax(320px,1fr)]">
-        <div class="relative min-h-[430px] border-b lg:min-h-[640px] lg:border-r lg:border-b-0">
+        <div class="relative isolate z-0 min-h-[430px] border-b lg:min-h-[640px] lg:border-r lg:border-b-0">
           <ResourceMap :resources="props.data" :selected-id="selectedId" @select="selectedId = $event" />
           <div v-if="!props.data.length" class="pointer-events-none absolute inset-0 z-[1100] flex items-center justify-center bg-white/70 p-6">
             <div class="rounded-xl bg-white p-6 text-center shadow-lg">

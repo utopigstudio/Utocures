@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AppLogoIcon } from '@/components/app';
+import { AppLogoHorizontal } from '@/components/app';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Notification } from '@/components/ui/notification';
 import type { HTMLAttributes } from 'vue'
@@ -16,14 +16,11 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flex min-h-svh flex-col items-center justify-center bg-blue-900 px-4 py-10 md:py-0">
+  <div class="flex min-h-svh flex-col items-center justify-center bg-sidebar px-4 py-10">
     <div class="flex w-full max-w-[34.375rem] flex-col">
-      <div :class="cn('flex items-center gap-6 self-center mb-16 md:mb-0', classLogoHeader)">
-        <div class="flex h-12 w-12 items-center justify-center">
-          <AppLogoIcon size="size-12" />
-        </div>
-        <h1 class="text-[2.9375rem] text-white font-bold">Utocures</h1>
-      </div>
+      <h1 :class="cn('mb-8 w-80 max-w-full self-center', classLogoHeader)">
+        <AppLogoHorizontal class="w-full" />
+      </h1>
 
       <div class="flex flex-col gap-6">
         <Card class="py-16">
