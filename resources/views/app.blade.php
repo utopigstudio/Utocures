@@ -13,10 +13,10 @@
         <title inertia>{{ config('app.name', 'Utocures') }}</title>
 
         <link rel="manifest" href="/manifest.webmanifest">
-        <link rel="icon" href="/favicon.ico" sizes="any">
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="icon" href="/favicon-96x96.png" type="image/png" sizes="96x96">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="icon" href="/favicon.ico?v=da3fe5b7cd90" sizes="any">
+        <link rel="icon" href="/favicon.svg?v=ba29d1b9a133" type="image/svg+xml">
+        <link rel="icon" href="/favicon-96x96.png?v=2435c96fc1bc" type="image/png" sizes="96x96">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=955d5cbb3b63">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">

@@ -3,7 +3,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/compon
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import { type User } from '@/types';
 import { usePage } from '@inertiajs/vue3';
-import { UserInfo, UserMenuContent } from '@/components/blocks';
+import UserInfo from '@/components/blocks/UserInfo.vue';
+import UserMenuContent from '@/components/blocks/UserMenuContent.vue';
 
 const page = usePage();
 const user = page.props.auth.user as User;

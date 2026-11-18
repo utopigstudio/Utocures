@@ -4,7 +4,7 @@ import { formatRecordedDuration } from '@/lib/timeRecords'
 import { watchDebounced } from '@vueuse/core'
 import { Link, router } from '@inertiajs/vue3';
 import { AppLayoutEmployee } from '@/layouts';
-import { DataTable } from '@/components/blocks'
+import DataTable from '@/components/blocks/DataTable.vue'
 import { ChevronLeft, CalendarClock } from 'lucide-vue-next';
 import { Select } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'

@@ -141,7 +141,7 @@ onBeforeUnmount(() => {
             <div class="flex flex-col gap-4 pr-7 sm:flex-row sm:items-center sm:pr-8">
                 <div class="flex min-w-0 flex-1 items-center gap-4">
                     <div class="relative flex size-14 shrink-0 items-center justify-center rounded-2xl bg-white shadow-lg">
-                        <img src="/pwa-icon-192.png" alt="" class="size-11 rounded-xl" />
+                        <img src="/pwa-icon-192.png?v=17c20533b28b" alt="" class="size-11 rounded-xl" />
                         <span class="absolute -right-1 -bottom-1 flex size-5 items-center justify-center rounded-full bg-blue-600 ring-2 ring-white">
                             <Share v-if="isIos" class="size-3 text-white" aria-hidden="true" />
                             <Download v-else class="size-3 text-white" aria-hidden="true" />

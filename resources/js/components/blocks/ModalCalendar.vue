@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogC
 import { Button, ButtonDelete } from '@/components/ui/button'
 import { Form } from '@inertiajs/vue3'
 import { InputText, Select, Timepicker, InputCheckboxGroup, RadioButtons, Datepicker } from '@/components/ui/input'
-import { ListEmployees } from '@/components/blocks'
+import ListEmployees from '@/components/blocks/ListEmployees.vue'
 import { Calendar, X, Save, Trash2 } from 'lucide-vue-next'
 import type { ServiceOption, AssignedHourTemplate, SelectOption } from '@/types'
 import { useI18n } from 'vue-i18n'

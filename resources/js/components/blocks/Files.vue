@@ -3,7 +3,7 @@ import DocumentFolderBrowser from '@/components/blocks/DocumentFolderBrowser.vue
 import { computed, ref } from 'vue'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogClose, DialogDescription } from '@/components/ui/dialog'
-import { DataTable } from '@/components/blocks'
+import DataTable from '@/components/blocks/DataTable.vue'
 import { Button } from '@/components/ui/button'
 import { Form, router } from '@inertiajs/vue3'
 import { useI18n } from 'vue-i18n'

@@ -38,21 +38,29 @@ class AssignedHoursTemplateObserver
             return;
         }
 
-        $originalDateStart = $this->originalDateStart($assignedHoursTemplate);
-
-        if (! $originalDateStart || $originalDateStart->greaterThanOrEqualTo(CarbonImmutable::today())) {
-            $this->regenerateAll($assignedHoursTemplate);
-
-            return;
-        }
-
-        if (array_keys($fieldsChanged) === ['date_end']) {
+        if ((int) $assignedHoursTemplate->recurrency > 0 && array_keys($fieldsChanged) === ['date_end']) {
             $this->applyEndDateChange($assignedHoursTemplate);
 
             return;
         }
 
-        $this->splitHistoricalTemplate($assignedHoursTemplate);
+        $today = CarbonImmutable::today();
+        $requestedStart = $assignedHoursTemplate->date_start ?? $assignedHoursTemplate->date;
+        $changeStart = $requestedStart && $requestedStart->greaterThan($today)
+            ? CarbonImmutable::instance($requestedStart)
+            : $today;
+        $originalDateStart = $this->originalDateStart($assignedHoursTemplate);
+
+        if (! $originalDateStart
+            || $originalDateStart->greaterThan($today)
+            || $originalDateStart->greaterThanOrEqualTo($changeStart)
+            || (int) $this->previousValue($assignedHoursTemplate, 'recurrency') === 0) {
+            $this->regenerateAll($assignedHoursTemplate);
+
+            return;
+        }
+
+        $this->splitHistoricalTemplate($assignedHoursTemplate, $changeStart);
     }
 
     private function regenerateAll(AssignedHoursTemplate $template): void
@@ -80,29 +88,24 @@ class AssignedHoursTemplateObserver
             $this->ensureHoursAreUnlocked(clone $hoursToRemove);
             $hoursToRemove->delete();
 
-            $template->forceFill(['generated_until' => $newDateEnd->toDateString()])->saveQuietly();
+            if ($template->generated_until && $template->generated_until->greaterThan($newDateEnd)) {
+                $template->forceFill(['generated_until' => $newDateEnd->toDateString()])->saveQuietly();
+            }
         }
 
         $template->generateAssignedHours();
     }
 
-    private function splitHistoricalTemplate(AssignedHoursTemplate $template): void
+    private function splitHistoricalTemplate(AssignedHoursTemplate $template, CarbonImmutable $changeStart): void
     {
-        $today = CarbonImmutable::today();
-        $yesterday = $today->subDay();
-        $futureHours = $template->assignedHours()->where('date', '>', $yesterday->toDateString());
+        $futureHours = $template->assignedHours()->where('date', '>=', $changeStart->toDateString());
         $this->ensureHoursAreUnlocked(clone $futureHours);
 
         $newTemplate = $template->replicate(['id', 'created_at', 'updated_at']);
         $newTemplate->generated_until = null;
 
         if ((int) $newTemplate->recurrency > 0) {
-            $requestedStart = $newTemplate->date_start
-                ? CarbonImmutable::instance($newTemplate->date_start)
-                : $today;
-            $newTemplate->date_start = $requestedStart->greaterThan($today)
-                ? $requestedStart
-                : $today;
+            $newTemplate->date_start = $changeStart;
         }
 
         $historicalAttributes = array_replace(
@@ -124,12 +127,19 @@ class AssignedHoursTemplateObserver
             'service_id',
             'generated_until',
         ]);
-        $originalAttributes['date_end'] = $yesterday->toDateString();
-        $originalAttributes['generated_until'] = $yesterday->toDateString();
+        $historicalEnd = $changeStart->subDay();
+        if ($originalAttributes['date_end'] && CarbonImmutable::parse($originalAttributes['date_end'])->lessThan($historicalEnd)) {
+            $historicalEnd = CarbonImmutable::parse($originalAttributes['date_end']);
+        }
+        $originalAttributes['date_end'] = $historicalEnd->toDateString();
+        if ($originalAttributes['generated_until'] && CarbonImmutable::parse($originalAttributes['generated_until'])->greaterThan($historicalEnd)) {
+            $originalAttributes['generated_until'] = $historicalEnd->toDateString();
+        }
 
         $futureHours->delete();
         $template->syncOriginal();
-        $template->forceFill($originalAttributes)->saveQuietly();
+        $template->setRawAttributes(array_replace($template->getAttributes(), $originalAttributes));
+        $template->saveQuietly();
         $newTemplate->save();
     }
 

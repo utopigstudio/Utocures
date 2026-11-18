@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTableQuery } from '@/composables/useTableQuery'
 import { AppLayout, LayoutBasic } from '@/layouts';
-import { DataTable } from '@/components/blocks'
+import DataTable from '@/components/blocks/DataTable.vue'
 import { router } from '@inertiajs/vue3'
 import { useI18n } from 'vue-i18n';
 import { History } from 'lucide-vue-next'

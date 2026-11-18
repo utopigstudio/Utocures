@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTableQuery } from '@/composables/useTableQuery'
 import { AppLayout, LayoutTabs } from '@/layouts';
-import { DataTable } from '@/components/blocks'
+import DataTable from '@/components/blocks/DataTable.vue'
 import { router, Link } from '@inertiajs/vue3'
 import { Card, CardContent } from '@/components/ui/card'
 import { ButtonDelete, Button } from '@/components/ui/button';

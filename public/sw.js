@@ -81,8 +81,8 @@ self.addEventListener('push', (event) => {
 
             await self.registration.showNotification(payload.title ?? 'Utocures', {
                 body: payload.body ?? 'Tienes un nuevo mensaje.',
-                icon: payload.icon ?? '/pwa-icon-192.png',
-                badge: payload.badge ?? '/pwa-icon-192.png',
+                icon: payload.icon ?? '/pwa-icon-192.png?v=17c20533b28b',
+                badge: payload.badge ?? '/pwa-icon-192.png?v=17c20533b28b',
                 tag: payload.tag ?? 'utocures-messages',
                 renotify: payload.renotify ?? true,
                 vibrate: payload.vibrate ?? [100, 50, 100],

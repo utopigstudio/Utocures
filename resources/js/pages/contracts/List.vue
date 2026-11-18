@@ -3,7 +3,7 @@ import { useTableQuery } from '@/composables/useTableQuery'
 import { ref } from 'vue';
 import { watchDebounced } from '@vueuse/core'
 import { AppLayout, LayoutBasic } from '@/layouts';
-import { DataTable } from '@/components/blocks'
+import DataTable from '@/components/blocks/DataTable.vue'
 import { router, Link } from '@inertiajs/vue3'
 import { Button } from '@/components/ui/button'
 import { InputText, Select } from '@/components/ui/input'

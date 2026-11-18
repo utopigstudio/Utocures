@@ -4,7 +4,7 @@ import { ref } from 'vue';
 import { watchDebounced } from '@vueuse/core'
 import { AppLayout, LayoutTabs } from '@/layouts';
 import { Link, router } from '@inertiajs/vue3'
-import { DataTable } from '@/components/blocks'
+import DataTable from '@/components/blocks/DataTable.vue'
 import { ButtonDelete, Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card'
 import { Select } from '@/components/ui/input'
