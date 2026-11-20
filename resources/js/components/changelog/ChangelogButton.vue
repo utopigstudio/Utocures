@@ -141,7 +141,7 @@ onMounted(() => {
           </ul>
         </section>
       </div>
-      <DialogFooter class="sticky -bottom-6 border-t bg-background py-4">
+      <DialogFooter class="sticky -bottom-6 border-t bg-white py-4">
         <DialogClose as-child>
           <button type="button" class="cursor-pointer rounded-lg bg-blue-700 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800">
             {{ $t('changelog.close') }}

@@ -1,0 +1,1 @@
+import{_ as o}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as t,i as c}from"./app-CSJCxUt_.js";const e={},r={src:"/images/logo-horizontal.svg",alt:"Utocures",width:"356",height:"97",class:"h-auto max-w-full object-contain"};function s(a,n){return t(),c("img",r)}const l=o(e,[["render",s]]);export{l as A};

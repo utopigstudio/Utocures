@@ -7,7 +7,7 @@ import { Button, ButtonDelete } from '@/components/ui/button'
 import { Form } from '@inertiajs/vue3'
 import { InputText, Select, Timepicker, InputCheckboxGroup, RadioButtons, Datepicker } from '@/components/ui/input'
 import ListEmployees from '@/components/blocks/ListEmployees.vue'
-import { Calendar, X, Save, Trash2 } from 'lucide-vue-next'
+import { Calendar, Save, Trash2 } from 'lucide-vue-next'
 import type { ServiceOption, AssignedHourTemplate, SelectOption } from '@/types'
 import { useI18n } from 'vue-i18n'
 import { format } from 'date-fns'
@@ -249,7 +249,7 @@ const resetForm = () => {
           <div class="flex gap-6 ml-auto">
             <DialogClose as-child>
               <Button 
-                class="text-blue-gray-600 border-blue-gray-500 border-2 has-[>svg]:px-6"
+                class="text-blue-gray-600 border-blue-gray-500 border-2 px-6"
                 variant="outline" 
                 @click="
                   () => {
@@ -260,13 +260,12 @@ const resetForm = () => {
                   }
                 "
               >
-                <X class="size-4" strokeWidth="3" />
                 {{ $t('layout.cancel') }}
               </Button>
             </DialogClose>
             <Button type="submit" :disabled="processing" class="has-[>svg]:px-6">
               <Save class="size-4 text-white" />
-              {{ isEdit ? $t('clients.save_changes') : $t('clients.create') }}
+              {{ isEdit ? $t('clients.save_changes') : $t('clients.save_service') }}
             </Button>
           </div>
         </DialogFooter>
